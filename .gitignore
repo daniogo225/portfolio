@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# screenshots & review
+review-*.png
+portfolio-*.png
+.playwright-mcp/
+
+# source photos (only public/ version is needed)
+dani1.HEIC
+dani2.JPG
