@@ -1,161 +1,131 @@
 "use client";
 
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
 
-const navItems = [
-  { label: "Projets", href: "#projets" },
-  { label: "A propos", href: "#apropos" },
+const links = [
+  { label: "About", href: "#about" },
+  { label: "Work", href: "#work" },
   { label: "Stack", href: "#stack" },
   { label: "Contact", href: "#contact" },
 ];
 
 export default function Navigation() {
-  const { theme, toggle } = useTheme();
-  const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 50);
-  });
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-[var(--surface)]/90 backdrop-blur-xl border-b border-[var(--border)]"
-            : "bg-transparent border-b border-transparent"
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-background/80 backdrop-blur-xl border-b border-border/50"
+          : "bg-transparent"
+      }`}
+    >
+      <nav className="max-w-[1400px] mx-auto flex items-center justify-between px-6 md:px-12 lg:px-20 h-20">
+        {/* Logo */}
+        <a
+          href="#"
+          className="font-display text-2xl tracking-tight relative z-50"
+        >
+          dani<span className="text-accent">.</span>
+        </a>
+
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-10">
+          {links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="relative text-[13px] font-sans font-medium tracking-[0.18em] uppercase text-muted hover:text-foreground transition-colors duration-300 group"
+            >
+              {link.label}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 ease-out group-hover:w-full" />
+            </a>
+          ))}
+          <button
+            onClick={toggleTheme}
+            className="ml-6 font-mono text-[11px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-colors duration-300 border border-border hover:border-accent/50 px-4 py-2"
+            data-hover
+          >
+            {theme === "dark" ? "Light" : "Dark"}
+          </button>
+        </div>
+
+        {/* Mobile burger */}
+        <button
+          className="md:hidden relative z-50 w-8 h-8 flex items-center justify-center"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+          data-hover
+        >
+          <div className="flex flex-col gap-[5px]">
+            <span
+              className={`block w-6 h-[1.5px] bg-foreground transition-all duration-300 origin-center ${
+                menuOpen ? "rotate-45 translate-y-[3.25px]" : ""
+              }`}
+            />
+            <span
+              className={`block w-6 h-[1.5px] bg-foreground transition-all duration-300 origin-center ${
+                menuOpen ? "-rotate-45 -translate-y-[3.25px]" : ""
+              }`}
+            />
+          </div>
+        </button>
+      </nav>
+
+      {/* Mobile overlay */}
+      <div
+        className={`md:hidden fixed inset-0 bg-background z-40 flex flex-col items-start justify-center px-12 transition-all duration-500 ${
+          menuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       >
-        <nav className="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-24 h-16 flex items-center justify-between">
+        {links.map((link, i) => (
           <a
-            href="#"
-            className={`font-bold text-lg tracking-tight hover:opacity-70 transition-all duration-500 ${
-              scrolled ? "text-[var(--foreground)]" : "text-white"
-            }`}
-          >
-            daniogo.
-          </a>
-
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-10">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className={`text-sm transition-colors duration-500 tracking-wide uppercase font-medium line-accent ${
-                  scrolled
-                    ? "text-[var(--muted)] hover:text-[var(--foreground)]"
-                    : "text-white/60 hover:text-white"
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
-
-            <button
-              onClick={(e) => toggle(e)}
-              className={`w-10 h-10 flex items-center justify-center rounded-full border transition-colors duration-500 ${
-                scrolled
-                  ? "border-[var(--border)] hover:border-[var(--foreground)] text-[var(--foreground)]"
-                  : "border-white/30 hover:border-white text-white"
-              }`}
-              aria-label="Toggle theme"
-            >
-              <motion.div
-                key={theme}
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {theme === "light" ? (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                  </svg>
-                ) : (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="5" />
-                    <line x1="12" y1="1" x2="12" y2="3" />
-                    <line x1="12" y1="21" x2="12" y2="23" />
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                    <line x1="1" y1="12" x2="3" y2="12" />
-                    <line x1="21" y1="12" x2="23" y2="12" />
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                  </svg>
-                )}
-              </motion.div>
-            </button>
-          </div>
-
-          {/* Mobile: theme + burger */}
-          <div className="flex md:hidden items-center gap-3">
-            <button
-              onClick={(e) => toggle(e)}
-              className={`w-10 h-10 flex items-center justify-center rounded-full border transition-colors duration-500 ${
-                scrolled
-                  ? "border-[var(--border)] text-[var(--foreground)]"
-                  : "border-white/30 text-white"
-              }`}
-              aria-label="Toggle theme"
-            >
-              {theme === "light" ? (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
-              ) : (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" /></svg>
-              )}
-            </button>
-
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="w-10 h-10 flex flex-col items-center justify-center gap-[7px]"
-              aria-label="Menu"
-            >
-              <motion.span
-                className={`block w-5 h-[2px] transition-colors duration-500 ${scrolled ? "bg-[var(--foreground)]" : "bg-white"}`}
-                animate={menuOpen ? { rotate: 45, y: 9 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-              <motion.span
-                className={`block w-5 h-[2px] transition-colors duration-500 ${scrolled ? "bg-[var(--foreground)]" : "bg-white"}`}
-                animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-                transition={{ duration: 0.2 }}
-              />
-              <motion.span
-                className={`block w-5 h-[2px] transition-colors duration-500 ${scrolled ? "bg-[var(--foreground)]" : "bg-white"}`}
-                animate={menuOpen ? { rotate: -45, y: -9 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            </button>
-          </div>
-        </nav>
-      </header>
-
-      {/* Mobile menu overlay */}
-      <motion.div
-        className="fixed inset-0 z-40 bg-[var(--background)] flex flex-col items-center justify-center gap-8 md:hidden"
-        initial={false}
-        animate={menuOpen ? { opacity: 1, pointerEvents: "auto" as const } : { opacity: 0, pointerEvents: "none" as const }}
-        transition={{ duration: 0.4 }}
-      >
-        {navItems.map((item, i) => (
-          <motion.a
-            key={item.href}
-            href={item.href}
-            className="text-3xl font-bold text-[var(--foreground)] tracking-tight"
-            initial={{ opacity: 0, y: 30 }}
-            animate={menuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ delay: menuOpen ? i * 0.1 : 0, duration: 0.4 }}
+            key={link.href}
+            href={link.href}
             onClick={() => setMenuOpen(false)}
+            className="font-display text-[clamp(2.5rem,8vw,4rem)] leading-tight tracking-tight text-foreground block py-3 transition-all duration-500"
+            style={{
+              transitionDelay: menuOpen ? `${150 + i * 80}ms` : "0ms",
+              opacity: menuOpen ? 1 : 0,
+              transform: menuOpen ? "translateY(0)" : "translateY(20px)",
+            }}
           >
-            {item.label}
-          </motion.a>
+            {link.label}
+          </a>
         ))}
-      </motion.div>
-    </>
+        <button
+          onClick={() => {
+            toggleTheme();
+            setMenuOpen(false);
+          }}
+          className="mt-10 font-mono text-xs tracking-[0.25em] uppercase text-muted border border-border px-4 py-2 transition-all duration-500"
+          style={{
+            transitionDelay: menuOpen ? "470ms" : "0ms",
+            opacity: menuOpen ? 1 : 0,
+            transform: menuOpen ? "translateY(0)" : "translateY(20px)",
+          }}
+        >
+          {theme === "dark" ? "Switch to Light" : "Switch to Dark"}
+        </button>
+      </div>
+    </header>
   );
 }

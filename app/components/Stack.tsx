@@ -1,117 +1,68 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  SiLaravel,
-  SiPhp,
-  SiMysql,
-  SiReact,
-  SiNextdotjs,
-  SiTypescript,
-  SiTailwindcss,
-  SiGit,
-  SiDocker,
-  SiLinux,
-  SiFigma,
-} from "react-icons/si";
-import { TbApi } from "react-icons/tb";
-import SectionHeading from "./SectionHeading";
-import type { IconType } from "react-icons";
+import ScrollReveal from "./ScrollReveal";
 
-interface StackItem {
-  name: string;
-  category: string;
-  level: number;
-  icon: IconType;
-}
-
-const stack: StackItem[] = [
-  { name: "Laravel", category: "Backend", level: 5, icon: SiLaravel },
-  { name: "PHP", category: "Backend", level: 5, icon: SiPhp },
-  { name: "MySQL / PostgreSQL", category: "Backend", level: 4, icon: SiMysql },
-  { name: "API REST", category: "Backend", level: 5, icon: TbApi },
-  { name: "React", category: "Frontend", level: 4, icon: SiReact },
-  { name: "Next.js", category: "Frontend", level: 4, icon: SiNextdotjs },
-  { name: "TypeScript", category: "Frontend", level: 4, icon: SiTypescript },
-  { name: "Tailwind CSS", category: "Frontend", level: 5, icon: SiTailwindcss },
-  { name: "Git", category: "Outils", level: 4, icon: SiGit },
-  { name: "Docker", category: "Outils", level: 3, icon: SiDocker },
-  { name: "Linux / Servers", category: "Outils", level: 3, icon: SiLinux },
-  { name: "Figma", category: "Outils", level: 3, icon: SiFigma },
+const stackData = [
+  {
+    category: "Core",
+    items: ["Laravel", "Inertia.js", "React", "TypeScript"],
+  },
+  {
+    category: "Infrastructure",
+    items: ["Laravel Cloud", "Laravel Forge", "OCI", "Cloudflare"],
+  },
+  {
+    category: "Tools",
+    items: ["Claude Code", "Git", "Figma"],
+  },
 ];
-
-const categories = ["Backend", "Frontend", "Outils"];
 
 export default function Stack() {
   return (
-    <section
-      id="stack"
-      className="relative py-24 md:py-32 bg-[var(--surface-elevated)]"
-    >
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-[var(--border)]" />
+    <section id="stack" className="py-28 md:py-44 px-6 md:px-12 lg:px-20">
+      <div className="max-w-[1400px] mx-auto">
+        {/* Section header */}
+        <ScrollReveal className="mb-20">
+          <div className="flex items-center gap-6">
+            <span className="font-mono text-gold text-[11px] tracking-[0.35em]">
+              04
+            </span>
+            <div className="h-px flex-1 bg-border" />
+            <span className="font-mono text-muted text-[11px] tracking-[0.35em] uppercase">
+              Stack
+            </span>
+          </div>
+        </ScrollReveal>
 
-      <div className="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-24">
-        <SectionHeading
-          index="03"
-          label="Technologies"
-          title="Stack technique"
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          {categories.map((category, catIndex) => (
-            <motion.div
-              key={category}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.5, delay: catIndex * 0.1 }}
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-2 h-2 bg-[var(--accent)]" />
-                <h3 className="text-sm font-[family-name:var(--font-mono)] uppercase tracking-[0.2em] text-[var(--muted)]">
-                  {category}
+        {/* 3-column editorial grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-10 lg:gap-14">
+          {stackData.map((group, groupIdx) => (
+            <ScrollReveal key={group.category} delay={groupIdx * 120}>
+              <div>
+                <h3 className="font-display text-2xl mb-10">
+                  {group.category}
+                  <span className="text-accent">.</span>
                 </h3>
+                <div className="flex flex-col">
+                  {group.items.map((item, i) => (
+                    <div
+                      key={item}
+                      className="group/item flex items-center justify-between py-[14px] border-b border-border/40 hover:border-accent/30 transition-colors duration-300 cursor-default"
+                    >
+                      <span className="text-[15px] text-foreground/80 group-hover/item:text-foreground transition-colors duration-300">
+                        {item}
+                      </span>
+                      <span className="font-mono text-[10px] text-muted/30 tracking-widest">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-
-              <div className="border-t border-[var(--border)]">
-                {stack
-                  .filter((s) => s.category === category)
-                  .map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <div
-                        key={item.name}
-                        className="group py-4 border-b border-[var(--border)] flex items-center justify-between"
-                      >
-                        <div className="flex items-center gap-3">
-                          <Icon className="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors duration-300" />
-                          <span className="text-sm text-[var(--foreground)] font-medium group-hover:text-[var(--accent)] transition-colors duration-300">
-                            {item.name}
-                          </span>
-                        </div>
-
-                        <div className="flex gap-1.5">
-                          {Array.from({ length: 5 }).map((_, di) => (
-                            <div
-                              key={di}
-                              className={`w-1.5 h-1.5 rounded-full ${
-                                di < item.level
-                                  ? "bg-[var(--accent)]"
-                                  : "bg-[var(--border)]"
-                              }`}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            </motion.div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-[var(--border)]" />
     </section>
   );
 }

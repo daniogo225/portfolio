@@ -1,29 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "./components/ThemeProvider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "daniogo. — Fullstack Developer",
+  title: "DANI — Senior Fullstack Developer & SaaS Founder",
   description:
-    "Plus que de simples apps, je construis des exp\u00e9riences. D\u00e9veloppeur web fullstack Laravel & React.",
+    "I build products that solve real problems for African businesses. Senior Fullstack Developer & SaaS Founder based in Abidjan, Côte d'Ivoire.",
   keywords: [
     "developer",
     "fullstack",
     "laravel",
     "react",
+    "saas",
     "portfolio",
-    "web",
+    "abidjan",
   ],
 };
 
@@ -33,11 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
-        suppressHydrationWarning
-      >
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased" suppressHydrationWarning>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
