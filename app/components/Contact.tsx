@@ -4,16 +4,6 @@ import ScrollReveal from "./ScrollReveal";
 
 const contactLinks = [
   { label: "daniogoaboubakar@icloud.com", href: "mailto:daniogoaboubakar@icloud.com" },
-  {
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/daniogo",
-    external: true,
-  },
-  {
-    label: "GitHub",
-    href: "https://github.com/daniogo225",
-    external: true,
-  },
 ];
 
 export default function Contact() {
@@ -57,8 +47,6 @@ export default function Contact() {
               <a
                 key={link.label}
                 href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
                 className="group inline-flex items-center gap-2.5 text-base md:text-lg text-muted hover:text-foreground transition-colors duration-500 ease-out"
                 data-hover
               >

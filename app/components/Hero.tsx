@@ -56,6 +56,28 @@ export default function Hero() {
       />
 
       <div className="relative max-w-[1400px] mx-auto w-full grid grid-cols-12 gap-4 md:gap-6 pt-24 md:pt-0">
+        {/* Mobile portrait */}
+        <div
+          className="col-span-12 lg:hidden flex justify-center mb-8"
+          style={{
+            opacity: loaded ? 1 : 0,
+            transform: loaded ? "none" : "translateY(20px) scale(0.95)",
+            transition:
+              "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s",
+          }}
+        >
+          <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-accent-light/30">
+            <Image
+              src="/dani2.jpg"
+              alt="Aboubakar Daniogo"
+              fill
+              className="object-cover object-[center_75%]"
+              sizes="144px"
+              priority
+            />
+          </div>
+        </div>
+
         {/* Text */}
         <div className="col-span-12 lg:col-span-8">
           {/* Section index */}
@@ -120,6 +142,40 @@ export default function Hero() {
             &ldquo;I build products that solve real problems for African
             businesses.&rdquo;
           </p>
+
+          {/* CTA */}
+          <div
+            className="mt-10 flex items-center gap-5"
+            style={{
+              opacity: loaded ? 1 : 0,
+              transform: loaded ? "none" : "translateY(16px)",
+              transition:
+                "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.3s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.3s",
+            }}
+          >
+            <a
+              href="/daniogo.vcf"
+              download="Daniogo Aboubakar.vcf"
+              className="group inline-flex items-center gap-3 px-6 py-3 border border-accent-light/40 hover:border-accent-light hover:bg-accent-light/10 transition-all duration-500 ease-out"
+              data-hover
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="text-accent-light"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <span className="text-[13px] tracking-[0.12em] uppercase text-foreground/80 group-hover:text-foreground transition-colors duration-500">
+                Save contact
+              </span>
+            </a>
+          </div>
         </div>
 
         {/* Portrait */}

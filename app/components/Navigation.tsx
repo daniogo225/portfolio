@@ -123,7 +123,7 @@ export default function Navigation() {
             transform: menuOpen ? "translateY(0)" : "translateY(20px)",
           }}
         >
-          {theme === "dark" ? "Switch to Light" : "Switch to Dark"}
+          {theme === "dark" ? "Light" : "Dark"}
         </button>
       </div>
     </header>

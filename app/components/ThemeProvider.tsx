@@ -28,7 +28,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const stored = localStorage.getItem("portfolio-theme") as Theme | null;
-    const initial = stored || "dark";
+    const isLightClass = document.documentElement.classList.contains("light");
+    const initial = stored || (isLightClass ? "light" : "dark");
     setTheme(initial);
     if (initial === "light") {
       document.documentElement.classList.add("light");
@@ -39,14 +40,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    if (next === "light") {
-      document.documentElement.classList.add("light");
-    } else {
-      document.documentElement.classList.remove("light");
-    }
-    localStorage.setItem("portfolio-theme", next);
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      if (next === "light") {
+        document.documentElement.classList.add("light");
+      } else {
+        document.documentElement.classList.remove("light");
+      }
+      localStorage.setItem("portfolio-theme", next);
+      return next;
+    });
   };
 
   if (!mounted) return null;

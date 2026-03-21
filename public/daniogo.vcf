@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Aboubakar;Daniogo;;;
+FN:Daniogo Aboubakar
+TITLE:Senior Fullstack Developer & SaaS Founder
+TEL;TYPE=CELL:+22507 15 736 802
+EMAIL;TYPE=WORK:daniogozieaboubakar@gmail.com
+EMAIL;TYPE=HOME:daniogoaboubakar@icloud.com
+ADR;TYPE=WORK:;;Vridi;Abidjan;;Côte d'Ivoire
+BDAY:2004-03-31
+URL:https://daniogo.dev
+NOTE:Senior Fullstack Developer - Laravel & React - SaaS Founder
+END:VCARD
