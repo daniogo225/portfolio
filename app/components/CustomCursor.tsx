@@ -16,7 +16,7 @@ export default function CustomCursor() {
     setVisible(true);
 
     const lerp = { x: -100, y: -100 };
-    const speed = 0.15;
+    const speed = 0.12;
 
     const animate = () => {
       lerp.x += (posRef.current.x - lerp.x) * speed;

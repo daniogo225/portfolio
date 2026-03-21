@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 function AnimatedLetters({
   text,
@@ -121,44 +122,33 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Portrait placeholder */}
+        {/* Portrait */}
         <div className="hidden lg:flex col-span-4 items-center justify-end">
           <div
             className="relative w-full max-w-[300px] aspect-[3/4]"
             style={{
               opacity: loaded ? 1 : 0,
-              transform: loaded ? "none" : "translateY(30px)",
+              transform: loaded ? "none" : "translateY(30px) scale(0.97)",
               transition:
                 "opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s",
             }}
           >
-            {/* Frame */}
-            <div
-              className="absolute inset-0 bg-surface-elevated border border-border overflow-hidden"
-              style={{
-                clipPath:
-                  "polygon(0% 0%, 100% 3%, 97% 100%, 3% 97%)",
-              }}
-            >
-              {/* Monogram */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-display text-[7rem] text-accent/[0.06] tracking-[-0.05em] select-none">
-                  AD
-                </span>
-              </div>
-              {/* Grid overlay */}
-              <div
-                className="absolute inset-0 opacity-[0.03]"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(var(--foreground) 1px, transparent 1px), linear-gradient(90deg, var(--foreground) 1px, transparent 1px)",
-                  backgroundSize: "24px 24px",
-                }}
+            {/* Photo frame */}
+            <div className="absolute inset-0 overflow-hidden border border-border">
+              <Image
+                src="/dani2.jpg"
+                alt="Aboubakar Daniogo"
+                fill
+                className="object-cover object-[center_75%]"
+                sizes="300px"
+                priority
               />
+              {/* Subtle green overlay */}
+              <div className="absolute inset-0 bg-accent/[0.08] mix-blend-multiply" />
             </div>
 
             {/* Corner accents */}
-            <div className="absolute -top-3 -right-3 w-10 h-10 border-t-[2px] border-r-[2px] border-accent" />
+            <div className="absolute -top-3 -right-3 w-10 h-10 border-t-[2px] border-r-[2px] border-accent-light" />
             <div className="absolute -bottom-3 -left-3 w-10 h-10 border-b-[2px] border-l-[2px] border-gold" />
 
             {/* Side label */}

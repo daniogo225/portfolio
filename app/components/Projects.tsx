@@ -37,7 +37,7 @@ const projects: Project[] = [
     title: "Divine Grace Vacation Homes",
     description:
       "Développement sur mesure pour une entreprise de gestion immobilière aux Émirats Arabes Unis.",
-    stack: ["Laravel"],
+    stack: ["React Native"],
     status: "Contrat actif",
     statusColor: "text-accent-light",
   },
@@ -52,13 +52,13 @@ function ProjectCard({
 }) {
   return (
     <div
-      className={`group relative border border-border bg-surface/30 transition-all duration-500 hover:border-accent/40 hover:bg-surface/60 ${
+      className={`group relative border border-border bg-surface/30 transition-all duration-700 ease-out hover:border-accent-light/40 hover:bg-surface/60 ${
         compact ? "p-7 md:p-8" : "p-8 md:p-12 h-full"
       }`}
     >
       {/* Hover corner accents */}
-      <div className="absolute top-0 left-0 w-5 h-5 border-t border-l border-transparent group-hover:border-accent/60 transition-all duration-500" />
-      <div className="absolute bottom-0 right-0 w-5 h-5 border-b border-r border-transparent group-hover:border-accent/60 transition-all duration-500" />
+      <div className="absolute top-0 left-0 w-5 h-5 border-t border-l border-transparent group-hover:border-accent-light/60 transition-all duration-700 ease-out" />
+      <div className="absolute bottom-0 right-0 w-5 h-5 border-b border-r border-transparent group-hover:border-accent-light/60 transition-all duration-700 ease-out" />
 
       {/* Header row */}
       <div className="flex items-start justify-between mb-6">
@@ -95,7 +95,7 @@ function ProjectCard({
         {project.stack.map((tech) => (
           <span
             key={tech}
-            className="font-mono text-[10px] tracking-[0.1em] text-muted/80 border border-border/80 px-3 py-1.5 group-hover:border-accent/20 transition-colors duration-300"
+            className="font-mono text-[10px] tracking-[0.1em] text-muted/80 border border-border/80 px-3 py-1.5 group-hover:border-accent-light/20 transition-colors duration-500 ease-out"
           >
             {tech}
           </span>
@@ -108,11 +108,11 @@ function ProjectCard({
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-[13px] tracking-wide text-accent hover:text-foreground transition-colors duration-300 group/link"
+          className="inline-flex items-center gap-2 text-[13px] tracking-wide text-accent-light hover:text-foreground transition-colors duration-500 ease-out group/link"
           data-hover
         >
           <span>Visit project</span>
-          <span className="inline-block transition-transform duration-300 group-hover/link:translate-x-1 group-hover/link:-translate-y-0.5">
+          <span className="inline-block transition-transform duration-500 ease-out group-hover/link:translate-x-1.5 group-hover/link:-translate-y-0.5">
             ↗
           </span>
         </a>

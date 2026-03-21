@@ -1,19 +1,52 @@
 "use client";
 
+import { type IconType } from "react-icons";
+import {
+  SiLaravel,
+  SiReact,
+  SiTypescript,
+  SiCloudflare,
+  SiGit,
+  SiFigma,
+} from "react-icons/si";
+import { TbBrandInertia } from "react-icons/tb";
+import { VscCloud } from "react-icons/vsc";
+import { HiServerStack } from "react-icons/hi2";
+import { RiRobot2Line } from "react-icons/ri";
+import { BsCloudFill } from "react-icons/bs";
 import ScrollReveal from "./ScrollReveal";
 
-const stackData = [
+interface StackItem {
+  name: string;
+  icon: IconType;
+}
+
+const stackData: { category: string; items: StackItem[] }[] = [
   {
     category: "Core",
-    items: ["Laravel", "Inertia.js", "React", "TypeScript"],
+    items: [
+      { name: "Laravel", icon: SiLaravel },
+      { name: "Inertia.js", icon: TbBrandInertia },
+      { name: "React", icon: SiReact },
+      { name: "TypeScript", icon: SiTypescript },
+    ],
   },
   {
     category: "Infrastructure",
-    items: ["Laravel Cloud", "Laravel Forge", "OCI", "Cloudflare"],
+    items: [
+      { name: "Laravel Cloud", icon: VscCloud },
+      { name: "Laravel Forge", icon: HiServerStack },
+      { name: "OCI", icon: BsCloudFill },
+      { name: "Cloudflare", icon: SiCloudflare },
+    ],
   },
   {
     category: "Tools",
-    items: ["Claude Code", "Git", "Figma"],
+    items: [
+      { name: "Claude Code", icon: RiRobot2Line },
+      { name: "Git", icon: SiGit },
+      { name: "Figma", icon: SiFigma },
+    ],
   },
 ];
 
@@ -44,19 +77,23 @@ export default function Stack() {
                   <span className="text-accent">.</span>
                 </h3>
                 <div className="flex flex-col">
-                  {group.items.map((item, i) => (
-                    <div
-                      key={item}
-                      className="group/item flex items-center justify-between py-[14px] border-b border-border/40 hover:border-accent/30 transition-colors duration-300 cursor-default"
-                    >
-                      <span className="text-[15px] text-foreground/80 group-hover/item:text-foreground transition-colors duration-300">
-                        {item}
-                      </span>
-                      <span className="font-mono text-[10px] text-muted/30 tracking-widest">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                  ))}
+                  {group.items.map((item, i) => {
+                    const Icon = item.icon;
+                    return (
+                      <div
+                        key={item.name}
+                        className="group/item flex items-center gap-4 py-[14px] border-b border-border/40 hover:border-accent-light/30 transition-all duration-300 cursor-default"
+                      >
+                        <Icon className="w-[18px] h-[18px] text-muted/40 group-hover/item:text-accent-light transition-colors duration-300 shrink-0" />
+                        <span className="text-[15px] text-foreground/80 group-hover/item:text-foreground transition-colors duration-300 flex-1">
+                          {item.name}
+                        </span>
+                        <span className="font-mono text-[10px] text-muted/30 tracking-widest">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </ScrollReveal>

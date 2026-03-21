@@ -30,9 +30,9 @@ export default function Navigation() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${
         scrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border/50"
+          ? "bg-background/85 backdrop-blur-2xl border-b border-border/40"
           : "bg-transparent"
       }`}
     >
@@ -51,15 +51,15 @@ export default function Navigation() {
             <a
               key={link.href}
               href={link.href}
-              className="relative text-[13px] font-sans font-medium tracking-[0.18em] uppercase text-muted hover:text-foreground transition-colors duration-300 group"
+              className="relative text-[13px] font-sans font-medium tracking-[0.18em] uppercase text-muted hover:text-foreground transition-colors duration-500 ease-out group"
             >
               {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 ease-out group-hover:w-full" />
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-light transition-all duration-500 ease-out group-hover:w-full" />
             </a>
           ))}
           <button
             onClick={toggleTheme}
-            className="ml-6 font-mono text-[11px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-colors duration-300 border border-border hover:border-accent/50 px-4 py-2"
+            className="ml-6 font-mono text-[11px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-all duration-500 ease-out border border-border hover:border-accent-light/50 px-4 py-2"
             data-hover
           >
             {theme === "dark" ? "Light" : "Dark"}
@@ -90,7 +90,7 @@ export default function Navigation() {
 
       {/* Mobile overlay */}
       <div
-        className={`md:hidden fixed inset-0 bg-background z-40 flex flex-col items-start justify-center px-12 transition-all duration-500 ${
+        className={`md:hidden fixed inset-0 bg-background z-40 flex flex-col items-start justify-center px-12 transition-all duration-600 ease-out ${
           menuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"

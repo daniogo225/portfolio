@@ -59,11 +59,11 @@ export default function Contact() {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className="group inline-flex items-center gap-2.5 text-base md:text-lg text-muted hover:text-foreground transition-colors duration-300"
+                className="group inline-flex items-center gap-2.5 text-base md:text-lg text-muted hover:text-foreground transition-colors duration-500 ease-out"
                 data-hover
               >
                 <span>{link.label}</span>
-                <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5 text-accent/60 group-hover:text-accent">
+                <span className="inline-block transition-all duration-500 ease-out group-hover:translate-x-1.5 group-hover:-translate-y-0.5 text-accent-light/60 group-hover:text-accent-light">
                   ↗
                 </span>
               </a>
