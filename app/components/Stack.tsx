@@ -1,117 +1,105 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { type IconType } from "react-icons";
 import {
   SiLaravel,
-  SiPhp,
-  SiMysql,
   SiReact,
-  SiNextdotjs,
   SiTypescript,
-  SiTailwindcss,
+  SiCloudflare,
   SiGit,
-  SiDocker,
-  SiLinux,
   SiFigma,
 } from "react-icons/si";
-import { TbApi } from "react-icons/tb";
-import SectionHeading from "./SectionHeading";
-import type { IconType } from "react-icons";
+import { TbBrandInertia } from "react-icons/tb";
+import { VscCloud } from "react-icons/vsc";
+import { HiServerStack } from "react-icons/hi2";
+import { RiRobot2Line } from "react-icons/ri";
+import { BsCloudFill } from "react-icons/bs";
+import ScrollReveal from "./ScrollReveal";
 
 interface StackItem {
   name: string;
-  category: string;
-  level: number;
   icon: IconType;
 }
 
-const stack: StackItem[] = [
-  { name: "Laravel", category: "Backend", level: 5, icon: SiLaravel },
-  { name: "PHP", category: "Backend", level: 5, icon: SiPhp },
-  { name: "MySQL / PostgreSQL", category: "Backend", level: 4, icon: SiMysql },
-  { name: "API REST", category: "Backend", level: 5, icon: TbApi },
-  { name: "React", category: "Frontend", level: 4, icon: SiReact },
-  { name: "Next.js", category: "Frontend", level: 4, icon: SiNextdotjs },
-  { name: "TypeScript", category: "Frontend", level: 4, icon: SiTypescript },
-  { name: "Tailwind CSS", category: "Frontend", level: 5, icon: SiTailwindcss },
-  { name: "Git", category: "Outils", level: 4, icon: SiGit },
-  { name: "Docker", category: "Outils", level: 3, icon: SiDocker },
-  { name: "Linux / Servers", category: "Outils", level: 3, icon: SiLinux },
-  { name: "Figma", category: "Outils", level: 3, icon: SiFigma },
+const stackData: { category: string; items: StackItem[] }[] = [
+  {
+    category: "Core",
+    items: [
+      { name: "Laravel", icon: SiLaravel },
+      { name: "Inertia.js", icon: TbBrandInertia },
+      { name: "React", icon: SiReact },
+      { name: "TypeScript", icon: SiTypescript },
+    ],
+  },
+  {
+    category: "Infrastructure",
+    items: [
+      { name: "Laravel Cloud", icon: VscCloud },
+      { name: "Laravel Forge", icon: HiServerStack },
+      { name: "OCI", icon: BsCloudFill },
+      { name: "Cloudflare", icon: SiCloudflare },
+    ],
+  },
+  {
+    category: "Tools",
+    items: [
+      { name: "Claude Code", icon: RiRobot2Line },
+      { name: "Git", icon: SiGit },
+      { name: "Figma", icon: SiFigma },
+    ],
+  },
 ];
-
-const categories = ["Backend", "Frontend", "Outils"];
 
 export default function Stack() {
   return (
-    <section
-      id="stack"
-      className="relative py-24 md:py-32 bg-[var(--surface-elevated)]"
-    >
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-[var(--border)]" />
+    <section id="stack" className="py-28 md:py-44 px-6 md:px-12 lg:px-20">
+      <div className="max-w-[1400px] mx-auto">
+        {/* Section header */}
+        <ScrollReveal className="mb-20">
+          <div className="flex items-center gap-6">
+            <span className="font-mono text-gold text-[11px] tracking-[0.35em]">
+              04
+            </span>
+            <div className="h-px flex-1 bg-border" />
+            <span className="font-mono text-muted text-[11px] tracking-[0.35em] uppercase">
+              Stack
+            </span>
+          </div>
+        </ScrollReveal>
 
-      <div className="max-w-[1200px] mx-auto px-8 md:px-16 lg:px-24">
-        <SectionHeading
-          index="03"
-          label="Technologies"
-          title="Stack technique"
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          {categories.map((category, catIndex) => (
-            <motion.div
-              key={category}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.5, delay: catIndex * 0.1 }}
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-2 h-2 bg-[var(--accent)]" />
-                <h3 className="text-sm font-[family-name:var(--font-mono)] uppercase tracking-[0.2em] text-[var(--muted)]">
-                  {category}
+        {/* 3-column editorial grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-10 lg:gap-14">
+          {stackData.map((group, groupIdx) => (
+            <ScrollReveal key={group.category} delay={groupIdx * 120}>
+              <div>
+                <h3 className="font-display text-2xl mb-10">
+                  {group.category}
+                  <span className="text-accent">.</span>
                 </h3>
-              </div>
-
-              <div className="border-t border-[var(--border)]">
-                {stack
-                  .filter((s) => s.category === category)
-                  .map((item) => {
+                <div className="flex flex-col">
+                  {group.items.map((item, i) => {
                     const Icon = item.icon;
                     return (
                       <div
                         key={item.name}
-                        className="group py-4 border-b border-[var(--border)] flex items-center justify-between"
+                        className="group/item flex items-center gap-4 py-[14px] border-b border-border/40 hover:border-accent-light/30 transition-all duration-300 cursor-default"
                       >
-                        <div className="flex items-center gap-3">
-                          <Icon className="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors duration-300" />
-                          <span className="text-sm text-[var(--foreground)] font-medium group-hover:text-[var(--accent)] transition-colors duration-300">
-                            {item.name}
-                          </span>
-                        </div>
-
-                        <div className="flex gap-1.5">
-                          {Array.from({ length: 5 }).map((_, di) => (
-                            <div
-                              key={di}
-                              className={`w-1.5 h-1.5 rounded-full ${
-                                di < item.level
-                                  ? "bg-[var(--accent)]"
-                                  : "bg-[var(--border)]"
-                              }`}
-                            />
-                          ))}
-                        </div>
+                        <Icon className="w-[18px] h-[18px] text-muted/40 group-hover/item:text-accent-light transition-colors duration-300 shrink-0" />
+                        <span className="text-[15px] text-foreground/80 group-hover/item:text-foreground transition-colors duration-300 flex-1">
+                          {item.name}
+                        </span>
+                        <span className="font-mono text-[10px] text-muted/30 tracking-widest">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
                       </div>
                     );
                   })}
+                </div>
               </div>
-            </motion.div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-[var(--border)]" />
     </section>
   );
 }

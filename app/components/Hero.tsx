@@ -1,379 +1,181 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import NeuralNetwork from "./NeuralNetwork";
 
-interface Particle {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  dur: number;
-  delay: number;
-  op: number;
-  moveY: number;
-  moveX: number;
-}
-
-function FloatingParticles() {
-  const [particles, setParticles] = useState<Particle[]>([]);
-
-  useEffect(() => {
-    setParticles(
-      Array.from({ length: 50 }).map((_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 2.5 + 0.5,
-        dur: Math.random() * 20 + 8,
-        delay: Math.random() * 8,
-        op: Math.random() * 0.4 + 0.05,
-        moveY: -40 - Math.random() * 30,
-        moveX: (Math.random() - 0.5) * 40,
-      }))
-    );
-  }, []);
-
-  if (particles.length === 0) return null;
-
-  return (
-    <div className="absolute inset-0 z-[1]">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.size,
-            height: p.size,
-            backgroundColor: p.id % 3 === 0 ? "var(--accent-light)" : "rgba(255,255,255,0.4)",
-            opacity: p.id % 3 === 0 ? 0.6 : 0.4,
-          }}
-          animate={{
-            y: [0, p.moveY, 0],
-            x: [0, p.moveX, 0],
-            opacity: [p.op, p.op * 2.5, p.op],
-            scale: [1, 1.5, 1],
-          }}
-          transition={{
-            duration: p.dur,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-function OrbitRing({
-  size,
-  duration,
-  reverse,
-  opacity,
-  dotColor,
-  dotSize,
+function AnimatedLetters({
+  text,
+  delay = 0,
 }: {
-  size: string;
-  duration: number;
-  reverse?: boolean;
-  opacity: number;
-  dotColor: string;
-  dotSize: number;
+  text: string;
+  delay?: number;
 }) {
   return (
-    <motion.div
-      className="absolute rounded-full border"
-      style={{
-        width: size,
-        height: size,
-        top: "50%",
-        left: "50%",
-        x: "-50%",
-        y: "-50%",
-        borderColor: `rgba(255,255,255,${opacity})`,
-      }}
-      animate={{ rotate: reverse ? -360 : 360 }}
-      transition={{ duration, repeat: Infinity, ease: "linear" }}
-    >
-      <div
-        className="absolute rounded-full"
-        style={{
-          width: dotSize,
-          height: dotSize,
-          backgroundColor: dotColor,
-          top: -dotSize / 2,
-          left: "50%",
-          marginLeft: -dotSize / 2,
-        }}
-      />
-      <div
-        className="absolute rounded-full"
-        style={{
-          width: dotSize * 0.6,
-          height: dotSize * 0.6,
-          backgroundColor: `rgba(255,255,255,${opacity * 3})`,
-          bottom: -dotSize * 0.3,
-          left: "50%",
-          marginLeft: -dotSize * 0.3,
-        }}
-      />
-    </motion.div>
+    <>
+      {text.split("").map((char, i) => (
+        <span
+          key={i}
+          className="animate-letter-up"
+          style={{ animationDelay: `${delay + i * 0.04}s` }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
+    </>
   );
 }
 
 export default function Hero() {
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
+  const [loaded, setLoaded] = useState(false);
 
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -250]);
-  const textOp = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const photoScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.1, 0.85]);
-  const photoY = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const glowScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.5]);
-  const statsY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  useEffect(() => {
+    const t = setTimeout(() => setLoaded(true), 100);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
-    <section
-      ref={containerRef}
-      className="relative h-screen overflow-hidden"
-      style={{ backgroundColor: "#030303" }}
-    >
-      {/* Radial ambient glow */}
-      <motion.div
-        className="absolute z-[0]"
-        style={{
-          width: "900px",
-          height: "900px",
-          top: "50%",
-          left: "50%",
-          x: "-50%",
-          y: "-50%",
-          background: "radial-gradient(circle, color-mix(in srgb, var(--accent) 12%, transparent) 0%, color-mix(in srgb, var(--accent) 3%, transparent) 40%, transparent 65%)",
-          scale: glowScale,
-        }}
-      />
-
-      {/* Pulsing glow */}
-      <motion.div
-        className="absolute z-[0]"
-        style={{
-          width: "500px",
-          height: "500px",
-          top: "50%",
-          left: "50%",
-          x: "-50%",
-          y: "-50%",
-          background: "radial-gradient(circle, color-mix(in srgb, var(--accent-light) 15%, transparent) 0%, transparent 60%)",
-          filter: "blur(60px)",
-        }}
-        animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      <NeuralNetwork />
-      <FloatingParticles />
-
-      {/* Vignette */}
-      <div
-        className="absolute inset-0 z-[2] pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.7) 100%)",
-        }}
-      />
-
-      {/* ---- CENTRAL COMPOSITION ---- */}
-      <div className="relative z-[5] h-full flex flex-col items-center justify-center w-full max-w-[1200px] mx-auto px-8 md:px-16 lg:px-24">
-
-        {/* Photo at center with orbits -- desktop */}
-        <motion.div
-          className="absolute right-[8%] md:right-[10%] top-1/2 -translate-y-1/2 hidden md:block"
-          style={{ y: photoY }}
-          initial={{ opacity: 0, scale: 0.7 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {/* Orbit rings */}
-          <OrbitRing size="420px" duration={25} opacity={0.04} dotColor="var(--accent)" dotSize={8} />
-          <OrbitRing size="340px" duration={18} reverse opacity={0.06} dotColor="var(--accent-light)" dotSize={6} />
-          <OrbitRing size="260px" duration={30} opacity={0.03} dotColor="rgba(255,255,255,0.3)" dotSize={4} />
-
-          {/* Photo */}
-          <motion.div
-            className="relative w-[200px] h-[200px] rounded-full overflow-hidden ring-[3px] ring-[var(--accent)]/30"
-            style={{
-              scale: photoScale,
-              boxShadow: "0 0 80px color-mix(in srgb, var(--accent-light) 15%, transparent), 0 0 160px color-mix(in srgb, var(--accent) 8%, transparent)",
-            }}
-          >
-            <Image
-              src="/dani2.jpg"
-              alt="daniogo"
-              fill
-              className="object-cover"
-              style={{ objectPosition: "center 75%" }}
-              sizes="200px"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-          </motion.div>
-        </motion.div>
-
-        {/* Photo -- mobile (smaller, above text) */}
-        <motion.div
-          className="md:hidden mb-6"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-        >
+    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-20 overflow-hidden">
+      {/* Decorative vertical grid lines */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.04]">
+        {[1, 2, 3, 4, 5].map((n) => (
           <div
-            className="relative w-32 h-32 rounded-full overflow-hidden ring-2 ring-[var(--accent)]/30"
-            style={{ boxShadow: "0 0 40px color-mix(in srgb, var(--accent-light) 15%, transparent)" }}
-          >
-            <Image
-              src="/dani2.jpg"
-              alt="daniogo"
-              fill
-              className="object-cover"
-              style={{ objectPosition: "center 75%" }}
-              sizes="128px"
-              priority
-            />
-          </div>
-        </motion.div>
-
-        {/* Text content */}
-        <motion.div
-          className="w-full md:max-w-[55%] text-center md:text-left self-center md:self-auto"
-          style={{ y: textY, opacity: textOp }}
-        >
-          <motion.div
-            className="flex items-center gap-3 mb-5 justify-center md:justify-start"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <motion.div
-              className="w-2.5 h-2.5 bg-[var(--accent)] rounded-full"
-              animate={{ scale: [1, 1.4, 1], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-            <span className="text-xs uppercase tracking-[0.3em] text-white/40 font-medium font-[family-name:var(--font-mono)]">
-              Fullstack Developer
-            </span>
-          </motion.div>
-
-          <motion.h1
-            className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold leading-[1.05] tracking-tighter text-white"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          >
-            daniogo
-            <span className="text-[var(--accent)]">.</span>
-          </motion.h1>
-
-          <motion.p
-            className="text-base md:text-lg text-white/30 max-w-md leading-relaxed mt-5 mx-auto md:mx-0"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            Plus que de simples apps,{" "}
-            <span className="text-white/90 font-semibold">
-              je construis des exp&eacute;riences.
-            </span>
-          </motion.p>
-
-          <motion.div
-            className="flex flex-wrap items-center gap-4 mt-8 justify-center md:justify-start"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-          >
-            <a
-              href="#projets"
-              className="group inline-flex items-center gap-3 px-7 py-3.5 bg-[var(--accent)] text-white text-sm font-semibold uppercase tracking-wider rounded-sm hover:brightness-125 hover:gap-5 transition-all duration-500"
-            >
-              Voir mes projets
-              <svg className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
-            <a
-              href="#contact"
-              className="px-7 py-3.5 text-sm text-white/30 border border-white/10 hover:border-[var(--accent)]/50 hover:text-[var(--accent-light)] transition-all duration-300 uppercase tracking-wider font-medium rounded-sm"
-            >
-              Me contacter
-            </a>
-          </motion.div>
-        </motion.div>
-
-        {/* Stats row -- bottom */}
-        <motion.div
-          className="absolute bottom-20 md:bottom-16 left-0 right-0 z-10"
-          style={{ y: statsY }}
-        >
-          <div className="w-full max-w-[1200px] mx-auto px-8 md:px-16 lg:px-24">
-            <motion.div
-              className="flex items-center gap-6 md:gap-10 justify-center md:justify-start"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.8 }}
-            >
-              {[
-                { value: "4+", label: "Ans" },
-                { value: "10+", label: "Projets" },
-                { value: "100%", label: "Passion" },
-              ].map((stat, i) => (
-                <div key={stat.label} className="flex items-baseline gap-2">
-                  <motion.span
-                    className="text-2xl md:text-3xl font-bold text-[var(--accent-light)]"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.2 + i * 0.15, duration: 0.5, type: "spring" }}
-                  >
-                    {stat.value}
-                  </motion.span>
-                  <span className="text-[10px] md:text-xs text-white/25 uppercase tracking-wider font-[family-name:var(--font-mono)]">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </motion.div>
+            key={n}
+            className="absolute top-0 bottom-0 w-px bg-foreground"
+            style={{ left: `${n * (100 / 6)}%` }}
+          />
+        ))}
       </div>
 
-      {/* Bottom line + tech stack */}
-      <div className="absolute bottom-0 left-0 right-0 z-10">
-        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[var(--accent)]/20 to-transparent" />
-        <div className="w-full max-w-[1200px] mx-auto px-8 md:px-16 lg:px-24 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3 text-[10px] md:text-xs text-white/15 font-[family-name:var(--font-mono)]">
-            <span>Laravel</span>
-            <span className="w-1 h-1 rounded-full bg-[var(--accent)]/50" />
-            <span>React</span>
-            <span className="w-1 h-1 rounded-full bg-[var(--accent)]/50" />
-            <span>TypeScript</span>
-          </div>
-          <motion.div
-            className="hidden md:flex items-center gap-2 text-white/15"
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      {/* Accent line */}
+      <div
+        className="absolute top-0 left-0 w-px bg-accent"
+        style={{
+          height: loaded ? "40%" : "0%",
+          transition: "height 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s",
+        }}
+      />
+
+      <div className="relative max-w-[1400px] mx-auto w-full grid grid-cols-12 gap-4 md:gap-6 pt-24 md:pt-0">
+        {/* Text */}
+        <div className="col-span-12 lg:col-span-8">
+          {/* Section index */}
+          <div
+            className="mb-10 md:mb-14"
+            style={{
+              opacity: loaded ? 1 : 0,
+              transform: loaded ? "none" : "translateY(10px)",
+              transition:
+                "opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s",
+            }}
           >
-            <span className="text-[10px] uppercase tracking-[0.2em] font-[family-name:var(--font-mono)]">Scroll</span>
-            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M5 1v12M1 9l4 4 4-4" />
-            </svg>
-          </motion.div>
+            <span className="font-mono text-gold text-[11px] tracking-[0.35em] uppercase">
+              01 — Portfolio
+            </span>
+          </div>
+
+          {/* Name */}
+          <h1 className="font-display text-[clamp(3rem,8vw,8.5rem)] leading-[0.88] tracking-[-0.02em] mb-8">
+            <span className="block overflow-hidden pb-2">
+              <AnimatedLetters text="ABOUBAKAR" delay={0.6} />
+            </span>
+            <span className="block overflow-hidden pb-2">
+              <AnimatedLetters text="DANIOGO" delay={1.0} />
+            </span>
+          </h1>
+
+          {/* Horizontal rule */}
+          <div
+            className="h-px bg-border mb-8 max-w-md"
+            style={{
+              transform: loaded ? "scaleX(1)" : "scaleX(0)",
+              transformOrigin: "left",
+              transition:
+                "transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1.6s",
+            }}
+          />
+
+          {/* Subtitle */}
+          <p
+            className="font-sans text-muted text-base md:text-lg tracking-[0.08em] mb-8"
+            style={{
+              opacity: loaded ? 1 : 0,
+              transform: loaded ? "none" : "translateY(16px)",
+              transition:
+                "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.7s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.7s",
+            }}
+          >
+            Senior Fullstack Developer · SaaS Founder · Abidjan, CI
+          </p>
+
+          {/* Tagline */}
+          <p
+            className="font-display text-lg md:text-2xl lg:text-[1.65rem] italic text-foreground/75 max-w-lg leading-snug"
+            style={{
+              opacity: loaded ? 1 : 0,
+              transform: loaded ? "none" : "translateY(16px)",
+              transition:
+                "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2s",
+            }}
+          >
+            &ldquo;I build products that solve real problems for African
+            businesses.&rdquo;
+          </p>
         </div>
+
+        {/* Portrait */}
+        <div className="hidden lg:flex col-span-4 items-center justify-end">
+          <div
+            className="relative w-full max-w-[300px] aspect-[3/4]"
+            style={{
+              opacity: loaded ? 1 : 0,
+              transform: loaded ? "none" : "translateY(30px) scale(0.97)",
+              transition:
+                "opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s",
+            }}
+          >
+            {/* Photo frame */}
+            <div className="absolute inset-0 overflow-hidden border border-border">
+              <Image
+                src="/dani2.jpg"
+                alt="Aboubakar Daniogo"
+                fill
+                className="object-cover object-[center_75%]"
+                sizes="300px"
+                priority
+              />
+              {/* Subtle green overlay */}
+              <div className="absolute inset-0 bg-accent/[0.08] mix-blend-multiply" />
+            </div>
+
+            {/* Corner accents */}
+            <div className="absolute -top-3 -right-3 w-10 h-10 border-t-[2px] border-r-[2px] border-accent-light" />
+            <div className="absolute -bottom-3 -left-3 w-10 h-10 border-b-[2px] border-l-[2px] border-gold" />
+
+            {/* Side label */}
+            <span
+              className="absolute -right-8 top-1/2 -translate-y-1/2 font-mono text-[9px] tracking-[0.4em] text-muted/40 uppercase"
+              style={{
+                writingMode: "vertical-rl",
+              }}
+            >
+              Abidjan · 2026
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
+        style={{
+          opacity: loaded ? 1 : 0,
+          transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 2.6s",
+        }}
+      >
+        <span className="font-mono text-[10px] tracking-[0.4em] text-muted uppercase">
+          Scroll
+        </span>
+        <div className="w-px h-10 bg-accent/60 animate-pulse-line" />
       </div>
     </section>
   );
