@@ -1,6 +1,7 @@
 "use client";
 
 import ScrollReveal from "./ScrollReveal";
+import { useI18n } from "../i18n";
 
 interface Project {
   index: string;
@@ -10,37 +11,21 @@ interface Project {
   status: string;
   statusColor: string;
   url?: string;
+  visitLabel?: string;
 }
 
-const projects: Project[] = [
-  {
-    index: "01",
-    title: "Inexus Business",
-    description:
-      "SaaS de gestion commerciale pour revendeurs Apple en Afrique de l'Ouest. Facturation, inventaire, CRM — un système complet pour digitaliser les opérations.",
-    stack: ["Laravel", "Inertia.js", "React", "Laravel Cloud"],
-    status: "En production",
-    statusColor: "text-emerald-400",
-    url: "https://inexus-business.com",
-  },
-  {
-    index: "02",
-    title: "School Management",
-    description:
-      "Gestion scolaire pour établissements secondaires privés en Côte d'Ivoire. Notes, emplois du temps, communication parents-école.",
-    stack: ["Laravel", "React", "Mobile-first"],
-    status: "En développement",
-    statusColor: "text-gold",
-  },
-  {
-    index: "03",
-    title: "Divine Grace Vacation Homes",
-    description:
-      "Développement sur mesure pour une entreprise de gestion immobilière aux Émirats Arabes Unis.",
-    stack: ["React Native"],
-    status: "Contrat actif",
-    statusColor: "text-accent-light",
-  },
+const statusColors = [
+  "text-accent-light",
+  "text-emerald-400",
+  "text-gold",
+  "text-accent-light",
+];
+
+const urls = [
+  undefined,
+  "https://inexus-business.com",
+  undefined,
+  undefined,
 ];
 
 function ProjectCard({
@@ -111,7 +96,7 @@ function ProjectCard({
           className="inline-flex items-center gap-2 text-[13px] tracking-wide text-accent-light hover:text-foreground transition-colors duration-500 ease-out group/link"
           data-hover
         >
-          <span>Visit project</span>
+          <span>{project.visitLabel}</span>
           <span className="inline-block transition-transform duration-500 ease-out group-hover/link:translate-x-1.5 group-hover/link:-translate-y-0.5">
             ↗
           </span>
@@ -122,6 +107,19 @@ function ProjectCard({
 }
 
 export default function Projects() {
+  const { t } = useI18n();
+
+  const projects: Project[] = t.projects.items.map((item, i) => ({
+    index: String(i + 1).padStart(2, "0"),
+    title: item.title,
+    description: item.description,
+    stack: [...item.stack],
+    status: item.status,
+    statusColor: statusColors[i] || "text-accent-light",
+    url: urls[i],
+    visitLabel: t.projects.visitProject,
+  }));
+
   return (
     <section id="work" className="py-28 md:py-44 px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
@@ -129,11 +127,11 @@ export default function Projects() {
         <ScrollReveal className="mb-20">
           <div className="flex items-center gap-6">
             <span className="font-mono text-gold text-[11px] tracking-[0.35em]">
-              03
+              {t.projects.section}
             </span>
             <div className="h-px flex-1 bg-border" />
             <span className="font-mono text-muted text-[11px] tracking-[0.35em] uppercase">
-              Featured Work
+              {t.projects.sectionLabel}
             </span>
           </div>
         </ScrollReveal>
@@ -157,6 +155,11 @@ export default function Projects() {
               <ProjectCard project={projects[2]} compact />
             </ScrollReveal>
           </div>
+
+          {/* Full width */}
+          <ScrollReveal className="col-span-12" delay={440}>
+            <ProjectCard project={projects[3]} compact />
+          </ScrollReveal>
         </div>
       </div>
     </section>

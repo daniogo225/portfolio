@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import ScrollReveal from "./ScrollReveal";
+import { useI18n } from "../i18n";
 
 function AnimatedCounter({
   end,
@@ -51,6 +52,8 @@ function AnimatedCounter({
 }
 
 export default function About() {
+  const { t } = useI18n();
+
   return (
     <section id="about" className="py-28 md:py-44 px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
@@ -58,11 +61,11 @@ export default function About() {
         <ScrollReveal className="mb-20">
           <div className="flex items-center gap-6">
             <span className="font-mono text-gold text-[11px] tracking-[0.35em]">
-              02
+              {t.about.section}
             </span>
             <div className="h-px flex-1 bg-border" />
             <span className="font-mono text-muted text-[11px] tracking-[0.35em] uppercase">
-              About
+              {t.about.sectionLabel}
             </span>
           </div>
         </ScrollReveal>
@@ -72,18 +75,16 @@ export default function About() {
           <div className="col-span-12 lg:col-span-7">
             <ScrollReveal delay={80}>
               <h2 className="font-display text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.1] mb-10">
-                Product engineer,
+                {t.about.title}
                 <br />
-                not just developer
+                {t.about.titleLine2}
                 <span className="text-accent">.</span>
               </h2>
             </ScrollReveal>
 
             <ScrollReveal delay={160}>
               <p className="text-muted text-base md:text-lg leading-[1.75] max-w-xl mb-6">
-                I build B2B SaaS products for the African francophone market.
-                From database architecture to pixel-perfect interfaces, I own
-                the full stack with Laravel and React.
+                {t.about.description}
               </p>
             </ScrollReveal>
 
@@ -91,9 +92,9 @@ export default function About() {
               <div className="flex items-center gap-4 mt-10">
                 <div className="w-8 h-px bg-gold" />
                 <p className="font-display text-gold/80 italic text-base md:text-lg">
-                  &ldquo;Less, but better.&rdquo;
+                  {t.about.quote}
                   <span className="text-muted text-sm not-italic ml-2">
-                    — Dieter Rams
+                    {t.about.quoteAuthor}
                   </span>
                 </p>
               </div>
@@ -108,7 +109,7 @@ export default function About() {
                   <AnimatedCounter end={5} suffix="+" />
                 </p>
                 <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono">
-                  Years of experience
+                  {t.about.yearsLabel}
                 </p>
               </div>
             </ScrollReveal>
@@ -119,7 +120,7 @@ export default function About() {
                   <AnimatedCounter end={2} />
                 </p>
                 <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono">
-                  SaaS in production
+                  {t.about.saasLabel}
                 </p>
               </div>
             </ScrollReveal>
@@ -127,10 +128,10 @@ export default function About() {
             <ScrollReveal delay={440}>
               <div className="border-l-2 border-border pl-7">
                 <p className="font-display text-xl leading-none">
-                  Laravel · React
+                  {t.about.coreStack}
                 </p>
                 <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono">
-                  Core stack
+                  {t.about.coreStackLabel}
                 </p>
               </div>
             </ScrollReveal>

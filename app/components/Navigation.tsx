@@ -2,18 +2,20 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
-
-const links = [
-  { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Stack", href: "#stack" },
-  { label: "Contact", href: "#contact" },
-];
+import { useI18n } from "../i18n";
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { t, locale, setLocale } = useI18n();
+
+  const links = [
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.work, href: "#work" },
+    { label: t.nav.stack, href: "#stack" },
+    { label: t.nav.contact, href: "#contact" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -58,8 +60,15 @@ export default function Navigation() {
             </a>
           ))}
           <button
+            onClick={() => setLocale(locale === "en" ? "fr" : "en")}
+            className="font-mono text-[11px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-all duration-500 ease-out border border-border hover:border-accent-light/50 px-3 py-2"
+            data-hover
+          >
+            {locale === "en" ? "FR" : "EN"}
+          </button>
+          <button
             onClick={toggleTheme}
-            className="ml-6 font-mono text-[11px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-all duration-500 ease-out border border-border hover:border-accent-light/50 px-4 py-2"
+            className="font-mono text-[11px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-all duration-500 ease-out border border-border hover:border-accent-light/50 px-3 py-2"
             data-hover
           >
             {theme === "dark" ? "Light" : "Dark"}
@@ -111,20 +120,34 @@ export default function Navigation() {
             {link.label}
           </a>
         ))}
-        <button
-          onClick={() => {
-            toggleTheme();
-            setMenuOpen(false);
-          }}
-          className="mt-10 font-mono text-xs tracking-[0.25em] uppercase text-muted border border-border px-4 py-2 transition-all duration-500"
+        <div
+          className="mt-10 flex items-center gap-4"
           style={{
             transitionDelay: menuOpen ? "470ms" : "0ms",
             opacity: menuOpen ? 1 : 0,
             transform: menuOpen ? "translateY(0)" : "translateY(20px)",
+            transition: "all 0.5s",
           }}
         >
-          {theme === "dark" ? "Light" : "Dark"}
-        </button>
+          <button
+            onClick={() => {
+              setLocale(locale === "en" ? "fr" : "en");
+              setMenuOpen(false);
+            }}
+            className="font-mono text-xs tracking-[0.25em] uppercase text-muted border border-border px-4 py-2"
+          >
+            {locale === "en" ? "FR" : "EN"}
+          </button>
+          <button
+            onClick={() => {
+              toggleTheme();
+              setMenuOpen(false);
+            }}
+            className="font-mono text-xs tracking-[0.25em] uppercase text-muted border border-border px-4 py-2"
+          >
+            {theme === "dark" ? "Light" : "Dark"}
+          </button>
+        </div>
       </div>
     </header>
   );

@@ -15,6 +15,7 @@ import { HiServerStack } from "react-icons/hi2";
 import { RiRobot2Line } from "react-icons/ri";
 import { BsCloudFill } from "react-icons/bs";
 import ScrollReveal from "./ScrollReveal";
+import { useI18n } from "../i18n";
 
 interface StackItem {
   name: string;
@@ -51,6 +52,8 @@ const stackData: { category: string; items: StackItem[] }[] = [
 ];
 
 export default function Stack() {
+  const { t } = useI18n();
+
   return (
     <section id="stack" className="py-28 md:py-44 px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
@@ -58,11 +61,11 @@ export default function Stack() {
         <ScrollReveal className="mb-20">
           <div className="flex items-center gap-6">
             <span className="font-mono text-gold text-[11px] tracking-[0.35em]">
-              04
+              {t.stack.section}
             </span>
             <div className="h-px flex-1 bg-border" />
             <span className="font-mono text-muted text-[11px] tracking-[0.35em] uppercase">
-              Stack
+              {t.stack.sectionLabel}
             </span>
           </div>
         </ScrollReveal>

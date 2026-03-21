@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useI18n } from "../i18n";
 
 function AnimatedLetters({
   text,
@@ -27,6 +28,7 @@ function AnimatedLetters({
 
 export default function Hero() {
   const [loaded, setLoaded] = useState(false);
+  const { t } = useI18n();
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 100);
@@ -91,7 +93,7 @@ export default function Hero() {
             }}
           >
             <span className="font-mono text-gold text-[11px] tracking-[0.35em] uppercase">
-              01 — Portfolio
+              {t.hero.section}
             </span>
           </div>
 
@@ -126,7 +128,7 @@ export default function Hero() {
                 "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.7s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.7s",
             }}
           >
-            Senior Fullstack Developer · SaaS Founder · Abidjan, CI
+            {t.hero.subtitle}
           </p>
 
           {/* Tagline */}
@@ -139,8 +141,7 @@ export default function Hero() {
                 "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2s",
             }}
           >
-            &ldquo;I build products that solve real problems for African
-            businesses.&rdquo;
+            {t.hero.tagline}
           </p>
 
           {/* CTA */}
@@ -172,7 +173,7 @@ export default function Hero() {
                 <circle cx="12" cy="7" r="4" />
               </svg>
               <span className="text-[13px] tracking-[0.12em] uppercase text-foreground/80 group-hover:text-foreground transition-colors duration-500">
-                Save contact
+                {t.hero.saveContact}
               </span>
             </a>
           </div>
@@ -229,7 +230,7 @@ export default function Hero() {
         }}
       >
         <span className="font-mono text-[10px] tracking-[0.4em] text-muted uppercase">
-          Scroll
+          {t.hero.scroll}
         </span>
         <div className="w-px h-10 bg-accent/60 animate-pulse-line" />
       </div>

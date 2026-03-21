@@ -1,12 +1,15 @@
 "use client";
 
 import ScrollReveal from "./ScrollReveal";
+import { useI18n } from "../i18n";
 
 const contactLinks = [
   { label: "daniogoaboubakar@icloud.com", href: "mailto:daniogoaboubakar@icloud.com" },
 ];
 
 export default function Contact() {
+  const { t } = useI18n();
+
   return (
     <section
       id="contact"
@@ -20,11 +23,11 @@ export default function Contact() {
         <ScrollReveal className="mb-20">
           <div className="flex items-center gap-6">
             <span className="font-mono text-gold text-[11px] tracking-[0.35em]">
-              05
+              {t.contact.section}
             </span>
             <div className="h-px flex-1 bg-border" />
             <span className="font-mono text-muted text-[11px] tracking-[0.35em] uppercase">
-              Contact
+              {t.contact.sectionLabel}
             </span>
           </div>
         </ScrollReveal>
@@ -32,11 +35,11 @@ export default function Contact() {
         {/* Oversize headline */}
         <ScrollReveal delay={80}>
           <h2 className="font-display text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.95] tracking-[-0.02em] mb-16 max-w-4xl">
-            Let&apos;s build
+            {t.contact.titleLine1}
             <br />
-            something
+            {t.contact.titleLine2}
             <br />
-            meaningful<span className="text-accent">.</span>
+            {t.contact.titleLine3}<span className="text-accent">.</span>
           </h2>
         </ScrollReveal>
 
