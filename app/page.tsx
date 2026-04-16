@@ -4,6 +4,7 @@ import CustomCursor from "./components/CustomCursor";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import Approach from "./components/Approach";
 import Projects from "./components/Projects";
 import Stack from "./components/Stack";
 import Contact from "./components/Contact";
@@ -17,6 +18,7 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <Approach />
         <Projects />
         <Stack />
         <Contact />

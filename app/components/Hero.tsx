@@ -36,7 +36,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-20 overflow-hidden">
+    <section className="relative h-screen min-h-[640px] max-h-[1000px] flex flex-col justify-center pt-16 md:pt-20 pb-20 md:pb-24 px-6 md:px-12 lg:px-20 overflow-hidden"
+      style={{ height: "100svh" }}
+    >
       {/* Decorative vertical grid lines */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.04]">
         {[1, 2, 3, 4, 5].map((n) => (
@@ -57,10 +59,10 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative max-w-[1400px] mx-auto w-full grid grid-cols-12 gap-4 md:gap-6 pt-24 md:pt-0">
+      <div className="relative max-w-[1400px] mx-auto w-full grid grid-cols-12 gap-4 md:gap-6">
         {/* Mobile portrait */}
         <div
-          className="col-span-12 lg:hidden flex justify-center mb-8"
+          className="col-span-12 lg:hidden flex justify-center mb-5"
           style={{
             opacity: loaded ? 1 : 0,
             transform: loaded ? "none" : "translateY(20px) scale(0.95)",
@@ -68,23 +70,23 @@ export default function Hero() {
               "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s",
           }}
         >
-          <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-accent-light/30">
+          <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-accent-light/30 shadow-[0_20px_40px_-20px_rgba(45,106,79,0.6)]">
             <Image
               src="/dani2.jpg"
               alt="Aboubakar Daniogo"
               fill
-              className="object-cover object-[center_75%]"
-              sizes="144px"
+              className="object-cover object-[center_30%]"
+              sizes="128px"
               priority
             />
           </div>
         </div>
 
         {/* Text */}
-        <div className="col-span-12 lg:col-span-8">
+        <div className="col-span-12 lg:col-span-7">
           {/* Section index */}
           <div
-            className="mb-10 md:mb-14"
+            className="mb-5 md:mb-8"
             style={{
               opacity: loaded ? 1 : 0,
               transform: loaded ? "none" : "translateY(10px)",
@@ -98,7 +100,7 @@ export default function Hero() {
           </div>
 
           {/* Name */}
-          <h1 className="font-display text-[clamp(3rem,8vw,8.5rem)] leading-[0.88] tracking-[-0.02em] mb-8">
+          <h1 className="font-display text-[clamp(2.25rem,5.2vw,5.25rem)] leading-[0.9] tracking-[-0.025em] mb-4 md:mb-5">
             <span className="block overflow-hidden pb-2">
               <AnimatedLetters text="ABOUBAKAR" delay={0.6} />
             </span>
@@ -109,7 +111,7 @@ export default function Hero() {
 
           {/* Horizontal rule */}
           <div
-            className="h-px bg-border mb-8 max-w-md"
+            className="h-px bg-border mb-5 md:mb-6 max-w-md"
             style={{
               transform: loaded ? "scaleX(1)" : "scaleX(0)",
               transformOrigin: "left",
@@ -120,7 +122,7 @@ export default function Hero() {
 
           {/* Subtitle */}
           <p
-            className="font-sans text-muted text-base md:text-lg tracking-[0.08em] mb-8"
+            className="font-sans text-muted text-sm md:text-base tracking-[0.08em] mb-5 md:mb-6"
             style={{
               opacity: loaded ? 1 : 0,
               transform: loaded ? "none" : "translateY(16px)",
@@ -133,7 +135,7 @@ export default function Hero() {
 
           {/* Tagline */}
           <p
-            className="font-display text-lg md:text-2xl lg:text-[1.65rem] italic text-foreground/75 max-w-lg leading-snug"
+            className="font-display text-base md:text-xl lg:text-[1.45rem] italic text-foreground/80 max-w-lg leading-snug"
             style={{
               opacity: loaded ? 1 : 0,
               transform: loaded ? "none" : "translateY(16px)",
@@ -144,35 +146,64 @@ export default function Hero() {
             {t.hero.tagline}
           </p>
 
-          {/* CTA */}
+          {/* Metrics ticker */}
           <div
-            className="mt-10 flex items-center gap-5"
+            className="mt-6 md:mt-7 flex flex-wrap items-baseline gap-x-5 gap-y-2.5 md:gap-x-7"
             style={{
               opacity: loaded ? 1 : 0,
               transform: loaded ? "none" : "translateY(16px)",
               transition:
-                "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.3s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.3s",
+                "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.15s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.15s",
+            }}
+          >
+            {t.hero.ticker.map((item, i) => (
+              <div key={item.label} className="flex items-baseline gap-2">
+                {i > 0 && (
+                  <span className="text-border/50 font-mono text-xs mr-3 md:mr-5 select-none">
+                    /
+                  </span>
+                )}
+                <span className="font-display text-foreground text-base md:text-lg leading-none">
+                  {item.value}
+                </span>
+                <span className="font-mono text-muted/80 text-[9px] md:text-[10px] tracking-[0.25em] uppercase">
+                  {item.label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div
+            className="mt-6 md:mt-7 flex items-center gap-5"
+            style={{
+              opacity: loaded ? 1 : 0,
+              transform: loaded ? "none" : "translateY(16px)",
+              transition:
+                "opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.4s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.4s",
             }}
           >
             <a
               href="/daniogo.vcf"
               download="Daniogo Aboubakar.vcf"
-              className="group inline-flex items-center gap-3 px-6 py-3 border border-accent-light/40 hover:border-accent-light hover:bg-accent-light/10 transition-all duration-500 ease-out"
+              className="group relative inline-flex items-center gap-3 px-6 py-3 border border-accent-light/40 hover:border-accent-light overflow-hidden transition-colors duration-500 ease-out"
               data-hover
             >
+              {/* Hover sweep */}
+              <span className="absolute inset-0 bg-accent-light/[0.08] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-700 ease-out" />
               <svg
-                width="16"
-                height="16"
+                width="15"
+                height="15"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
-                className="text-accent-light"
+                className="relative text-accent-light transition-transform duration-500 ease-out group-hover:-rotate-6"
               >
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
-              <span className="text-[13px] tracking-[0.12em] uppercase text-foreground/80 group-hover:text-foreground transition-colors duration-500">
+              <span className="relative text-[12px] tracking-[0.15em] uppercase text-foreground/80 group-hover:text-foreground transition-colors duration-500">
                 {t.hero.saveContact}
               </span>
             </a>
@@ -180,9 +211,9 @@ export default function Hero() {
         </div>
 
         {/* Portrait */}
-        <div className="hidden lg:flex col-span-4 items-center justify-end">
+        <div className="hidden lg:flex col-span-5 items-center justify-end">
           <div
-            className="relative w-full max-w-[300px] aspect-[3/4]"
+            className="group relative w-full max-w-[380px] aspect-[4/5]"
             style={{
               opacity: loaded ? 1 : 0,
               transform: loaded ? "none" : "translateY(30px) scale(0.97)",
@@ -191,22 +222,26 @@ export default function Hero() {
             }}
           >
             {/* Photo frame */}
-            <div className="absolute inset-0 overflow-hidden border border-border">
+            <div className="absolute inset-0 overflow-hidden border border-border shadow-[0_40px_80px_-30px_rgba(0,0,0,0.5)]">
               <Image
                 src="/dani2.jpg"
                 alt="Aboubakar Daniogo"
                 fill
-                className="object-cover object-[center_75%]"
-                sizes="300px"
+                className="object-cover object-[70%_80%] scale-[1.45] transition-transform duration-[1400ms] ease-out group-hover:scale-[1.5]"
+                sizes="340px"
                 priority
               />
               {/* Subtle green overlay */}
               <div className="absolute inset-0 bg-accent/[0.08] mix-blend-multiply" />
+              {/* Premium duotone glow */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-accent/20 via-transparent to-gold/10 mix-blend-overlay" />
+              {/* Top shine */}
+              <div className="absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-light/60 to-transparent" />
             </div>
 
             {/* Corner accents */}
-            <div className="absolute -top-3 -right-3 w-10 h-10 border-t-[2px] border-r-[2px] border-accent-light" />
-            <div className="absolute -bottom-3 -left-3 w-10 h-10 border-b-[2px] border-l-[2px] border-gold" />
+            <div className="absolute -top-3 -right-3 w-10 h-10 border-t-[2px] border-r-[2px] border-accent-light transition-all duration-700 group-hover:-top-4 group-hover:-right-4" />
+            <div className="absolute -bottom-3 -left-3 w-10 h-10 border-b-[2px] border-l-[2px] border-gold transition-all duration-700 group-hover:-bottom-4 group-hover:-left-4" />
 
             {/* Side label */}
             <span
@@ -223,16 +258,16 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
+        className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
         style={{
           opacity: loaded ? 1 : 0,
           transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 2.6s",
         }}
       >
-        <span className="font-mono text-[10px] tracking-[0.4em] text-muted uppercase">
+        <span className="font-mono text-[9px] tracking-[0.4em] text-muted/70 uppercase">
           {t.hero.scroll}
         </span>
-        <div className="w-px h-10 bg-accent/60 animate-pulse-line" />
+        <div className="w-px h-7 bg-gradient-to-b from-accent/60 to-transparent animate-pulse-line" />
       </div>
     </section>
   );

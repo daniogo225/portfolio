@@ -34,42 +34,61 @@ export default function Navigation() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${
         scrolled
-          ? "bg-background/85 backdrop-blur-2xl border-b border-border/40"
-          : "bg-transparent"
+          ? "bg-background/70 backdrop-blur-xl backdrop-saturate-150 border-b border-border/40 shadow-[0_1px_30px_-10px_rgba(0,0,0,0.25)]"
+          : "bg-gradient-to-b from-background/30 to-transparent backdrop-blur-sm"
       }`}
     >
-      <nav className="max-w-[1400px] mx-auto flex items-center justify-between px-6 md:px-12 lg:px-20 h-20">
+      <nav
+        className={`max-w-[1400px] mx-auto flex items-center justify-between px-6 md:px-12 lg:px-20 transition-all duration-500 ease-out ${
+          scrolled ? "h-16" : "h-20"
+        }`}
+      >
         {/* Logo */}
         <a
           href="#"
-          className="font-display text-2xl tracking-tight relative z-50"
+          className="group font-display text-2xl tracking-tight relative z-50 inline-flex items-baseline"
+          aria-label="Home"
         >
-          dani<span className="text-accent">.</span>
+          <span className="transition-colors duration-500 group-hover:text-accent-light">
+            dani
+          </span>
+          <span className="text-accent transition-all duration-500 group-hover:text-accent-light group-hover:translate-x-0.5">
+            .
+          </span>
         </a>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-10">
-          {links.map((link) => (
+        <div className="hidden md:flex items-center gap-9">
+          {links.map((link, i) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-[13px] font-sans font-medium tracking-[0.18em] uppercase text-muted hover:text-foreground transition-colors duration-500 ease-out group"
+              className="relative text-[12px] font-sans font-medium tracking-[0.18em] uppercase text-muted hover:text-foreground transition-colors duration-500 ease-out group"
             >
+              <span className="font-mono text-[9px] text-muted/40 mr-2 group-hover:text-accent-light/70 transition-colors duration-500">
+                {String(i + 1).padStart(2, "0")}
+              </span>
               {link.label}
               <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-light transition-all duration-500 ease-out group-hover:w-full" />
             </a>
           ))}
+
+          {/* Subtle divider */}
+          <div className="h-4 w-px bg-border/60" />
+
           <button
             onClick={() => setLocale(locale === "en" ? "fr" : "en")}
-            className="font-mono text-[11px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-all duration-500 ease-out border border-border hover:border-accent-light/50 px-3 py-2"
+            className="relative font-mono text-[10px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-all duration-500 ease-out border border-border/80 hover:border-accent-light/50 hover:bg-accent-light/5 px-2.5 py-1.5"
             data-hover
+            aria-label="Toggle language"
           >
             {locale === "en" ? "FR" : "EN"}
           </button>
           <button
             onClick={toggleTheme}
-            className="font-mono text-[11px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-all duration-500 ease-out border border-border hover:border-accent-light/50 px-3 py-2"
+            className="relative font-mono text-[10px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-all duration-500 ease-out border border-border/80 hover:border-accent-light/50 hover:bg-accent-light/5 px-2.5 py-1.5 w-[62px]"
             data-hover
+            aria-label="Toggle theme"
           >
             {theme === "dark" ? "Light" : "Dark"}
           </button>

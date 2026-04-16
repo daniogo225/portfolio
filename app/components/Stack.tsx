@@ -85,13 +85,14 @@ export default function Stack() {
                     return (
                       <div
                         key={item.name}
-                        className="group/item flex items-center gap-4 py-[14px] border-b border-border/40 hover:border-accent-light/30 transition-all duration-300 cursor-default"
+                        className="group/item relative flex items-center gap-4 py-[14px] border-b border-border/40 hover:border-accent-light/40 transition-all duration-500 cursor-default"
                       >
-                        <Icon className="w-[18px] h-[18px] text-muted/40 group-hover/item:text-accent-light transition-colors duration-300 shrink-0" />
-                        <span className="text-[15px] text-foreground/80 group-hover/item:text-foreground transition-colors duration-300 flex-1">
+                        <span className="absolute left-0 top-0 bottom-0 w-0 bg-gradient-to-r from-accent-light/[0.06] to-transparent group-hover/item:w-full transition-[width] duration-700 ease-out -z-10" />
+                        <Icon className="w-[18px] h-[18px] text-muted/40 group-hover/item:text-accent-light group-hover/item:scale-110 transition-all duration-500 shrink-0" />
+                        <span className="text-[15px] text-foreground/80 group-hover/item:text-foreground group-hover/item:translate-x-1 transition-all duration-500 flex-1">
                           {item.name}
                         </span>
-                        <span className="font-mono text-[10px] text-muted/30 tracking-widest">
+                        <span className="font-mono text-[10px] text-muted/30 tracking-widest group-hover/item:text-accent-light/60 transition-colors duration-500">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                       </div>

@@ -104,33 +104,33 @@ export default function About() {
           {/* Stats */}
           <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col gap-12 mt-16 lg:mt-4">
             <ScrollReveal delay={200}>
-              <div className="border-l-2 border-accent pl-7">
+              <div className="group border-l-2 border-accent pl-7 hover:pl-8 transition-all duration-700 ease-out">
                 <p className="font-display text-[clamp(2.5rem,5vw,3.8rem)] leading-none">
                   <AnimatedCounter end={5} suffix="+" />
                 </p>
-                <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono">
+                <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono group-hover:text-foreground/70 transition-colors duration-500">
                   {t.about.yearsLabel}
                 </p>
               </div>
             </ScrollReveal>
 
             <ScrollReveal delay={320}>
-              <div className="border-l-2 border-gold pl-7">
-                <p className="font-display text-[clamp(2.5rem,5vw,3.8rem)] leading-none">
-                  <AnimatedCounter end={2} />
+              <div className="group border-l-2 border-gold pl-7 hover:pl-8 transition-all duration-700 ease-out">
+                <p className="font-display text-[clamp(2.25rem,4.5vw,3.5rem)] leading-none">
+                  {t.about.saasValue}
                 </p>
-                <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono">
+                <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono group-hover:text-foreground/70 transition-colors duration-500">
                   {t.about.saasLabel}
                 </p>
               </div>
             </ScrollReveal>
 
             <ScrollReveal delay={440}>
-              <div className="border-l-2 border-border pl-7">
+              <div className="group border-l-2 border-border pl-7 hover:border-accent-light/60 hover:pl-8 transition-all duration-700 ease-out">
                 <p className="font-display text-xl leading-none">
                   {t.about.coreStack}
                 </p>
-                <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono">
+                <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono group-hover:text-foreground/70 transition-colors duration-500">
                   {t.about.coreStackLabel}
                 </p>
               </div>

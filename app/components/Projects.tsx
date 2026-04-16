@@ -2,6 +2,12 @@
 
 import ScrollReveal from "./ScrollReveal";
 import { useI18n } from "../i18n";
+import { projectsMeta } from "../data/projects";
+
+interface ProjectMetric {
+  value: string;
+  label: string;
+}
 
 interface Project {
   index: string;
@@ -12,21 +18,8 @@ interface Project {
   statusColor: string;
   url?: string;
   visitLabel?: string;
+  metrics?: ProjectMetric[];
 }
-
-const statusColors = [
-  "text-accent-light",
-  "text-emerald-400",
-  "text-gold",
-  "text-accent-light",
-];
-
-const urls = [
-  undefined,
-  "https://inexus-business.com",
-  undefined,
-  undefined,
-];
 
 function ProjectCard({
   project,
@@ -37,29 +30,39 @@ function ProjectCard({
 }) {
   return (
     <div
-      className={`group relative border border-border bg-surface/30 transition-all duration-700 ease-out hover:border-accent-light/40 hover:bg-surface/60 ${
+      className={`card-lift group relative border border-border bg-surface/40 hover:border-accent-light/40 hover:bg-surface/70 overflow-hidden ${
         compact ? "p-7 md:p-8" : "p-8 md:p-12 h-full"
       }`}
     >
+      {/* Subtle sheen on hover */}
+      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-accent-light/[0.04] via-transparent to-gold/[0.03]" />
+
+      {/* Top accent line — slides in on hover */}
+      <div className="pointer-events-none absolute top-0 left-0 h-px w-0 bg-gradient-to-r from-accent-light via-accent-light/60 to-transparent group-hover:w-full transition-[width] duration-[900ms] ease-out" />
+
       {/* Hover corner accents */}
-      <div className="absolute top-0 left-0 w-5 h-5 border-t border-l border-transparent group-hover:border-accent-light/60 transition-all duration-700 ease-out" />
-      <div className="absolute bottom-0 right-0 w-5 h-5 border-b border-r border-transparent group-hover:border-accent-light/60 transition-all duration-700 ease-out" />
+      <div className="pointer-events-none absolute top-0 left-0 w-5 h-5 border-t border-l border-transparent group-hover:border-accent-light/60 group-hover:w-7 group-hover:h-7 transition-all duration-700 ease-out" />
+      <div className="pointer-events-none absolute bottom-0 right-0 w-5 h-5 border-b border-r border-transparent group-hover:border-accent-light/60 group-hover:w-7 group-hover:h-7 transition-all duration-700 ease-out" />
 
       {/* Header row */}
-      <div className="flex items-start justify-between mb-6">
+      <div className="relative flex items-start justify-between mb-6">
         <span className="font-mono text-accent text-[11px] tracking-[0.35em]">
           {project.index}
         </span>
         <span
-          className={`font-mono text-[10px] tracking-[0.2em] uppercase ${project.statusColor}`}
+          className={`flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase ${project.statusColor}`}
         >
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inset-0 rounded-full bg-current opacity-40 animate-ping" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-current" />
+          </span>
           {project.status}
         </span>
       </div>
 
       {/* Title */}
       <h3
-        className={`font-display leading-tight mb-5 ${
+        className={`relative font-display leading-tight mb-5 transition-colors duration-500 group-hover:text-foreground ${
           compact ? "text-xl md:text-2xl" : "text-2xl md:text-4xl"
         }`}
       >
@@ -75,12 +78,28 @@ function ProjectCard({
         {project.description}
       </p>
 
+      {/* Metrics (featured card only) */}
+      {!compact && project.metrics && project.metrics.length > 0 && (
+        <div className="grid grid-cols-3 gap-4 md:gap-6 mb-8 pt-6 border-t border-border/60">
+          {project.metrics.map((metric) => (
+            <div key={metric.label}>
+              <p className="font-display text-xl md:text-2xl leading-none text-foreground">
+                {metric.value}
+              </p>
+              <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-muted mt-2">
+                {metric.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Stack tags */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="relative flex flex-wrap gap-2 mb-6">
         {project.stack.map((tech) => (
           <span
             key={tech}
-            className="font-mono text-[10px] tracking-[0.1em] text-muted/80 border border-border/80 px-3 py-1.5 group-hover:border-accent-light/20 transition-colors duration-500 ease-out"
+            className="font-mono text-[10px] tracking-[0.1em] text-muted/80 border border-border/80 bg-background/30 px-3 py-1.5 group-hover:border-accent-light/25 group-hover:text-muted transition-all duration-500 ease-out"
           >
             {tech}
           </span>
@@ -93,10 +112,13 @@ function ProjectCard({
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-[13px] tracking-wide text-accent-light hover:text-foreground transition-colors duration-500 ease-out group/link"
+          className="relative inline-flex items-center gap-2 text-[12px] tracking-[0.12em] uppercase text-accent-light hover:text-foreground transition-colors duration-500 ease-out group/link"
           data-hover
         >
-          <span>{project.visitLabel}</span>
+          <span className="relative">
+            {project.visitLabel}
+            <span className="absolute left-0 -bottom-0.5 h-px w-full bg-accent-light/40 group-hover/link:bg-foreground transition-colors duration-500" />
+          </span>
           <span className="inline-block transition-transform duration-500 ease-out group-hover/link:translate-x-1.5 group-hover/link:-translate-y-0.5">
             ↗
           </span>
@@ -109,16 +131,20 @@ function ProjectCard({
 export default function Projects() {
   const { t } = useI18n();
 
-  const projects: Project[] = t.projects.items.map((item, i) => ({
-    index: String(i + 1).padStart(2, "0"),
-    title: item.title,
-    description: item.description,
-    stack: [...item.stack],
-    status: item.status,
-    statusColor: statusColors[i] || "text-accent-light",
-    url: urls[i],
-    visitLabel: t.projects.visitProject,
-  }));
+  const projects: Project[] = t.projects.items.map((item, i) => {
+    const meta = projectsMeta[i];
+    return {
+      index: String(i + 1).padStart(2, "0"),
+      title: item.title,
+      description: item.description,
+      stack: [...item.stack],
+      status: item.status,
+      statusColor: meta?.statusColor ?? "text-accent-light",
+      url: meta?.url,
+      visitLabel: t.projects.visitProject,
+      metrics: item.metrics ? [...item.metrics] : undefined,
+    };
+  });
 
   return (
     <section id="work" className="py-28 md:py-44 px-6 md:px-12 lg:px-20">

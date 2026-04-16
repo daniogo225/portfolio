@@ -17,6 +17,11 @@ export default function Contact() {
     >
       {/* Subtle background accent */}
       <div className="absolute inset-0 bg-accent/[0.02] pointer-events-none" />
+      {/* Oversized watermark dot */}
+      <div
+        className="absolute -top-20 -right-20 w-[560px] h-[560px] rounded-full bg-accent/[0.04] blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
 
       <div className="relative max-w-[1400px] mx-auto">
         {/* Section header */}
@@ -50,10 +55,13 @@ export default function Contact() {
               <a
                 key={link.label}
                 href={link.href}
-                className="group inline-flex items-center gap-2.5 text-base md:text-lg text-muted hover:text-foreground transition-colors duration-500 ease-out"
+                className="group inline-flex items-center gap-3 text-base md:text-lg text-muted hover:text-foreground transition-colors duration-500 ease-out"
                 data-hover
               >
-                <span>{link.label}</span>
+                <span className="relative">
+                  {link.label}
+                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-accent-light group-hover:w-full transition-[width] duration-700 ease-out" />
+                </span>
                 <span className="inline-block transition-all duration-500 ease-out group-hover:translate-x-1.5 group-hover:-translate-y-0.5 text-accent-light/60 group-hover:text-accent-light">
                   ↗
                 </span>
