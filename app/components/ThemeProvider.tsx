@@ -16,36 +16,40 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: "dark",
+  theme: "light",
   toggleTheme: () => {},
 });
 
 export const useTheme = () => useContext(ThemeContext);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("portfolio-theme") as Theme | null;
-    const isLightClass = document.documentElement.classList.contains("light");
-    const initial = stored || (isLightClass ? "light" : "dark");
+    const isDarkClass = document.documentElement.classList.contains("dark");
+    const initial = stored || (isDarkClass ? "dark" : "light");
     setTheme(initial);
-    if (initial === "light") {
-      document.documentElement.classList.add("light");
-    } else {
+    if (initial === "dark") {
+      document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
     }
     setMounted(true);
   }, []);
 
   const toggleTheme = () => {
     setTheme((prev) => {
-      const next = prev === "dark" ? "light" : "dark";
-      if (next === "light") {
-        document.documentElement.classList.add("light");
-      } else {
+      const next = prev === "light" ? "dark" : "light";
+      if (next === "dark") {
+        document.documentElement.classList.add("dark");
         document.documentElement.classList.remove("light");
+      } else {
+        document.documentElement.classList.add("light");
+        document.documentElement.classList.remove("dark");
       }
       localStorage.setItem("portfolio-theme", next);
       return next;

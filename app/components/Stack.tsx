@@ -1,104 +1,125 @@
 "use client";
 
-import { type IconType } from "react-icons";
 import {
-  SiLaravel,
-  SiReact,
   SiTypescript,
-  SiCloudflare,
-  SiGit,
+  SiReact,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiLaravel,
+  SiPostgresql,
+  SiClaude,
+  SiOpenai,
+  SiLangchain,
+  SiVercel,
   SiFigma,
+  SiLinear,
+  SiNotion,
+  SiGit,
 } from "react-icons/si";
-import { TbBrandInertia } from "react-icons/tb";
-import { VscCloud } from "react-icons/vsc";
-import { HiServerStack } from "react-icons/hi2";
-import { RiRobot2Line } from "react-icons/ri";
-import { BsCloudFill } from "react-icons/bs";
+import { type IconType } from "react-icons";
 import ScrollReveal from "./ScrollReveal";
 import { useI18n } from "../i18n";
 
-interface StackItem {
-  name: string;
-  icon: IconType;
-}
+const iconMap: Record<string, IconType> = {
+  TypeScript: SiTypescript,
+  React: SiReact,
+  "Next.js": SiNextdotjs,
+  "Node.js": SiNodedotjs,
+  Laravel: SiLaravel,
+  PostgreSQL: SiPostgresql,
+  Claude: SiClaude,
+  OpenAI: SiOpenai,
+  LangChain: SiLangchain,
+  "Vercel AI SDK": SiVercel,
+  Figma: SiFigma,
+  Linear: SiLinear,
+  Notion: SiNotion,
+  Git: SiGit,
+};
 
-const stackData: { category: string; items: StackItem[] }[] = [
-  {
-    category: "Core",
-    items: [
-      { name: "Laravel", icon: SiLaravel },
-      { name: "Inertia.js", icon: TbBrandInertia },
-      { name: "React", icon: SiReact },
-      { name: "TypeScript", icon: SiTypescript },
-    ],
-  },
-  {
-    category: "Infrastructure",
-    items: [
-      { name: "Laravel Cloud", icon: VscCloud },
-      { name: "Laravel Forge", icon: HiServerStack },
-      { name: "OCI", icon: BsCloudFill },
-      { name: "Cloudflare", icon: SiCloudflare },
-    ],
-  },
-  {
-    category: "Tools",
-    items: [
-      { name: "Claude Code", icon: RiRobot2Line },
-      { name: "Git", icon: SiGit },
-      { name: "Figma", icon: SiFigma },
-    ],
-  },
-];
+function StackIcon({ name }: { name: string }) {
+  const Icon = iconMap[name];
+  if (!Icon) {
+    return (
+      <span
+        aria-hidden
+        className="inline-block w-5 h-5 sm:w-6 sm:h-6 rounded-sm border border-border bg-surface"
+      />
+    );
+  }
+  return (
+    <Icon
+      aria-hidden
+      className="w-[18px] h-[18px] sm:w-5 sm:h-5 text-muted/50 group-hover/item:text-foreground group-hover/item:scale-110 transition-all duration-500 shrink-0"
+    />
+  );
+}
 
 export default function Stack() {
   const { t } = useI18n();
 
   return (
-    <section id="stack" className="py-28 md:py-44 px-6 md:px-12 lg:px-20">
+    <section
+      id="capabilities"
+      className="relative py-24 sm:py-32 lg:py-44 px-6 sm:px-10 lg:px-20 border-t border-border"
+    >
       <div className="max-w-[1400px] mx-auto">
-        {/* Section header */}
-        <ScrollReveal className="mb-20">
-          <div className="flex items-center gap-6">
-            <span className="font-mono text-gold text-[11px] tracking-[0.35em]">
-              {t.stack.section}
+        <ScrollReveal>
+          <div className="flex items-center gap-4 sm:gap-6 mb-12 sm:mb-16 lg:mb-20">
+            <span className="font-mono text-accent text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
+              {t.capabilities.section}
             </span>
             <div className="h-px flex-1 bg-border" />
-            <span className="font-mono text-muted text-[11px] tracking-[0.35em] uppercase">
-              {t.stack.sectionLabel}
+            <span className="font-mono text-muted text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
+              {t.capabilities.sectionLabel}
             </span>
           </div>
         </ScrollReveal>
 
-        {/* 3-column editorial grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-10 lg:gap-14">
-          {stackData.map((group, groupIdx) => (
-            <ScrollReveal key={group.category} delay={groupIdx * 120}>
+        <div className="grid grid-cols-12 gap-4 sm:gap-6 mb-16 sm:mb-20 lg:mb-28">
+          <ScrollReveal className="col-span-12 lg:col-span-7" delay={80}>
+            <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.035em] font-medium">
+              {t.capabilities.title}
+            </h2>
+          </ScrollReveal>
+          <ScrollReveal
+            className="col-span-12 lg:col-span-4 lg:col-start-9 flex items-end"
+            delay={160}
+          >
+            <p className="text-muted text-base sm:text-lg leading-[1.7]">
+              {t.capabilities.subtitle}
+            </p>
+          </ScrollReveal>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-10 lg:gap-14">
+          {t.capabilities.groups.map((group, gi) => (
+            <ScrollReveal key={group.title} delay={120 + gi * 100}>
               <div>
-                <h3 className="font-display text-2xl mb-10">
-                  {group.category}
-                  <span className="text-accent">.</span>
-                </h3>
-                <div className="flex flex-col">
-                  {group.items.map((item, i) => {
-                    const Icon = item.icon;
-                    return (
-                      <div
-                        key={item.name}
-                        className="group/item relative flex items-center gap-4 py-[14px] border-b border-border/40 hover:border-accent-light/40 transition-all duration-500 cursor-default"
-                      >
-                        <span className="absolute left-0 top-0 bottom-0 w-0 bg-gradient-to-r from-accent-light/[0.06] to-transparent group-hover/item:w-full transition-[width] duration-700 ease-out -z-10" />
-                        <Icon className="w-[18px] h-[18px] text-muted/40 group-hover/item:text-accent-light group-hover/item:scale-110 transition-all duration-500 shrink-0" />
-                        <span className="text-[15px] text-foreground/80 group-hover/item:text-foreground group-hover/item:translate-x-1 transition-all duration-500 flex-1">
-                          {item.name}
-                        </span>
-                        <span className="font-mono text-[10px] text-muted/30 tracking-widest group-hover/item:text-accent-light/60 transition-colors duration-500">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                      </div>
-                    );
-                  })}
+                <div className="mb-7 sm:mb-9">
+                  <h3 className="font-display text-xl sm:text-2xl tracking-[-0.02em] font-medium mb-2">
+                    {group.title}
+                  </h3>
+                  <p className="text-muted text-sm leading-[1.6]">
+                    {group.description}
+                  </p>
                 </div>
+                <ul className="flex flex-col">
+                  {group.items.map((item, ii) => (
+                    <li
+                      key={item.name}
+                      className="group/item relative flex items-center gap-4 py-3 sm:py-4 border-b border-border min-h-[48px] transition-colors duration-500"
+                    >
+                      <StackIcon name={item.name} />
+                      <span className="text-foreground/80 text-sm sm:text-[15px] flex-1 group-hover/item:text-foreground group-hover/item:translate-x-0.5 transition-all duration-500">
+                        {item.name}
+                      </span>
+                      <span className="font-mono text-[10px] text-muted/60 tracking-widest">
+                        {String(ii + 1).padStart(2, "0")}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </ScrollReveal>
           ))}

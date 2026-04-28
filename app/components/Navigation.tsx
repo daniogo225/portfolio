@@ -11,14 +11,16 @@ export default function Navigation() {
   const { t, locale, setLocale } = useI18n();
 
   const links = [
-    { label: t.nav.about, href: "#about" },
+    { label: t.nav.manifesto, href: "#manifesto" },
+    { label: t.nav.approach, href: "#approach" },
     { label: t.nav.work, href: "#work" },
-    { label: t.nav.stack, href: "#stack" },
+    { label: t.nav.process, href: "#process" },
+    { label: t.nav.about, href: "#about" },
     { label: t.nav.contact, href: "#contact" },
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -32,53 +34,47 @@ export default function Navigation() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-700 ease-out ${
         scrolled
-          ? "bg-background/70 backdrop-blur-xl backdrop-saturate-150 border-b border-border/40 shadow-[0_1px_30px_-10px_rgba(0,0,0,0.25)]"
-          : "bg-gradient-to-b from-background/30 to-transparent backdrop-blur-sm"
+          ? "bg-background/75 backdrop-blur-xl backdrop-saturate-150 border-b border-border"
+          : "bg-transparent"
       }`}
     >
       <nav
-        className={`max-w-[1400px] mx-auto flex items-center justify-between px-6 md:px-12 lg:px-20 transition-all duration-500 ease-out ${
-          scrolled ? "h-16" : "h-20"
+        className={`max-w-[1400px] mx-auto flex items-center justify-between px-6 sm:px-10 lg:px-20 transition-[height] duration-500 ease-out ${
+          scrolled ? "h-14 sm:h-16" : "h-16 sm:h-20"
         }`}
       >
-        {/* Logo */}
         <a
           href="#"
-          className="group font-display text-2xl tracking-tight relative z-50 inline-flex items-baseline"
+          className="group font-display text-lg sm:text-xl tracking-[-0.02em] relative z-50 inline-flex items-center font-medium min-h-[44px] -ml-2 px-2"
           aria-label="Home"
         >
-          <span className="transition-colors duration-500 group-hover:text-accent-light">
-            dani
+          <span className="transition-colors duration-500 group-hover:text-accent">
+            daniogo
           </span>
-          <span className="text-accent transition-all duration-500 group-hover:text-accent-light group-hover:translate-x-0.5">
-            .
-          </span>
+          <span className="text-accent">.</span>
         </a>
 
-        {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-9">
+        <div className="hidden lg:flex items-center gap-7">
           {links.map((link, i) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-[12px] font-sans font-medium tracking-[0.18em] uppercase text-muted hover:text-foreground transition-colors duration-500 ease-out group"
+              className="relative text-[11px] font-mono tracking-[0.15em] uppercase text-muted hover:text-foreground transition-colors duration-500 ease-out group min-h-[44px] flex items-center"
             >
-              <span className="font-mono text-[9px] text-muted/40 mr-2 group-hover:text-accent-light/70 transition-colors duration-500">
+              <span className="text-muted/40 mr-1.5 group-hover:text-accent transition-colors duration-500">
                 {String(i + 1).padStart(2, "0")}
               </span>
               {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent-light transition-all duration-500 ease-out group-hover:w-full" />
             </a>
           ))}
 
-          {/* Subtle divider */}
-          <div className="h-4 w-px bg-border/60" />
+          <div className="h-3.5 w-px bg-border" />
 
           <button
             onClick={() => setLocale(locale === "en" ? "fr" : "en")}
-            className="relative font-mono text-[10px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-all duration-500 ease-out border border-border/80 hover:border-accent-light/50 hover:bg-accent-light/5 px-2.5 py-1.5"
+            className="font-mono text-[10px] tracking-[0.18em] uppercase text-muted hover:text-foreground transition-colors duration-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
             data-hover
             aria-label="Toggle language"
           >
@@ -86,7 +82,7 @@ export default function Navigation() {
           </button>
           <button
             onClick={toggleTheme}
-            className="relative font-mono text-[10px] tracking-[0.25em] uppercase text-muted hover:text-foreground transition-all duration-500 ease-out border border-border/80 hover:border-accent-light/50 hover:bg-accent-light/5 px-2.5 py-1.5 w-[62px]"
+            className="font-mono text-[10px] tracking-[0.18em] uppercase text-muted hover:text-foreground transition-colors duration-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
             data-hover
             aria-label="Toggle theme"
           >
@@ -96,20 +92,20 @@ export default function Navigation() {
 
         {/* Mobile burger */}
         <button
-          className="md:hidden relative z-50 w-8 h-8 flex items-center justify-center"
+          className="lg:hidden relative z-50 w-11 h-11 flex items-center justify-center"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
           data-hover
         >
           <div className="flex flex-col gap-[5px]">
             <span
-              className={`block w-6 h-[1.5px] bg-foreground transition-all duration-300 origin-center ${
-                menuOpen ? "rotate-45 translate-y-[3.25px]" : ""
+              className={`block w-6 h-px bg-foreground transition-all duration-300 origin-center ${
+                menuOpen ? "rotate-45 translate-y-[3px]" : ""
               }`}
             />
             <span
-              className={`block w-6 h-[1.5px] bg-foreground transition-all duration-300 origin-center ${
-                menuOpen ? "-rotate-45 -translate-y-[3.25px]" : ""
+              className={`block w-6 h-px bg-foreground transition-all duration-300 origin-center ${
+                menuOpen ? "-rotate-45 -translate-y-[3px]" : ""
               }`}
             />
           </div>
@@ -118,34 +114,43 @@ export default function Navigation() {
 
       {/* Mobile overlay */}
       <div
-        className={`md:hidden fixed inset-0 bg-background z-40 flex flex-col items-start justify-center px-12 transition-all duration-600 ease-out ${
-          menuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
+        className={`lg:hidden fixed inset-0 bg-background z-40 flex flex-col px-6 sm:px-10 pt-24 pb-12 transition-opacity duration-500 ease-out ${
+          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        {links.map((link, i) => (
-          <a
-            key={link.href}
-            href={link.href}
-            onClick={() => setMenuOpen(false)}
-            className="font-display text-[clamp(2.5rem,8vw,4rem)] leading-tight tracking-tight text-foreground block py-3 transition-all duration-500"
-            style={{
-              transitionDelay: menuOpen ? `${150 + i * 80}ms` : "0ms",
-              opacity: menuOpen ? 1 : 0,
-              transform: menuOpen ? "translateY(0)" : "translateY(20px)",
-            }}
-          >
-            {link.label}
-          </a>
-        ))}
+        <div className="flex-1 flex flex-col justify-center">
+          {links.map((link, i) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="font-display text-[clamp(2rem,8vw,3.5rem)] leading-[1.05] tracking-[-0.03em] text-foreground py-2 sm:py-3 flex items-baseline gap-3 sm:gap-4 font-medium"
+              style={{
+                opacity: menuOpen ? 1 : 0,
+                transform: menuOpen ? "translateY(0)" : "translateY(20px)",
+                transitionProperty: "opacity, transform",
+                transitionDuration: "500ms",
+                transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                transitionDelay: menuOpen ? `${120 + i * 60}ms` : "0ms",
+              }}
+            >
+              <span className="font-mono text-[11px] tracking-[0.2em] text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              {link.label}
+            </a>
+          ))}
+        </div>
+
         <div
-          className="mt-10 flex items-center gap-4"
+          className="flex items-center gap-3 pt-6 border-t border-border"
           style={{
-            transitionDelay: menuOpen ? "470ms" : "0ms",
             opacity: menuOpen ? 1 : 0,
             transform: menuOpen ? "translateY(0)" : "translateY(20px)",
-            transition: "all 0.5s",
+            transitionProperty: "opacity, transform",
+            transitionDuration: "500ms",
+            transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+            transitionDelay: menuOpen ? "500ms" : "0ms",
           }}
         >
           <button
@@ -153,7 +158,7 @@ export default function Navigation() {
               setLocale(locale === "en" ? "fr" : "en");
               setMenuOpen(false);
             }}
-            className="font-mono text-xs tracking-[0.25em] uppercase text-muted border border-border px-4 py-2"
+            className="font-mono text-xs tracking-[0.2em] uppercase text-muted border border-border min-h-[44px] px-4"
           >
             {locale === "en" ? "FR" : "EN"}
           </button>
@@ -162,7 +167,7 @@ export default function Navigation() {
               toggleTheme();
               setMenuOpen(false);
             }}
-            className="font-mono text-xs tracking-[0.25em] uppercase text-muted border border-border px-4 py-2"
+            className="font-mono text-xs tracking-[0.2em] uppercase text-muted border border-border min-h-[44px] px-4"
           >
             {theme === "dark" ? "Light" : "Dark"}
           </button>

@@ -1,20 +1,35 @@
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { I18nProvider } from "./i18n";
 import "./globals.css";
 
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "DANI — Senior Fullstack Developer & SaaS Founder",
+  title: "Daniogo — Product Engineer",
   description:
-    "I build products that solve real problems for African businesses. Senior Fullstack Developer & SaaS Founder based in Abidjan, Côte d'Ivoire.",
+    "I don't ship apps. I ship experiences. Product engineering powered by 6+ years of craft and AI-native velocity. Based in Abidjan, working with teams worldwide.",
   keywords: [
-    "developer",
-    "fullstack",
-    "laravel",
+    "product engineer",
+    "fullstack developer",
+    "ai-native",
     "react",
-    "saas",
-    "portfolio",
+    "next.js",
+    "laravel",
+    "typescript",
     "abidjan",
+    "daniogo",
   ],
 };
 
@@ -24,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${geist.variable} ${geistMono.variable}`}>
       <body className="antialiased" suppressHydrationWarning>
         <ThemeProvider>
           <I18nProvider>{children}</I18nProvider>

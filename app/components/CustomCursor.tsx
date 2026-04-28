@@ -16,7 +16,7 @@ export default function CustomCursor() {
     setVisible(true);
 
     const lerp = { x: -100, y: -100 };
-    const speed = 0.12;
+    const speed = 0.18;
 
     const animate = () => {
       lerp.x += (posRef.current.x - lerp.x) * speed;
@@ -55,15 +55,16 @@ export default function CustomCursor() {
       ref={dotRef}
       className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
       style={{ willChange: "transform" }}
+      aria-hidden
     >
       <div
-        className="rounded-full bg-white transition-all duration-300 ease-out"
+        className="rounded-full bg-white transition-[width,height,margin,opacity] duration-300 ease-out"
         style={{
-          width: hovering ? 48 : 10,
-          height: hovering ? 48 : 10,
-          marginLeft: hovering ? -24 : -5,
-          marginTop: hovering ? -24 : -5,
-          opacity: hovering ? 0.4 : 1,
+          width: hovering ? 44 : 8,
+          height: hovering ? 44 : 8,
+          marginLeft: hovering ? -22 : -4,
+          marginTop: hovering ? -22 : -4,
+          opacity: hovering ? 0.35 : 1,
         }}
       />
     </div>

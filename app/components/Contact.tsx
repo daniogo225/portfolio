@@ -3,70 +3,86 @@
 import ScrollReveal from "./ScrollReveal";
 import { useI18n } from "../i18n";
 
-const contactLinks = [
-  { label: "daniogoaboubakar@icloud.com", href: "mailto:daniogoaboubakar@icloud.com" },
-];
-
 export default function Contact() {
   const { t } = useI18n();
 
   return (
     <section
       id="contact"
-      className="relative py-28 md:py-44 px-6 md:px-12 lg:px-20 overflow-hidden"
+      className="relative py-24 sm:py-32 lg:py-44 px-6 sm:px-10 lg:px-20 border-t border-border overflow-hidden"
     >
-      {/* Subtle background accent */}
-      <div className="absolute inset-0 bg-accent/[0.02] pointer-events-none" />
-      {/* Oversized watermark dot */}
-      <div
-        className="absolute -top-20 -right-20 w-[560px] h-[560px] rounded-full bg-accent/[0.04] blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
-
       <div className="relative max-w-[1400px] mx-auto">
         {/* Section header */}
-        <ScrollReveal className="mb-20">
-          <div className="flex items-center gap-6">
-            <span className="font-mono text-gold text-[11px] tracking-[0.35em]">
+        <ScrollReveal>
+          <div className="flex items-center gap-4 sm:gap-6 mb-12 sm:mb-16 lg:mb-20">
+            <span className="font-mono text-accent text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
               {t.contact.section}
             </span>
             <div className="h-px flex-1 bg-border" />
-            <span className="font-mono text-muted text-[11px] tracking-[0.35em] uppercase">
+            <span className="font-mono text-muted text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
               {t.contact.sectionLabel}
             </span>
           </div>
         </ScrollReveal>
 
-        {/* Oversize headline */}
+        {/* Headline */}
         <ScrollReveal delay={80}>
-          <h2 className="font-display text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.95] tracking-[-0.02em] mb-16 max-w-4xl">
-            {t.contact.titleLine1}
-            <br />
-            {t.contact.titleLine2}
-            <br />
-            {t.contact.titleLine3}<span className="text-accent">.</span>
+          <h2 className="font-display text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.95] tracking-[-0.04em] font-medium mb-12 sm:mb-16 max-w-[12ch]">
+            <span className="block">{t.contact.titleLine1}</span>
+            <span className="block">{t.contact.titleLine2}</span>
+            <span className="block">
+              {t.contact.titleLine3Pre}
+              <span className="text-accent italic">{t.contact.titleLine3Highlight}</span>
+              {t.contact.titleLine3Post}
+            </span>
           </h2>
         </ScrollReveal>
 
-        {/* Links */}
-        <ScrollReveal delay={200}>
-          <div className="flex flex-col sm:flex-row gap-6 sm:gap-14">
-            {contactLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="group inline-flex items-center gap-3 text-base md:text-lg text-muted hover:text-foreground transition-colors duration-500 ease-out"
-                data-hover
-              >
-                <span className="relative">
-                  {link.label}
-                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-accent-light group-hover:w-full transition-[width] duration-700 ease-out" />
+        {/* Availability + hint */}
+        <ScrollReveal delay={200} className="mb-10 sm:mb-12">
+          <div className="grid grid-cols-12 gap-4 sm:gap-6">
+            <div className="col-span-12 lg:col-span-7 lg:col-start-6">
+              <div className="flex items-center gap-3 mb-4 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-muted">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inset-0 rounded-full bg-accent opacity-50 animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
                 </span>
-                <span className="inline-block transition-all duration-500 ease-out group-hover:translate-x-1.5 group-hover:-translate-y-0.5 text-accent-light/60 group-hover:text-accent-light">
+                {t.contact.availability}
+              </div>
+              <p className="text-muted text-base sm:text-lg leading-[1.7] max-w-[42ch]">
+                {t.contact.hint}
+              </p>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* CTAs */}
+        <ScrollReveal delay={280}>
+          <div className="grid grid-cols-12 gap-4 sm:gap-6">
+            <div className="col-span-12 lg:col-span-7 lg:col-start-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <a
+                href={`mailto:${t.contact.emailLabel}`}
+                data-hover
+                className="group inline-flex items-center justify-center gap-2 min-h-[52px] px-6 bg-foreground text-background font-mono text-[12px] tracking-[0.12em] uppercase hover:bg-accent transition-colors duration-500"
+              >
+                <span>{t.contact.emailLabel}</span>
+                <span className="inline-block transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                   ↗
                 </span>
               </a>
-            ))}
+              <a
+                href="https://cal.com/dani-walker-uqwwfc/30min?overlayCalendar=true"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-hover
+                className="group inline-flex items-center justify-center gap-2 min-h-[52px] px-6 border border-border text-foreground font-mono text-[12px] tracking-[0.12em] uppercase hover:border-foreground transition-colors duration-500"
+              >
+                <span>{t.contact.ctaCall}</span>
+                <span className="inline-block transition-transform duration-500 group-hover:translate-x-0.5">
+                  →
+                </span>
+              </a>
+            </div>
           </div>
         </ScrollReveal>
       </div>

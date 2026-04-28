@@ -1,139 +1,92 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import ScrollReveal from "./ScrollReveal";
 import { useI18n } from "../i18n";
-
-function AnimatedCounter({
-  end,
-  suffix = "",
-}: {
-  end: number;
-  suffix?: string;
-}) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const animated = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !animated.current) {
-          animated.current = true;
-          const duration = 1400;
-          const start = performance.now();
-
-          const tick = (now: number) => {
-            const t = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - t, 3);
-            setCount(Math.floor(eased * end));
-            if (t < 1) requestAnimationFrame(tick);
-          };
-
-          requestAnimationFrame(tick);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [end]);
-
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
-  );
-}
 
 export default function About() {
   const { t } = useI18n();
 
   return (
-    <section id="about" className="py-28 md:py-44 px-6 md:px-12 lg:px-20">
+    <section
+      id="about"
+      className="relative py-24 sm:py-32 lg:py-44 px-6 sm:px-10 lg:px-20 border-t border-border"
+    >
       <div className="max-w-[1400px] mx-auto">
         {/* Section header */}
-        <ScrollReveal className="mb-20">
-          <div className="flex items-center gap-6">
-            <span className="font-mono text-gold text-[11px] tracking-[0.35em]">
+        <ScrollReveal>
+          <div className="flex items-center gap-4 sm:gap-6 mb-12 sm:mb-16 lg:mb-20">
+            <span className="font-mono text-accent text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
               {t.about.section}
             </span>
             <div className="h-px flex-1 bg-border" />
-            <span className="font-mono text-muted text-[11px] tracking-[0.35em] uppercase">
+            <span className="font-mono text-muted text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
               {t.about.sectionLabel}
             </span>
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-12 gap-6 md:gap-8">
-          {/* Main text */}
-          <div className="col-span-12 lg:col-span-7">
+        <div className="grid grid-cols-12 gap-6 sm:gap-8">
+          {/* Portrait + name */}
+          <div className="col-span-12 lg:col-span-5">
             <ScrollReveal delay={80}>
-              <h2 className="font-display text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.1] mb-10">
-                {t.about.title}
-                <br />
-                {t.about.titleLine2}
-                <span className="text-accent">.</span>
-              </h2>
-            </ScrollReveal>
-
-            <ScrollReveal delay={160}>
-              <p className="text-muted text-base md:text-lg leading-[1.75] max-w-xl mb-6">
-                {t.about.description}
-              </p>
-            </ScrollReveal>
-
-            <ScrollReveal delay={240}>
-              <div className="flex items-center gap-4 mt-10">
-                <div className="w-8 h-px bg-gold" />
-                <p className="font-display text-gold/80 italic text-base md:text-lg">
-                  {t.about.quote}
-                  <span className="text-muted text-sm not-italic ml-2">
-                    {t.about.quoteAuthor}
-                  </span>
-                </p>
+              <div className="relative w-full max-w-[360px] aspect-[4/5] mb-8 sm:mb-10 overflow-hidden border border-border">
+                <Image
+                  src="/dani2.jpg"
+                  alt="Daniogo"
+                  fill
+                  className="object-cover object-[70%_30%] grayscale hover:grayscale-0 transition-[filter] duration-700"
+                  sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                />
               </div>
+            </ScrollReveal>
+            <ScrollReveal delay={160}>
+              <h2 className="font-display text-[clamp(2.25rem,5vw,3.5rem)] leading-[1] tracking-[-0.04em] font-medium mb-4">
+                {t.about.title}
+              </h2>
+              <p className="text-muted text-base sm:text-lg leading-[1.6] max-w-[36ch]">
+                {t.about.role}
+              </p>
             </ScrollReveal>
           </div>
 
-          {/* Stats */}
-          <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col gap-12 mt-16 lg:mt-4">
-            <ScrollReveal delay={200}>
-              <div className="group border-l-2 border-accent pl-7 hover:pl-8 transition-all duration-700 ease-out">
-                <p className="font-display text-[clamp(2.5rem,5vw,3.8rem)] leading-none">
-                  <AnimatedCounter end={5} suffix="+" />
+          {/* Narrative + timeline */}
+          <div className="col-span-12 lg:col-span-6 lg:col-start-7">
+            <div className="space-y-6 sm:space-y-7 mb-12 sm:mb-16 lg:mb-20">
+              <ScrollReveal delay={200}>
+                <p className="text-foreground/90 text-base sm:text-lg leading-[1.7]">
+                  {t.about.paragraph1}
                 </p>
-                <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono group-hover:text-foreground/70 transition-colors duration-500">
-                  {t.about.yearsLabel}
+              </ScrollReveal>
+              <ScrollReveal delay={280}>
+                <p className="text-muted text-base sm:text-lg leading-[1.7]">
+                  {t.about.paragraph2}
                 </p>
-              </div>
-            </ScrollReveal>
+              </ScrollReveal>
+              <ScrollReveal delay={360}>
+                <p className="text-foreground/90 text-base sm:text-lg leading-[1.7]">
+                  {t.about.paragraph3}
+                </p>
+              </ScrollReveal>
+            </div>
 
-            <ScrollReveal delay={320}>
-              <div className="group border-l-2 border-gold pl-7 hover:pl-8 transition-all duration-700 ease-out">
-                <p className="font-display text-[clamp(2.25rem,4.5vw,3.5rem)] leading-none">
-                  {t.about.saasValue}
-                </p>
-                <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono group-hover:text-foreground/70 transition-colors duration-500">
-                  {t.about.saasLabel}
-                </p>
-              </div>
-            </ScrollReveal>
-
+            {/* Timeline */}
             <ScrollReveal delay={440}>
-              <div className="group border-l-2 border-border pl-7 hover:border-accent-light/60 hover:pl-8 transition-all duration-700 ease-out">
-                <p className="font-display text-xl leading-none">
-                  {t.about.coreStack}
-                </p>
-                <p className="text-muted text-[11px] tracking-[0.2em] uppercase mt-3 font-mono group-hover:text-foreground/70 transition-colors duration-500">
-                  {t.about.coreStackLabel}
-                </p>
-              </div>
+              <ol className="border-t border-border">
+                {t.about.timeline.map((entry) => (
+                  <li
+                    key={entry.year}
+                    className="grid grid-cols-12 gap-4 py-5 sm:py-6 border-b border-border"
+                  >
+                    <span className="col-span-3 sm:col-span-2 font-mono text-accent text-xs sm:text-sm tracking-[0.1em]">
+                      {entry.year}
+                    </span>
+                    <span className="col-span-9 sm:col-span-10 text-foreground/85 text-sm sm:text-base leading-[1.5]">
+                      {entry.event}
+                    </span>
+                  </li>
+                ))}
+              </ol>
             </ScrollReveal>
           </div>
         </div>
