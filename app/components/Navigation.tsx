@@ -34,12 +34,12 @@ export default function Navigation() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-700 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] ease-out ${
         menuOpen
-          ? "bg-background"
+          ? "bg-background duration-0"
           : scrolled
-            ? "bg-background/75 backdrop-blur-xl backdrop-saturate-150 border-b border-border"
-            : "bg-transparent"
+            ? "bg-background/75 backdrop-blur-xl backdrop-saturate-150 border-b border-border duration-700"
+            : "bg-transparent duration-700"
       }`}
     >
       <nav
@@ -116,8 +116,10 @@ export default function Navigation() {
 
       {/* Mobile overlay */}
       <div
-        className={`lg:hidden fixed inset-0 bg-background z-40 flex flex-col px-6 sm:px-10 pt-24 pb-12 transition-opacity duration-500 ease-out ${
-          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`lg:hidden fixed inset-0 z-40 flex flex-col px-6 sm:px-10 pt-24 pb-12 transition-[visibility] duration-0 ${
+          menuOpen
+            ? "visible bg-background pointer-events-auto"
+            : "invisible pointer-events-none"
         }`}
       >
         <div className="flex-1 flex flex-col justify-center">
