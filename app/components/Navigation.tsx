@@ -35,9 +35,11 @@ export default function Navigation() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-700 ease-out ${
-        scrolled
-          ? "bg-background/75 backdrop-blur-xl backdrop-saturate-150 border-b border-border"
-          : "bg-transparent"
+        menuOpen
+          ? "bg-background"
+          : scrolled
+            ? "bg-background/75 backdrop-blur-xl backdrop-saturate-150 border-b border-border"
+            : "bg-transparent"
       }`}
     >
       <nav

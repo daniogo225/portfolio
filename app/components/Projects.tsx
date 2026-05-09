@@ -116,12 +116,9 @@ export default function Projects() {
                         target="_blank"
                         rel="noopener noreferrer"
                         data-hover
-                        className="group/link inline-flex items-center gap-2 self-start min-h-[44px] font-mono text-[11px] sm:text-[12px] tracking-[0.12em] uppercase text-foreground hover:text-accent transition-colors duration-500"
+                        className="group/link inline-flex items-center gap-2.5 self-start min-h-[44px] px-5 py-2.5 bg-foreground text-background font-mono text-[11px] sm:text-[12px] tracking-[0.12em] uppercase hover:bg-accent transition-colors duration-500"
                       >
-                        <span className="relative">
-                          {t.work.visitLabel}
-                          <span className="absolute left-0 -bottom-1 h-px w-full bg-accent scale-x-0 group-hover/link:scale-x-100 origin-left transition-transform duration-500 ease-out" />
-                        </span>
+                        {t.work.visitLabel}
                         <span className="inline-block transition-transform duration-500 group-hover/link:translate-x-1 group-hover/link:-translate-y-0.5">
                           ↗
                         </span>
