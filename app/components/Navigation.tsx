@@ -58,12 +58,12 @@ export default function Navigation() {
           <span className="text-accent">.</span>
         </a>
 
-        <div className="hidden lg:flex items-center gap-7">
+        <div className="hidden lg:flex items-center gap-6">
           {links.map((link, i) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-[11px] font-mono tracking-[0.15em] uppercase text-muted hover:text-foreground transition-colors duration-500 ease-out group min-h-[44px] flex items-center"
+              className="relative text-[12px] font-mono tracking-[0.1em] uppercase text-foreground/60 hover:text-foreground transition-colors duration-500 ease-out group min-h-[44px] flex items-center"
             >
               <span className="text-muted/40 mr-1.5 group-hover:text-accent transition-colors duration-500">
                 {String(i + 1).padStart(2, "0")}
@@ -76,7 +76,7 @@ export default function Navigation() {
 
           <button
             onClick={() => setLocale(locale === "en" ? "fr" : "en")}
-            className="font-mono text-[10px] tracking-[0.18em] uppercase text-muted hover:text-foreground transition-colors duration-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="font-mono text-[11px] tracking-[0.12em] uppercase text-foreground/60 hover:text-foreground transition-colors duration-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
             data-hover
             aria-label="Toggle language"
           >
@@ -84,7 +84,7 @@ export default function Navigation() {
           </button>
           <button
             onClick={toggleTheme}
-            className="font-mono text-[10px] tracking-[0.18em] uppercase text-muted hover:text-foreground transition-colors duration-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="font-mono text-[11px] tracking-[0.12em] uppercase text-foreground/60 hover:text-foreground transition-colors duration-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
             data-hover
             aria-label="Toggle theme"
           >

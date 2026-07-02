@@ -19,13 +19,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Daniogo — Product Engineer",
   description:
-    "I don't ship apps. I ship experiences. Product engineering powered by 6+ years of craft and AI-native velocity. Based in Abidjan, working with teams worldwide.",
+    "Product engineer in Abidjan building web and mobile products with Laravel, Inertia, React, React Native, Expo, AI workflows, and production discipline.",
   keywords: [
     "product engineer",
     "fullstack developer",
-    "ai-native",
+    "ai workflows",
     "react",
+    "react native",
+    "expo",
     "next.js",
+    "inertia",
     "laravel",
     "typescript",
     "abidjan",

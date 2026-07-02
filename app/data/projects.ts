@@ -17,9 +17,6 @@ export const projectsMeta: ProjectMeta[] = [
   {
     slug: "comafrique",
   },
-  {
-    slug: "divine-grace",
-  },
 ];
 
 export const liveProjects = projectsMeta.filter((p) => p.url);

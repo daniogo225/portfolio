@@ -30,13 +30,13 @@ export default function About() {
           {/* Portrait + name */}
           <div className="col-span-12 lg:col-span-5">
             <ScrollReveal delay={80}>
-              <div className="relative w-full max-w-[360px] aspect-[4/5] mb-8 sm:mb-10 overflow-hidden border border-border">
+              <div className="relative w-full max-w-[380px] aspect-[4/5] mb-8 sm:mb-10 overflow-hidden border border-border">
                 <Image
                   src="/dani2.jpg"
                   alt="Daniogo"
                   fill
-                  className="object-cover object-[70%_30%] grayscale hover:grayscale-0 transition-[filter] duration-700"
-                  sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover object-[50%_90%] grayscale hover:grayscale-0 transition-[filter] duration-700"
+                  sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
                 />
               </div>
             </ScrollReveal>

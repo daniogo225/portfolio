@@ -27,7 +27,7 @@ export default function Projects() {
         </ScrollReveal>
 
         {/* Title block */}
-        <div className="grid grid-cols-12 gap-4 sm:gap-6 mb-16 sm:mb-20 lg:mb-28">
+        <div className="grid grid-cols-12 gap-4 sm:gap-6 mb-12 sm:mb-16 lg:mb-20">
           <ScrollReveal className="col-span-12 lg:col-span-7" delay={80}>
             <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.035em] font-medium">
               {t.work.title}
@@ -41,13 +41,18 @@ export default function Projects() {
         </div>
 
         {/* Projects list — editorial rows */}
-        <ol className="space-y-px">
+        <ol className="space-y-0 border-y border-border">
           {t.work.items.map((project, i) => {
             const meta = projectsMeta[i];
             const num = String(i + 1).padStart(2, "0");
+            const isEnterprise = project.title === "Comafrique Technologies";
             return (
               <ScrollReveal key={project.title} delay={120 + i * 100}>
-                <li className="group relative grid grid-cols-12 gap-4 sm:gap-6 py-10 sm:py-14 lg:py-16 border-t border-border first:border-t-0 transition-colors duration-700">
+                <li
+                  className={`group relative grid grid-cols-12 gap-4 sm:gap-6 py-10 sm:py-14 lg:py-16 transition-colors duration-700 ${
+                    i > 0 ? "border-t border-border" : ""
+                  } ${isEnterprise ? "bg-surface/45 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8" : ""}`}
+                >
                   {/* Index */}
                   <div className="col-span-12 lg:col-span-1">
                     <span className="font-mono text-accent text-[11px] sm:text-[12px] tracking-[0.18em]">
@@ -74,18 +79,20 @@ export default function Projects() {
 
                   {/* Description + stack + metrics */}
                   <div className="col-span-12 lg:col-span-6 flex flex-col gap-6">
-                    <p className="text-muted text-sm sm:text-base leading-[1.7]">
+                    <p className="text-foreground/70 text-sm sm:text-base leading-[1.75]">
                       {project.description}
                     </p>
 
                     {"metrics" in project && project.metrics && (
-                      <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-6 border-t border-border">
+                      <div className={`grid grid-cols-3 gap-4 sm:gap-6 pt-6 border-t border-border ${
+                        isEnterprise ? "border-foreground/15" : ""
+                      }`}>
                         {project.metrics.map((m) => (
                           <div key={m.label}>
-                            <p className="font-display text-xl sm:text-2xl leading-none tracking-[-0.02em]">
+                            <p className="font-display text-2xl sm:text-3xl leading-none tracking-[-0.025em]">
                               {m.value}
                             </p>
-                            <p className="font-mono text-[9px] sm:text-[10px] tracking-[0.15em] uppercase text-muted mt-2">
+                            <p className="font-mono text-[9px] sm:text-[10px] tracking-[0.12em] uppercase text-muted mt-2">
                               {m.label}
                             </p>
                           </div>
@@ -103,7 +110,7 @@ export default function Projects() {
                       {project.stack.map((tech) => (
                         <span
                           key={tech}
-                          className="font-mono text-[10px] tracking-[0.05em] text-muted border border-border px-2.5 py-1.5"
+                          className="font-mono text-[10px] tracking-[0.04em] text-foreground/65 border border-border bg-background/35 px-2.5 py-1.5"
                         >
                           {tech}
                         </span>
@@ -116,7 +123,7 @@ export default function Projects() {
                         target="_blank"
                         rel="noopener noreferrer"
                         data-hover
-                        className="group/link inline-flex items-center gap-2.5 self-start min-h-[44px] px-5 py-2.5 bg-foreground text-background font-mono text-[11px] sm:text-[12px] tracking-[0.12em] uppercase hover:bg-accent transition-colors duration-500"
+                        className="group/link inline-flex items-center gap-2.5 self-start min-h-[50px] px-6 py-2.5 bg-foreground text-background font-mono text-[13px] tracking-[0.03em] uppercase hover:bg-accent transition-colors duration-500"
                       >
                         {t.work.visitLabel}
                         <span className="inline-block transition-transform duration-500 group-hover/link:translate-x-1 group-hover/link:-translate-y-0.5">

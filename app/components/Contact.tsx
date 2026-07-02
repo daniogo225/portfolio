@@ -27,7 +27,7 @@ export default function Contact() {
 
         {/* Headline */}
         <ScrollReveal delay={80}>
-          <h2 className="font-display text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.95] tracking-[-0.04em] font-medium mb-12 sm:mb-16 max-w-[12ch]">
+          <h2 className="font-display text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.95] tracking-[-0.04em] font-medium mb-10 sm:mb-14 max-w-[13ch]">
             <span className="block">{t.contact.titleLine1}</span>
             <span className="block">{t.contact.titleLine2}</span>
             <span className="block">
@@ -41,15 +41,15 @@ export default function Contact() {
         {/* Availability + hint */}
         <ScrollReveal delay={200} className="mb-10 sm:mb-12">
           <div className="grid grid-cols-12 gap-4 sm:gap-6">
-            <div className="col-span-12 lg:col-span-7 lg:col-start-6">
-              <div className="flex items-center gap-3 mb-4 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-muted">
+            <div className="col-span-12 lg:col-span-8 lg:col-start-5">
+              <div className="flex items-center gap-3 mb-4 font-mono text-[10px] sm:text-[11px] tracking-[0.12em] uppercase text-foreground/60">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inset-0 rounded-full bg-accent opacity-50 animate-ping" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
                 </span>
                 {t.contact.availability}
               </div>
-              <p className="text-muted text-base sm:text-lg leading-[1.7] max-w-[42ch]">
+              <p className="text-foreground/75 text-base sm:text-lg leading-[1.7] max-w-[46ch]">
                 {t.contact.hint}
               </p>
             </div>
@@ -59,13 +59,13 @@ export default function Contact() {
         {/* CTAs */}
         <ScrollReveal delay={280}>
           <div className="grid grid-cols-12 gap-4 sm:gap-6">
-            <div className="col-span-12 lg:col-span-7 lg:col-start-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <div className="col-span-12 lg:col-span-8 lg:col-start-5 flex flex-col sm:flex-row gap-3 sm:gap-4">
               <a
                 href={`mailto:${t.contact.emailLabel}`}
                 data-hover
-                className="group inline-flex items-center justify-center gap-2 min-h-[52px] px-6 bg-foreground text-background font-mono text-[12px] tracking-[0.12em] uppercase hover:bg-accent transition-colors duration-500"
+                className="group inline-flex items-center justify-center gap-2 min-h-[56px] px-6 sm:px-7 bg-foreground text-background font-mono text-[13px] tracking-[0.03em] uppercase hover:bg-accent transition-colors duration-500"
               >
-                <span>{t.contact.emailLabel}</span>
+                <span className="whitespace-nowrap">{t.contact.emailLabel}</span>
                 <span className="inline-block transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                   ↗
                 </span>
@@ -75,9 +75,9 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-hover
-                className="group inline-flex items-center justify-center gap-2 min-h-[52px] px-6 border border-border text-foreground font-mono text-[12px] tracking-[0.12em] uppercase hover:border-foreground transition-colors duration-500"
+                className="group inline-flex items-center justify-center gap-2 min-h-[56px] px-6 sm:px-7 border border-border text-foreground font-mono text-[13px] tracking-[0.03em] uppercase hover:border-foreground hover:bg-surface transition-colors duration-500"
               >
-                <span>{t.contact.ctaCall}</span>
+                <span className="whitespace-nowrap">{t.contact.ctaCall}</span>
                 <span className="inline-block transition-transform duration-500 group-hover:translate-x-0.5">
                   →
                 </span>

@@ -49,7 +49,7 @@ function MagneticLink({
   }, []);
 
   const base =
-    "magnetic-link group relative inline-flex items-center justify-center gap-2 font-mono text-[12px] tracking-[0.12em] uppercase min-h-[48px] px-6";
+    "magnetic-link group relative inline-flex items-center justify-center gap-2 font-mono text-[13px] sm:text-[14px] tracking-[0.03em] uppercase min-h-[54px] px-7 sm:px-8";
   const styles =
     variant === "primary"
       ? "bg-foreground text-background hover:bg-accent"
@@ -109,7 +109,7 @@ export default function Hero() {
 
       {/* Title block */}
       <div className="relative max-w-[1400px] mx-auto w-full grid grid-cols-12 gap-4 sm:gap-6 flex-1 content-center my-6 sm:my-8 lg:my-0">
-        <h1 className="col-span-12 lg:col-span-10 font-display text-[clamp(2.25rem,6.5vw,6.5rem)] leading-[0.95] tracking-[-0.04em] font-medium">
+        <h1 className="col-span-12 lg:col-span-10 font-display text-[clamp(2.4rem,6.5vw,6.5rem)] leading-[0.95] tracking-[-0.04em] font-medium">
           <span className="block overflow-hidden">
             <span
               className="block"
@@ -140,9 +140,9 @@ export default function Hero() {
           </span>
         </h1>
 
-        <div className="col-span-12 lg:col-span-8 lg:col-start-5 mt-6 sm:mt-8 lg:mt-8">
+        <div className="col-span-12 lg:col-span-7 lg:col-start-6 mt-7 sm:mt-9 lg:mt-10">
           <p
-            className="text-muted text-base sm:text-lg leading-[1.6] max-w-[480px] lg:ml-auto"
+            className="text-foreground/75 text-[1.05rem] sm:text-xl leading-[1.65] max-w-[560px] lg:ml-auto"
             style={{
               opacity: loaded ? 1 : 0,
               transform: loaded ? "translateY(0)" : "translateY(12px)",
@@ -153,7 +153,7 @@ export default function Hero() {
           </p>
 
           <div
-            className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 lg:justify-end"
+            className="mt-7 sm:mt-9 flex flex-col sm:flex-row gap-3 sm:gap-4 lg:justify-end"
             style={{
               opacity: loaded ? 1 : 0,
               transform: loaded ? "translateY(0)" : "translateY(12px)",
