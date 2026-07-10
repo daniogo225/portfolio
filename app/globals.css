@@ -216,9 +216,6 @@
 .reveal-mask {
   display: block;
   overflow: hidden;
-}
-
-.reveal-mask:nth-child(3) {
   margin-bottom: -0.14em;
   padding-bottom: 0.14em;
 }
@@ -279,52 +276,298 @@
   transform: rotate(-1deg) translateY(-8px);
 }
 
-.systems-visual {
+.systems-stage {
+  --systems-light-x: 34%;
+  --systems-light-y: 26%;
+  --systems-tilt-x: 0deg;
+  --systems-tilt-y: 0deg;
+  position: relative;
+  height: clamp(460px, 45vw, 610px);
+  min-height: 460px;
   isolation: isolate;
-  background:
-    radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 34%),
-    #10100f;
+  overflow: visible;
+  perspective: 1100px;
 }
 
-.systems-visual::before {
+.systems-stage::before {
   position: absolute;
-  inset: 0;
+  inset: -8%;
+  z-index: -2;
+  content: "";
+  opacity: 0.55;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--border) 54%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--border) 54%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at center, black 0%, rgba(0, 0, 0, 0.68) 42%, transparent 76%);
+}
+
+.systems-stage::after {
+  position: absolute;
+  inset: 8% 4% 7%;
   z-index: -1;
   content: "";
-  opacity: 0.4;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 36px 36px;
-  mask-image: radial-gradient(circle at center, black, transparent 72%);
+  pointer-events: none;
+  background: radial-gradient(circle at 56% 47%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 48%);
+  filter: blur(34px);
 }
 
-.systems-map {
+.systems-stage-meta {
   position: absolute;
-  inset: 3rem 1.5rem 3.4rem;
+  inset: 0 0 auto;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.systems-orbit-line {
-  stroke-dasharray: 3 8;
-  animation: orbitFlow 18s linear infinite;
+.systems-scene {
+  position: absolute;
+  inset: 3rem 0 4.8rem;
+  transform: rotateX(var(--systems-tilt-x)) rotateY(var(--systems-tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 500ms var(--ease-premium);
 }
 
-.systems-orbit-line:nth-of-type(2) {
-  animation-duration: 24s;
-  animation-direction: reverse;
+.systems-connections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  transform: translateZ(-24px);
 }
 
-.systems-core {
+.systems-connections line {
+  vector-effect: non-scaling-stroke;
+  stroke: color-mix(in srgb, var(--foreground) 18%, transparent);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 7;
+  transition: stroke 350ms ease, stroke-width 350ms ease;
+}
+
+.systems-connections line.is-active {
+  stroke: color-mix(in srgb, var(--accent) 78%, transparent);
+  stroke-width: 1.4;
+}
+
+.systems-orbit-3d {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(92%, 680px);
+  height: 38%;
+  border: 1px solid color-mix(in srgb, var(--foreground) 17%, transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+.systems-orbit-3d span {
+  position: absolute;
+  left: -4px;
+  top: calc(50% - 4px);
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--background);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 12%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 58%, transparent);
+}
+
+.systems-orbit-3d--one {
+  animation: systemsOrbitOne 20s linear infinite;
+}
+
+.systems-orbit-3d--two {
+  width: min(78%, 560px);
+  height: 48%;
+  animation: systemsOrbitTwo 25s linear infinite reverse;
+}
+
+.systems-orbit-3d--three {
+  width: min(72%, 500px);
+  height: 56%;
+  animation: systemsOrbitThree 31s linear infinite;
+}
+
+.systems-globe-3d {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(176px, 24vw, 270px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 86%, #fff 14%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at var(--systems-light-x) var(--systems-light-y), #ffe0d5 0 5%, #ff9b82 16%, var(--accent) 44%, #aa351f 72%, #37130e 100%);
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--accent) 60%, transparent),
-    0 0 0 12px color-mix(in srgb, var(--accent) 8%, transparent),
-    0 24px 70px rgba(0, 0, 0, 0.45);
+    inset -28px -34px 54px rgba(49, 12, 6, 0.5),
+    inset 18px 16px 30px rgba(255, 255, 255, 0.17),
+    0 0 0 11px color-mix(in srgb, var(--accent) 7%, transparent),
+    0 42px 90px rgba(0, 0, 0, 0.38),
+    0 0 70px color-mix(in srgb, var(--accent) 22%, transparent);
+  transform: translate(-50%, -50%) translateZ(74px);
+  transform-style: preserve-3d;
+  transition: background 180ms linear, box-shadow 500ms ease;
 }
 
-.systems-node-pulse {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: nodePulse 2.8s ease-in-out infinite;
+.systems-globe-3d::after {
+  position: absolute;
+  inset: 5%;
+  content: "";
+  border: 1px solid rgba(34, 12, 8, 0.24);
+  border-radius: 50%;
+}
+
+.systems-globe-grid {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid rgba(43, 14, 8, 0.34);
+  border-radius: 50%;
+}
+
+.systems-globe-grid--vertical {
+  inset: 6% 31%;
+}
+
+.systems-globe-grid--turned {
+  transform: rotate(90deg);
+}
+
+.systems-globe-grid--horizontal {
+  inset: 31% 6%;
+}
+
+.systems-globe-grid--lower {
+  inset: 42% 6% 20%;
+}
+
+.systems-globe-label {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #1b0f0a;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.systems-globe-label strong {
+  font-size: clamp(2.1rem, 5vw, 3.5rem);
+  line-height: 0.85;
+  letter-spacing: -0.08em;
+}
+
+.systems-globe-label span {
+  margin-top: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.systems-network-node {
+  position: absolute;
+  left: var(--node-x);
+  top: var(--node-y);
+  z-index: 12;
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--background) 84%, transparent);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+  transform: translate(-50%, -50%) translateZ(52px);
+  backdrop-filter: blur(12px);
+  transition: color 300ms ease, border-color 300ms ease, background 300ms ease, box-shadow 300ms ease;
+}
+
+.systems-network-node:hover,
+.systems-network-node:focus-visible,
+.systems-network-node.is-active {
+  border-color: color-mix(in srgb, var(--accent) 52%, transparent);
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--background) 94%, var(--accent) 6%);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.systems-network-node:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.systems-network-dot {
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--background);
+  border-radius: 50%;
+  background: var(--foreground);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--foreground) 7%, transparent);
+  animation: systemsNodeSignal 3.2s ease-in-out infinite;
+  animation-delay: var(--node-delay);
+}
+
+.systems-network-node.is-active .systems-network-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 12%, transparent), 0 0 20px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.systems-stage-readout {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  display: grid;
+  width: min(100%, 285px);
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.9rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.85rem;
+}
+
+.systems-stage-readout-index {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 9px;
+}
+
+.systems-stage-readout div {
+  display: flex;
+  flex-direction: column;
+}
+
+.systems-stage-readout strong {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.systems-stage-readout div span {
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .project-index {
@@ -351,13 +594,24 @@
   65%, 100% { box-shadow: 0 0 0 10px transparent; }
 }
 
-@keyframes orbitFlow {
-  to { stroke-dashoffset: -110; }
+@keyframes systemsOrbitOne {
+  from { transform: translate(-50%, -50%) rotateX(68deg) rotateZ(4deg); }
+  to { transform: translate(-50%, -50%) rotateX(68deg) rotateZ(364deg); }
 }
 
-@keyframes nodePulse {
-  0%, 100% { opacity: 0.55; transform: scale(0.82); }
-  50% { opacity: 1; transform: scale(1.2); }
+@keyframes systemsOrbitTwo {
+  from { transform: translate(-50%, -50%) rotateY(72deg) rotateZ(-18deg); }
+  to { transform: translate(-50%, -50%) rotateY(72deg) rotateZ(342deg); }
+}
+
+@keyframes systemsOrbitThree {
+  from { transform: translate(-50%, -50%) rotateX(58deg) rotateY(52deg) rotateZ(12deg); }
+  to { transform: translate(-50%, -50%) rotateX(58deg) rotateY(52deg) rotateZ(372deg); }
+}
+
+@keyframes systemsNodeSignal {
+  0%, 100% { opacity: 0.55; transform: scale(0.84); }
+  50% { opacity: 1; transform: scale(1.16); }
 }
 
 @keyframes slowDrift {
@@ -376,8 +630,40 @@
     height: 320px;
   }
 
-  .systems-map {
-    inset: 3.2rem 0.25rem 3.2rem;
+  .systems-stage {
+    height: 470px;
+    min-height: 470px;
+  }
+
+  .systems-stage::before {
+    inset: -3%;
+    background-size: 34px 34px;
+  }
+
+  .systems-scene {
+    inset: 3.7rem -0.5rem 5.2rem;
+  }
+
+  .systems-globe-3d {
+    width: 168px;
+  }
+
+  .systems-network-node {
+    min-height: 30px;
+    gap: 0.4rem;
+    padding: 0.35rem 0.48rem;
+    font-size: 7px;
+  }
+
+  .systems-network-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .systems-stage-readout {
+    left: 0;
+    right: auto;
+    width: 100%;
   }
 }
 

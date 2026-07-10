@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import { projectsMeta } from "../data/projects";
 import { useI18n } from "../i18n";
 import ScrollReveal from "./ScrollReveal";
@@ -33,78 +34,101 @@ function ContractVisual({ locale }: { locale: "en" | "fr" }) {
 }
 
 function SystemsVisual({ locale }: { locale: "en" | "fr" }) {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [activeNode, setActiveNode] = useState("ops");
+  const nodes = [
+    { key: "web", label: "WEB", x: 13, y: 48, detail: locale === "fr" ? "Interfaces métier" : "Business interfaces" },
+    { key: "api", label: "API", x: 47, y: 14, detail: locale === "fr" ? "Services et intégrations" : "Services and integrations" },
+    { key: "ops", label: "OPS", x: 86, y: 32, detail: locale === "fr" ? "Opérations en temps réel" : "Real-time operations" },
+    { key: "data", label: "DATA", x: 79, y: 79, detail: locale === "fr" ? "Données décisionnelles" : "Decision data" },
+    { key: "mobile", label: "MOBILE", x: 20, y: 81, detail: locale === "fr" ? "Expériences terrain" : "Field experiences" },
+  ];
+  const selectedNode = nodes.find((node) => node.key === activeNode) ?? nodes[2];
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const bounds = stage.getBoundingClientRect();
+    const relativeX = (event.clientX - bounds.left) / bounds.width;
+    const relativeY = (event.clientY - bounds.top) / bounds.height;
+    stage.style.setProperty("--systems-tilt-x", `${(0.5 - relativeY) * 10}deg`);
+    stage.style.setProperty("--systems-tilt-y", `${(relativeX - 0.5) * 14}deg`);
+    stage.style.setProperty("--systems-light-x", `${relativeX * 100}%`);
+    stage.style.setProperty("--systems-light-y", `${relativeY * 100}%`);
+  };
+
+  const resetTilt = () => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    stage.style.setProperty("--systems-tilt-x", "0deg");
+    stage.style.setProperty("--systems-tilt-y", "0deg");
+    stage.style.setProperty("--systems-light-x", "34%");
+    stage.style.setProperty("--systems-light-y", "26%");
+  };
+
   return (
-    <div className="project-visual systems-visual">
-      <div className="absolute inset-x-4 top-4 z-20 flex items-center justify-between font-mono text-[8px] uppercase tracking-[0.14em] text-white/45">
+    <div
+      ref={stageRef}
+      className="systems-stage"
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetTilt}
+      role="group"
+      aria-label={locale === "fr" ? "Topologie interactive des systèmes Comafrique" : "Interactive Comafrique systems topology"}
+    >
+      <div className="systems-stage-meta" aria-hidden="true">
         <span>Enterprise systems / 02</span>
-        <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-accent" />Live topology</span>
+        <span className="flex items-center gap-2"><span className="signal-dot !h-1.5 !w-1.5" />{locale === "fr" ? "Topologie active" : "Live topology"}</span>
       </div>
 
-      <div className="systems-map">
-        <svg viewBox="0 0 700 400" className="h-full w-full" role="img" aria-label={locale === "fr" ? "Cartographie d’un système métier" : "Business system topology"}>
-          <defs>
-            <radialGradient id="signal-core" cx="36%" cy="30%" r="72%">
-              <stop offset="0%" stopColor="#ffc0ad" />
-              <stop offset="55%" stopColor="var(--accent)" />
-              <stop offset="100%" stopColor="#a92f18" />
-            </radialGradient>
-            <filter id="signal-glow" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="5" result="blur" />
-              <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-            </filter>
-          </defs>
-
-          <g fill="none" stroke="rgba(232,227,216,0.18)" strokeWidth="1">
-            <ellipse className="systems-orbit-line" cx="350" cy="200" rx="270" ry="92" />
-            <ellipse className="systems-orbit-line" cx="350" cy="200" rx="250" ry="82" transform="rotate(58 350 200)" />
-            <ellipse className="systems-orbit-line" cx="350" cy="200" rx="250" ry="82" transform="rotate(-58 350 200)" />
-          </g>
-
-          <g stroke="rgba(255,104,70,0.25)" strokeWidth="1" strokeDasharray="2 7">
-            <path d="M350 200 L350 54" />
-            <path d="M350 200 L574 142" />
-            <path d="M350 200 L516 326" />
-            <path d="M350 200 L184 326" />
-            <path d="M350 200 L126 196" />
-          </g>
-
-          {([
-            { x: 350, y: 54, label: "API", anchor: "middle" },
-            { x: 574, y: 142, label: "OPS", anchor: "start" },
-            { x: 516, y: 326, label: "DATA", anchor: "start" },
-            { x: 184, y: 326, label: "MOBILE", anchor: "end" },
-            { x: 126, y: 196, label: "WEB", anchor: "end" },
-          ] as const).map((node, index) => (
-            <g key={node.label}>
-              <circle className="systems-node-pulse" cx={node.x} cy={node.y} r="10" fill="rgba(255,104,70,0.14)" style={{ animationDelay: `${index * 220}ms` }} />
-              <circle cx={node.x} cy={node.y} r="4" fill={index === 1 ? "var(--accent)" : "#eee9df"} />
-              <text x={node.x + (node.anchor === "start" ? 16 : node.anchor === "end" ? -16 : 0)} y={node.y + (node.anchor === "middle" ? -15 : 4)} textAnchor={node.anchor} fill="rgba(255,255,255,0.62)" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="1.5">{node.label}</text>
-            </g>
+      <div className="systems-scene">
+        <svg className="systems-connections" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          {nodes.map((node) => (
+            <line key={node.key} className={activeNode === node.key ? "is-active" : ""} x1="50" y1="50" x2={node.x} y2={node.y} />
           ))}
-
-          <g fill="none" stroke="rgba(17,17,15,0.32)" strokeWidth="1">
-            <ellipse cx="350" cy="200" rx="43" ry="80" />
-            <ellipse cx="350" cy="200" rx="76" ry="28" />
-            <path d="M272 200 H428" />
-            <path d="M350 122 V278" />
-          </g>
-          <circle cx="350" cy="200" r="79" fill="url(#signal-core)" filter="url(#signal-glow)" />
-          <g fill="none" stroke="rgba(17,17,15,0.32)" strokeWidth="1">
-            <ellipse cx="350" cy="200" rx="42" ry="78" />
-            <ellipse cx="350" cy="200" rx="75" ry="27" />
-            <path d="M273 200 H427" />
-          </g>
         </svg>
 
-        <div className="systems-core absolute left-1/2 top-1/2 z-20 flex h-[104px] w-[104px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full text-[#17130c] sm:h-[126px] sm:w-[126px]">
-          <strong className="text-2xl tracking-[-0.06em] sm:text-3xl">CT</strong>
-          <span className="mt-1 font-mono text-[6px] uppercase tracking-[0.16em] sm:text-[7px]">{locale === "fr" ? "Système métier" : "Business system"}</span>
+        <div className="systems-orbit-3d systems-orbit-3d--one"><span /></div>
+        <div className="systems-orbit-3d systems-orbit-3d--two"><span /></div>
+        <div className="systems-orbit-3d systems-orbit-3d--three"><span /></div>
+
+        <div className="systems-globe-3d" aria-hidden="true">
+          <div className="systems-globe-grid systems-globe-grid--vertical" />
+          <div className="systems-globe-grid systems-globe-grid--vertical systems-globe-grid--turned" />
+          <div className="systems-globe-grid systems-globe-grid--horizontal" />
+          <div className="systems-globe-grid systems-globe-grid--horizontal systems-globe-grid--lower" />
+          <div className="systems-globe-label">
+            <strong>CT</strong>
+            <span>{locale === "fr" ? "Système métier" : "Business system"}</span>
+          </div>
         </div>
+
+        {nodes.map((node, index) => (
+          <button
+            key={node.key}
+            type="button"
+            className={`systems-network-node ${activeNode === node.key ? "is-active" : ""}`}
+            data-node={node.key}
+            style={{ "--node-x": `${node.x}%`, "--node-y": `${node.y}%`, "--node-delay": `${index * -1.1}s` } as CSSProperties}
+            onPointerEnter={() => setActiveNode(node.key)}
+            onFocus={() => setActiveNode(node.key)}
+            onClick={() => setActiveNode(node.key)}
+            aria-pressed={activeNode === node.key}
+          >
+            <span className="systems-network-dot" />
+            <span>{node.label}</span>
+          </button>
+        ))}
       </div>
 
-      <div className="absolute inset-x-4 bottom-4 z-20 flex items-center justify-between border-t border-white/10 pt-3 font-mono text-[7px] uppercase tracking-[0.13em] text-white/35 sm:text-[8px]">
-        <span>Web · Mobile · Data</span>
-        <span>{locale === "fr" ? "Architecture opérationnelle" : "Operational architecture"}</span>
+      <div className="systems-stage-readout" aria-live="polite">
+        <span className="systems-stage-readout-index">0{nodes.findIndex((node) => node.key === activeNode) + 1}</span>
+        <div>
+          <strong>{selectedNode.label}</strong>
+          <span>{selectedNode.detail}</span>
+        </div>
       </div>
     </div>
   );
