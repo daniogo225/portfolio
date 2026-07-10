@@ -20,6 +20,13 @@ export const metadata: Metadata = {
   title: "Daniogo — Ingénieur produit",
   description:
     "Ingénieur produit à Abidjan. Je conçois et livre des systèmes web, mobile et IA pensés pour la production.",
+  icons: {
+    icon: {
+      url: "/portraits/daniogo-product-engineer-cutout.png",
+      type: "image/png",
+    },
+    apple: "/portraits/daniogo-product-engineer-cutout.png",
+  },
   keywords: [
     "product engineer",
     "fullstack developer",
