@@ -139,7 +139,7 @@
 }
 
 .content-shell {
-  width: min(100% - 40px, 1480px);
+  width: min(calc(100% - 40px), 1480px);
   margin-inline: auto;
 }
 
@@ -214,7 +214,16 @@
 }
 
 .reveal-mask {
+  display: block;
   overflow: hidden;
+}
+
+.hero-portrait-system {
+  top: 50%;
+  right: clamp(-110px, -6vw, -54px);
+  width: clamp(600px, 48vw, 780px);
+  height: clamp(600px, 48vw, 780px);
+  transform: translateY(-48%);
 }
 
 .reveal-mask > span {
@@ -232,7 +241,8 @@
 
 .project-visual {
   position: relative;
-  min-height: clamp(290px, 38vw, 520px);
+  height: clamp(320px, 34vw, 460px);
+  min-height: 0;
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--surface);
@@ -264,39 +274,52 @@
   transform: rotate(-1deg) translateY(-8px);
 }
 
-.system-orbit {
-  position: absolute;
-  inset: 9%;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  animation: orbitSpin 22s linear infinite;
+.systems-visual {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 34%),
+    #10100f;
 }
 
-.system-orbit::before,
-.system-orbit::after {
+.systems-visual::before {
   position: absolute;
-  border: 1px solid var(--border);
-  border-radius: 50%;
+  inset: 0;
+  z-index: -1;
   content: "";
+  opacity: 0.4;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(circle at center, black, transparent 72%);
 }
 
-.system-orbit::before {
-  inset: 17%;
-}
-
-.system-orbit::after {
-  inset: 36%;
-  border-color: var(--accent);
-}
-
-.system-node {
+.systems-map {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  border: 2px solid var(--surface);
-  border-radius: 50%;
-  background: var(--foreground);
-  box-shadow: 0 0 0 1px var(--border);
+  inset: 3rem 1.5rem 3.4rem;
+}
+
+.systems-orbit-line {
+  stroke-dasharray: 3 8;
+  animation: orbitFlow 18s linear infinite;
+}
+
+.systems-orbit-line:nth-of-type(2) {
+  animation-duration: 24s;
+  animation-direction: reverse;
+}
+
+.systems-core {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 60%, transparent),
+    0 0 0 12px color-mix(in srgb, var(--accent) 8%, transparent),
+    0 24px 70px rgba(0, 0, 0, 0.45);
+}
+
+.systems-node-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: nodePulse 2.8s ease-in-out infinite;
 }
 
 .project-index {
@@ -323,8 +346,13 @@
   65%, 100% { box-shadow: 0 0 0 10px transparent; }
 }
 
-@keyframes orbitSpin {
-  to { transform: rotate(360deg); }
+@keyframes orbitFlow {
+  to { stroke-dashoffset: -110; }
+}
+
+@keyframes nodePulse {
+  0%, 100% { opacity: 0.55; transform: scale(0.82); }
+  50% { opacity: 1; transform: scale(1.2); }
 }
 
 @keyframes slowDrift {
@@ -334,7 +362,17 @@
 
 @media (min-width: 768px) {
   .content-shell {
-    width: min(100% - 80px, 1480px);
+    width: min(calc(100% - 80px), 1480px);
+  }
+}
+
+@media (max-width: 640px) {
+  .project-visual {
+    height: 320px;
+  }
+
+  .systems-map {
+    inset: 3.2rem 0.25rem 3.2rem;
   }
 }
 

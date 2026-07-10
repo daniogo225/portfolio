@@ -72,7 +72,7 @@ export default function Hero() {
               <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted">{copy.label}</span>
             </div>
 
-            <h1 className="font-display text-[clamp(3.6rem,9.5vw,9.3rem)] leading-[0.77] text-foreground">
+            <h1 className="font-display text-[clamp(3.6rem,8vw,8.2rem)] leading-[0.8] text-foreground">
               <span className="reveal-mask"><span>{copy.lines[0]}</span></span>
               <span className="reveal-mask"><span className="serif-accent ml-[7vw] text-accent lg:ml-[10vw]">{copy.lines[1]}</span></span>
               <span className="reveal-mask"><span>{copy.lines[2]}</span></span>
@@ -110,7 +110,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="pointer-events-none absolute right-[-13vw] top-[13%] z-0 hidden h-[56vw] min-h-[620px] w-[56vw] min-w-[620px] lg:block lg:opacity-95">
+          <div className="hero-portrait-system pointer-events-none absolute z-0 hidden lg:block lg:opacity-95">
             <div ref={visualRef} className="relative h-full w-full transition-transform duration-700 ease-out">
               <div className="absolute inset-0 rounded-full border border-border" />
               <div className="absolute inset-[12%] rounded-full border border-border" />

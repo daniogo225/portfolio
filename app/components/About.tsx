@@ -15,7 +15,7 @@ export default function About() {
     <section id="about" className="section-space overflow-hidden bg-surface">
       <div className="content-shell">
         <div className="grid grid-cols-12 gap-x-4 gap-y-12 lg:gap-x-8">
-          <ScrollReveal className="col-span-12 lg:col-span-5" direction="left">
+          <ScrollReveal className="col-span-12 lg:col-span-5">
             <div className="relative aspect-[4/5] max-h-[720px]">
               <div className="absolute left-1/2 top-[47%] h-[70%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" />
               <div className="absolute left-1/2 top-[47%] h-[86%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-border" />
