@@ -1,72 +1,58 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
-  const [visible, setVisible] = useState(false);
-  const [hovering, setHovering] = useState(false);
-  const posRef = useRef({ x: -100, y: -100 });
-  const dotRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>(0);
+  const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (window.matchMedia("(pointer: coarse), (prefers-reduced-motion: reduce)").matches) return;
 
-    setVisible(true);
+    const cursor = cursorRef.current;
+    if (!cursor) return;
 
-    const lerp = { x: -100, y: -100 };
-    const speed = 0.18;
+    let frame = 0;
+    let currentX = -40;
+    let currentY = -40;
+    let targetX = -40;
+    let targetY = -40;
 
-    const animate = () => {
-      lerp.x += (posRef.current.x - lerp.x) * speed;
-      lerp.y += (posRef.current.y - lerp.y) * speed;
-
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${lerp.x}px, ${lerp.y}px)`;
-      }
-      rafRef.current = requestAnimationFrame(animate);
+    const render = () => {
+      currentX += (targetX - currentX) * 0.2;
+      currentY += (targetY - currentY) * 0.2;
+      cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+      frame = requestAnimationFrame(render);
     };
 
-    const onMove = (e: MouseEvent) => {
-      posRef.current = { x: e.clientX, y: e.clientY };
+    const move = (event: MouseEvent) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      cursor.dataset.visible = "true";
     };
 
-    const onOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      setHovering(!!target.closest("a, button, [data-hover]"));
+    const over = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      cursor.dataset.active = target.closest("a, button, [data-hover]") ? "true" : "false";
     };
 
-    window.addEventListener("mousemove", onMove, { passive: true });
-    window.addEventListener("mouseover", onOver, { passive: true });
-    rafRef.current = requestAnimationFrame(animate);
+    window.addEventListener("mousemove", move, { passive: true });
+    window.addEventListener("mouseover", over, { passive: true });
+    frame = requestAnimationFrame(render);
 
     return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseover", onOver);
-      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseover", over);
+      cancelAnimationFrame(frame);
     };
   }, []);
 
-  if (!visible) return null;
-
   return (
     <div
-      ref={dotRef}
-      className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
-      style={{ willChange: "transform" }}
+      ref={cursorRef}
       aria-hidden
-    >
-      <div
-        className="rounded-full bg-white transition-[width,height,margin,opacity] duration-300 ease-out"
-        style={{
-          width: hovering ? 44 : 8,
-          height: hovering ? 44 : 8,
-          marginLeft: hovering ? -22 : -4,
-          marginTop: hovering ? -22 : -4,
-          opacity: hovering ? 0.35 : 1,
-        }}
-      />
-    </div>
+      data-visible="false"
+      data-active="false"
+      className="fixed left-0 top-0 z-[90] hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-accent pointer-events-none opacity-0 transition-[width,height,opacity,background-color] duration-300 data-[visible=true]:opacity-100 data-[active=true]:h-12 data-[active=true]:w-12 data-[active=true]:bg-accent/15 lg:block"
+    />
   );
 }

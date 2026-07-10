@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Daniogo — Product Engineer",
+  title: "Daniogo — Ingénieur produit",
   description:
-    "Product engineer in Abidjan building web and mobile products with Laravel, Inertia, React, React Native, Expo, AI workflows, and production discipline.",
+    "Ingénieur produit à Abidjan. Je conçois et livre des systèmes web, mobile et IA pensés pour la production.",
   keywords: [
     "product engineer",
     "fullstack developer",
@@ -42,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${geist.variable} ${geistMono.variable}`}>
+    <html lang="fr" suppressHydrationWarning className={`${geist.variable} ${geistMono.variable} dark`}>
       <body className="antialiased" suppressHydrationWarning>
         <ThemeProvider>
           <I18nProvider>{children}</I18nProvider>

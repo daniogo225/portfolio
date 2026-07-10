@@ -1,71 +1,41 @@
 "use client";
 
-import ScrollReveal from "./ScrollReveal";
 import { useI18n } from "../i18n";
+import ScrollReveal from "./ScrollReveal";
 
 export default function Process() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
+  const note = locale === "fr"
+    ? "La vitesse vient de la clarté, pas de la précipitation."
+    : "Speed comes from clarity, not haste.";
 
   return (
-    <section
-      id="process"
-      className="relative py-24 sm:py-32 lg:py-44 px-6 sm:px-10 lg:px-20 border-t border-border"
-    >
-      <div className="max-w-[1400px] mx-auto">
-        {/* Section header */}
-        <ScrollReveal>
-          <div className="flex items-center gap-4 sm:gap-6 mb-12 sm:mb-16 lg:mb-20">
-            <span className="font-mono text-accent text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
-              {t.process.section}
-            </span>
-            <div className="h-px flex-1 bg-border" />
-            <span className="font-mono text-muted text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
-              {t.process.sectionLabel}
-            </span>
-          </div>
-        </ScrollReveal>
+    <section id="process" className="section-space border-t border-border">
+      <div className="content-shell">
+        <div className="grid grid-cols-12 gap-x-4 gap-y-14 lg:gap-x-8">
+          <ScrollReveal className="col-span-12 lg:col-span-4">
+            <span className="section-kicker">{t.process.sectionLabel}</span>
+            <h2 className="mt-7 font-display text-[clamp(3rem,6vw,6rem)] leading-[0.88]">{t.process.title}</h2>
+            <p className="mt-7 max-w-[26ch] font-serif text-xl italic leading-[1.35] text-accent sm:text-2xl">{note}</p>
+          </ScrollReveal>
 
-        {/* Title block */}
-        <div className="grid grid-cols-12 gap-4 sm:gap-6 mb-16 sm:mb-20 lg:mb-28">
-          <ScrollReveal className="col-span-12 lg:col-span-7" delay={80}>
-            <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.035em] font-medium">
-              {t.process.title}
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal className="col-span-12 lg:col-span-4 lg:col-start-9 flex items-end" delay={160}>
-            <p className="text-muted text-base sm:text-lg leading-[1.7]">
-              {t.process.subtitle}
-            </p>
-          </ScrollReveal>
+          <ol className="col-span-12 lg:col-span-8">
+            {t.process.steps.map((step, index) => (
+              <ScrollReveal key={step.title} delay={index * 90}>
+                <li className="group grid min-h-[220px] grid-cols-12 gap-4 border-t border-border py-8 last:border-b lg:gap-6 lg:py-10">
+                  <div className="col-span-2">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border font-mono text-[9px] text-accent transition-colors duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-[#11110f]">0{index + 1}</span>
+                  </div>
+                  <div className="col-span-10 lg:col-span-5">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">{step.duration}</span>
+                    <h3 className="mt-4 font-display text-3xl leading-[1] sm:text-4xl">{step.title}</h3>
+                  </div>
+                  <p className="col-span-10 col-start-3 mt-4 self-center text-sm leading-[1.75] text-muted sm:text-base lg:col-span-5 lg:col-start-8 lg:mt-0">{step.body}</p>
+                </li>
+              </ScrollReveal>
+            ))}
+          </ol>
         </div>
-
-        {/* Steps — 3 column on desktop, vertical on mobile */}
-        <ol className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-border">
-          {t.process.steps.map((step, i) => (
-            <ScrollReveal
-              key={step.title}
-              delay={120 + i * 100}
-              className="bg-background"
-            >
-              <li className="group relative h-full p-7 sm:p-10 lg:p-12 transition-colors duration-700 hover:bg-surface">
-                <div className="flex items-baseline justify-between mb-8 sm:mb-12">
-                  <span className="font-mono text-accent text-[11px] sm:text-[12px] tracking-[0.18em]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-muted">
-                    {step.duration}
-                  </span>
-                </div>
-                <h3 className="font-display text-2xl sm:text-3xl lg:text-[2rem] leading-[1.1] tracking-[-0.025em] font-medium mb-4 sm:mb-5">
-                  {step.title}
-                </h3>
-                <p className="text-muted text-sm sm:text-base leading-[1.7]">
-                  {step.body}
-                </p>
-              </li>
-            </ScrollReveal>
-          ))}
-        </ol>
       </div>
     </section>
   );

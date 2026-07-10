@@ -1,89 +1,60 @@
 "use client";
 
 import Image from "next/image";
-import ScrollReveal from "./ScrollReveal";
 import { useI18n } from "../i18n";
+import ScrollReveal from "./ScrollReveal";
 
 export default function About() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
+  const portraitLabel = locale === "fr" ? "Portrait / Abidjan / 2026" : "Portrait / Abidjan / 2026";
+  const statement = locale === "fr"
+    ? "Je travaille à la jonction du produit, de l’interface et de l’infrastructure. C’est là que les bonnes idées deviennent des systèmes fiables."
+    : "I work at the intersection of product, interface, and infrastructure. That is where good ideas become reliable systems.";
 
   return (
-    <section
-      id="about"
-      className="relative py-24 sm:py-32 lg:py-44 px-6 sm:px-10 lg:px-20 border-t border-border"
-    >
-      <div className="max-w-[1400px] mx-auto">
-        {/* Section header */}
-        <ScrollReveal>
-          <div className="flex items-center gap-4 sm:gap-6 mb-12 sm:mb-16 lg:mb-20">
-            <span className="font-mono text-accent text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
-              {t.about.section}
-            </span>
-            <div className="h-px flex-1 bg-border" />
-            <span className="font-mono text-muted text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
-              {t.about.sectionLabel}
-            </span>
-          </div>
-        </ScrollReveal>
-
-        <div className="grid grid-cols-12 gap-6 sm:gap-8">
-          {/* Portrait + name */}
-          <div className="col-span-12 lg:col-span-5">
-            <ScrollReveal delay={80}>
-              <div className="relative w-full max-w-[380px] aspect-[4/5] mb-8 sm:mb-10 overflow-hidden border border-border">
+    <section id="about" className="section-space overflow-hidden bg-surface">
+      <div className="content-shell">
+        <div className="grid grid-cols-12 gap-x-4 gap-y-12 lg:gap-x-8">
+          <ScrollReveal className="col-span-12 lg:col-span-5" direction="left">
+            <div className="relative aspect-[4/5] max-h-[720px]">
+              <div className="absolute left-1/2 top-[47%] h-[70%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" />
+              <div className="absolute left-1/2 top-[47%] h-[86%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-border" />
+              <div className="absolute inset-0">
                 <Image
-                  src="/dani2.jpg"
-                  alt="Daniogo"
+                  src="/portraits/daniogo-about-seated-cutout.png"
+                  alt="Daniogo Aboubakar"
                   fill
-                  className="object-cover object-[50%_90%] grayscale hover:grayscale-0 transition-[filter] duration-700"
-                  sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+                  sizes="(min-width: 1024px) 42vw, 100vw"
+                  className="origin-bottom scale-[1.06] object-contain object-bottom drop-shadow-[0_35px_50px_rgba(0,0,0,0.32)] transition-transform duration-[1200ms] hover:scale-[1.09]"
                 />
+                <span className="absolute bottom-3 left-0 font-mono text-[9px] uppercase tracking-[0.14em] text-muted">{portraitLabel}</span>
               </div>
-            </ScrollReveal>
-            <ScrollReveal delay={160}>
-              <h2 className="font-display text-[clamp(2.25rem,5vw,3.5rem)] leading-[1] tracking-[-0.04em] font-medium mb-4">
-                {t.about.title}
-              </h2>
-              <p className="text-muted text-base sm:text-lg leading-[1.6] max-w-[36ch]">
-                {t.about.role}
-              </p>
-            </ScrollReveal>
-          </div>
+              <div className="absolute -bottom-10 -right-4 hidden h-32 w-32 items-center justify-center rounded-full bg-accent text-[#11110f] lg:flex">
+                <span className="font-serif text-6xl italic">D.</span>
+              </div>
+            </div>
+          </ScrollReveal>
 
-          {/* Narrative + timeline */}
           <div className="col-span-12 lg:col-span-6 lg:col-start-7">
-            <div className="space-y-6 sm:space-y-7 mb-12 sm:mb-16 lg:mb-20">
-              <ScrollReveal delay={200}>
-                <p className="text-foreground/90 text-base sm:text-lg leading-[1.7]">
-                  {t.about.paragraph1}
-                </p>
-              </ScrollReveal>
-              <ScrollReveal delay={280}>
-                <p className="text-muted text-base sm:text-lg leading-[1.7]">
-                  {t.about.paragraph2}
-                </p>
-              </ScrollReveal>
-              <ScrollReveal delay={360}>
-                <p className="text-foreground/90 text-base sm:text-lg leading-[1.7]">
-                  {t.about.paragraph3}
-                </p>
-              </ScrollReveal>
+            <ScrollReveal>
+              <span className="section-kicker">{t.about.sectionLabel}</span>
+              <h2 className="mt-7 font-display text-[clamp(3.5rem,7vw,7.5rem)] leading-[0.82]">{t.about.title}</h2>
+              <p className="mt-8 max-w-[26ch] font-serif text-2xl italic leading-[1.3] text-accent sm:text-3xl">{statement}</p>
+            </ScrollReveal>
+
+            <div className="mt-12 space-y-6 text-sm leading-[1.8] text-muted sm:text-base lg:ml-[16%] lg:mt-16">
+              <ScrollReveal delay={100}><p className="text-foreground">{t.about.role}</p></ScrollReveal>
+              <ScrollReveal delay={160}><p>{t.about.paragraph1}</p></ScrollReveal>
+              <ScrollReveal delay={220}><p>{t.about.paragraph2}</p></ScrollReveal>
+              <ScrollReveal delay={280}><p>{t.about.paragraph3}</p></ScrollReveal>
             </div>
 
-            {/* Timeline */}
-            <ScrollReveal delay={440}>
+            <ScrollReveal delay={340} className="mt-12 lg:ml-[16%]">
               <ol className="border-t border-border">
                 {t.about.timeline.map((entry) => (
-                  <li
-                    key={entry.year}
-                    className="grid grid-cols-12 gap-4 py-5 sm:py-6 border-b border-border"
-                  >
-                    <span className="col-span-3 sm:col-span-2 font-mono text-accent text-xs sm:text-sm tracking-[0.1em]">
-                      {entry.year}
-                    </span>
-                    <span className="col-span-9 sm:col-span-10 text-foreground/85 text-sm sm:text-base leading-[1.5]">
-                      {entry.event}
-                    </span>
+                  <li key={entry.year} className="grid grid-cols-[72px_1fr] border-b border-border py-4">
+                    <span className="font-mono text-[10px] tracking-[0.12em] text-accent">{entry.year}</span>
+                    <span className="text-sm text-muted">{entry.event}</span>
                   </li>
                 ))}
               </ol>

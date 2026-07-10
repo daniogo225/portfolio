@@ -1,28 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTheme } from "./ThemeProvider";
+import { useEffect, useState } from "react";
 import { useI18n } from "../i18n";
+import { useTheme } from "./ThemeProvider";
 
 export default function Navigation() {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { locale, setLocale, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
-  const { t, locale, setLocale } = useI18n();
 
   const links = [
-    { label: t.nav.manifesto, href: "#manifesto" },
-    { label: t.nav.approach, href: "#approach" },
-    { label: t.nav.work, href: "#work" },
-    { label: t.nav.process, href: "#process" },
-    { label: t.nav.about, href: "#about" },
-    { label: t.nav.contact, href: "#contact" },
+    { href: "#work", label: t.nav.work },
+    { href: "#capabilities", label: t.nav.capabilities },
+    { href: "#process", label: t.nav.process },
+    { href: "#about", label: t.nav.about },
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const update = () => setScrolled(window.scrollY > 24);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
 
   useEffect(() => {
@@ -33,148 +32,55 @@ export default function Navigation() {
   }, [menuOpen]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] ease-out ${
-        menuOpen
-          ? "bg-background duration-0"
-          : scrolled
-            ? "bg-background/75 backdrop-blur-xl backdrop-saturate-150 border-b border-border duration-700"
-            : "bg-transparent duration-700"
-      }`}
-    >
-      <nav
-        className={`max-w-[1400px] mx-auto flex items-center justify-between px-6 sm:px-10 lg:px-20 transition-[height] duration-500 ease-out ${
-          scrolled ? "h-14 sm:h-16" : "h-16 sm:h-20"
-        }`}
-      >
-        <a
-          href="#"
-          className="group font-display text-lg sm:text-xl tracking-[-0.02em] relative z-50 inline-flex items-center font-medium min-h-[44px] -ml-2 px-2"
-          aria-label="Home"
-        >
-          <span className="transition-colors duration-500 group-hover:text-accent">
-            daniogo
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-700 ${scrolled ? "border-b border-border bg-background/80 backdrop-blur-2xl" : "bg-transparent"}`}>
+      <nav className={`content-shell flex items-center justify-between transition-[height] duration-700 ${scrolled ? "h-16" : "h-20 lg:h-24"}`}>
+        <a href="#top" className="group flex min-h-11 items-center gap-3" aria-label="Daniogo, accueil">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-foreground text-[12px] font-semibold tracking-[-0.03em] text-background transition-transform duration-500 group-hover:rotate-[-8deg]">DA</span>
+          <span className="hidden font-mono text-[10px] uppercase leading-[1.35] tracking-[0.14em] text-muted sm:block">
+            Product systems<br />Abidjan, CI
           </span>
-          <span className="text-accent">.</span>
         </a>
 
-        <div className="hidden lg:flex items-center gap-6">
-          {links.map((link, i) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="relative text-[12px] font-mono tracking-[0.1em] uppercase text-foreground/60 hover:text-foreground transition-colors duration-500 ease-out group min-h-[44px] flex items-center"
-            >
-              <span className="text-muted/40 mr-1.5 group-hover:text-accent transition-colors duration-500">
-                {String(i + 1).padStart(2, "0")}
-              </span>
+        <div className="hidden items-center gap-7 lg:flex">
+          {links.map((link) => (
+            <a key={link.href} href={link.href} className="interactive-line font-mono text-[10px] uppercase tracking-[0.14em] text-muted transition-colors duration-300 hover:text-foreground">
               {link.label}
             </a>
           ))}
-
-          <div className="h-3.5 w-px bg-border" />
-
-          <button
-            onClick={() => setLocale(locale === "en" ? "fr" : "en")}
-            className="font-mono text-[11px] tracking-[0.12em] uppercase text-foreground/60 hover:text-foreground transition-colors duration-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
-            data-hover
-            aria-label="Toggle language"
-          >
-            {locale === "en" ? "FR" : "EN"}
-          </button>
-          <button
-            onClick={toggleTheme}
-            className="font-mono text-[11px] tracking-[0.12em] uppercase text-foreground/60 hover:text-foreground transition-colors duration-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
-            data-hover
-            aria-label="Toggle theme"
-          >
-            {theme === "dark" ? "Light" : "Dark"}
-          </button>
         </div>
 
-        {/* Mobile burger */}
-        <button
-          className="lg:hidden relative z-50 w-11 h-11 flex items-center justify-center"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-          data-hover
-        >
-          <div className="flex flex-col gap-[5px]">
-            <span
-              className={`block w-6 h-px bg-foreground transition-all duration-300 origin-center ${
-                menuOpen ? "rotate-45 translate-y-[3px]" : ""
-              }`}
-            />
-            <span
-              className={`block w-6 h-px bg-foreground transition-all duration-300 origin-center ${
-                menuOpen ? "-rotate-45 -translate-y-[3px]" : ""
-              }`}
-            />
-          </div>
-        </button>
+        <div className="flex items-center gap-1.5">
+          <button onClick={() => setLocale(locale === "fr" ? "en" : "fr")} className="hidden h-10 min-w-10 items-center justify-center border border-border px-3 font-mono text-[10px] uppercase tracking-[0.12em] text-muted transition-colors hover:border-foreground hover:text-foreground sm:flex" aria-label="Changer de langue">
+            {locale === "fr" ? "EN" : "FR"}
+          </button>
+          <button onClick={toggleTheme} className="hidden h-10 min-w-10 items-center justify-center border border-border px-3 font-mono text-[10px] uppercase tracking-[0.12em] text-muted transition-colors hover:border-foreground hover:text-foreground sm:flex" aria-label="Changer de thème">
+            {theme === "dark" ? "Clair" : "Sombre"}
+          </button>
+          <a href="#contact" className="hidden h-10 items-center gap-3 bg-foreground px-4 font-mono text-[10px] uppercase tracking-[0.12em] text-background transition-colors hover:bg-accent sm:flex">
+            {t.nav.contact}<span aria-hidden>↗</span>
+          </a>
+          <button onClick={() => setMenuOpen((value) => !value)} className="flex h-11 w-11 items-center justify-center border border-border lg:hidden" aria-expanded={menuOpen} aria-label="Ouvrir le menu">
+            <span className="relative h-3.5 w-5">
+              <span className={`absolute left-0 top-1 h-px w-5 bg-foreground transition-transform duration-500 ${menuOpen ? "translate-y-[3px] rotate-45" : ""}`} />
+              <span className={`absolute bottom-1 left-0 h-px w-5 bg-foreground transition-transform duration-500 ${menuOpen ? "-translate-y-[3px] -rotate-45" : ""}`} />
+            </span>
+          </button>
+        </div>
       </nav>
 
-      {/* Mobile overlay */}
-      <div
-        className={`lg:hidden fixed inset-0 z-40 flex flex-col px-6 sm:px-10 pt-24 pb-12 transition-[visibility] duration-0 ${
-          menuOpen
-            ? "visible bg-background pointer-events-auto"
-            : "invisible pointer-events-none"
-        }`}
-      >
-        <div className="flex-1 flex flex-col justify-center">
-          {links.map((link, i) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="font-display text-[clamp(2rem,8vw,3.5rem)] leading-[1.05] tracking-[-0.03em] text-foreground py-2 sm:py-3 flex items-baseline gap-3 sm:gap-4 font-medium"
-              style={{
-                opacity: menuOpen ? 1 : 0,
-                transform: menuOpen ? "translateY(0)" : "translateY(20px)",
-                transitionProperty: "opacity, transform",
-                transitionDuration: "500ms",
-                transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-                transitionDelay: menuOpen ? `${120 + i * 60}ms` : "0ms",
-              }}
-            >
-              <span className="font-mono text-[11px] tracking-[0.2em] text-accent">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              {link.label}
-            </a>
-          ))}
-        </div>
-
-        <div
-          className="flex items-center gap-3 pt-6 border-t border-border"
-          style={{
-            opacity: menuOpen ? 1 : 0,
-            transform: menuOpen ? "translateY(0)" : "translateY(20px)",
-            transitionProperty: "opacity, transform",
-            transitionDuration: "500ms",
-            transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-            transitionDelay: menuOpen ? "500ms" : "0ms",
-          }}
-        >
-          <button
-            onClick={() => {
-              setLocale(locale === "en" ? "fr" : "en");
-              setMenuOpen(false);
-            }}
-            className="font-mono text-xs tracking-[0.2em] uppercase text-muted border border-border min-h-[44px] px-4"
-          >
-            {locale === "en" ? "FR" : "EN"}
-          </button>
-          <button
-            onClick={() => {
-              toggleTheme();
-              setMenuOpen(false);
-            }}
-            className="font-mono text-xs tracking-[0.2em] uppercase text-muted border border-border min-h-[44px] px-4"
-          >
-            {theme === "dark" ? "Light" : "Dark"}
-          </button>
+      <div className={`fixed inset-0 top-0 z-[-1] bg-background px-5 pb-8 pt-28 transition-[opacity,visibility] duration-500 lg:hidden ${menuOpen ? "visible opacity-100" : "invisible opacity-0"}`}>
+        <div className="flex h-full flex-col justify-between">
+          <div className="border-t border-border">
+            {links.concat({ href: "#contact", label: t.nav.contact }).map((link, index) => (
+              <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)} className="flex items-baseline justify-between border-b border-border py-5 font-display text-[clamp(2rem,10vw,4rem)] leading-none">
+                {link.label}<span className="font-mono text-[10px] text-accent">0{index + 1}</span>
+              </a>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <button onClick={() => setLocale(locale === "fr" ? "en" : "fr")} className="h-12 flex-1 border border-border font-mono text-[10px] uppercase tracking-[0.12em]">{locale === "fr" ? "English" : "Français"}</button>
+            <button onClick={toggleTheme} className="h-12 flex-1 border border-border font-mono text-[10px] uppercase tracking-[0.12em]">{theme === "dark" ? "Mode clair" : "Mode sombre"}</button>
+          </div>
         </div>
       </div>
     </header>

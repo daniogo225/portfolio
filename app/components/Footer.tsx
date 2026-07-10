@@ -3,40 +3,19 @@
 import { useI18n } from "../i18n";
 
 export default function Footer() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
 
   return (
-    <footer className="relative py-10 sm:py-12 px-6 sm:px-10 lg:px-20 border-t border-border">
-      <div className="max-w-[1400px] mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-        <a
-          href="#"
-          className="group font-display text-base tracking-[-0.02em] inline-flex items-center self-start font-medium min-h-[44px] -ml-2 px-2"
-        >
-          <span className="transition-colors duration-500 group-hover:text-accent">daniogo</span>
-          <span className="text-accent">.</span>
+    <footer className="border-t border-border bg-background py-8">
+      <div className="content-shell grid gap-6 font-mono text-[9px] uppercase tracking-[0.13em] text-muted sm:grid-cols-3 sm:items-center">
+        <a href="#top" className="group flex items-center gap-3 text-foreground">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border transition-colors duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-[#11110f]">DA</span>
+          <span>Daniogo Aboubakar</span>
         </a>
-
-        <div className="flex items-center gap-3 font-mono text-[10px] tracking-[0.18em] uppercase">
-          <span className="text-muted">{t.footer.liveLabel}</span>
-          <a
-            href="https://contracttchecker.laravel.cloud/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 text-muted hover:text-foreground transition-colors duration-500 border border-border hover:border-foreground min-h-[44px] px-3"
-            data-hover
-          >
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inset-0 rounded-full bg-accent opacity-50 animate-ping" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-            </span>
-            <span>{t.footer.contractTchecker}</span>
-            <span className="inline-block transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
-          </a>
-        </div>
-
-        <span className="font-mono text-muted text-[10px] tracking-[0.15em]">
-          {t.footer.copyright}
-        </span>
+        <a href="https://contracttchecker.laravel.cloud/" target="_blank" rel="noreferrer" className="flex items-center gap-2 sm:justify-center">
+          <span className="signal-dot !h-1.5 !w-1.5" />{t.footer.liveLabel} · {t.footer.contractTchecker}
+        </a>
+        <span className="sm:text-right">© {new Date().getFullYear()} · {locale === "fr" ? "Conçu et développé à Abidjan" : "Designed and built in Abidjan"}</span>
       </div>
     </footer>
   );

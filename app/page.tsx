@@ -15,7 +15,7 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <>
+    <div className="page-shell">
       <ScrollProgress />
       <CustomCursor />
       <Navigation />
@@ -30,6 +30,6 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

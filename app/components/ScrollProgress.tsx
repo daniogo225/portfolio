@@ -6,27 +6,25 @@ export default function ScrollProgress() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement;
-      const total = h.scrollHeight - h.clientHeight;
-      const p = total > 0 ? (h.scrollTop / total) * 100 : 0;
-      setProgress(p);
+    const update = () => {
+      const root = document.documentElement;
+      const total = root.scrollHeight - root.clientHeight;
+      setProgress(total > 0 ? root.scrollTop / total : 0);
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
 
   return (
-    <div
-      aria-hidden
-      className="fixed top-0 left-0 right-0 z-[60] h-px pointer-events-none"
-    >
+    <div className="fixed right-0 top-0 z-[70] h-screen w-[3px] bg-transparent" aria-hidden>
       <div
-        className="h-full bg-accent origin-left"
+        className="w-full origin-top bg-accent"
         style={{
-          transform: `scaleX(${progress / 100})`,
-          transition: "transform 80ms linear",
+          height: "100%",
+          transform: `scaleY(${progress})`,
+          transition: "transform 90ms linear",
         }}
       />
     </div>

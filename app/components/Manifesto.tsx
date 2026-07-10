@@ -1,55 +1,39 @@
 "use client";
 
-import ScrollReveal from "./ScrollReveal";
 import { useI18n } from "../i18n";
+import ScrollReveal from "./ScrollReveal";
 
 export default function Manifesto() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
+  const note = locale === "fr"
+    ? "Le code est une matière. Le produit, une responsabilité."
+    : "Code is a material. Product is a responsibility.";
 
   return (
-    <section
-      id="manifesto"
-      className="relative py-24 sm:py-32 lg:py-44 px-6 sm:px-10 lg:px-20 border-t border-border"
-    >
-      <div className="max-w-[1400px] mx-auto">
-        {/* Section header */}
-        <ScrollReveal>
-          <div className="flex items-center gap-4 sm:gap-6 mb-12 sm:mb-16 lg:mb-20">
-            <span className="font-mono text-accent text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
-              {t.manifesto.section}
-            </span>
-            <div className="h-px flex-1 bg-border" />
-            <span className="font-mono text-muted text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
-              {t.manifesto.sectionLabel}
-            </span>
-          </div>
-        </ScrollReveal>
-
-        <div className="grid grid-cols-12 gap-4 sm:gap-6">
-          {/* Headline */}
-          <ScrollReveal className="col-span-12 lg:col-span-9 lg:col-start-2" delay={80}>
-            <h2 className="font-display text-[clamp(1.875rem,5.5vw,4.5rem)] leading-[1.05] tracking-[-0.035em] font-medium max-w-[18ch]">
-              {t.manifesto.title}
-            </h2>
+    <section id="manifesto" className="section-space border-t border-border">
+      <div className="content-shell">
+        <div className="grid grid-cols-12 gap-x-4 gap-y-12 lg:gap-x-8">
+          <ScrollReveal className="col-span-12 lg:col-span-3">
+            <span className="section-kicker">{t.manifesto.sectionLabel}</span>
           </ScrollReveal>
 
-          {/* Body — narrative reveal */}
-          <div className="col-span-12 lg:col-span-7 lg:col-start-6 mt-12 sm:mt-16 lg:mt-20 space-y-7 sm:space-y-8">
-            <ScrollReveal delay={160}>
-              <p className="text-foreground/90 text-lg sm:text-xl leading-[1.6]">
-                {t.manifesto.body1}
+          <div className="col-span-12 lg:col-span-9">
+            <ScrollReveal>
+              <p className="font-display max-w-[18ch] text-[clamp(2.35rem,5.5vw,5.8rem)] leading-[0.96]">
+                {t.manifesto.title}
               </p>
             </ScrollReveal>
-            <ScrollReveal delay={240}>
-              <p className="text-muted text-base sm:text-lg leading-[1.7]">
-                {t.manifesto.body2}
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={320}>
-              <p className="text-foreground text-lg sm:text-xl leading-[1.6] font-display italic">
-                {t.manifesto.body3}
-              </p>
-            </ScrollReveal>
+
+            <div className="mt-14 grid grid-cols-12 gap-x-4 gap-y-10 border-t border-border pt-8 lg:mt-20 lg:gap-x-8 lg:pt-10">
+              <ScrollReveal className="col-span-12 lg:col-span-4" delay={120}>
+                <p className="font-serif text-2xl italic leading-[1.25] text-accent">{note}</p>
+              </ScrollReveal>
+              <div className="col-span-12 space-y-6 text-base leading-[1.75] text-muted sm:text-lg lg:col-span-7 lg:col-start-6">
+                <ScrollReveal delay={180}><p className="text-foreground">{t.manifesto.body1}</p></ScrollReveal>
+                <ScrollReveal delay={240}><p>{t.manifesto.body2}</p></ScrollReveal>
+                <ScrollReveal delay={300}><p className="text-foreground">{t.manifesto.body3}</p></ScrollReveal>
+              </div>
+            </div>
           </div>
         </div>
       </div>

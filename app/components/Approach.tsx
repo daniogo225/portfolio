@@ -1,75 +1,36 @@
 "use client";
 
-import ScrollReveal from "./ScrollReveal";
 import { useI18n } from "../i18n";
+import ScrollReveal from "./ScrollReveal";
 
 export default function Approach() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
+  const sideNote = locale === "fr"
+    ? "Des principes visibles dans les choix, pas affichés comme des slogans."
+    : "Principles made visible through decisions, not displayed as slogans.";
 
   return (
-    <section
-      id="approach"
-      className="relative py-24 sm:py-32 lg:py-44 px-6 sm:px-10 lg:px-20 border-t border-border"
-    >
-      <div className="max-w-[1400px] mx-auto">
-        {/* Section header */}
-        <ScrollReveal>
-          <div className="flex items-center gap-4 sm:gap-6 mb-12 sm:mb-16 lg:mb-20">
-            <span className="font-mono text-accent text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
-              {t.approach.section}
-            </span>
-            <div className="h-px flex-1 bg-border" />
-            <span className="font-mono text-muted text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
-              {t.approach.sectionLabel}
-            </span>
-          </div>
-        </ScrollReveal>
+    <section id="approach" className="section-space bg-surface text-foreground">
+      <div className="content-shell">
+        <div className="grid grid-cols-12 gap-x-4 gap-y-14 lg:gap-x-8">
+          <ScrollReveal className="col-span-12 lg:col-span-4">
+            <span className="section-kicker">{t.approach.sectionLabel}</span>
+            <h2 className="mt-7 font-display text-[clamp(2.7rem,5.5vw,5.6rem)] leading-[0.9]">{t.approach.title}</h2>
+            <p className="mt-7 max-w-[30ch] text-sm leading-[1.7] text-muted">{sideNote}</p>
+          </ScrollReveal>
 
-        {/* Title block */}
-        <div className="grid grid-cols-12 gap-4 sm:gap-6 mb-16 sm:mb-20 lg:mb-28">
-          <ScrollReveal className="col-span-12 lg:col-span-7" delay={80}>
-            <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.035em] font-medium">
-              {t.approach.title}
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal className="col-span-12 lg:col-span-4 lg:col-start-9 flex items-end" delay={160}>
-            <p className="text-muted text-base sm:text-lg leading-[1.7]">
-              {t.approach.subtitle}
-            </p>
-          </ScrollReveal>
+          <ol className="col-span-12 border-t border-border lg:col-span-8">
+            {t.approach.pillars.map((pillar, index) => (
+              <ScrollReveal key={pillar.title} delay={index * 60}>
+                <li className="group grid grid-cols-12 gap-4 border-b border-border py-7 transition-colors duration-500 hover:bg-background/25 sm:py-9 lg:gap-6 lg:px-4">
+                  <span className="col-span-2 font-mono text-[10px] tracking-[0.16em] text-accent">0{index + 1}</span>
+                  <h3 className="col-span-10 font-display text-2xl leading-[1.05] transition-transform duration-700 group-hover:translate-x-2 sm:text-3xl lg:col-span-4">{pillar.title}</h3>
+                  <p className="col-span-10 col-start-3 mt-3 text-sm leading-[1.7] text-muted lg:col-span-5 lg:col-start-8 lg:mt-0">{pillar.body}</p>
+                </li>
+              </ScrollReveal>
+            ))}
+          </ol>
         </div>
-
-        {/* Pillars — vertical stacked, editorial */}
-        <ol className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
-          {t.approach.pillars.map((pillar, i) => (
-            <ScrollReveal
-              key={pillar.title}
-              delay={120 + i * 80}
-              className="bg-background"
-            >
-              <li className="group relative h-full p-7 sm:p-10 lg:p-12 transition-colors duration-700 hover:bg-surface">
-                {/* Top-left number */}
-                <div className="flex items-baseline gap-3 mb-6 sm:mb-8">
-                  <span className="font-mono text-accent text-[11px] sm:text-[12px] tracking-[0.18em]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="h-px w-8 bg-border group-hover:w-12 group-hover:bg-accent transition-all duration-700 ease-out" />
-                </div>
-
-                <h3 className="font-display text-xl sm:text-2xl lg:text-[1.75rem] leading-[1.2] mb-4 sm:mb-5 tracking-[-0.02em] font-medium">
-                  {pillar.title}
-                </h3>
-
-                <p className="text-muted text-sm sm:text-base leading-[1.7] max-w-[55ch]">
-                  {pillar.body}
-                </p>
-              </li>
-            </ScrollReveal>
-          ))}
-
-          {/* Empty cell to fill the 6th slot of the 2-col grid for visual symmetry */}
-          <div className="bg-background hidden md:block" />
-        </ol>
       </div>
     </section>
   );

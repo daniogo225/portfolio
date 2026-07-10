@@ -411,13 +411,13 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const stored = localStorage.getItem("portfolio-locale") as Locale | null;
-    if (stored) {
-      setLocaleState(stored);
-    } else {
-      const browserLang = navigator.language.slice(0, 2);
-      setLocaleState(browserLang === "fr" ? "fr" : "en");
-    }
-    setMounted(true);
+    const browserLang = navigator.language.slice(0, 2);
+    const initial = stored || (browserLang === "fr" ? "fr" : "en");
+    const frame = requestAnimationFrame(() => {
+      setLocaleState(initial);
+      setMounted(true);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const setLocale = (l: Locale) => {

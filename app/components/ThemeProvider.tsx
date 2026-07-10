@@ -16,21 +16,19 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: "light",
+  theme: "dark",
   toggleTheme: () => {},
 });
 
 export const useTheme = () => useContext(ThemeContext);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("portfolio-theme") as Theme | null;
-    const isDarkClass = document.documentElement.classList.contains("dark");
-    const initial = stored || (isDarkClass ? "dark" : "light");
-    setTheme(initial);
+    const stored = localStorage.getItem("portfolio-theme-v2") as Theme | null;
+    const initial = stored || "dark";
     if (initial === "dark") {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
@@ -38,7 +36,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
     }
-    setMounted(true);
+    const frame = requestAnimationFrame(() => {
+      setTheme(initial);
+      setMounted(true);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const toggleTheme = () => {
@@ -51,7 +53,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         document.documentElement.classList.add("light");
         document.documentElement.classList.remove("dark");
       }
-      localStorage.setItem("portfolio-theme", next);
+      localStorage.setItem("portfolio-theme-v2", next);
       return next;
     });
   };
