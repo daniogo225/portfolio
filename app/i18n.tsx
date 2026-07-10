@@ -44,7 +44,7 @@ const translations = {
       pillars: [
         {
           title: "Craft over output",
-          body: "Six years of building production software taught me one thing: the decision you make today shows up in two years. I optimize for the version of the codebase your future team will inherit — not the demo you're showing on Friday.",
+          body: "Building production software since 2019 taught me one thing: the decision you make today shows up in two years. I optimize for the version of the codebase your future team will inherit — not the demo you're showing on Friday.",
         },
         {
           title: "AI as leverage, not crutch",
@@ -88,11 +88,11 @@ const translations = {
         {
           title: "Comafrique Technologies",
           tagline: "Enterprise product engineering across web, mobile, and production systems.",
-          description: "Full-time product engineering on business-critical platforms: Laravel/Inertia/React web apps, React Native and Expo mobile experiences, Forge deployments, audit trails, admin workflows, and AI or monitoring experiments. Some product details stay confidential; the production constraints are the proof.",
+          description: "For more than three years, I have worked full time at Comafrique Technologies on business-critical platforms: Laravel/Inertia/React web apps, React Native and Expo mobile experiences, Forge deployments, audit trails, admin workflows, and AI or monitoring experiments. Some product details remain confidential; this case focuses on the responsibilities, systems, and operational constraints I can document.",
           stack: ["Laravel", "Inertia.js", "React", "React Native", "Expo", "Forge", "AI"],
-          status: "Full-time · enterprise",
+          status: "Full-time role · enterprise",
           metrics: [
-            { value: "3+ yrs", label: "in production" },
+            { value: "3+ yrs", label: "at Comafrique" },
             { value: "Web + mobile", label: "surfaces" },
             { value: "Ops", label: "workflows" },
           ],
@@ -236,7 +236,7 @@ const translations = {
       pillars: [
         {
           title: "Le craft avant le débit",
-          body: "Six années à construire des logiciels en production m'ont appris une chose : la décision prise aujourd'hui se paie dans deux ans. J'optimise pour la version du code que votre futur équipe va hériter — pas pour la démo de vendredi.",
+          body: "Construire des logiciels en production depuis 2019 m'a appris une chose : la décision prise aujourd'hui se paie dans deux ans. J'optimise pour la version du code dont votre future équipe héritera — pas pour la démo du vendredi.",
         },
         {
           title: "L'IA comme levier, pas béquille",
@@ -280,11 +280,11 @@ const translations = {
         {
           title: "Comafrique Technologies",
           tagline: "Ingénierie produit en entreprise, du web au mobile.",
-          description: "Ingénieur produit à temps plein sur des plateformes métier critiques : applications Laravel/Inertia/React, expériences React Native et Expo, déploiements Forge, journaux d'audit, workflows admin et expérimentations IA ou monitoring. Certains détails produit restent confidentiels ; les contraintes de production sont la preuve.",
+          description: "Depuis plus de trois ans, je travaille à temps plein chez Comafrique Technologies sur des plateformes métier critiques : applications Laravel/Inertia/React, expériences React Native et Expo, déploiements Forge, journaux d'audit, workflows admin et expérimentations IA ou monitoring. Certains détails produit restent confidentiels ; ce cas présente les responsabilités, les systèmes et les contraintes opérationnelles que je peux documenter.",
           stack: ["Laravel", "Inertia.js", "React", "React Native", "Expo", "Forge", "IA"],
-          status: "Temps plein · entreprise",
+          status: "Poste à temps plein · entreprise",
           metrics: [
-            { value: "3+ ans", label: "en production" },
+            { value: "3+ ans", label: "chez Comafrique" },
             { value: "Web + mobile", label: "surfaces" },
             { value: "Métier", label: "workflows" },
           ],
