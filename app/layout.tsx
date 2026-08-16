@@ -1,25 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "./components/ThemeProvider";
-import { I18nProvider } from "./i18n";
+import { Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-bricolage",
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-plex-mono",
+  weight: ["400", "500"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Daniogo — Ingénieur produit",
+  title: "Daniogo Aboubakar | Ingénieur produit",
   description:
-    "Ingénieur produit à Abidjan. Je conçois et livre des systèmes web, mobile et IA pensés pour la production.",
+    "Ingénieur produit à Abidjan. Je transforme des contraintes métier complexes en produits web, mobile et IA fiables.",
   icons: {
     icon: {
       url: "/portraits/daniogo-product-engineer-cutout.png",
@@ -49,12 +48,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" suppressHydrationWarning className={`${geist.variable} ${geistMono.variable} dark`}>
-      <body className="antialiased" suppressHydrationWarning>
-        <ThemeProvider>
-          <I18nProvider>{children}</I18nProvider>
-        </ThemeProvider>
-      </body>
+    <html lang="fr" className={`${bricolage.variable} ${plexMono.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
