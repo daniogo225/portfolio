@@ -4,7 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { content, type Locale } from "../data/content";
 import AsciiField from "./AsciiField";
+import DecodeText from "./DecodeText";
 import GsapController from "./GsapController";
+import ProjectVisual from "./ProjectVisuals";
 
 function Words({ children }: { children: string }) {
   return (
@@ -18,48 +20,11 @@ function Words({ children }: { children: string }) {
   );
 }
 
-function ProjectVisual({ index, locale }: { index: number; locale: Locale }) {
-  if (index === 0) {
-    return (
-      <div className="case-visual case-visual-contract" aria-hidden="true">
-        <div className="visual-topline"><span>CONTRACT::SCAN</span><span>[ RUNNING ]</span></div>
-        <div className="contract-document">
-          <div className="document-head"><span>RISK/REPORT</span><strong>68</strong></div>
-          <div className="document-code">
-            <span>01 / TERMINATION</span><b>REVIEW</b>
-            <span>02 / LIABILITY</span><b>REVIEW</b>
-            <span>03 / JURISDICTION</span><b>CLEAR</b>
-            <span>04 / DATA</span><b>CLEAR</b>
-          </div>
-          <div className="document-bars"><i style={{ width: "68%" }} /><i style={{ width: "42%" }} /><i style={{ width: "82%" }} /></div>
-        </div>
-        <div className="scan-line" data-scan />
-        <span className="visual-caption">{locale === "fr" ? "Analyse structurée en moins de 60 secondes" : "Structured analysis in under 60 seconds"}</span>
-      </div>
-    );
-  }
-
-  return (
-    <div className="case-visual case-visual-systems" aria-hidden="true">
-      <div className="visual-topline"><span>ENTERPRISE::TOPOLOGY</span><span>[ STABLE ]</span></div>
-      <div className="system-map">
-        <div className="system-core">CT</div>
-        {[["WEB", "node-web"], ["MOBILE", "node-mobile"], ["OPS", "node-ops"], ["DATA", "node-data"]].map(([label, className]) => (
-          <div className={`system-node ${className}`} key={label}>{`< ${label} />`}</div>
-        ))}
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M50 50 L14 26 M50 50 L18 80 M50 50 L84 25 M50 50 L84 79" /></svg>
-      </div>
-      <div className="scan-line" data-scan />
-      <span className="visual-caption">{locale === "fr" ? "Un système partagé entre produit et opérations" : "One system shared by product and operations"}</span>
-    </div>
-  );
-}
-
 export default function Portfolio() {
   const [locale, setLocale] = useState<Locale>("fr");
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("00");
-  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const lastMenuTriggerRef = useRef<HTMLButtonElement | null>(null);
   const menuWasOpen = useRef(false);
   const t = content[locale];
 
@@ -99,7 +64,7 @@ export default function Portfolio() {
 
     if (menuWasOpen.current) {
       menuWasOpen.current = false;
-      menuButtonRef.current?.focus();
+      lastMenuTriggerRef.current?.focus({ preventScroll: true });
     }
 
     return () => document.body.classList.remove("menu-is-open");
@@ -151,11 +116,15 @@ export default function Portfolio() {
           <span className="mobile-section-index" aria-label={`${locale === "fr" ? "Section" : "Section"} ${activeSection}`}>/{activeSection}</span>
           <button className="language-switch" type="button" onClick={changeLocale} aria-label="Changer de langue">{locale === "fr" ? "EN" : "FR"}</button>
           <a className="header-contact" href="#contact">{t.nav.contact}<span>↗</span></a>
-          <button ref={menuButtonRef} className="menu-toggle" type="button" onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-controls="mobile-menu">{menuOpen ? t.nav.close : t.nav.menu}</button>
+          <button className="menu-toggle" type="button" onClick={(event) => { lastMenuTriggerRef.current = event.currentTarget; setMenuOpen((open) => !open); }} aria-expanded={menuOpen} aria-controls="mobile-menu">{menuOpen ? t.nav.close : t.nav.menu}</button>
         </div>
       </header>
 
       <div id="mobile-menu" className={`mobile-menu ${menuOpen ? "is-open" : ""}`} role="dialog" aria-modal="true" aria-hidden={!menuOpen}>
+        <div className="mobile-menu-topline">
+          <span>{locale === "fr" ? "Navigation" : "Navigation"} /{activeSection}</span>
+          <button type="button" onClick={() => setMenuOpen(false)}>{t.nav.close}</button>
+        </div>
         <nav aria-label="Navigation mobile">
           {[["#work", t.nav.work], ["#profile", t.nav.profile], ["#expertise", t.nav.expertise], ["#contact", t.nav.contact]].map(([href, label], index) => (
             <a key={href} href={href} onClick={() => setMenuOpen(false)}><span>0{index + 2}</span>{label}</a>
@@ -164,15 +133,19 @@ export default function Portfolio() {
         <button type="button" onClick={changeLocale}>{locale === "fr" ? "Read in English" : "Lire en français"}</button>
       </div>
 
+      <button className={`mobile-menu-dock ${activeSection === "00" ? "" : "is-visible"}`} type="button" onClick={(event) => { lastMenuTriggerRef.current = event.currentTarget; setMenuOpen(true); }} aria-expanded={menuOpen} aria-controls="mobile-menu">
+        <span>/{activeSection}</span>{t.nav.menu}
+      </button>
+
       <main>
         <section className="hero" id="top">
           <AsciiField />
           <div className="hero-meta" data-hero-meta><span>{t.hero.role}</span><span>{t.hero.location}</span><span>[ {t.hero.status} ]</span></div>
           <div className="hero-layout">
             <div className="hero-copy">
-              <h1>{t.hero.headline.map((line, index) => <span className={`hero-line hero-line-${index + 1}`} key={line}><span data-hero-line>{line}</span></span>)}</h1>
+              <h1>{t.hero.headline.map((line, index) => <span className={`hero-line hero-line-${index + 1}`} key={line}><span data-hero-line><DecodeText text={line} eager delay={260 + index * 150} /></span></span>)}</h1>
               <div className="hero-intro" data-hero-copy>
-                <p>{t.hero.intro}</p>
+                <p><DecodeText text={t.hero.intro} eager delay={760} /></p>
                 <div className="hero-links"><a className="text-link text-link-solid" href="#work">{t.hero.primary}<span>↓</span></a><a className="text-link" href="#contact">{t.hero.secondary}<span>↗</span></a></div>
               </div>
             </div>
@@ -192,31 +165,39 @@ export default function Portfolio() {
           <div className="section-label" data-reveal><span>01</span>{t.statement.label}</div>
           <div className="statement-content">
             <h2><Words>{t.statement.title}</Words></h2>
-            <div className="statement-detail" data-reveal><p>{t.statement.body}</p><strong>{t.statement.note}</strong></div>
+            <div className="statement-detail" data-reveal><p><DecodeText text={t.statement.body} /></p><strong>{t.statement.note}</strong></div>
           </div>
         </section>
 
-        <section className="work section-shell" id="work">
-          <div className="section-heading">
-            <div className="section-label" data-reveal><span>02</span>{t.work.label}</div>
-            <div data-reveal><h2>{t.work.title}</h2><p>{t.work.intro}</p></div>
-          </div>
-          <div className="case-list">
-            {t.work.cases.map((project, index) => (
-              <article className="case-study" key={project.title}>
-                <div className="case-heading" data-reveal><span className="case-index">/{project.index}</span><span className="case-kind">{project.kind}</span><h3>{project.title}</h3><p>{project.subtitle}</p></div>
-                <div className="case-grid">
-                  <div data-reveal><ProjectVisual index={index} locale={locale} /></div>
-                  <div className="case-notes" data-reveal>
-                    <p className="case-story">{project.story}</p>
-                    <p className="case-decision"><span>{locale === "fr" ? "Décision" : "Decision"}</span>{project.decision}</p>
-                    <dl className="case-metrics">{project.metrics.map(([value, label]) => <div key={label}><dt>{value}</dt><dd>{label}</dd></div>)}</dl>
-                    <div className="case-stack">{project.stack.map((item) => <span key={item}>{item}</span>)}</div>
-                    <a className="project-link" href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} rel={project.link.startsWith("http") ? "noreferrer" : undefined}>{project.linkLabel}<span>↗</span></a>
+        <section className="work" id="work">
+          <div className="work-shell">
+            <div className="section-heading work-heading">
+              <div className="section-label" data-reveal><span>02</span>{t.work.label}</div>
+              <div data-reveal><h2><DecodeText text={t.work.title} /></h2><p><DecodeText text={t.work.intro} /></p></div>
+            </div>
+            <div className="case-list">
+              {t.work.cases.map((project, index) => (
+                <article className="case-study" key={project.title}>
+                  <div className="case-heading" data-reveal>
+                    <div className="case-reference"><span className="case-index">/{project.index}</span><span className="case-kind">{project.kind}</span></div>
+                    <h3><DecodeText text={project.title} /></h3>
+                    <p><DecodeText text={project.subtitle} /></p>
                   </div>
-                </div>
-              </article>
-            ))}
+                  <div className="case-grid">
+                    <div className="case-visual-wrap" data-reveal><ProjectVisual index={index} locale={locale} /></div>
+                    <div className="case-notes" data-reveal>
+                      <div className="case-copy-block"><span>{locale === "fr" ? "Contexte" : "Context"}</span><p className="case-story"><DecodeText text={project.story} /></p></div>
+                      <div className="case-copy-block case-decision"><span>{locale === "fr" ? "Décision" : "Decision"}</span><p><DecodeText text={project.decision} /></p></div>
+                      <a className="project-link" href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} rel={project.link.startsWith("http") ? "noreferrer" : undefined}>{project.linkLabel}<span>↗</span></a>
+                    </div>
+                  </div>
+                  <div className="case-outcomes" data-reveal>
+                    <dl className="case-metrics">{project.metrics.map(([value, label]) => <div key={label}><dt>{value}</dt><dd>{label}</dd></div>)}</dl>
+                    <div className="case-stack"><span>STACK</span><p>{project.stack.join(" / ")}</p></div>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -227,14 +208,14 @@ export default function Portfolio() {
           </div>
           <div className="profile-content">
             <div className="section-label" data-reveal><span>03</span>{t.profile.label}</div>
-            <h2 data-reveal>{t.profile.title}</h2>
-            <div className="profile-copy" data-reveal>{t.profile.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
+            <h2 data-reveal><DecodeText text={t.profile.title} /></h2>
+            <div className="profile-copy" data-reveal>{t.profile.paragraphs.map((paragraph) => <p key={paragraph}><DecodeText text={paragraph} /></p>)}</div>
             <ol className="timeline" data-reveal>{t.profile.timeline.map(([year, event]) => <li key={year}><span>{year}</span>{event}</li>)}</ol>
           </div>
         </section>
 
         <section className="expertise section-shell" id="expertise">
-          <div className="section-heading expertise-heading"><div className="section-label" data-reveal><span>04</span>{t.expertise.label}</div><h2 data-reveal>{t.expertise.title}</h2></div>
+          <div className="section-heading expertise-heading"><div className="section-label" data-reveal><span>04</span>{t.expertise.label}</div><h2 data-reveal><DecodeText text={t.expertise.title} /></h2></div>
           <ol className="expertise-list">{t.expertise.groups.map((group) => <li key={group.index} data-reveal><span className="expertise-index">/{group.index}</span><h3>{group.title}</h3><p>{group.body}</p><span className="expertise-tools">{group.tools}</span></li>)}</ol>
         </section>
 
