@@ -30,38 +30,10 @@ export default function MotionController() {
       revealTargets.forEach((element) => observer?.observe(element));
     }
 
-    const progress = document.querySelector<HTMLElement>("[data-progress]");
-    let previousY = 0;
-    let ticking = false;
-    let scrollFrame = 0;
-
-    const updateScrollState = () => {
-      const currentY = window.scrollY;
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      progress?.style.setProperty("transform", `scaleX(${Math.min(1, currentY / max)})`);
-
-      if (currentY > 140 && currentY > previousY + 5) root.classList.add("header-is-hidden");
-      if (currentY < previousY - 5 || currentY < 80) root.classList.remove("header-is-hidden");
-
-      previousY = currentY;
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      scrollFrame = window.requestAnimationFrame(updateScrollState);
-    };
-
-    updateScrollState();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
     return () => {
       observer?.disconnect();
       window.cancelAnimationFrame(introFrame);
-      window.cancelAnimationFrame(scrollFrame);
-      window.removeEventListener("scroll", onScroll);
-      root.classList.remove("motion-ready", "intro-ready", "header-is-hidden");
+      root.classList.remove("motion-ready", "intro-ready");
     };
   }, []);
 

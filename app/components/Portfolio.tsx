@@ -102,9 +102,8 @@ export default function Portfolio() {
   return (
     <div className="site-shell">
       <MotionController />
-      <div className="reading-progress" data-progress aria-hidden="true" />
 
-      <header className="site-header">
+      <header className="site-header" data-header-mode="opening-only">
         <a className="identity" href="#top" aria-label="Daniogo Aboubakar, accueil">
           <span className="identity-mark">DA</span>
           <span className="identity-text">Product Engineer<br />Abidjan / CI</span>
@@ -175,7 +174,7 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section className="work" id="work">
+        <section className="work" id="work" data-section-transition="continuous">
           <div className="work-shell">
             <div className="section-heading work-heading">
               <div className="section-label" data-reveal><span>02</span>{t.work.label}</div>
@@ -207,7 +206,7 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section className="profile" id="profile">
+        <section className="profile" id="profile" data-section-transition="continuous">
           <div className="profile-photo" data-profile-photo>
             <div><Image src="/portraits/daniogo-about-seated-cutout.png" alt={t.profile.photo} fill sizes="(min-width: 900px) 48vw, 100vw" className="profile-image" /></div>
             <div className="profile-ascii" aria-hidden="true"><span>HUMAN::SYSTEM</span><pre>{`PRODUCT  <──>  ENGINEERING\n              │\n           DELIVERY`}</pre></div>
