@@ -99,20 +99,10 @@ export default function DecodeText({
     };
   }, [delay, eager, loop, text]);
 
-  if (loop) {
-    return (
-      <span className={["decode-text-loop", className].filter(Boolean).join(" ")} aria-label={text}>
-        <span className="decode-text-loop-reserve" aria-hidden="true">{text}</span>
-        <span className="decode-text-loop-value" ref={textRef} aria-hidden="true">{text}</span>
-      </span>
-    );
-  }
-
   return (
-    <span className={className} aria-label={text}>
-      <span ref={textRef} aria-hidden="true">
-        {text}
-      </span>
+    <span className={["decode-text", loop ? "decode-text-loop" : "", className].filter(Boolean).join(" ")} aria-label={text}>
+      <span className="decode-text-reserve" aria-hidden="true">{text}</span>
+      <span className="decode-text-value" ref={textRef} aria-hidden="true">{text}</span>
     </span>
   );
 }
