@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { content, type Locale } from "../data/content";
 import AsciiField from "./AsciiField";
 import DecodeText from "./DecodeText";
-import GsapController from "./GsapController";
+import MotionController from "./MotionController";
 import ProjectVisual from "./ProjectVisuals";
 
 function Words({ children }: { children: string }) {
@@ -101,7 +101,7 @@ export default function Portfolio() {
 
   return (
     <div className="site-shell">
-      <GsapController />
+      <MotionController />
       <div className="reading-progress" data-progress aria-hidden="true" />
 
       <header className="site-header">
@@ -143,9 +143,9 @@ export default function Portfolio() {
           <div className="hero-meta" data-hero-meta><span>{t.hero.role}</span><span>{t.hero.location}</span><span>[ {t.hero.status} ]</span></div>
           <div className="hero-layout">
             <div className="hero-copy">
-              <h1>{t.hero.headline.map((line, index) => <span className={`hero-line hero-line-${index + 1}`} key={line}><span data-hero-line><DecodeText text={line} eager delay={260 + index * 150} /></span></span>)}</h1>
+              <h1>{t.hero.headline.map((line, index) => <span className={`hero-line hero-line-${index + 1}`} key={line}><span data-hero-line><DecodeText text={line} eager loop={index === 1} delay={260 + index * 150} /></span></span>)}</h1>
               <div className="hero-intro" data-hero-copy>
-                <p><DecodeText text={t.hero.intro} eager delay={760} /></p>
+                <p>{t.hero.intro}</p>
                 <div className="hero-links"><a className="text-link text-link-solid" href="#work">{t.hero.primary}<span>↓</span></a><a className="text-link" href="#contact">{t.hero.secondary}<span>↗</span></a></div>
               </div>
             </div>
@@ -165,7 +165,13 @@ export default function Portfolio() {
           <div className="section-label" data-reveal><span>01</span>{t.statement.label}</div>
           <div className="statement-content">
             <h2><Words>{t.statement.title}</Words></h2>
-            <div className="statement-detail" data-reveal><p><DecodeText text={t.statement.body} /></p><strong>{t.statement.note}</strong></div>
+            <div className="statement-detail" data-reveal>
+              <p>{t.statement.body}</p>
+              <div className="statement-system">
+                <strong>{t.statement.note}</strong>
+                <pre aria-hidden="true">{`OBSERVE ──┐\n          ├─ BUILD ── OPERATE\nDECIDE  ──┘`}</pre>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -173,7 +179,7 @@ export default function Portfolio() {
           <div className="work-shell">
             <div className="section-heading work-heading">
               <div className="section-label" data-reveal><span>02</span>{t.work.label}</div>
-              <div data-reveal><h2><DecodeText text={t.work.title} /></h2><p><DecodeText text={t.work.intro} /></p></div>
+              <div data-reveal><h2><DecodeText text={t.work.title} /></h2><p>{t.work.intro}</p></div>
             </div>
             <div className="case-list">
               {t.work.cases.map((project, index) => (
@@ -181,13 +187,13 @@ export default function Portfolio() {
                   <div className="case-heading" data-reveal>
                     <div className="case-reference"><span className="case-index">/{project.index}</span><span className="case-kind">{project.kind}</span></div>
                     <h3><DecodeText text={project.title} /></h3>
-                    <p><DecodeText text={project.subtitle} /></p>
+                    <p>{project.subtitle}</p>
                   </div>
                   <div className="case-grid">
                     <div className="case-visual-wrap" data-reveal><ProjectVisual index={index} locale={locale} /></div>
                     <div className="case-notes" data-reveal>
-                      <div className="case-copy-block"><span>{locale === "fr" ? "Contexte" : "Context"}</span><p className="case-story"><DecodeText text={project.story} /></p></div>
-                      <div className="case-copy-block case-decision"><span>{locale === "fr" ? "Décision" : "Decision"}</span><p><DecodeText text={project.decision} /></p></div>
+                      <div className="case-copy-block"><span>{locale === "fr" ? "Contexte" : "Context"}</span><p className="case-story">{project.story}</p></div>
+                      <div className="case-copy-block case-decision"><span>{locale === "fr" ? "Décision" : "Decision"}</span><p>{project.decision}</p></div>
                       <a className="project-link" href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} rel={project.link.startsWith("http") ? "noreferrer" : undefined}>{project.linkLabel}<span>↗</span></a>
                     </div>
                   </div>
@@ -203,13 +209,14 @@ export default function Portfolio() {
 
         <section className="profile" id="profile">
           <div className="profile-photo" data-profile-photo>
-            <div data-portrait-parallax><Image src="/portraits/daniogo-about-seated-cutout.png" alt={t.profile.photo} fill sizes="(min-width: 900px) 48vw, 100vw" className="profile-image" /></div>
+            <div><Image src="/portraits/daniogo-about-seated-cutout.png" alt={t.profile.photo} fill sizes="(min-width: 900px) 48vw, 100vw" className="profile-image" /></div>
+            <div className="profile-ascii" aria-hidden="true"><span>HUMAN::SYSTEM</span><pre>{`PRODUCT  <──>  ENGINEERING\n              │\n           DELIVERY`}</pre></div>
             <span className="profile-photo-code">ABJ / 05.34°N / 04.01°W</span>
           </div>
           <div className="profile-content">
             <div className="section-label" data-reveal><span>03</span>{t.profile.label}</div>
             <h2 data-reveal><DecodeText text={t.profile.title} /></h2>
-            <div className="profile-copy" data-reveal>{t.profile.paragraphs.map((paragraph) => <p key={paragraph}><DecodeText text={paragraph} /></p>)}</div>
+            <div className="profile-copy" data-reveal>{t.profile.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
             <ol className="timeline" data-reveal>{t.profile.timeline.map(([year, event]) => <li key={year}><span>{year}</span>{event}</li>)}</ol>
           </div>
         </section>
@@ -229,7 +236,7 @@ export default function Portfolio() {
         </section>
       </main>
 
-      <footer className="site-footer"><a href="#top">DA / INDEX</a><span>© {new Date().getFullYear()} {t.footer}</span><span>NEXT.JS / REACT / GSAP</span></footer>
+      <footer className="site-footer"><a href="#top">DA / INDEX</a><span>© {new Date().getFullYear()} {t.footer}</span><span>NEXT.JS / REACT / COBE</span></footer>
     </div>
   );
 }
