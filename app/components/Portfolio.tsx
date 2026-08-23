@@ -8,18 +8,6 @@ import DecodeText from "./DecodeText";
 import MotionController from "./MotionController";
 import ProjectVisual from "./ProjectVisuals";
 
-function Words({ children }: { children: string }) {
-  return (
-    <span className="word-reveal" data-word-reveal>
-      {children.split(" ").map((word, index) => (
-        <span className="word-clip" key={`${word}-${index}`}>
-          <span>{word}&nbsp;</span>
-        </span>
-      ))}
-    </span>
-  );
-}
-
 export default function Portfolio() {
   const [locale, setLocale] = useState<Locale>("fr");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -161,10 +149,10 @@ export default function Portfolio() {
         </section>
 
         <section className="statement section-shell" id="statement">
-          <div className="section-label" data-reveal><span>01</span>{t.statement.label}</div>
+          <div className="section-label"><span>01</span>{t.statement.label}</div>
           <div className="statement-content">
-            <h2><Words>{t.statement.title}</Words></h2>
-            <div className="statement-detail" data-reveal>
+            <h2>{t.statement.title}</h2>
+            <div className="statement-detail">
               <p>{t.statement.body}</p>
               <div className="statement-system">
                 <strong>{t.statement.note}</strong>
@@ -174,55 +162,52 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section className="work" id="work" data-section-transition="continuous">
+        <section className="work" id="work">
           <div className="work-shell">
-            <div className="section-heading work-heading">
-              <div className="section-label" data-reveal><span>02</span>{t.work.label}</div>
-              <div data-reveal><h2><DecodeText text={t.work.title} /></h2><p>{t.work.intro}</p></div>
-            </div>
+            <header className="work-intro">
+              <div className="section-label"><span>02</span>{t.work.label}</div>
+              <div className="work-intro-copy"><h2>{t.work.title}</h2><p>{t.work.intro}</p></div>
+            </header>
             <div className="case-list">
               {t.work.cases.map((project, index) => (
                 <article className="case-study" key={project.title}>
-                  <div className="case-heading" data-reveal>
+                  <header className="case-heading">
                     <div className="case-reference"><span className="case-index">/{project.index}</span><span className="case-kind">{project.kind}</span></div>
-                    <h3><DecodeText text={project.title} /></h3>
-                    <p>{project.subtitle}</p>
+                    <div className="case-title"><h3>{project.title}</h3><p>{project.subtitle}</p></div>
+                  </header>
+                  <div className="case-visual-wrap"><ProjectVisual index={index} locale={locale} /></div>
+                  <div className="case-evidence">
+                    <div className="case-copy-block"><span>{locale === "fr" ? "Problème et réponse" : "Problem and response"}</span><p className="case-story">{project.story}</p></div>
+                    <div className="case-copy-block case-decision"><span>{locale === "fr" ? "Décision structurante" : "Defining decision"}</span><p>{project.decision}</p></div>
                   </div>
-                  <div className="case-grid">
-                    <div className="case-visual-wrap" data-reveal><ProjectVisual index={index} locale={locale} /></div>
-                    <div className="case-notes" data-reveal>
-                      <div className="case-copy-block"><span>{locale === "fr" ? "Contexte" : "Context"}</span><p className="case-story">{project.story}</p></div>
-                      <div className="case-copy-block case-decision"><span>{locale === "fr" ? "Décision" : "Decision"}</span><p>{project.decision}</p></div>
-                      <a className="project-link" href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} rel={project.link.startsWith("http") ? "noreferrer" : undefined}>{project.linkLabel}<span>↗</span></a>
-                    </div>
-                  </div>
-                  <div className="case-outcomes" data-reveal>
+                  <footer className="case-outcomes">
                     <dl className="case-metrics">{project.metrics.map(([value, label]) => <div key={label}><dt>{value}</dt><dd>{label}</dd></div>)}</dl>
                     <div className="case-stack"><span>STACK</span><p>{project.stack.join(" / ")}</p></div>
-                  </div>
+                    <a className="project-link" href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} rel={project.link.startsWith("http") ? "noreferrer" : undefined}>{project.linkLabel}<span>↗</span></a>
+                  </footer>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="profile" id="profile" data-section-transition="continuous">
+        <section className="profile" id="profile">
           <div className="profile-photo" data-profile-photo>
             <div><Image src="/portraits/daniogo-about-seated-cutout.png" alt={t.profile.photo} fill sizes="(min-width: 900px) 48vw, 100vw" className="profile-image" /></div>
             <div className="profile-ascii" aria-hidden="true"><span>HUMAN::SYSTEM</span><pre>{`PRODUCT  <──>  ENGINEERING\n              │\n           DELIVERY`}</pre></div>
             <span className="profile-photo-code">ABJ / 05.34°N / 04.01°W</span>
           </div>
           <div className="profile-content">
-            <div className="section-label" data-reveal><span>03</span>{t.profile.label}</div>
-            <h2 data-reveal><DecodeText text={t.profile.title} /></h2>
-            <div className="profile-copy" data-reveal>{t.profile.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
-            <ol className="timeline" data-reveal>{t.profile.timeline.map(([year, event]) => <li key={year}><span>{year}</span>{event}</li>)}</ol>
+            <div className="section-label"><span>03</span>{t.profile.label}</div>
+            <h2>{t.profile.title}</h2>
+            <div className="profile-copy">{t.profile.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
+            <ol className="timeline">{t.profile.timeline.map(([year, event]) => <li key={year}><span>{year}</span>{event}</li>)}</ol>
           </div>
         </section>
 
         <section className="expertise section-shell" id="expertise">
-          <div className="section-heading expertise-heading"><div className="section-label" data-reveal><span>04</span>{t.expertise.label}</div><h2 data-reveal><DecodeText text={t.expertise.title} /></h2></div>
-          <ol className="expertise-list">{t.expertise.groups.map((group) => <li key={group.index} data-reveal><span className="expertise-index">/{group.index}</span><h3>{group.title}</h3><p>{group.body}</p><span className="expertise-tools">{group.tools}</span></li>)}</ol>
+          <div className="section-heading expertise-heading"><div className="section-label"><span>04</span>{t.expertise.label}</div><h2>{t.expertise.title}</h2></div>
+          <ol className="expertise-list">{t.expertise.groups.map((group) => <li key={group.index}><span className="expertise-index">/{group.index}</span><h3>{group.title}</h3><p>{group.body}</p><span className="expertise-tools">{group.tools}</span></li>)}</ol>
         </section>
 
         <section className="contact" id="contact">

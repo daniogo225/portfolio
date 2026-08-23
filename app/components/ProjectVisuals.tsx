@@ -1,5 +1,4 @@
 import type { Locale } from "../data/content";
-import NetworkGlobe from "./NetworkGlobe";
 
 export default function ProjectVisual({ index, locale }: { index: number; locale: Locale }) {
   if (index === 0) {
@@ -7,54 +6,59 @@ export default function ProjectVisual({ index, locale }: { index: number; locale
       <div
         className="case-visual case-visual-contract"
         role="img"
-        aria-label={locale === "fr" ? "Pipeline d’analyse contractuelle et rapport de risques" : "Contract analysis pipeline and risk report"}
+        aria-label={locale === "fr" ? "Aperçu statique d’un rapport d’analyse contractuelle" : "Static preview of a contract analysis report"}
       >
-        <div className="visual-topline"><span>CONTRACT::PIPELINE</span><span>[ 00:47 ]</span></div>
-        <div className="contract-flow">
-          <div className="contract-source">
-            <span>INPUT / 01</span>
+        <div className="visual-topline"><span>CONTRACT REVIEW</span><span>00:47</span></div>
+        <div className="contract-workspace">
+          <div className="contract-document">
+            <span>{locale === "fr" ? "Document source" : "Source document"}</span>
             <strong>CONTRAT.PDF</strong>
-            <small>24 PAGES / FR</small>
+            <small>24 PAGES · FR</small>
+            <div className="document-lines" aria-hidden="true"><i /><i /><i /><i /><i /></div>
           </div>
-          <pre className="contract-pipeline" aria-hidden="true">{`EXTRACT ──> CLASSIFY\n                │\nRECOMMEND <── SCORE`}</pre>
-          <div className="contract-report">
-            <div className="report-score"><span>RISK / 100</span><strong>68</strong></div>
-            <ul>
-              <li><span>01</span>TERMINATION <b>REVIEW</b></li>
-              <li><span>02</span>LIABILITY <b>REVIEW</b></li>
-              <li><span>03</span>JURISDICTION <b>CLEAR</b></li>
-            </ul>
+          <div className="contract-summary">
+            <div className="summary-heading">
+              <div><span>{locale === "fr" ? "Analyse terminée" : "Analysis complete"}</span><small>{locale === "fr" ? "3 points à vérifier" : "3 points to review"}</small></div>
+              <strong>68<small>/100</small></strong>
+            </div>
+            <dl>
+              <div><dt>{locale === "fr" ? "Résiliation" : "Termination"}</dt><dd>{locale === "fr" ? "À revoir" : "Review"}</dd></div>
+              <div><dt>{locale === "fr" ? "Responsabilité" : "Liability"}</dt><dd>{locale === "fr" ? "À préciser" : "Clarify"}</dd></div>
+              <div><dt>{locale === "fr" ? "Juridiction" : "Jurisdiction"}</dt><dd>{locale === "fr" ? "Conforme" : "Clear"}</dd></div>
+            </dl>
+            <p>{locale === "fr" ? "Recommandation prête à être relue et validée." : "Recommendation ready for review and validation."}</p>
           </div>
         </div>
-        <div className="scan-line" data-scan />
-        <span className="visual-caption">{locale === "fr" ? "Entrée brute → décision lisible en moins de 60 secondes" : "Raw input → readable decision in under 60 seconds"}</span>
+        <span className="visual-caption">{locale === "fr" ? "Du document brut à une décision structurée" : "From raw document to structured decision"}</span>
       </div>
     );
   }
 
   return (
     <div
-      className="case-visual case-visual-globe"
+      className="case-visual case-visual-system"
       role="img"
-      aria-label={locale === "fr" ? "Topologie conceptuelle des surfaces web, mobile, données et opérations" : "Conceptual topology of web, mobile, data, and operations surfaces"}
+      aria-label={locale === "fr" ? "Schéma statique reliant interfaces, règles métier, données et opérations" : "Static map connecting interfaces, business rules, data, and operations"}
     >
-      <div className="visual-topline"><span>SYSTEM::REACH</span><span>[ CONCEPTUAL ]</span></div>
-      <div className="globe-layout">
-        <div className="globe-stage">
-          <NetworkGlobe />
-          <span className="globe-origin">ABIDJAN<br />05.36°N</span>
+      <div className="visual-topline"><span>PRODUCT SYSTEM</span><span>ABIDJAN · CI</span></div>
+      <div className="system-workspace">
+        <div className="system-map">
+          <div className="system-node system-node-mobile"><span>MOBILE</span><strong>{locale === "fr" ? "Terrain" : "Field"}</strong></div>
+          <div className="system-node system-node-web"><span>WEB</span><strong>{locale === "fr" ? "Équipes" : "Teams"}</strong></div>
+          <div className="system-core"><span>{locale === "fr" ? "Noyau métier" : "Business core"}</span><strong>{locale === "fr" ? "Règles + données" : "Rules + data"}</strong></div>
+          <div className="system-node system-node-data"><span>DATA</span><strong>Audit</strong></div>
+          <div className="system-node system-node-ops"><span>OPS</span><strong>Production</strong></div>
         </div>
-        <div className="globe-intelligence">
-          <span className="globe-intelligence-label">DELIVERY::TOPOLOGY</span>
-          <pre aria-hidden="true">{`WEB    ──┐\nMOBILE ──┼── DOMAIN ── PROD\nDATA   ──┘       │\n              OBSERVE`}</pre>
+        <div className="system-principles">
+          <span>{locale === "fr" ? "Principes de livraison" : "Delivery principles"}</span>
           <dl>
-            <div><dt>WEB + MOBILE</dt><dd>{locale === "fr" ? "Surfaces métier partagées" : "Shared business surfaces"}</dd></div>
-            <div><dt>DOMAIN + DATA</dt><dd>{locale === "fr" ? "Règles et audit préservés" : "Rules and audit preserved"}</dd></div>
-            <div><dt>OPS + PROD</dt><dd>{locale === "fr" ? "Livraison et suivi continus" : "Continuous delivery and monitoring"}</dd></div>
+            <div><dt>01</dt><dd>{locale === "fr" ? "Une règle métier, plusieurs interfaces" : "One business rule, multiple interfaces"}</dd></div>
+            <div><dt>02</dt><dd>{locale === "fr" ? "Audit et permissions intégrés" : "Built-in audit and permissions"}</dd></div>
+            <div><dt>03</dt><dd>{locale === "fr" ? "Déploiement et suivi continus" : "Continuous delivery and monitoring"}</dd></div>
           </dl>
         </div>
       </div>
-      <span className="visual-caption">{locale === "fr" ? "Schéma conceptuel, détails opérationnels confidentiels" : "Conceptual map, operational details remain confidential"}</span>
+      <span className="visual-caption">{locale === "fr" ? "Architecture conceptuelle, détails opérationnels confidentiels" : "Conceptual architecture, operational details remain confidential"}</span>
     </div>
   );
 }

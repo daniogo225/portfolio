@@ -31,9 +31,9 @@ export const content = {
     },
     work: {
       label: "Travaux sélectionnés",
-      title: "Des preuves, pas une galerie.",
+      title: "Deux systèmes, une même exigence.",
       intro:
-        "Deux contextes différents, une même exigence : réduire la complexité sans la masquer et livrer un résultat qui tient dans le réel.",
+        "Partir d’un problème réel, construire une réponse lisible et la livrer jusqu’en production.",
       cases: [
         {
           index: "01",
@@ -67,7 +67,7 @@ export const content = {
             ["Web + mobile", "surfaces livrées"],
             ["Production", "standard quotidien"],
           ],
-          stack: ["Laravel", "React", "React Native", "Expo", "Forge", "Monitoring"],
+          stack: ["Laravel", "React", "React Native", "Expo", "Intégrations IA", "Forge"],
           link: "#profile",
           linkLabel: "Voir mon approche",
         },
@@ -113,9 +113,15 @@ export const content = {
         },
         {
           index: "04",
-          title: "IA et opérations",
-          body: "Workflows assistés, validation humaine, monitoring, déploiement et amélioration continue.",
-          tools: "OpenAI, Claude, Forge, observabilité",
+          title: "Intégration d’intelligence artificielle",
+          body: "Fonctionnalités assistées, extraction, classification, génération encadrée et validation humaine.",
+          tools: "OpenAI, Claude, API, automatisation",
+        },
+        {
+          index: "05",
+          title: "Opérations et fiabilité",
+          body: "Déploiement, monitoring, observabilité et amélioration continue des systèmes en production.",
+          tools: "Forge, CI/CD, monitoring, exploitation",
         },
       ],
     },
@@ -161,9 +167,9 @@ export const content = {
     },
     work: {
       label: "Selected work",
-      title: "Proof, not a gallery.",
+      title: "Two systems, one standard.",
       intro:
-        "Two different contexts, one standard: reduce complexity without hiding it and ship work that survives contact with reality.",
+        "Start from a real problem, build a readable response, and carry it all the way to production.",
       cases: [
         {
           index: "01",
@@ -197,7 +203,7 @@ export const content = {
             ["Web + mobile", "shipped surfaces"],
             ["Production", "daily standard"],
           ],
-          stack: ["Laravel", "React", "React Native", "Expo", "Forge", "Monitoring"],
+          stack: ["Laravel", "React", "React Native", "Expo", "AI integrations", "Forge"],
           link: "#profile",
           linkLabel: "See my approach",
         },
@@ -243,9 +249,15 @@ export const content = {
         },
         {
           index: "04",
-          title: "AI and operations",
-          body: "Assisted workflows, human validation, monitoring, deployment, and continuous improvement.",
-          tools: "OpenAI, Claude, Forge, observability",
+          title: "Artificial intelligence integration",
+          body: "Assisted features, extraction, classification, controlled generation, and human validation.",
+          tools: "OpenAI, Claude, APIs, automation",
+        },
+        {
+          index: "05",
+          title: "Operations and reliability",
+          body: "Deployment, monitoring, observability, and continuous improvement of production systems.",
+          tools: "Forge, CI/CD, monitoring, operations",
         },
       ],
     },
