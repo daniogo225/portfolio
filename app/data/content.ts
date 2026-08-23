@@ -50,7 +50,7 @@ export const content = {
             ["13", "juridictions"],
           ],
           stack: ["Laravel", "Inertia", "React", "IA", "Laravel Cloud"],
-          link: "https://contracttchecker.laravel.cloud/",
+          link: "https://checker.65-21-0-100.sslip.io/",
           linkLabel: "Ouvrir le produit",
         },
         {
@@ -180,7 +180,7 @@ export const content = {
             ["13", "jurisdictions"],
           ],
           stack: ["Laravel", "Inertia", "React", "AI", "Laravel Cloud"],
-          link: "https://contracttchecker.laravel.cloud/",
+          link: "https://checker.65-21-0-100.sslip.io/",
           linkLabel: "Open the product",
         },
         {
