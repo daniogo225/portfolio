@@ -156,7 +156,11 @@ export default function Portfolio() {
               <p>{t.statement.body}</p>
               <div className="statement-system">
                 <strong>{t.statement.note}</strong>
-                <pre aria-hidden="true">{`OBSERVE ──┐\n          ├─ BUILD ── OPERATE\nDECIDE  ──┘`}</pre>
+                <pre className="pixel-ascii statement-pixel-art" aria-hidden="true">{`####  #  #  ###  ###
+#     #  #   #   #  #
+####  ####   #   ###
+   #  #  #   #   #
+####  #  #  ###  #`}</pre>
               </div>
             </div>
           </div>
@@ -194,7 +198,11 @@ export default function Portfolio() {
         <section className="profile" id="profile">
           <div className="profile-photo" data-profile-photo>
             <div><Image src="/portraits/daniogo-about-seated-cutout.png" alt={t.profile.photo} fill sizes="(min-width: 900px) 48vw, 100vw" className="profile-image" /></div>
-            <div className="profile-ascii" aria-hidden="true"><span>HUMAN::SYSTEM</span><pre>{`PRODUCT  <──>  ENGINEERING\n              │\n           DELIVERY`}</pre></div>
+            <div className="profile-ascii" aria-hidden="true"><span>IDENTITY::DA</span><pre className="pixel-ascii profile-pixel-art">{`####    ###
+#   #  #   #
+#   #  #####
+#   #  #   #
+####   #   #`}</pre></div>
             <span className="profile-photo-code">ABJ / 05.34°N / 04.01°W</span>
           </div>
           <div className="profile-content">
