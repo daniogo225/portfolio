@@ -2994,6 +2994,40 @@ main:focus {
 }
 
 /* ==========================================================================
+   Page introuvable
+   ========================================================================== */
+
+.not-found {
+  display: grid;
+  align-content: center;
+  gap: 18px;
+  min-height: 100svh;
+}
+
+.not-found .mono {
+  color: var(--accent-text);
+}
+
+.not-found h1 {
+  font-size: clamp(2.6rem, 1.2rem + 5vw, 6rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.not-found-en {
+  color: var(--fg-muted);
+  font-size: 1.2rem;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* ==========================================================================
    Palette d’actions
    ========================================================================== */
 
