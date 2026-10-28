@@ -1,0 +1,473 @@
+/* ==========================================================================
+   CV : une feuille A4, papier clair dans les deux thèmes
+   ========================================================================== */
+
+.cv-page {
+  min-height: 100svh;
+  padding: 0 var(--gutter) 56px;
+}
+
+.cv-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  max-width: 210mm;
+  margin: 0 auto 20px;
+  padding: 12px 0;
+  background: var(--bg);
+}
+
+.cv-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.cv-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--fg);
+  font-size: 0.92rem;
+  transition:
+    border-color 0.3s var(--ease-out),
+    background-color 0.3s var(--ease-out),
+    color 0.3s var(--ease-out);
+}
+
+.cv-tool.is-primary {
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+}
+
+@media (hover: hover) {
+  .cv-tool:hover {
+    border-color: var(--fg);
+  }
+
+  .cv-tool.is-primary:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+}
+
+.cv-langs {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.cv-langs a {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  color: var(--fg-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.cv-langs a[aria-current] {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* La feuille */
+
+.cv-sheet {
+  --ink: #121211;
+  --ink-soft: #4b4a46;
+  --ink-faint: #6a6964;
+  --rule: #e3e1db;
+  --mark: #b33c09;
+  display: flex;
+  flex-direction: column;
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto;
+  padding: 13mm 14mm 12mm;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #ffffff;
+  color: var(--ink);
+  font-family: var(--font-cv-sans), var(--font-sans);
+  font-size: 9.3pt;
+  line-height: 1.47;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.06),
+    0 30px 80px -30px rgb(0 0 0 / 0.45);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cv-sheet a {
+  color: inherit;
+}
+
+.cv-sheet :is(p, li, dd) {
+  text-wrap: pretty;
+}
+
+.cv-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 27mm;
+  gap: 7mm;
+  align-items: end;
+}
+
+.cv-identity h1 {
+  font-size: 31pt;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.cv-role {
+  margin-top: 2.4mm;
+  font-size: 12.5pt;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.cv-tagline {
+  margin-top: 1mm;
+  color: var(--ink-faint);
+  font-size: 12.5pt;
+  letter-spacing: -0.02em;
+}
+
+.cv-tagline em {
+  color: var(--mark);
+  font-family: var(--font-serif);
+  font-size: 1.08em;
+  font-style: italic;
+  letter-spacing: 0;
+}
+
+.cv-photo {
+  display: block;
+  width: 27mm;
+  height: 32.4mm;
+  border-radius: 2.5mm;
+  object-fit: cover;
+}
+
+.cv-summary {
+  margin-top: 6mm;
+  padding-top: 4.6mm;
+  border-top: 0.3mm solid var(--rule);
+  font-size: 10.3pt;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+
+.cv-contacts {
+  display: grid;
+  gap: 0.9mm;
+  color: var(--ink-soft);
+  font-size: 8.4pt;
+  line-height: 1.38;
+  text-align: right;
+}
+
+.cv-contacts a {
+  color: var(--ink);
+}
+
+.cv-contacts span {
+  color: var(--ink-faint);
+}
+
+.cv-columns {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 9mm;
+  min-height: 0;
+  margin-top: 6mm;
+}
+
+.cv-main,
+.cv-side {
+  display: flex;
+  flex-direction: column;
+  gap: 6.4mm;
+  min-height: 0;
+}
+
+.cv-sheet h2 {
+  margin-bottom: 2.4mm;
+  padding-bottom: 1.4mm;
+  border-bottom: 0.3mm solid var(--rule);
+  color: var(--mark);
+  font-family: var(--font-cv-mono), var(--font-mono);
+  font-size: 7pt;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cv-sheet h3 {
+  font-size: 10.4pt;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.cv-job-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 4mm;
+}
+
+.cv-job-head p {
+  color: var(--ink-faint);
+  font-size: 8pt;
+}
+
+.cv-job-role {
+  margin: 0.6mm 0 2.2mm;
+  font-weight: 500;
+}
+
+.cv-job ul,
+.cv-missions {
+  display: grid;
+  gap: 1.9mm;
+}
+
+.cv-job li,
+.cv-missions li {
+  position: relative;
+  padding-left: 4.2mm;
+  color: var(--ink-soft);
+}
+
+.cv-job li::before,
+.cv-missions li::before {
+  content: "";
+  position: absolute;
+  top: 0.72em;
+  left: 0;
+  width: 2.4mm;
+  height: 0.3mm;
+  background: var(--mark);
+}
+
+.cv-missions strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.cv-main section > p {
+  color: var(--ink-soft);
+}
+
+.cv-main section > h3 + p {
+  margin-top: 0.6mm;
+}
+
+.cv-skills {
+  display: grid;
+  gap: 2.8mm;
+}
+
+.cv-skills dt {
+  font-weight: 600;
+}
+
+.cv-skills dd {
+  color: var(--ink-soft);
+  font-size: 8.8pt;
+}
+
+.cv-plain {
+  display: grid;
+  gap: 0.8mm;
+}
+
+.cv-plain span,
+.cv-side section > p {
+  color: var(--ink-soft);
+}
+
+.cv-qr {
+  display: grid;
+  grid-template-columns: 19mm 1fr;
+  gap: 4mm;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 3.4mm;
+  border-top: 0.3mm solid var(--rule);
+}
+
+.cv-qr img {
+  width: 19mm;
+  height: 19mm;
+}
+
+.cv-qr h2 {
+  margin-bottom: 1mm;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.cv-qr p {
+  color: var(--ink-soft);
+  font-size: 8pt;
+  line-height: 1.4;
+}
+
+/* Téléphone : la feuille devient une page fluide sur une colonne. */
+@media screen and (max-width: 899px) {
+  .cv-sheet {
+    width: 100%;
+    height: auto;
+    padding: 24px 20px 28px;
+    font-size: 0.94rem;
+    border-radius: 14px;
+  }
+
+  .cv-head {
+    grid-template-columns: 1fr 88px;
+    gap: 16px;
+  }
+
+  .cv-contacts {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  .cv-identity h1 {
+    font-size: 2.1rem;
+  }
+
+  .cv-role,
+  .cv-tagline {
+    font-size: 1.05rem;
+  }
+
+  .cv-photo {
+    width: 88px;
+    height: 106px;
+    border-radius: 10px;
+  }
+
+  .cv-summary {
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+
+  .cv-contacts {
+    gap: 0;
+    font-size: 0.95rem;
+  }
+
+  .cv-contacts a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .cv-columns {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-top: 24px;
+  }
+
+  .cv-main,
+  .cv-side {
+    gap: 22px;
+  }
+
+  .cv-sheet h2 {
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    font-size: 0.72rem;
+  }
+
+  .cv-sheet h3 {
+    font-size: 1.08rem;
+  }
+
+  .cv-job-head p,
+  .cv-skills dd,
+  .cv-qr p {
+    font-size: 0.9rem;
+  }
+
+  .cv-job ul,
+  .cv-missions {
+    gap: 8px;
+  }
+
+  .cv-job li,
+  .cv-missions li {
+    padding-left: 18px;
+  }
+
+  .cv-job li::before,
+  .cv-missions li::before {
+    width: 10px;
+  }
+
+  .cv-skills {
+    gap: 10px;
+  }
+
+  .cv-qr {
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    padding-top: 16px;
+  }
+
+  .cv-qr img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Impression et export PDF : exactement une page A4, sans la barre d’outils. */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  .cv-toolbar {
+    display: none;
+  }
+
+  .cv-page {
+    min-height: 0;
+    padding: 0;
+  }
+
+  .cv-sheet {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
