@@ -2,7 +2,7 @@
 
 import { motion, stagger, type Variants } from "motion/react";
 import { Fragment } from "react";
-import { parseEmphasis, plain } from "../../data/content";
+import { parseEmphasis, plain } from "../../data/site";
 
 export const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 

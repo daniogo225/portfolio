@@ -1,14 +1,16 @@
 "use client";
 
+import { ArrowUpRight, Download } from "lucide-react";
 import Image from "next/image";
 import { motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
+import { cvPdf, localePath } from "../../data/site";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
 import useAbidjanTime from "../ui/useAbidjanTime";
 import { useSite } from "./SiteProvider";
 
 export default function Profile() {
-  const { t, calm } = useSite();
+  const { t, calm, locale } = useSite();
   const photoRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const [reached, setReached] = useState(-1);
@@ -40,7 +42,7 @@ export default function Profile() {
             </motion.div>
           </motion.div>
           <figcaption className="mono">
-            <span>{t.profile.place}</span>
+            <span>{t.contact.place}</span>
             <span>
               UTC+0 <time>{time}</time>
             </span>
@@ -49,7 +51,7 @@ export default function Profile() {
 
         <div className="profile-copy">
           <p className="section-label mono">
-            <span>03</span>
+            <span>04</span>
             <span>{t.profile.label}</span>
           </p>
           <RevealText as="h2" id="profile-title" className="section-title" text={t.profile.title} />
@@ -68,6 +70,15 @@ export default function Profile() {
             ))}
           </div>
 
+          <dl className="profile-facts">
+            {t.profile.facts.map((fact) => (
+              <div key={fact.label}>
+                <dt className="mono">{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+
           <div className="timeline-block">
             <h3 className="mono timeline-label">{t.profile.timelineLabel}</h3>
             <div ref={timelineRef} className="timeline">
@@ -82,6 +93,24 @@ export default function Profile() {
                   </li>
                 ))}
               </ol>
+            </div>
+          </div>
+
+          <div className="profile-cv">
+            <h3 className="mono">{t.profile.cvLabel}</h3>
+            <div className="profile-cv-actions">
+              <a className="button button-primary" href={cvPdf(locale)} download>
+                <span className="roll" data-text={t.profile.cvPdf}>
+                  <span>{t.profile.cvPdf}</span>
+                </span>
+                <Download size={18} strokeWidth={1.75} aria-hidden="true" />
+              </a>
+              <a className="button button-ghost" href={localePath(locale, "cv")}>
+                <span className="roll" data-text={t.profile.cvOnline}>
+                  <span>{t.profile.cvOnline}</span>
+                </span>
+                <ArrowUpRight size={18} strokeWidth={1.75} aria-hidden="true" />
+              </a>
             </div>
           </div>
         </div>

@@ -1,17 +1,21 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import type { SiteContent } from "../data/content";
+import type { Locale } from "../data/site";
 import CommandPalette from "./site/CommandPalette";
 import Contact from "./site/Contact";
-import Expertise from "./site/Expertise";
+import FloatingCta from "./site/FloatingCta";
 import Footer from "./site/Footer";
 import Header from "./site/Header";
 import Hero from "./site/Hero";
 import Marquee from "./site/Marquee";
+import Method from "./site/Method";
+import Offers from "./site/Offers";
 import Profile from "./site/Profile";
 import SiteProvider, { useSite } from "./site/SiteProvider";
+import Skills from "./site/Skills";
 import Statement from "./site/Statement";
-import Work from "./site/Work";
 
 function Site() {
   const { t } = useSite();
@@ -43,20 +47,22 @@ function Site() {
         <Hero />
         <Marquee />
         <Statement />
-        <Work />
-        <Expertise />
+        <Offers />
+        <Skills />
+        <Method />
         <Profile />
         <Contact />
       </main>
       <Footer />
+      <FloatingCta />
       <CommandPalette open={paletteOpen} onClose={closePalette} />
     </>
   );
 }
 
-export default function Portfolio() {
+export default function Portfolio({ locale, t }: { locale: Locale; t: SiteContent }) {
   return (
-    <SiteProvider>
+    <SiteProvider locale={locale} t={t}>
       <Site />
     </SiteProvider>
   );

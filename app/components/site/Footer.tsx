@@ -2,17 +2,32 @@
 
 import { ArrowUp, Pause, Play } from "lucide-react";
 import { motion, stagger } from "motion/react";
+import { cvPdf, links, whatsappUrl } from "../../data/site";
 import { EASE_OUT } from "../ui/RevealText";
 import { useSite } from "./SiteProvider";
 
 const LETTERS = Array.from("Daniogo");
 
 export default function Footer() {
-  const { t, paused, setPaused } = useSite();
+  const { t, locale, paused, setPaused } = useSite();
+  const year = new Date().getFullYear();
 
   return (
     <footer className="site-footer">
       <div className="shell">
+        <nav className="footer-links" aria-label={t.footer.linksLabel}>
+          <a href={whatsappUrl(t.hero.message)} target="_blank" rel="noreferrer">
+            WhatsApp
+          </a>
+          <a href={`mailto:${links.email}`}>{t.contact.emailLabel}</a>
+          <a href={links.github} target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+          <a href={cvPdf(locale)} download>
+            {t.footer.cv}
+          </a>
+        </nav>
+
         <motion.p
           className="footer-wordmark"
           aria-hidden="true"
@@ -37,7 +52,7 @@ export default function Footer() {
 
         <div className="footer-bar">
           <p>
-            © {new Date().getFullYear()} Daniogo Aboubakar / {t.footer.rights}
+            © {year} Zié Daniogo / {t.footer.rights}
           </p>
           <div className="footer-actions">
             <button

@@ -13,8 +13,10 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
+import { useRouter } from "next/navigation";
 import { flushSync } from "react-dom";
-import { content, type Locale, type SiteContent } from "../../data/content";
+import type { SiteContent } from "../../data/content";
+import { localePath, type Locale } from "../../data/site";
 
 export type Theme = "light" | "dark";
 
@@ -34,16 +36,7 @@ type SiteContextValue = {
 
 const SiteContext = createContext<SiteContextValue | null>(null);
 
-const LOCALE_KEY = "portfolio-locale-v3";
 const THEME_KEY = "portfolio-theme";
-
-function readStorage(key: string) {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-}
 
 function writeStorage(key: string, value: string) {
   try {
@@ -76,8 +69,16 @@ export function useSite() {
   return value;
 }
 
-export default function SiteProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("fr");
+export default function SiteProvider({
+  locale,
+  t,
+  children,
+}: {
+  locale: Locale;
+  t: SiteContent;
+  children: ReactNode;
+}) {
+  const router = useRouter();
   const [theme, setTheme] = useState<Theme>("dark");
   const [paused, setPaused] = useState(false);
   const prefersReduced = usePrefersReducedMotion();
@@ -86,8 +87,6 @@ export default function SiteProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
-      const savedLocale = readStorage(LOCALE_KEY);
-      if (savedLocale === "fr" || savedLocale === "en") setLocaleState(savedLocale);
       const explicit = document.documentElement.dataset.theme;
       if (explicit === "light" || explicit === "dark") setTheme(explicit);
       else setTheme(matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
@@ -104,10 +103,6 @@ export default function SiteProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = locale;
-  }, [locale]);
-
-  useEffect(() => {
     document.documentElement.dataset.motion = calm ? "off" : "on";
   }, [calm]);
 
@@ -121,10 +116,14 @@ export default function SiteProvider({ children }: { children: ReactNode }) {
     };
   }, [calm]);
 
-  const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
-    writeStorage(LOCALE_KEY, next);
-  }, []);
+  // Chaque langue a sa propre adresse : on change de page en gardant la section et la position.
+  const setLocale = useCallback(
+    (next: Locale) => {
+      if (next === locale) return;
+      router.push(`${localePath(next)}${window.location.hash}`, { scroll: false });
+    },
+    [locale, router],
+  );
 
   const toggleTheme = useCallback(
     (origin?: { x: number; y: number }) => {
@@ -179,7 +178,7 @@ export default function SiteProvider({ children }: { children: ReactNode }) {
   const value = useMemo(
     () => ({
       locale,
-      t: content[locale],
+      t,
       setLocale,
       theme,
       toggleTheme,
@@ -189,7 +188,7 @@ export default function SiteProvider({ children }: { children: ReactNode }) {
       scrollTo,
       lockScroll,
     }),
-    [calm, locale, lockScroll, paused, scrollTo, setLocale, theme, toggleTheme],
+    [calm, locale, lockScroll, paused, scrollTo, setLocale, t, theme, toggleTheme],
   );
 
   return (

@@ -1,13 +1,13 @@
 BEGIN:VCARD
 VERSION:3.0
-N:Aboubakar;Daniogo;;;
-FN:Daniogo Aboubakar
-TITLE:Senior Fullstack Developer & SaaS Founder
-TEL;TYPE=CELL:+22507 15 736 802
-EMAIL;TYPE=WORK:daniogozieaboubakar@gmail.com
-EMAIL;TYPE=HOME:daniogoaboubakar@icloud.com
-ADR;TYPE=WORK:;;Vridi;Abidjan;;Côte d'Ivoire
-BDAY:2004-03-31
+N:Daniogo;Zié;Aboubakar;;
+FN:Zié Daniogo
+TITLE:Ingénieur produit full-stack et IA
+TEL;TYPE=CELL,VOICE:+225 07 15 73 68 02
+EMAIL;TYPE=INTERNET,PREF:daniogoaboubakar@icloud.com
+EMAIL;TYPE=INTERNET:daniogozieaboubakar@gmail.com
+ADR;TYPE=WORK:;;;Abidjan;;;Côte d'Ivoire
 URL:https://portfolio-eight-rust-82.vercel.app/
-NOTE:Senior Fullstack Developer - Laravel & React - SaaS Founder
+X-SOCIALPROFILE;TYPE=github:https://github.com/daniogo225
+NOTE:Ingénieur produit full-stack et IA. SaaS\, applications mobiles\, agents IA\, de la maquette au serveur. WhatsApp : +225 07 15 73 68 02.
 END:VCARD

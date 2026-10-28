@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
-import "./globals.css";
+import { notFound } from "next/navigation";
+import "../globals.css";
+import { isLocale, locales, person, siteUrl } from "../data/site";
 
 const sans = Geist({
   subsets: ["latin"],
@@ -12,46 +14,36 @@ const mono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
   display: "swap",
+  preload: false,
 });
 
 const serif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
-  style: ["normal", "italic"],
+  style: "italic",
   variable: "--font-instrument",
   display: "swap",
 });
 
+// Seules les deux langues existent : toute autre valeur donne une page 404.
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
+// Les pages complètent ces métadonnées communes (titre, description, URL, partage).
 export const metadata: Metadata = {
-  title: "Daniogo Aboubakar | Ingénieur produit",
-  description:
-    "Ingénieur produit à Abidjan. Je transforme des contraintes métier complexes en produits web, mobile et IA fiables.",
+  metadataBase: new URL(siteUrl),
+  applicationName: person.name,
+  authors: [{ name: person.name, url: siteUrl }],
+  creator: person.name,
   icons: {
-    icon: {
-      url: "/portraits/daniogo-product-engineer-cutout.png",
-      type: "image/png",
-    },
-    apple: "/portraits/daniogo-product-engineer-cutout.png",
-  },
-  keywords: [
-    "product engineer",
-    "fullstack developer",
-    "ai workflows",
-    "react",
-    "react native",
-    "expo",
-    "next.js",
-    "inertia",
-    "laravel",
-    "typescript",
-    "abidjan",
-    "daniogo",
-  ],
-  openGraph: {
-    title: "Daniogo Aboubakar | Ingénieur produit",
-    description: "Je transforme la complexité métier en produits web, mobile et IA fiables.",
-    locale: "fr_FR",
-    type: "website",
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: "/apple-icon.png",
   },
 };
 
@@ -65,13 +57,18 @@ export const viewport: Viewport = {
 // Applique le thème choisi avant le premier rendu pour éviter un flash de la mauvaise couleur.
 const themeScript = `try{var t=localStorage.getItem("portfolio-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ lang: string }>;
 }>) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+
   return (
-    <html lang="fr" className={`${sans.variable} ${mono.variable} ${serif.variable}`} suppressHydrationWarning>
+    <html lang={lang} className={`${sans.variable} ${mono.variable} ${serif.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

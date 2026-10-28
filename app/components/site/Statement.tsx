@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { Fragment, useRef } from "react";
-import { parseEmphasis, plain } from "../../data/content";
+import { parseEmphasis, plain } from "../../data/site";
 import { EASE_OUT } from "../ui/RevealText";
 import { useSite } from "./SiteProvider";
 
@@ -17,7 +17,8 @@ function Word({
   range: [number, number];
   em: boolean;
 }) {
-  const opacity = useTransform(progress, range, [0.14, 1]);
+  // Même « éteint », un mot garde un contraste suffisant pour un grand texte (3:1).
+  const opacity = useTransform(progress, range, [em ? 0.72 : 0.5, 1]);
   const y = useTransform(progress, range, [6, 0]);
   return (
     <motion.span className={em ? "statement-word word-em" : "statement-word"} style={{ opacity, y }}>
@@ -41,9 +42,9 @@ export default function Statement() {
   return (
     <section className="statement section" aria-labelledby="statement-label">
       <div className="shell statement-grid">
-        <p className="section-label mono" id="statement-label">
+        <h2 className="section-label mono" id="statement-label">
           <span>{t.statement.label}</span>
-        </p>
+        </h2>
         <p ref={ref} className="statement-text">
           <span className="sr-only">{plain(t.statement.text)}</span>
           <span aria-hidden="true">
@@ -61,32 +62,21 @@ export default function Statement() {
             ))}
           </span>
         </p>
-        <div className="statement-foot">
-          <motion.p
-            className="statement-body"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.9, ease: EASE_OUT }}
-          >
-            {t.statement.body}
-          </motion.p>
-          <ol className="steps">
-            {t.statement.steps.map((step, index) => (
-              <motion.li
-                key={step.title}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.6 }}
-                transition={{ duration: 0.8, delay: index * 0.12, ease: EASE_OUT }}
-              >
-                <span className="mono step-index">0{index + 1}</span>
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-              </motion.li>
-            ))}
-          </ol>
-        </div>
+        <ol className="statement-points">
+          {t.statement.points.map((point, index) => (
+            <motion.li
+              key={point.title}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.8, delay: index * 0.12, ease: EASE_OUT }}
+            >
+              <span className="mono step-index">0{index + 1}</span>
+              <h3>{point.title}</h3>
+              <p>{point.body}</p>
+            </motion.li>
+          ))}
+        </ol>
       </div>
     </section>
   );

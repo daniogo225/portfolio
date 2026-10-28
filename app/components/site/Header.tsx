@@ -1,6 +1,6 @@
 "use client";
 
-import { Command, Menu, Moon, Sun, X } from "lucide-react";
+import { ArrowUpRight, Command, Menu, Moon, Sun, X } from "lucide-react";
 import {
   AnimatePresence,
   motion,
@@ -11,13 +11,24 @@ import {
   type Variants,
 } from "motion/react";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
-import { links, type Locale } from "../../data/content";
+import { links, localePath, locales, whatsappUrl } from "../../data/site";
 import { EASE_OUT } from "../ui/RevealText";
 import useAbidjanTime from "../ui/useAbidjanTime";
 import { useSite } from "./SiteProvider";
 
-export const SECTIONS = ["work", "expertise", "profile", "contact"] as const;
-type SectionId = (typeof SECTIONS)[number];
+export const SECTIONS = ["offers", "expertise", "method", "profile", "contact"] as const;
+export type SectionId = (typeof SECTIONS)[number];
+
+export function sectionLabel(t: ReturnType<typeof useSite>["t"], id: SectionId) {
+  const labels: Record<SectionId, string> = {
+    offers: t.nav.offers,
+    expertise: t.nav.skills,
+    method: t.nav.method,
+    profile: t.nav.profile,
+    contact: t.nav.contact,
+  };
+  return labels[id];
+}
 
 function RollLabel({ children }: { children: string }) {
   return (
@@ -31,20 +42,24 @@ export function LocaleSwitch({ id }: { id: string }) {
   const { locale, setLocale, t } = useSite();
   return (
     <div className="segmented" role="group" aria-label={t.controls.language}>
-      {(["fr", "en"] as Locale[]).map((lang) => (
-        <button
+      {locales.map((lang) => (
+        <a
           key={lang}
-          type="button"
+          href={localePath(lang)}
+          hrefLang={lang}
           lang={lang}
-          aria-pressed={locale === lang}
-          aria-label={lang === "fr" ? "Français" : "English"}
-          onClick={() => setLocale(lang)}
+          aria-current={locale === lang ? "true" : undefined}
+          onClick={(event) => {
+            event.preventDefault();
+            setLocale(lang);
+          }}
         >
           {locale === lang && (
             <motion.span layoutId={`locale-pill-${id}`} className="segmented-pill" transition={{ type: "spring", stiffness: 420, damping: 34 }} />
           )}
           <span className="segmented-label">{lang.toUpperCase()}</span>
-        </button>
+          <span className="sr-only">{lang === "fr" ? ", Français" : ", English"}</span>
+        </a>
       ))}
     </div>
   );
@@ -169,7 +184,7 @@ export default function Header({ onOpenPalette }: { onOpenPalette: () => void })
     };
   }, [menuOpen, lockScroll]);
 
-  const items = SECTIONS.map((id) => ({ id, label: t.nav[id] }));
+  const items = SECTIONS.map((id) => ({ id, label: sectionLabel(t, id) }));
 
   return (
     <header
@@ -179,9 +194,10 @@ export default function Header({ onOpenPalette }: { onOpenPalette: () => void })
       data-menu={menuOpen ? "" : undefined}
     >
       <div className="header-inner shell">
-        <a href="#top" className="wordmark" aria-label={`Daniogo Aboubakar, ${t.footer.top}`}>
-          <span className="wordmark-name">Daniogo</span>
+        <a href="#top" className="wordmark">
+          <span className="wordmark-name">Zié Daniogo</span>
           <span className="wordmark-role">{t.hero.role}</span>
+          <span className="sr-only">, {t.footer.top}</span>
         </a>
 
         <nav className="desktop-nav" aria-label={t.meta.navLabel}>
@@ -207,6 +223,10 @@ export default function Header({ onOpenPalette }: { onOpenPalette: () => void })
             <LocaleSwitch id="header" />
           </div>
           <ThemeToggle />
+          <a className="header-cta" href={whatsappUrl(t.hero.message)} target="_blank" rel="noreferrer">
+            <RollLabel>{t.nav.cta}</RollLabel>
+            <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
+          </a>
           <button
             ref={menuButton}
             type="button"
@@ -254,6 +274,10 @@ export default function Header({ onOpenPalette }: { onOpenPalette: () => void })
               animate={{ opacity: 1, y: 0, transition: { delay: 0.45, duration: 0.6, ease: EASE_OUT } }}
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
             >
+              <a className="button button-primary mobile-menu-cta" href={whatsappUrl(t.hero.message)} target="_blank" rel="noreferrer">
+                {t.hero.primary}
+                <ArrowUpRight size={18} strokeWidth={1.75} aria-hidden="true" />
+              </a>
               <a className="mobile-menu-mail" href={`mailto:${links.email}`}>
                 {links.email}
               </a>

@@ -2,9 +2,9 @@
 
 import { CornerDownLeft, Search } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { links } from "../../data/content";
+import { links, localePath, whatsappUrl } from "../../data/site";
 import { copyEmail } from "./Contact";
-import { SECTIONS } from "./Header";
+import { SECTIONS, sectionLabel } from "./Header";
 import { useSite } from "./SiteProvider";
 
 type Action = {
@@ -66,7 +66,7 @@ export default function CommandPalette({ open, onClose }: { open: boolean; onClo
       ...SECTIONS.map((id) => ({
         id,
         group: t.palette.navigate,
-        label: t.nav[id],
+        label: sectionLabel(t, id),
         hint: `#${id}`,
         run: () => scrollTo(`#${id}`),
       })),
@@ -84,14 +84,15 @@ export default function CommandPalette({ open, onClose }: { open: boolean; onClo
           });
         },
       },
-      { id: "book", group: t.palette.actions, label: t.palette.book, hint: "cal.com", run: () => openExternal(links.calendar) },
       {
-        id: "product",
+        id: "whatsapp",
         group: t.palette.actions,
-        label: t.palette.openProduct,
-        hint: "checker",
-        run: () => openExternal(links.contractChecker),
+        label: t.palette.whatsapp,
+        hint: "WhatsApp",
+        run: () => openExternal(whatsappUrl(t.hero.message)),
       },
+      { id: "cv", group: t.palette.actions, label: t.palette.cv, hint: "/cv", run: () => window.location.assign(localePath(locale, "cv")) },
+      { id: "book", group: t.palette.actions, label: t.palette.book, hint: "cal.com", run: () => openExternal(links.calendar) },
       {
         id: "theme",
         group: t.palette.actions,
