@@ -67,7 +67,7 @@ const fr = {
   ],
   education: {
     school: "Pigier Côte d’Ivoire, Abidjan",
-    body: "Informatique, développement d’applications : BTS IDA, licence 1 validée.",
+    body: "Informatique, développement d’applications : admissible au BTS IDA (2022), licence 1 validée.",
   },
   languages: [
     { name: "Français", level: "courant" },
@@ -143,7 +143,7 @@ const en: CvContent = {
   ],
   education: {
     school: "Pigier Côte d’Ivoire, Abidjan",
-    body: "Computer science, application development: BTS IDA (two-year technical degree), first year of bachelor’s completed.",
+    body: "Computer science, application development: passed the BTS IDA admission (2022, two-year technical degree), first year of bachelor’s completed.",
   },
   languages: [
     { name: "French", level: "fluent" },
