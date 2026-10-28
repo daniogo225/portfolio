@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio de Zié Daniogo
 
-## Getting Started
+Site personnel et CV de Zié Daniogo, ingénieur produit full-stack et IA. Next.js 16, React 19, Tailwind 4, motion et lenis, déployé par Vercel depuis `master`.
 
-First, run the development server:
+Le positionnement, les offres, le ton et les textes réutilisables (LinkedIn, Malt, Upwork, Fiverr) sont dans [`docs/positionnement.md`](docs/positionnement.md). À lire avant de modifier un texte.
+
+## Commandes
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm build        # build de production
+pnpm lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Pages
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Adresse | Contenu |
+| --- | --- |
+| `/` | Portfolio en français |
+| `/en` | Portfolio en anglais |
+| `/cv`, `/en/cv` | CV sur une page A4, imprimable |
+| `/sitemap.xml`, `/robots.txt` | Référencement |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Les pages vivent dans `app/[lang]/`. Le français est servi à la racine grâce à une réécriture dans `next.config.ts` ; les adresses `/fr/...` redirigent vers la racine.
 
-## Learn More
+## Où sont les textes
 
-To learn more about Next.js, take a look at the following resources:
+- `app/data/content.ts` : textes du portfolio (FR et EN), importés seulement côté serveur.
+- `app/data/cv.ts` : textes du CV (FR et EN).
+- `app/data/site.ts` : coordonnées, liens, adresse du site.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Règles : aucun projet, produit, client, chiffre ou capture de l’employeur ; aucun produit personnel nommé ; rien d’inventé. Voir `docs/positionnement.md`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Régénérer les PDF du CV
 
-## Deploy on Vercel
+Après toute modification de `app/data/cv.ts` ou de `app/[lang]/cv/` :
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm build && pnpm start              # le site tourne sur http://localhost:3000
+mkdir -p /tmp/cv-export && cd /tmp/cv-export
+npm i playwright && npx playwright install chromium
+node ~/code/portfolio/scripts/export-cv.mjs http://localhost:3000
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Le script écrit `public/cv-zie-daniogo-fr.pdf` et `public/cv-zie-daniogo-en.pdf` et refuse d’exporter si le contenu dépasse la page A4. La feuille utilise des polices Geist statiques (`app/[lang]/cv/fonts`, licence OFL) pour que le PDF contienne du texte TrueType net et sélectionnable.
+
+## Si l’adresse du site change
+
+1. Modifier `siteUrl` dans `app/data/site.ts` (métadonnées, sitemap, CV).
+2. Régénérer les QR codes du CV :
+   ```bash
+   cd /tmp/cv-export && npm i qrcode
+   node -e "const q=require('qrcode');const fs=require('fs');for(const [l,p] of [['fr','/'],['en','/en']])q.toString('NOUVELLE_ADRESSE'+p,{type:'svg',errorCorrectionLevel:'M',margin:0,color:{dark:'#121211ff',light:'#ffffff00'}}).then(s=>fs.writeFileSync('$HOME/code/portfolio/public/qr/portfolio-'+l+'.svg',s))"
+   ```
+3. Mettre à jour `public/daniogo.vcf`, puis régénérer les PDF.
