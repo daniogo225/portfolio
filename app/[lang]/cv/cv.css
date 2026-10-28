@@ -378,6 +378,14 @@
     font-size: 0.95rem;
   }
 
+  .cv-contacts li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 6px;
+    min-height: 44px;
+  }
+
   .cv-contacts a {
     display: inline-flex;
     align-items: center;
