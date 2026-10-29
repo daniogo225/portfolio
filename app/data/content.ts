@@ -17,8 +17,8 @@ const fr = {
   meta: {
     title: "Zié Daniogo, ingénieur produit full-stack et IA",
     description:
-      "Ingénieur produit full-stack et IA à Abidjan. Je conçois, construis et mets en ligne des SaaS, des applications mobiles et des agents IA, de la maquette au serveur. Missions à distance, en français et en anglais.",
-    ogAlt: "Zié Daniogo, ingénieur produit full-stack et IA. Votre produit, de la maquette au serveur.",
+      "Ingénieur produit full-stack et IA à Abidjan. De l’idée à la mise en ligne, je conçois toute la chaîne de vos SaaS, applications mobiles et agents IA. Missions à distance, en français et en anglais.",
+    ogAlt: "Zié Daniogo, ingénieur produit full-stack et IA. Votre produit, de l’idée à la mise en ligne.",
     skip: "Aller au contenu",
     navLabel: "Navigation principale",
     mobileNavLabel: "Navigation mobile",
@@ -44,9 +44,9 @@ const fr = {
     role: "Produit, full-stack et IA",
     eyebrow: "Ingénieur produit full-stack et IA",
     place: "Basé à Abidjan, Côte d’Ivoire",
-    title: "Votre produit, de la maquette au *serveur.*",
+    title: "Votre produit, de l’idée à la *mise en ligne.*",
     intro:
-      "Je conçois, construis et mets en ligne des SaaS, des applications mobiles et des agents IA. Un seul interlocuteur du début à la fin, avec la cadence d’une petite équipe.",
+      "Je conçois et je développe vos SaaS, applications mobiles et agents IA, en soignant chaque écran : la maquette, le code, les serveurs et la mise en ligne. Un seul interlocuteur du début à la fin, avec la cadence d’une petite équipe.",
     primary: "Écrire sur WhatsApp",
     secondary: "Voir les offres",
     availability: "Disponible pour des missions à distance",
@@ -71,19 +71,19 @@ const fr = {
   statement: {
     label: "Point de vue",
     cta: "Mon parcours",
-    text: "Entre le designer, le développeur et l’hébergeur, un produit perd souvent ce qui le rendait bon. Je tiens toutes les étapes, pour qu’il arrive *entier.*",
+    text: "Un bon produit se joue dans les détails : un bouton à portée de pouce, un message d’erreur qui aide, un écran qui tient quand le réseau coupe. Je les dessine et je les code *moi-même.*",
     points: [
       {
-        title: "Un seul responsable",
-        body: "La même personne cadre, dessine, code et déploie. Aucun passage de relais où les décisions se perdent.",
+        title: "Partir des utilisateurs",
+        body: "Avant de dessiner, je regarde qui utilise le produit, où et avec quelles contraintes : au comptoir, sur le terrain, entre deux rendez-vous.",
       },
       {
-        title: "L’exigence du détail",
-        body: "Des interfaces sobres et lisibles, en clair comme en sombre, où chaque espacement est une décision.",
+        title: "Soigner chaque détail",
+        body: "États vides, erreurs, chargements, mode sombre, taille des boutons : chaque écran est pensé dans tous ses cas, puis vérifié sur téléphone et sur ordinateur.",
       },
       {
-        title: "Prêt pour de vrais utilisateurs",
-        body: "Tests, sécurité, surveillance. Une application est finie quand elle tient face à de vrais utilisateurs, pas quand elle marche sur l’ordinateur du développeur.",
+        title: "Livrer ce qui est dessiné",
+        body: "Je développe moi-même ce que je conçois, tests et sécurité compris. Rien ne se perd entre la maquette et l’application en ligne.",
       },
     ],
   },
@@ -106,7 +106,7 @@ const fr = {
         tagline: "Une première version solide, en ligne en quelques semaines.",
         audience:
           "Fondateurs, porteurs de projet et entreprises qui veulent tester un nouveau service avec de vrais utilisateurs.",
-        body: "Du cadrage à la mise en ligne : parcours utilisateurs, maquettes, application web, comptes et droits d’accès, espace d’administration. Une base saine, pensée pour évoluer sans tout réécrire.",
+        body: "Du cadrage à la mise en ligne : parcours utilisateurs, maquettes soignées, application web, comptes et droits d’accès, espace d’administration. Le code est organisé pour ajouter des fonctionnalités sans tout réécrire.",
         deliverables: [
           "Parcours et maquettes validés avant le code",
           "Application web en ligne",
@@ -119,10 +119,10 @@ const fr = {
       {
         id: "ai",
         title: "Agents IA et assistants vocaux",
-        tagline: "Mettre l’IA au travail dans votre produit.",
+        tagline: "Confier les tâches répétitives à l’IA, sous votre contrôle.",
         audience:
           "Produits existants et équipes support, ventes ou opérations qui veulent automatiser des tâches réelles, pas ajouter un gadget.",
-        body: "Des agents qui utilisent vos outils et vos données pour agir, et des assistants vocaux qui répondent en temps réel. Avec des garde-fous : un périmètre d’action défini, votre validation avant toute action sensible, l’historique de chaque décision.",
+        body: "Des agents qui utilisent vos outils et vos données pour agir à votre place : répondre aux clients, suivre les commandes, planifier des rendez-vous. Et des assistants vocaux qui répondent au téléphone ou dans votre application, en temps réel. Avec des garde-fous : un périmètre d’action défini, votre validation avant toute action sensible, l’historique de chaque décision.",
         deliverables: [
           "Agent connecté à vos outils et à vos données",
           "Assistant vocal en temps réel",
@@ -135,11 +135,11 @@ const fr = {
       {
         id: "mobile",
         title: "Application mobile",
-        tagline: "Une seule application pour iOS et Android.",
-        audience: "Services qui doivent tenir dans la poche de leurs utilisateurs, y compris là où le réseau manque.",
-        body: "Développée avec React Native et Expo : écrans pensés pour une main, fonctionnement sans réseau puis synchronisation, notifications, publication sur les stores.",
+        tagline: "Des apps soignées, pensées pour la réalité de vos utilisateurs.",
+        audience: "Commerces, équipes de terrain et services utilisés surtout sur téléphone, y compris là où le réseau manque.",
+        body: "Une seule application pour iOS et Android, avec React Native et Expo, conçue pour l’usage réel : une main libre, un écran en plein soleil, un réseau qui coupe. Notifications et publication sur les stores comprises.",
         deliverables: [
-          "Maquettes mobiles",
+          "Maquettes mobiles validées avec vous",
           "Application iOS et Android",
           "Fonctionnement sans réseau et synchronisation",
           "Publication sur l’App Store et Google Play",
@@ -169,25 +169,25 @@ const fr = {
     label: "Méthode",
     title: "Voyez comment je *travaille.*",
     intro:
-      "Les projets de mes clients restent confidentiels. Je vous montre donc ma façon de travailler, en quatre démonstrations interactives construites pour cette page : chacune reproduit en petit ce que je livre en mission. Essayez-les.",
+      "Les projets de mes clients restent confidentiels. Je vous montre donc ma façon de concevoir et de construire, en quatre démonstrations interactives construites pour cette page : chacune reproduit en petit ce que je livre en mission. Essayez-les.",
     toolsLabel: "Outils",
     items: [
       {
         id: "product",
-        title: "Du produit au serveur",
-        body: "Je pars du problème, pas de l’outil. Parcours, maquette, interface, règles métier, tests, mise en ligne : la même personne tient chaque étape, donc rien ne se perd entre deux équipes.",
+        title: "De la maquette à l’écran en ligne",
+        body: "Je commence par la maquette, je la valide avec vous, puis je l’habille jusqu’à l’interface finie, je la développe et je la mets en ligne. Une seule personne du début à la fin : ce qui est dessiné est exactement ce qui est livré.",
         points: [
-          "Cadrage et parcours utilisateurs",
-          "Interfaces sobres et accessibles, en clair et en sombre",
-          "Règles métier, rôles et droits d’accès",
+          "Besoin cadré et maquettes validées avec vous",
+          "Chaque état prévu : vide, chargement, erreur, succès",
+          "Écrans accessibles, en mode clair et sombre",
           "Tests automatisés à chaque modification",
         ],
         tools: "Laravel, PHP, React, Next.js, Inertia, Tailwind, TypeScript",
       },
       {
         id: "ai",
-        title: "Agents IA et voix",
-        body: "Un agent utile n’est pas un simple chatbot. Il comprend la demande, choisit ses outils, agit dans un périmètre défini et demande votre accord avant toute action sensible. À la voix, la réponse doit arriver pendant que l’utilisateur écoute encore.",
+        title: "Des agents IA clairs et sous contrôle",
+        body: "Un agent se conçoit comme une interface : on doit voir ce qu’il fait et pouvoir l’arrêter. Il déplace un rendez-vous, compte les commandes en retard, prépare un remboursement, en montrant chaque étape et en demandant votre accord avant toute action sensible. À la voix, il répond sans blanc et accepte qu’on lui coupe la parole.",
         points: [
           "Agents reliés à vos logiciels, à vos données et à vos documents",
           "Assistants vocaux qui répondent sans délai, même quand on les coupe",
@@ -198,8 +198,8 @@ const fr = {
       },
       {
         id: "scale",
-        title: "Solide quand le trafic grimpe",
-        body: "Une application qui tient à dix utilisateurs peut tomber à cent. Je conçois des services qui encaissent : plusieurs serveurs qui se partagent le travail, une file d’attente pour absorber les pics, du cache pour répondre plus vite, des limites contre les abus, et des audits de sécurité pour trouver les failles avant les attaquants.",
+        title: "Rapide, même quand le trafic grimpe",
+        body: "La rapidité fait partie de l’expérience : une application lente ou en panne, c’est un client qui part. Je conçois des services qui encaissent : plusieurs serveurs qui se partagent le travail, une file d’attente pour absorber les pics, du cache pour répondre plus vite, des limites contre les abus, et des audits de sécurité pour trouver les failles avant les attaquants.",
         points: [
           "Plusieurs serveurs qui se partagent le trafic",
           "File d’attente, cache et protection contre les abus",
@@ -210,13 +210,13 @@ const fr = {
       },
       {
         id: "mobile",
-        title: "Mobile, même sans réseau",
-        body: "Sur le terrain, le réseau coupe. Une bonne application mobile continue de fonctionner, garde les actions en attente et se synchronise d’elle-même au retour du réseau, sans perte ni doublon.",
+        title: "Des apps mobiles au design soigné",
+        body: "Une bonne application mobile s’adapte à la réalité de ceux qui l’utilisent : une seule main libre, un écran en plein soleil, un réseau qui coupe au fond d’un entrepôt. Je dessine chaque écran pour ces moments-là, et l’application continue de fonctionner hors ligne, puis se synchronise d’elle-même, sans perte ni doublon.",
         points: [
-          "React Native et Expo, iOS et Android",
+          "Écrans pensés pour une main et un petit écran",
+          "Contrastes lisibles en plein soleil, mode sombre",
           "Fonctionne sans réseau, se synchronise ensuite",
-          "Parcours pensés pour une main et un petit écran",
-          "Publication sur les stores et mises à jour",
+          "iOS et Android avec React Native et Expo",
         ],
         tools: "React Native, Expo, TypeScript",
       },
@@ -227,7 +227,12 @@ const fr = {
     product: {
       label: "Une fonctionnalité, de la maquette à la mise en ligne",
       tabs: ["Maquette", "Interface", "Code", "En ligne"],
-      wire: ["Titre", "Champ e-mail", "Choix du rôle", "Action principale"],
+      captions: [
+        "Maquette : la structure de l’écran, sans couleur ni texte définitif. On la valide ensemble avant d’aller plus loin.",
+        "Interface : la maquette s’habille bloc par bloc, typographie, couleurs, états. L’invitation fonctionne, jusqu’au message de confirmation.",
+        "Code : le contrôleur reprend exactement ce qui a été dessiné, avec la règle métier : seul un admin de l’équipe peut inviter.",
+        "En ligne : tests, vérification du code, mise à jour de la base de données, puis mise en ligne sans interruption de service.",
+      ],
       title: "Inviter un membre",
       hint: "Il recevra un lien d’invitation par e-mail.",
       emailLabel: "E-mail",
@@ -273,7 +278,6 @@ const fr = {
         "Surveillance activée",
       ],
       live: "En ligne",
-      liveCaption: "En ligne sur {url} : {steps}.",
       comment: "// Seul un admin de l’équipe peut inviter",
       flash: "Invitation envoyée",
     },
@@ -385,7 +389,7 @@ const fr = {
       add: "Ajouter",
       newTask: "Nouvelle tâche",
       lists: "Listes",
-      initial: ["Ouvrir le point de vente", "Compter la caisse"],
+      initial: ["Ouvrir le point de vente", "Compter la caisse", "Réceptionner la livraison", "Mettre à jour les prix"],
       presets: [
         "Vérifier le stock du dépôt",
         "Photographier le compteur",
@@ -432,7 +436,7 @@ const fr = {
   method: {
     label: "Collaboration",
     title: "Une personne, la cadence d’une petite *équipe.*",
-    body: "Je travaille avec des agents IA spécialisés, chacun dans un rôle précis : développement, documentation et comptes rendus, gestion des serveurs. Je cadre, je découpe, je relis et je décide ; eux exécutent en parallèle. Vous gardez un seul interlocuteur responsable, et le travail avance sur plusieurs fronts à la fois.",
+    body: "Je travaille avec des agents IA spécialisés, chacun dans un rôle précis : développement, documentation et comptes rendus, gestion des serveurs. Je cadre, je découpe, je relis et je décide ; eux exécutent en parallèle. Vous gardez un seul interlocuteur responsable, et le développement, la documentation et les serveurs avancent en même temps.",
     points: [
       "Des consignes précises pour chaque agent",
       "Claude Code et Codex, des outils d’IA pour coder",
@@ -459,17 +463,17 @@ const fr = {
       },
       {
         title: "Mettre en ligne",
-        body: "Mise en ligne, surveillance, documentation et remise du code. Vous repartez avec un produit qui tient.",
+        body: "Mise en ligne, surveillance, documentation et remise du code. Vous repartez avec une application en service et tout ce qu’il faut pour la faire évoluer.",
       },
     ],
   },
   profile: {
     label: "Profil",
-    title: "Assez proche du produit pour comprendre. Assez technique pour *livrer.*",
+    title: "Assez proche de votre métier pour comprendre. Assez technique pour *livrer.*",
     paragraphs: [
       "Je suis Zié Daniogo, ingénieur produit full-stack et IA, basé à Abidjan. Depuis 2023, je conçois, livre et maintiens des applications web et mobiles en entreprise.",
-      "J’aime le design autant que la technique. Une interface sobre est une interface où chaque détail a été décidé ; une bonne architecture est celle qu’on oublie parce qu’elle tient.",
-      "L’IA accélère mon travail, elle ne décide pas à ma place. Je l’utilise comme un levier, avec du jugement, des tests et une attention constante à ce qui se passe après la mise en ligne.",
+      "Pour moi, le design compte autant que le code : je dessine moi-même les écrans que je développe, je soigne les détails qu’on ne remarque que lorsqu’ils manquent, et je choisis des architectures simples, qui restent rapides et faciles à faire évoluer.",
+      "L’IA accélère mon travail, elle ne décide pas à ma place : je relis chaque livraison, je teste avant chaque mise en ligne et je surveille l’application une fois en service.",
     ],
     facts: [
       { label: "Basé à", value: "Abidjan, Côte d’Ivoire (UTC+0)" },
@@ -486,7 +490,7 @@ const fr = {
     },
     education: { dates: "2021", school: cv.fr.education.school, body: cv.fr.education.body },
     skillsLabel: cv.fr.sections.skills,
-    skillsTitle: "Du produit au serveur, les *outils du quotidien.*",
+    skillsTitle: "Les outils que j’utilise *chaque jour.*",
     skills: cv.fr.skills,
     photo: "Zié Daniogo, assis, en polo vert",
     cvLabel: "CV",
@@ -574,8 +578,8 @@ const en: SiteContent = {
   meta: {
     title: "Zié Daniogo, full-stack and AI product engineer",
     description:
-      "Full-stack and AI product engineer based in Abidjan. I design, build and ship SaaS products, mobile apps and AI agents, from mockup to production server. Remote engagements, in English and French.",
-    ogAlt: "Zié Daniogo, full-stack and AI product engineer. Your product, from mockup to production.",
+      "Full-stack and AI product engineer based in Abidjan. From idea to launch, I build the whole chain of your SaaS products, mobile apps and AI agents. Remote engagements, in English and French.",
+    ogAlt: "Zié Daniogo, full-stack and AI product engineer. Your product, from idea to launch.",
     skip: "Skip to content",
     navLabel: "Main navigation",
     mobileNavLabel: "Mobile navigation",
@@ -601,9 +605,9 @@ const en: SiteContent = {
     role: "Product, full-stack and AI",
     eyebrow: "Full-stack and AI product engineer",
     place: "Based in Abidjan, Côte d’Ivoire",
-    title: "Your product, from mockup to *production.*",
+    title: "Your product, from idea to *launch.*",
     intro:
-      "I design, build and ship SaaS products, mobile apps and AI agents. One accountable person from start to finish, working at the pace of a small team.",
+      "I design and build your SaaS products, mobile apps and AI agents, with care for every screen: the mockup, the code, the servers and the launch. One accountable person from start to finish, working at the pace of a small team.",
     primary: "Message me on WhatsApp",
     secondary: "See the services",
     availability: "Available for remote engagements",
@@ -628,19 +632,19 @@ const en: SiteContent = {
   statement: {
     label: "Point of view",
     cta: "My path",
-    text: "Between the designer, the developer and the hosting provider, a product often loses what made it good. I own every step, so it arrives *whole.*",
+    text: "A good product lives in the details: a button within thumb’s reach, an error message that helps, a screen that holds up when the network drops. I design them and build them *myself.*",
     points: [
       {
-        title: "One accountable person",
-        body: "The same person scopes, designs, codes and deploys. No hand-offs where decisions get lost.",
+        title: "Start from the users",
+        body: "Before designing, I look at who uses the product, where and under which constraints: at the counter, out in the field, between two meetings.",
       },
       {
-        title: "Obsessed with detail",
-        body: "Calm, legible interfaces, in light and dark mode, where every bit of spacing is a decision.",
+        title: "Care for every detail",
+        body: "Empty states, errors, loading, dark mode, button sizes: every screen is designed for all its cases, then checked on phones and on desktop.",
       },
       {
-        title: "Built for real users",
-        body: "Tests, security, monitoring. An app is done when it holds up in front of real users, not when it runs on the developer’s laptop.",
+        title: "Ship what was designed",
+        body: "I build what I design myself, tests and security included. Nothing gets lost between the mockup and the live app.",
       },
     ],
   },
@@ -662,7 +666,7 @@ const en: SiteContent = {
         title: "Web app and SaaS",
         tagline: "A solid first version, live in a few weeks.",
         audience: "Founders, project owners and companies that want to test a new service with real users.",
-        body: "From scoping to launch: user flows, mockups, web app, accounts and access rights, admin area. A sound foundation, built to evolve without a rewrite.",
+        body: "From scoping to launch: user flows, polished mockups, web app, accounts and access rights, admin area. The code is organized so new features can be added without a rewrite.",
         deliverables: [
           "Flows and mockups approved before any code",
           "Web app live online",
@@ -675,10 +679,10 @@ const en: SiteContent = {
       {
         id: "ai",
         title: "AI agents and voice assistants",
-        tagline: "Put AI to work inside your product.",
+        tagline: "Hand repetitive tasks to AI, under your control.",
         audience:
           "Existing products and support, sales or operations teams that want to automate real tasks, not add a gimmick.",
-        body: "Agents that use your tools and data to get things done, and voice assistants that answer in real time. With guardrails: a defined scope of action, your approval before any sensitive action, and a record of every decision.",
+        body: "Agents that use your tools and data to act for you: answer customers, track orders, schedule meetings. And voice assistants that answer on the phone or inside your app, in real time. With guardrails: a defined scope of action, your approval before any sensitive action, and a record of every decision.",
         deliverables: [
           "Agent connected to your tools and data",
           "Real-time voice assistant",
@@ -691,11 +695,11 @@ const en: SiteContent = {
       {
         id: "mobile",
         title: "Mobile app",
-        tagline: "One app for iOS and Android.",
-        audience: "Services that need to live in their users’ pockets, including where the network drops.",
-        body: "Built with React Native and Expo: screens designed for one hand, works without a network and syncs later, notifications, store release.",
+        tagline: "Polished apps, designed around your users’ reality.",
+        audience: "Shops, field teams and services used mostly on phones, including where the network drops.",
+        body: "One app for iOS and Android, built with React Native and Expo and designed for real use: one free hand, a screen in bright sunlight, a network that drops. Notifications and store release included.",
         deliverables: [
-          "Mobile mockups",
+          "Mobile mockups approved with you",
           "iOS and Android app",
           "Works offline, syncs later",
           "Release on the App Store and Google Play",
@@ -724,25 +728,25 @@ const en: SiteContent = {
     label: "Approach",
     title: "See how I *work.*",
     intro:
-      "My clients’ projects stay confidential. So here is how I work instead, in four interactive demos built for this page: each one is a small version of what I deliver on real engagements. Try them.",
+      "My clients’ projects stay confidential. So here is how I design and build instead, in four interactive demos built for this page: each one is a small version of what I deliver on real engagements. Try them.",
     toolsLabel: "Tools",
     items: [
       {
         id: "product",
-        title: "From product to server",
-        body: "I start from the problem, not the tool. Flows, mockup, interface, business rules, tests, launch: one person owns every step, so nothing gets lost between teams.",
+        title: "From mockup to live screen",
+        body: "I start with the mockup, approve it with you, then dress it up into the finished interface, build it and put it online. One person from start to finish: what is designed is exactly what gets delivered.",
         points: [
-          "Scoping and user flows",
-          "Calm, accessible interfaces, in light and dark mode",
-          "Business rules, roles and access rights",
+          "Needs scoped and mockups approved with you",
+          "Every state planned: empty, loading, error, success",
+          "Accessible screens, in light and dark mode",
           "Automated tests on every change",
         ],
         tools: "Laravel, PHP, React, Next.js, Inertia, Tailwind, TypeScript",
       },
       {
         id: "ai",
-        title: "AI agents and voice",
-        body: "A useful agent is more than a chatbot. It understands the request, picks its tools, acts within a defined scope and asks for your approval before anything sensitive. With voice, the answer has to arrive while the user is still listening.",
+        title: "Clear AI agents, under control",
+        body: "An agent is designed like an interface: you should see what it does and be able to stop it. It moves a meeting, counts late orders, prepares a refund, showing every step and asking for your approval before anything sensitive. With voice, it answers without awkward pauses and lets you interrupt it.",
         points: [
           "Agents connected to your software, data and documents",
           "Voice assistants that answer instantly, even when interrupted",
@@ -753,8 +757,8 @@ const en: SiteContent = {
       },
       {
         id: "scale",
-        title: "Solid when traffic climbs",
-        body: "An app that holds up with ten users can fall over with a hundred. I build services that take the load: several servers sharing the work, a queue to absorb spikes, caching to answer faster, limits against abuse, and security audits to find the holes before attackers do.",
+        title: "Fast, even when traffic climbs",
+        body: "Speed is part of the experience: a slow or broken app is a customer walking away. I build services that take the load: several servers sharing the work, a queue to absorb spikes, caching to answer faster, limits against abuse, and security audits to find the holes before attackers do.",
         points: [
           "Several servers sharing the traffic",
           "Queue, caching and abuse protection",
@@ -765,13 +769,13 @@ const en: SiteContent = {
       },
       {
         id: "mobile",
-        title: "Mobile, even offline",
-        body: "In the field, the network drops. A good mobile app keeps working, holds actions in a queue and syncs on its own when the network returns, with no loss and no duplicates.",
+        title: "Polished mobile apps",
+        body: "A good mobile app adapts to the reality of the people using it: one free hand, a screen in bright sunlight, a network that drops at the back of a warehouse. I design every screen for those moments, and the app keeps working offline, then syncs on its own, with no loss and no duplicates.",
         points: [
-          "React Native and Expo, iOS and Android",
+          "Screens designed for one hand and a small screen",
+          "Contrast readable in sunlight, dark mode",
           "Works offline, syncs later",
-          "Flows designed for one hand and a small screen",
-          "Store releases and updates",
+          "iOS and Android with React Native and Expo",
         ],
         tools: "React Native, Expo, TypeScript",
       },
@@ -782,7 +786,12 @@ const en: SiteContent = {
     product: {
       label: "One feature, from mockup to launch",
       tabs: ["Wireframe", "Interface", "Code", "Live"],
-      wire: ["Title", "Email field", "Role picker", "Primary action"],
+      captions: [
+        "Mockup: the structure of the screen, with no color or final text yet. We approve it together before going further.",
+        "Interface: the mockup is dressed up block by block, typography, colors, states. The invitation works, down to the confirmation message.",
+        "Code: the controller follows exactly what was designed, with the business rule: only a team admin can invite.",
+        "Live: tests, code checks, database update, then a release with no downtime.",
+      ],
       title: "Invite a member",
       hint: "They will receive an invitation link by email.",
       emailLabel: "Email",
@@ -822,7 +831,6 @@ const en: SiteContent = {
       },
       steps: ["Automated tests", "Code checks", "Database update", "Zero-downtime release", "Monitoring on"],
       live: "Live",
-      liveCaption: "Live at {url}: {steps}.",
       comment: "// Only a team admin can invite",
       flash: "Invitation sent",
     },
@@ -934,7 +942,7 @@ const en: SiteContent = {
       add: "Add",
       newTask: "New task",
       lists: "Lists",
-      initial: ["Open the store", "Count the till"],
+      initial: ["Open the store", "Count the till", "Receive the delivery", "Update the prices"],
       presets: [
         "Check the warehouse stock",
         "Photograph the meter",
@@ -981,7 +989,7 @@ const en: SiteContent = {
   method: {
     label: "Process",
     title: "One person, the pace of a small *team.*",
-    body: "I work with specialized AI agents, each with a clear role: development, documentation and status reports, server management. I scope, split the work, review and decide; they execute in parallel. You keep a single accountable point of contact, and the work moves on several fronts at once.",
+    body: "I work with specialized AI agents, each with a clear role: development, documentation and status reports, server management. I scope, split the work, review and decide; they execute in parallel. You keep a single accountable point of contact, and development, documentation and servers move forward at the same time.",
     points: [
       "Clear instructions for every agent",
       "Claude Code and Codex, AI coding tools",
@@ -1008,17 +1016,17 @@ const en: SiteContent = {
       },
       {
         title: "Ship",
-        body: "Launch, monitoring, documentation and code hand-over. You walk away with a product that holds up.",
+        body: "Launch, monitoring, documentation and code hand-over. You walk away with a running app and everything needed to keep it growing.",
       },
     ],
   },
   profile: {
     label: "Profile",
-    title: "Close enough to product to understand. Technical enough to *deliver.*",
+    title: "Close enough to your business to understand. Technical enough to *deliver.*",
     paragraphs: [
       "I am Zié Daniogo, a full-stack and AI product engineer based in Abidjan. Since 2023, I have been designing, shipping and running web and mobile applications in-house.",
-      "I care about design as much as engineering. A calm interface is one where every detail has been decided; good architecture is the kind you forget about because it holds.",
-      "AI makes me faster, it does not decide for me. I use it as leverage, with judgment, tests and constant attention to what happens after launch.",
+      "To me, design matters as much as code: I design the screens I build myself, I polish the details you only notice when they are missing, and I choose simple architectures that stay fast and easy to evolve.",
+      "AI makes me faster, it does not decide for me: I review every delivery, test before every launch and monitor the app once it is live.",
     ],
     facts: [
       { label: "Based in", value: "Abidjan, Côte d’Ivoire (UTC+0)" },
@@ -1035,7 +1043,7 @@ const en: SiteContent = {
     },
     education: { dates: "2021", school: cv.en.education.school, body: cv.en.education.body },
     skillsLabel: cv.en.sections.skills,
-    skillsTitle: "From product to server, the *everyday toolkit.*",
+    skillsTitle: "The tools I use *every day.*",
     skills: cv.en.skills,
     photo: "Zié Daniogo, seated, wearing a green polo shirt",
     cvLabel: "Résumé",

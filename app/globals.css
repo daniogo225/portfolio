@@ -2544,6 +2544,7 @@ main:focus {
 
 .webapp-primary {
   display: inline-flex;
+  border: 1px solid #1d1d1f;
   align-items: center;
   justify-content: center;
   gap: 0.5cqw;
@@ -2738,6 +2739,7 @@ main:focus {
 
 .webapp-roles {
   display: grid;
+  border: 1px solid transparent;
   grid-template-columns: repeat(3, 1fr);
   padding: 0.25cqw;
   border-radius: 0.7cqw;
@@ -2806,26 +2808,90 @@ main:focus {
   color: #30d158;
 }
 
-/* Maquette filaire : la même page, le texte devient des barres, les pleins des pointillés. */
-.webapp[data-wire] .tx {
-  display: inline-block;
-  color: transparent !important;
-  line-height: 0.72em;
-  vertical-align: middle;
+/*
+ * Maquette filaire : la même page, le texte devient des barres, les pleins des pointillés.
+ * Le passage à l’interface se fait bloc par bloc, dans l’ordre donné par --d : l’écran
+ * s’habille sous les yeux, sans que rien ne bouge dans la mise en page.
+ */
+/* Le délai se calcule sur chaque élément, là où son rang --d est connu. */
+.webapp {
+  --wire: #e1e1e6;
+  --wire-line: #b8b8c0;
+  --morph: 0.55s var(--ease-out);
+}
+
+.webapp .tx {
+  position: relative;
+  transition: color var(--morph) calc(var(--d, 0) * 75ms);
+}
+
+.webapp .tx::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 0.72em;
   border-radius: 999px;
-  background: #e1e1e6;
+  background: var(--wire);
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: opacity var(--morph) calc(var(--d, 0) * 75ms);
+  pointer-events: none;
+}
+
+.webapp[data-wire] .tx {
+  color: transparent;
+}
+
+.webapp[data-wire] .tx::after {
+  opacity: 1;
+}
+
+.webapp[data-wire] .webapp-primary .tx::after {
+  background: #cfcfd6;
+}
+
+.webapp svg,
+.webapp kbd,
+.webapp .webapp-count {
+  transition: opacity var(--morph) calc(var(--d, 0) * 75ms);
 }
 
 .webapp[data-wire] svg,
 .webapp[data-wire] kbd,
 .webapp[data-wire] .webapp-count {
-  visibility: hidden;
+  opacity: 0;
+}
+
+.webapp-avatar,
+.webapp-logo,
+.webapp-side,
+.webapp-scrim,
+.webapp-status::before,
+.webapp-nav > span,
+.webapp-tabs > span,
+.webapp-primary,
+.webapp-ghost,
+.webapp-input,
+.webapp-search,
+.webapp-role,
+.webapp-roles,
+.webapp-roles button,
+.webapp-modal {
+  transition:
+    background-color var(--morph) calc(var(--d, 0) * 75ms),
+    border-color var(--morph) calc(var(--d, 0) * 75ms),
+    border-style var(--morph) calc(var(--d, 0) * 75ms),
+    box-shadow var(--morph) calc(var(--d, 0) * 75ms),
+    color var(--morph) calc(var(--d, 0) * 75ms);
+  transition-behavior: allow-discrete;
 }
 
 .webapp[data-wire] .webapp-avatar,
 .webapp[data-wire] .webapp-logo {
   color: transparent;
-  background: #e1e1e6;
+  background: var(--wire);
   box-shadow: none;
 }
 
@@ -2833,45 +2899,39 @@ main:focus {
 .webapp[data-wire] .webapp-ghost,
 .webapp[data-wire] .webapp-input,
 .webapp[data-wire] .webapp-search,
-.webapp[data-wire] .webapp-role {
-  border: 1px dashed #b8b8c0;
+.webapp[data-wire] .webapp-role,
+.webapp[data-wire] .webapp-roles {
+  border-style: dashed;
+  border-color: var(--wire-line);
   background: transparent;
   box-shadow: none;
 }
 
-.webapp[data-wire] .webapp-primary .tx {
-  background: #cfcfd6;
-}
-
 .webapp[data-wire] .webapp-modal {
-  border: 1px dashed #b8b8c0;
+  border-style: dashed;
+  border-color: var(--wire-line);
   box-shadow: none;
 }
 
-.webapp[data-wire] .webapp-roles,
 .webapp[data-wire] .webapp-roles button[data-on],
 .webapp[data-wire] .webapp-nav > span[data-active] {
   background: transparent;
   box-shadow: none;
 }
 
-.webapp[data-wire] .webapp-roles {
-  border: 1px dashed #b8b8c0;
-}
-
 .webapp[data-wire] .webapp-side {
-  background: #ffffff;
   border-right-style: dashed;
+  background: #ffffff;
 }
 
 .webapp[data-wire] .webapp-status::before {
-  background: #e1e1e6;
+  background: var(--wire);
   box-shadow: none;
 }
 
 .webapp[data-wire] .webapp-tabs > span[data-active] {
   border-bottom-style: dashed;
-  border-bottom-color: #b8b8c0;
+  border-bottom-color: var(--wire-line);
 }
 
 .webapp[data-wire] .webapp-scrim {
@@ -2880,6 +2940,72 @@ main:focus {
 
 .webapp[data-wire] .webapp-toast {
   display: none;
+}
+
+/* La maquette se dessine bloc par bloc quand la figure entre dans l’écran. */
+.product[data-armed]:not([data-play]) .webapp[data-wire] .st {
+  opacity: 0;
+}
+
+.product[data-play] .webapp[data-wire] .st {
+  animation: wire-in 0.55s var(--ease-out) both;
+  animation-delay: calc(var(--d, 0) * 90ms);
+}
+
+@keyframes wire-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.6cqw);
+  }
+}
+
+/* Le code s’écrit ligne après ligne, le Terminal tape la commande avant de dérouler. */
+.product[data-play] .editor-line {
+  animation: type-in 0.42s steps(20, end) both;
+  animation-delay: calc(250ms + var(--i, 0) * 140ms);
+}
+
+.product[data-play] .term-type {
+  animation: type-in 0.6s steps(26, end) 0.2s both;
+}
+
+@keyframes type-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+[data-motion="off"] .webapp *,
+[data-motion="off"] .webapp *::after,
+[data-motion="off"] .webapp *::before {
+  transition-delay: 0s !important;
+}
+
+[data-motion="off"] .webapp .st,
+[data-motion="off"] .editor-line,
+[data-motion="off"] .term-type {
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .webapp *,
+  .webapp *::after,
+  .webapp *::before {
+    transition-delay: 0s !important;
+  }
+
+  .webapp .st,
+  .editor-line,
+  .term-type,
+  .term-steps li,
+  .term-live {
+    animation: none !important;
+    opacity: 1 !important;
+  }
 }
 
 /* --- L’éditeur ---------------------------------------------------------- */

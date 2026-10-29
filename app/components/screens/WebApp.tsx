@@ -1,6 +1,7 @@
 "use client";
 
 import { Bell, Check, CreditCard, Ellipsis, FileCode2, Folder, FolderKanban, LayoutGrid, Plus, Search, Settings, Users } from "lucide-react";
+import type { CSSProperties } from "react";
 import { useSite } from "../site/SiteProvider";
 import MacScreen from "./MacScreen";
 
@@ -60,6 +61,11 @@ const TREE = [
 ];
 
 const NAV_ICONS = [LayoutGrid, FolderKanban, Users, CreditCard, Settings];
+
+// Rang d’apparition d’un bloc : la maquette se dessine, puis s’habille, dans cet ordre.
+function step(rank: number) {
+  return { "--d": rank } as CSSProperties;
+}
 
 function initials(name: string) {
   return name
@@ -127,7 +133,7 @@ export default function WebApp({
             </div>
             <pre className="editor-code">
               {lines.map((line, index) => (
-                <span key={index} className="editor-line" data-current={index === 3 ? "" : undefined}>
+                <span key={index} className="editor-line" data-current={index === 3 ? "" : undefined} style={{ "--i": index } as CSSProperties}>
                   <span className="editor-gutter">{index + 1}</span>
                   {highlight(line).map((part, i) => (
                     <span key={i} className={part.kind ? `tk-${part.kind}` : undefined}>
@@ -147,18 +153,18 @@ export default function WebApp({
     return (
       <MacScreen kind="terminal" title="atelier — zsh">
         <div className="term">
-          <p className="term-line">
+          <p className="term-line term-type">
             <span className="term-path">~/atelier</span> <span className="term-branch">main</span> <span className="term-prompt">$</span> {copy.mac.command}
           </p>
           <ol className="term-steps">
-            {copy.steps.map((step, index) => (
-              <li key={step} style={{ animationDelay: calm ? "0ms" : `${250 + index * 360}ms` }}>
+            {copy.steps.map((line, index) => (
+              <li key={line} style={{ animationDelay: calm ? "0ms" : `${900 + index * 380}ms` }}>
                 <span className="term-ok">✓</span>
-                <span>{step}</span>
+                <span>{line}</span>
               </li>
             ))}
           </ol>
-          <p className="term-live" style={{ animationDelay: calm ? "0ms" : `${250 + copy.steps.length * 360}ms` }}>
+          <p className="term-live" style={{ animationDelay: calm ? "0ms" : `${900 + copy.steps.length * 380}ms` }}>
             <span className="term-dot" />
             {copy.live}
             <span className="term-url">https://{copy.url}</span>
@@ -173,7 +179,7 @@ export default function WebApp({
     <MacScreen kind="browser" title={copy.url}>
       <div className="webapp" data-wire={wire ? "" : undefined}>
         <aside className="webapp-side">
-          <div className="webapp-brand">
+          <div className="webapp-brand st" style={step(0)}>
             <span className="webapp-logo" />
             <span className="tx">{app.name}</span>
           </div>
@@ -181,14 +187,14 @@ export default function WebApp({
             {app.nav.map((item, index) => {
               const Icon = NAV_ICONS[index] ?? LayoutGrid;
               return (
-                <span key={item} data-active={index === app.active ? "" : undefined}>
+                <span key={item} className="st" style={step(1 + index)} data-active={index === app.active ? "" : undefined}>
                   <Icon strokeWidth={2} />
                   <span className="tx">{item}</span>
                 </span>
               );
             })}
           </nav>
-          <div className="webapp-me">
+          <div className="webapp-me st" style={step(6)}>
             <span className="webapp-avatar" data-tone="0">
               {initials(app.me)}
             </span>
@@ -197,7 +203,7 @@ export default function WebApp({
         </aside>
 
         <main className="webapp-main">
-          <div className="webapp-top">
+          <div className="webapp-top st" style={step(2)}>
             <span className="webapp-search">
               <Search strokeWidth={2} />
               <span className="tx">{copy.search}</span>
@@ -206,7 +212,7 @@ export default function WebApp({
             <Bell className="webapp-bell" strokeWidth={2} />
           </div>
 
-          <div className="webapp-head">
+          <div className="webapp-head st" style={step(3)}>
             <div>
               <h3>
                 <span className="tx">{app.heading}</span>
@@ -221,7 +227,7 @@ export default function WebApp({
             </span>
           </div>
 
-          <div className="webapp-tabs">
+          <div className="webapp-tabs st" style={step(4)}>
             {app.tabs.map((tab, index) => (
               <span key={tab} data-active={index === 0 ? "" : undefined}>
                 <span className="tx">{tab}</span>
@@ -232,7 +238,7 @@ export default function WebApp({
 
           <table className="webapp-table">
             <thead>
-              <tr>
+              <tr className="st" style={step(5)}>
                 {app.columns.map((column) => (
                   <th key={column}>
                     <span className="tx">{column}</span>
@@ -243,7 +249,7 @@ export default function WebApp({
             </thead>
             <tbody>
               {app.rows.map((row, index) => (
-                <tr key={row[0]}>
+                <tr key={row[0]} className="st" style={step(6 + index)}>
                   <td>
                     <span className="webapp-person">
                       <span className="webapp-avatar" data-tone={(index % 5) + 1}>
@@ -273,21 +279,21 @@ export default function WebApp({
         </main>
 
         {modal && (
-          <div className="webapp-scrim">
-            <div className="webapp-modal">
-              <h4>
+          <div className="webapp-scrim" style={step(11)}>
+            <div className="webapp-modal st">
+              <h4 style={step(12)}>
                 <span className="tx">{copy.title}</span>
               </h4>
-              <p>
+              <p style={step(12)}>
                 <span className="tx">{copy.hint}</span>
               </p>
-              <label>
+              <label style={step(13)}>
                 <span className="tx">{copy.emailLabel}</span>
                 <span className="webapp-input">
                   <span className="tx">{copy.email}</span>
                 </span>
               </label>
-              <div className="webapp-field">
+              <div className="webapp-field" style={step(14)}>
                 <span className="tx">{copy.roleLabel}</span>
                 <div className="webapp-roles">
                   {copy.roles.map((name, index) => (
@@ -297,7 +303,7 @@ export default function WebApp({
                   ))}
                 </div>
               </div>
-              <div className="webapp-actions">
+              <div className="webapp-actions" style={step(15)}>
                 <span className="webapp-ghost">
                   <span className="tx">{copy.cancel}</span>
                 </span>

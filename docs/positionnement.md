@@ -4,18 +4,19 @@ Document de référence pour le portfolio, le CV et les profils freelance. À re
 
 ## 1. Le positionnement retenu
 
-**Ingénieur produit full-stack et IA. Je conçois, construis et mets en production des SaaS, des applications mobiles et des agents IA, de la maquette au serveur.**
+**Ingénieur produit full-stack et IA. De l’idée à la mise en ligne, je conçois toute la chaîne de vos SaaS, applications mobiles et agents IA.**
 
-Formule courte : **« Votre produit, de la maquette au serveur. »**
+Formule courte : **« Votre produit, de l’idée à la mise en ligne. »**
 
 Pourquoi celui-ci :
 
-- **Il vend un résultat, pas une pile technique.** Un client n’achète pas « Laravel et React », il achète un produit en ligne qui fonctionne. « De la maquette au serveur » dit en quatre mots qu’il n’y aura pas trois prestataires à coordonner.
+- **Il vend un résultat, pas une pile technique.** Un client n’achète pas « Laravel et React », il achète un produit en ligne qui fonctionne. « De l’idée à la mise en ligne » dit d’où l’on part et où l’on arrive : il n’y aura pas trois prestataires à coordonner. On évite les images comme « du produit au serveur », trop vagues pour un client.
 - **Il s’appuie sur ce que Zié fait vraiment** : conception, développement web et mobile, intégration d’IA, déploiement et exploitation de serveurs. Rien n’est gonflé.
 - **Il le distingue du développeur freelance générique.** Trois différences crédibles et vérifiables en entretien :
   1. **Un seul responsable de bout en bout** (design, code, mise en production).
   2. **La méthode d’orchestration d’agents IA** : il pilote des agents spécialisés (développement, documentation, serveurs) et relit chaque livraison. Résultat : la cadence d’une petite équipe, avec un seul interlocuteur.
   3. **L’exigence de design** : interfaces sobres, soignées, en clair et en sombre.
+- **Le fil rouge du récit : le product design et l’attention au détail.** Chaque section part des utilisateurs et de leurs contraintes réelles (une main libre, un écran en plein soleil, un réseau qui coupe), montre le détail soigné (états vides, erreurs, chargements, mode sombre), puis la livraison de ce qui a été dessiné. La technique vient en preuve, jamais en premier.
 - **Il tient sans projets nommés.** Comme ses travaux sont confidentiels, le niveau se démontre par des démonstrations interactives construites dans le site, par la méthode et par la qualité du site lui-même. Sur le site, cette section s’appelle « Méthode » : elle montre une façon de travailler, jamais des projets. On n’écrit donc pas « je vous montre mes projets » à côté de « mes projets sont confidentiels ».
 
 ## 2. La cible
@@ -32,7 +33,7 @@ Atouts concrets pour l’international : fuseau **UTC+0** (heures de bureau comm
 
 1. **Application web et SaaS** : une première version solide, en ligne en quelques semaines. Cadrage, parcours, maquettes validées avant le code, application web en production, espace d’administration, code et documentation remis.
 2. **Agents IA et assistants vocaux** : mettre l’IA au travail dans un produit. Agents connectés aux outils et aux données, voix en temps réel, garde-fous, validation humaine avant toute action sensible, service prêt pour la charge.
-3. **Application mobile** : iOS et Android avec React Native et Expo, mode hors ligne et synchronisation, publication sur les stores.
+3. **Application mobile** : des apps au design soigné, pensées pour la réalité des utilisateurs (une main, le plein soleil, le réseau qui coupe). iOS et Android avec React Native et Expo, fonctionnement hors ligne et synchronisation, publication sur les stores.
 4. **Audit, performance et sécurité** : rapport classé par priorité et corrections (sécurité, rapidité), serveurs capables d’absorber les pics de trafic, mise en ligne et surveillance sur Oracle Cloud, Forge ou VPS.
 
 Chaque mission démarre par un appel de 30 minutes puis une proposition écrite (périmètre, étapes, livrables). Les tarifs ne sont pas publiés : ils sont donnés dans la proposition.
@@ -40,6 +41,7 @@ Chaque mission démarre par un appel de 30 minutes puis une proposition écrite 
 ## 4. Le ton
 
 - **Direct et concret.** Des verbes d’action, des livrables, pas d’adjectifs creux (« passionné », « innovant », « solutions sur mesure »).
+- **Concret plutôt qu’imagé.** Chaque phrase dit ce qui est fait, pour qui, avec quel résultat. « Une interface où chaque espacement est une décision » ne dit rien à un client ; « des écrans clairs, vérifiés sur téléphone et sur ordinateur » se vérifie. Quand c’est possible, on donne un exemple : déplacer un rendez-vous, suivre une commande, préparer un remboursement.
 - **Sobre**, à l’image des interfaces : phrases courtes, une idée par phrase.
 - **Honnête** : on ne promet que ce qui est livrable. « Je vous dis franchement si je suis la bonne personne. »
 - **Vouvoiement** sur le site et dans les premiers échanges en français.
@@ -70,6 +72,9 @@ Le site s’adresse d’abord à des clients, pas à des développeurs. Chaque t
 | Limitation de débit, durcissement | protection contre les abus, serveurs verrouillés |
 | Une seule base de code | une seule application pour iOS et Android |
 | Agent communication, agent exploitation | agent documentation, agent serveurs |
+| Du produit au serveur, de la maquette au serveur | de l’idée à la mise en ligne, toute la chaîne |
+| Mettre l’IA au travail dans votre produit | confier les tâches répétitives à l’IA, sous votre contrôle |
+| Un produit qui tient | une application en service, prête à évoluer |
 
 Sur Malt, Upwork, Fiverr et LinkedIn, les mots-clés recherchés par les clients (MVP, scaling, montée en charge) peuvent rester : ils servent à être trouvé.
 
@@ -79,18 +84,18 @@ Les noms de section du site : Offres, Méthode (les démonstrations), Collaborat
 
 ### Accroche d’une ligne
 
-- FR : Ingénieur produit full-stack et IA. Je conçois, construis et mets en production vos SaaS, applications mobiles et agents IA, de la maquette au serveur.
-- EN : Full-stack and AI product engineer. I design, build and ship your SaaS, mobile apps and AI agents, from mockup to production.
+- FR : Ingénieur produit full-stack et IA. De l’idée à la mise en ligne, je conçois toute la chaîne de vos SaaS, applications mobiles et agents IA.
+- EN : Full-stack and AI product engineer. From idea to launch, I build the whole chain of your SaaS, mobile apps and AI agents.
 
 ### LinkedIn
 
-**Titre (FR)** : Ingénieur produit full-stack et IA | SaaS, mobile, agents IA et assistants vocaux | De la maquette au serveur | Missions à distance
+**Titre (FR)** : Ingénieur produit full-stack et IA | SaaS, mobile, agents IA et assistants vocaux | De l’idée à la mise en ligne | Missions à distance
 
-**Headline (EN)** : Full-stack and AI product engineer | SaaS, mobile, AI agents and voice assistants | From mockup to production | Available remotely
+**Headline (EN)** : Full-stack and AI product engineer | SaaS, mobile, AI agents and voice assistants | From idea to launch | Available remotely
 
 **Infos (FR)** :
 
-> Je conçois, construis et mets en production des produits numériques : SaaS, applications mobiles, agents IA et assistants vocaux. De la première maquette au serveur, je tiens toutes les étapes, pour qu’aucune décision ne se perde entre deux équipes.
+> Je conçois, construis et mets en production des produits numériques : SaaS, applications mobiles, agents IA et assistants vocaux. De l’idée à la mise en ligne, je conçois toute la chaîne, pour qu’aucune décision ne se perde entre deux équipes.
 >
 > Basé à Abidjan, je livre des applications en production depuis 2023 et je suis développeur full-stack en entreprise. Je travaille aussi avec des agents IA spécialisés (développement, communication, exploitation des serveurs) que je cadre, relis et pilote : vous gardez un seul interlocuteur, avec la cadence d’une petite équipe.
 >
@@ -106,7 +111,7 @@ Les noms de section du site : Offres, Méthode (les démonstrations), Collaborat
 
 **About (EN)** :
 
-> I design, build and ship digital products: SaaS, mobile apps, AI agents and voice assistants. From the first mockup to the production server, I own every step, so no decision gets lost between teams.
+> I design, build and ship digital products: SaaS, mobile apps, AI agents and voice assistants. From idea to launch, I build the whole chain, so no decision gets lost between teams.
 >
 > Based in Abidjan, I have been shipping production applications since 2023 and I work as a full-stack developer in-house. I also work with specialized AI agents (development, communication, server operations) that I scope, review and steer: you keep a single point of contact, working at the pace of a small team.
 >
@@ -126,7 +131,7 @@ Les noms de section du site : Offres, Méthode (les démonstrations), Collaborat
 
 **Description** :
 
-> Je conçois, construis et mets en production votre produit, de la maquette au serveur : application web SaaS, application mobile iOS et Android, agents IA et assistants vocaux.
+> De l’idée à la mise en ligne, je conçois toute la chaîne de votre produit : application web SaaS, application mobile iOS et Android, agents IA et assistants vocaux.
 >
 > Pourquoi travailler avec moi :
 > Un seul interlocuteur responsable du design, du code et de la mise en production.
@@ -144,7 +149,7 @@ Les noms de section du site : Offres, Méthode (les démonstrations), Collaborat
 
 **Overview** :
 
-> I build your product from mockup to production: SaaS web apps, iOS and Android apps, AI agents and real-time voice assistants.
+> I build your product end to end, from idea to launch: SaaS web apps, iOS and Android apps, AI agents and real-time voice assistants.
 >
 > Why clients work with me:
 > One accountable person for design, code and deployment, no hand-offs.
@@ -162,7 +167,7 @@ Les noms de section du site : Offres, Méthode (les démonstrations), Collaborat
 
 ### Fiverr (EN)
 
-**Gig 1** : I will build your SaaS MVP from mockup to production
+**Gig 1** : I will build your SaaS MVP from idea to launch
 
 **Gig 2** : I will integrate AI agents and voice assistants into your product
 
