@@ -17,6 +17,7 @@ import { person, whatsappUrl } from "../../data/site";
 import Magnetic from "../ui/Magnetic";
 import RevealText from "../ui/RevealText";
 import useAbidjanTime from "../ui/useAbidjanTime";
+import useMediaQuery from "../ui/useMediaQuery";
 import { useSite } from "./SiteProvider";
 
 // Apparitions en CSS : elles démarrent dès le premier rendu, sans attendre le JavaScript.
@@ -78,6 +79,9 @@ function NameMarquee({ calm }: { calm: boolean }) {
 
 export default function Hero() {
   const { t, calm } = useSite();
+  // La parallaxe ne joue que sur grand écran : sur téléphone, le portrait glisserait sur le texte.
+  const wide = useMediaQuery("(min-width: 1024px)");
+  const still = calm || !wide;
   const ref = useRef<HTMLElement>(null);
   const time = useAbidjanTime();
   const [clockBefore, clockAfter = ""] = t.hero.clock.split("{time}");
@@ -88,7 +92,7 @@ export default function Hero() {
 
   return (
     <section ref={ref} className="hero" id="top" aria-labelledby="hero-title">
-      <motion.div className="hero-pitch" style={calm ? undefined : { y: copyY }}>
+      <motion.div className="hero-pitch" style={still ? undefined : { y: copyY }}>
         <ArrowDownRight className="hero-arrow rise" style={rise(0.1)} size={30} strokeWidth={1.25} aria-hidden="true" />
         <RevealText as="h1" id="hero-title" className="hero-title" text={t.hero.title} mode="mount" delay={0.3} interval={0.06} />
         <div className="hero-actions rise" style={rise(0.9)}>
@@ -108,7 +112,7 @@ export default function Hero() {
       </motion.div>
 
       <div className="hero-stage">
-        <motion.figure className="hero-portrait" style={calm ? undefined : { y: portraitY }}>
+        <motion.figure className="hero-portrait" style={still ? undefined : { y: portraitY }}>
           <Image
             src="/portraits/daniogo-product-engineer-cutout.png"
             alt={t.hero.portrait}
@@ -117,12 +121,12 @@ export default function Hero() {
             sizes="(min-width: 1024px) 40vw, 90vw"
           />
         </motion.figure>
-        <motion.div className="hero-name-wrap" style={calm ? undefined : { y: nameY }}>
+        <motion.div className="hero-name-wrap" style={still ? undefined : { y: nameY }}>
           <NameMarquee calm={calm} />
         </motion.div>
       </div>
 
-      <motion.div className="hero-about rise" style={calm ? rise(0.6) : { ...rise(0.6), y: copyY }}>
+      <motion.div className="hero-about rise" style={still ? rise(0.6) : { ...rise(0.6), y: copyY }}>
         <Globe />
         <p>
           <strong>{t.hero.eyebrow}</strong>

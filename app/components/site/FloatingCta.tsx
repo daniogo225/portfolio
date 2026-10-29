@@ -8,17 +8,23 @@ import { EASE_OUT } from "../ui/RevealText";
 import { useSite } from "./SiteProvider";
 
 /**
- * Appel à l’action toujours à portée de pouce : il apparaît après le hero
- * et s’efface quand la section contact ou le pied de page sont à l’écran.
+ * Appel à l’action à portée de pouce : il apparaît après le hero, se retire pendant qu’on descend
+ * pour ne jamais masquer le texte ni les boutons, revient dès qu’on remonte, et s’efface quand la
+ * section contact ou le pied de page sont à l’écran.
  */
 export default function FloatingCta() {
   const { t } = useSite();
   const { scrollY } = useScroll();
   const [past, setPast] = useState(false);
+  const [down, setDown] = useState(false);
   const [covered, setCovered] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (value) => {
     setPast(value > window.innerHeight * 0.85);
+    const previous = scrollY.getPrevious() ?? value;
+    // Un léger seuil évite le clignotement sur les petits mouvements du doigt.
+    if (value > previous + 6) setDown(true);
+    else if (value < previous - 6) setDown(false);
   });
 
   useEffect(() => {
@@ -37,7 +43,7 @@ export default function FloatingCta() {
     return () => observer.disconnect();
   }, []);
 
-  const shown = past && !covered;
+  const shown = past && !covered && !down;
 
   return (
     <AnimatePresence>

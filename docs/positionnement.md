@@ -71,7 +71,7 @@ Le site s’adresse d’abord à des clients, pas à des développeurs. Chaque t
 | Ingénierie de contexte et de prompts | consignes et contexte soignés |
 | Limitation de débit, durcissement | protection contre les abus, serveurs verrouillés |
 | Une seule base de code | une seule application pour iOS et Android |
-| Agent communication, agent exploitation | agent documentation, agent serveurs |
+| Agent développement, communication, exploitation | agent code, agent rédaction, agent serveurs |
 | Du produit au serveur, de la maquette au serveur | de l’idée à la mise en ligne, toute la chaîne |
 | Mettre l’IA au travail dans votre produit | confier les tâches répétitives à l’IA, sous votre contrôle |
 | Un produit qui tient | une application en service, prête à évoluer |
