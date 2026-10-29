@@ -7,7 +7,7 @@ const fr = {
   meta: {
     title: "CV de Zié Daniogo, ingénieur produit full-stack et IA",
     description:
-      "CV de Zié Daniogo, ingénieur produit full-stack et IA à Abidjan : applications web et mobiles, agents IA, montée en charge et déploiement cloud.",
+      "CV de Zié Daniogo, ingénieur produit full-stack et IA à Abidjan : applications web et mobiles, agents IA, montée en charge et déploiement cloud.",
   },
   toolbar: {
     back: "Portfolio",
@@ -16,65 +16,51 @@ const fr = {
     language: "Langue du CV",
   },
   role: "Ingénieur produit full-stack et IA",
-  tagline: "De la maquette au *serveur.*",
-  summary:
-    "Je conçois, construis et mets en production des applications web et mobiles, des services et des agents IA. Responsable technique d’une équipe de développement, j’orchestre aussi des agents IA spécialisés pour livrer avec la cadence d’une petite équipe. Exigeant sur le design, la qualité et la fiabilité en production.",
+  pitch: "Je conçois, construis et mets en production des applications web, mobiles et IA, de la maquette au serveur.",
+  method: "J’orchestre des agents IA spécialisés et je relis chaque livraison : la cadence d’une petite équipe, un seul interlocuteur.",
   place: "Abidjan, Côte d’Ivoire",
   whatsapp: "WhatsApp",
   photo: "Portrait de Zié Daniogo",
   sections: {
     experience: "Expérience",
-    missions: "Missions proposées",
-    method: "Méthode",
     skills: "Compétences",
     education: "Formation",
     languages: "Langues",
     interests: "Centres d’intérêt",
     portfolio: "Portfolio",
   },
-  experience: [
-    {
-      org: "Comafrique Technologies",
-      place: "Abidjan",
-      dates: "Depuis janvier 2023",
-      role: "Développeur full-stack, aujourd’hui responsable technique de l’équipe Dev",
-      bullets: [
-        "Conception et livraison d’applications web et mobiles, du cadrage à la mise en production.",
-        "Encadrement technique de l’équipe : architecture, revues de code, choix techniques et qualité.",
-        "Intégration de l’IA dans les applications, de la conception à l’exploitation.",
-        "Déploiement et exploitation de serveurs cloud : mise en production, supervision, sécurité.",
-      ],
-    },
-  ],
-  missions: [
-    { title: "MVP SaaS", body: "lancer un produit web en quelques semaines, du cadrage au déploiement." },
-    { title: "Agents IA et assistants vocaux", body: "des agents avec outils et une voix en temps réel, avec garde-fous." },
-    { title: "Application mobile", body: "iOS et Android avec React Native et Expo, hors ligne compris." },
-    { title: "Audit et montée en charge", body: "sécurité, performance, multi-instances, déploiement cloud." },
-  ],
-  method:
-    "J’orchestre des agents IA spécialisés (développement, communication, exploitation des serveurs) : je cadre, je découpe, je relis et je décide. Un seul responsable, plusieurs chantiers en parallèle, une relecture humaine avant chaque livraison.",
+  job: {
+    org: "Comafrique Technologies",
+    place: "Abidjan",
+    dates: "depuis janvier 2023",
+    title: "Développeur full-stack",
+    highlights: [
+      { title: "Livraison", body: "Applications web et mobiles livrées de bout en bout, du cadrage à la mise en production." },
+      { title: "Architecture", body: "Plateforme multi-instances déployée pour plusieurs entités d’un même groupe." },
+      { title: "Produit", body: "Interfaces conçues avec les utilisateurs métier, tests automatisés et revues de code." },
+      { title: "IA", body: "Agents IA et assistants vocaux intégrés dans des applications métier." },
+      { title: "Cloud", body: "Serveurs déployés et exploités sur Oracle Cloud et Forge : mises en production, supervision." },
+      { title: "Sécurité", body: "Audits de sécurité des applications et correction des failles." },
+    ],
+  },
   skills: [
-    { title: "Produit et interface", body: "React, Next.js, Inertia, TypeScript, Tailwind. Parcours, maquettes, interfaces accessibles." },
-    { title: "Back-end", body: "Laravel, PHP, Node. API, files d’attente, applications multi-instances." },
-    {
-      title: "Intelligence artificielle",
-      body: "Agents avec outils, assistants vocaux temps réel, services IA en Node pour la montée en charge, ingénierie de contexte et de prompts.",
-    },
-    { title: "Mobile", body: "React Native, Expo." },
-    { title: "Qualité et sécurité", body: "Pest, Vitest, Playwright. Audits de sécurité." },
-    { title: "Cloud et outils", body: "Oracle Cloud (OCI), Forge, VPS, Docker, Git. Claude Code, Codex." },
+    { title: "Interface", body: "React, Next.js, Inertia, TypeScript, Tailwind" },
+    { title: "Back-end", body: "Laravel, PHP, Node, API, files d’attente" },
+    { title: "IA", body: "Agents avec outils, voix en temps réel, ingénierie de contexte, Claude Code, Codex" },
+    { title: "Mobile", body: "React Native, Expo" },
+    { title: "Qualité", body: "Pest, Vitest, Playwright" },
+    { title: "Cloud", body: "Oracle Cloud, Forge, Docker, VPS, Git" },
   ],
   education: {
     school: "Pigier Côte d’Ivoire, Abidjan",
-    body: "Informatique, développement d’applications : admissible au BTS IDA (2022), licence 1 validée.",
+    body: "Développement d’applications. Admissible au BTS IDA (2022), licence 1 validée.",
   },
   languages: [
     { name: "Français", level: "courant" },
     { name: "Anglais", level: "" },
   ],
-  interests: "Design d’interfaces, technologie, produit, football.",
-  qr: "Scannez pour voir le portfolio et me contacter.",
+  interests: "Design d’interfaces, produit, football.",
+  qr: "Portfolio, démonstrations et contact",
 };
 
 export type CvContent = typeof fr;
@@ -92,65 +78,51 @@ const en: CvContent = {
     language: "Résumé language",
   },
   role: "Full-stack and AI product engineer",
-  tagline: "From mockup to *production.*",
-  summary:
-    "I design, build and ship web and mobile applications, AI services and agents. As technical lead of a development team, I also orchestrate specialized AI agents to deliver at the pace of a small team. Demanding about design, quality and reliability in production.",
+  pitch: "I design, build and ship web, mobile and AI applications, from mockup to production.",
+  method: "I orchestrate specialized AI agents and review every delivery: the pace of a small team, a single point of contact.",
   place: "Abidjan, Côte d’Ivoire",
   whatsapp: "WhatsApp",
   photo: "Portrait of Zié Daniogo",
   sections: {
     experience: "Experience",
-    missions: "Engagements",
-    method: "Method",
     skills: "Skills",
     education: "Education",
     languages: "Languages",
     interests: "Interests",
     portfolio: "Portfolio",
   },
-  experience: [
-    {
-      org: "Comafrique Technologies",
-      place: "Abidjan",
-      dates: "Since January 2023",
-      role: "Full-stack developer, now technical lead of the development team",
-      bullets: [
-        "Design and delivery of web and mobile applications, from scoping to production.",
-        "Technical leadership of the team: architecture, code reviews, technical choices and quality.",
-        "Integration of AI into applications, from design to operations.",
-        "Deployment and operation of cloud servers: releases, monitoring, security.",
-      ],
-    },
-  ],
-  missions: [
-    { title: "SaaS MVP", body: "launch a web product in a few weeks, from scoping to deployment." },
-    { title: "AI agents and voice assistants", body: "tool-using agents and real-time voice, with guardrails." },
-    { title: "Mobile app", body: "iOS and Android with React Native and Expo, offline included." },
-    { title: "Audit and scaling", body: "security, performance, multiple instances, cloud deployment." },
-  ],
-  method:
-    "I orchestrate specialized AI agents (development, communication, server operations): I scope, split the work, review and decide. One accountable person, several workstreams in parallel, a human review before every delivery.",
+  job: {
+    org: "Comafrique Technologies",
+    place: "Abidjan",
+    dates: "since January 2023",
+    title: "Full-stack developer",
+    highlights: [
+      { title: "Delivery", body: "Web and mobile applications shipped end to end, from scoping to production." },
+      { title: "Architecture", body: "Multi-instance platform deployed for several entities of the same group." },
+      { title: "Product", body: "Interfaces designed with business users, automated tests and code reviews." },
+      { title: "AI", body: "AI agents and voice assistants built into business applications." },
+      { title: "Cloud", body: "Servers deployed and run on Oracle Cloud and Forge: releases, monitoring." },
+      { title: "Security", body: "Application security audits and vulnerability fixes." },
+    ],
+  },
   skills: [
-    { title: "Product and interface", body: "React, Next.js, Inertia, TypeScript, Tailwind. User flows, mockups, accessible interfaces." },
-    { title: "Back end", body: "Laravel, PHP, Node. APIs, queues, multi-instance applications." },
-    {
-      title: "Artificial intelligence",
-      body: "Tool-using agents, real-time voice assistants, Node AI services built to scale, context and prompt engineering.",
-    },
-    { title: "Mobile", body: "React Native, Expo." },
-    { title: "Quality and security", body: "Pest, Vitest, Playwright. Security audits." },
-    { title: "Cloud and tools", body: "Oracle Cloud (OCI), Forge, VPS, Docker, Git. Claude Code, Codex." },
+    { title: "Interface", body: "React, Next.js, Inertia, TypeScript, Tailwind" },
+    { title: "Back end", body: "Laravel, PHP, Node, APIs, queues" },
+    { title: "AI", body: "Tool-using agents, real-time voice, context engineering, Claude Code, Codex" },
+    { title: "Mobile", body: "React Native, Expo" },
+    { title: "Quality", body: "Pest, Vitest, Playwright" },
+    { title: "Cloud", body: "Oracle Cloud, Forge, Docker, VPS, Git" },
   ],
   education: {
     school: "Pigier Côte d’Ivoire, Abidjan",
-    body: "Computer science, application development: passed the BTS IDA admission (2022, two-year technical degree), first year of bachelor’s completed.",
+    body: "Application development. Passed the BTS IDA admission (2022, two-year technical degree), first year of bachelor’s completed.",
   },
   languages: [
     { name: "French", level: "fluent" },
     { name: "English", level: "" },
   ],
-  interests: "Interface design, technology, product, football.",
-  qr: "Scan to see the portfolio and get in touch.",
+  interests: "Interface design, product, football.",
+  qr: "Portfolio, live demos and contact",
 };
 
 export const cv: Record<Locale, CvContent> = { fr, en };

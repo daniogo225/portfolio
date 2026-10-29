@@ -72,9 +72,12 @@ export default function Profile() {
                   <div className="path-body">
                     <h4>{p.experience.role}</h4>
                     <p className="path-place">{p.experience.place}</p>
-                    <ul className="path-points">
-                      {p.experience.bullets.map((bullet) => (
-                        <li key={bullet}>{bullet}</li>
+                    <ul className="path-highlights">
+                      {p.experience.highlights.map((item) => (
+                        <li key={item.title}>
+                          <strong>{item.title}</strong>
+                          <span>{item.body}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>

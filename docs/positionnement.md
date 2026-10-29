@@ -11,7 +11,7 @@ Formule courte : **« Votre produit, de la maquette au serveur. »**
 Pourquoi celui-ci :
 
 - **Il vend un résultat, pas une pile technique.** Un client n’achète pas « Laravel et React », il achète un produit en ligne qui fonctionne. « De la maquette au serveur » dit en quatre mots qu’il n’y aura pas trois prestataires à coordonner.
-- **Il s’appuie sur ce que Zié fait vraiment** : conception, développement web et mobile, intégration d’IA, déploiement et exploitation de serveurs, encadrement d’une équipe. Rien n’est gonflé.
+- **Il s’appuie sur ce que Zié fait vraiment** : conception, développement web et mobile, intégration d’IA, déploiement et exploitation de serveurs. Rien n’est gonflé.
 - **Il le distingue du développeur freelance générique.** Trois différences crédibles et vérifiables en entretien :
   1. **Un seul responsable de bout en bout** (design, code, mise en production).
   2. **La méthode d’orchestration d’agents IA** : il pilote des agents spécialisés (développement, communication, exploitation) et relit chaque livraison. Résultat : la cadence d’une petite équipe, avec un seul interlocuteur.
@@ -69,7 +69,7 @@ Chaque mission démarre par un appel de 30 minutes puis une proposition écrite 
 
 > Je conçois, construis et mets en production des produits numériques : SaaS, applications mobiles, agents IA et assistants vocaux. De la première maquette au serveur, je tiens toutes les étapes, pour qu’aucune décision ne se perde entre deux équipes.
 >
-> Basé à Abidjan, je livre des applications en production depuis 2023 et je suis aujourd’hui responsable technique d’une équipe de développement. Je travaille aussi avec des agents IA spécialisés (développement, communication, exploitation des serveurs) que je cadre, relis et pilote : vous gardez un seul interlocuteur, avec la cadence d’une petite équipe.
+> Basé à Abidjan, je livre des applications en production depuis 2023 et je suis développeur full-stack en entreprise. Je travaille aussi avec des agents IA spécialisés (développement, communication, exploitation des serveurs) que je cadre, relis et pilote : vous gardez un seul interlocuteur, avec la cadence d’une petite équipe.
 >
 > Ce que je propose en mission :
 > MVP SaaS, lancé en quelques semaines
@@ -85,7 +85,7 @@ Chaque mission démarre par un appel de 30 minutes puis une proposition écrite 
 
 > I design, build and ship digital products: SaaS, mobile apps, AI agents and voice assistants. From the first mockup to the production server, I own every step, so no decision gets lost between teams.
 >
-> Based in Abidjan, I have been shipping production applications since 2023 and I now lead a development team as technical lead. I also work with specialized AI agents (development, communication, server operations) that I scope, review and steer: you keep a single point of contact, working at the pace of a small team.
+> Based in Abidjan, I have been shipping production applications since 2023 and I work as a full-stack developer in-house. I also work with specialized AI agents (development, communication, server operations) that I scope, review and steer: you keep a single point of contact, working at the pace of a small team.
 >
 > What I offer:
 > SaaS MVPs, launched in a few weeks

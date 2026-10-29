@@ -3795,27 +3795,30 @@ main:focus {
   font-size: 0.95rem;
 }
 
-.path-points {
+/* Points forts du poste, repris du CV : une petite grille, un mot puis une phrase. */
+.path-highlights {
   display: grid;
-  gap: 8px;
-  margin-top: 16px;
+  margin-top: 18px;
+  column-gap: 24px;
 }
 
-.path-points li {
-  position: relative;
-  padding-left: 20px;
-  font-size: 0.95rem;
+.path-highlights li {
+  display: grid;
+  align-content: start;
+  gap: 3px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.path-highlights strong {
+  color: var(--accent-text);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.path-highlights span {
+  font-size: 0.92rem;
   line-height: 1.5;
-}
-
-.path-points li::before {
-  content: "";
-  position: absolute;
-  top: 0.75em;
-  left: 2px;
-  width: 8px;
-  height: 1px;
-  background: var(--accent);
 }
 
 .profile-facts {
@@ -3899,6 +3902,10 @@ main:focus {
   .path-list > li {
     grid-template-columns: 150px minmax(0, 1fr);
     column-gap: 24px;
+  }
+
+  .path-highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .profile-facts {

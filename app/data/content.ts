@@ -51,7 +51,7 @@ const fr = {
     availability: "Disponible pour des missions à distance",
     facts: [
       { value: "Depuis 2023", label: "des applications en production" },
-      { value: "Responsable technique", label: "d’une équipe de développement" },
+      { value: "De bout en bout", label: "design, code et mise en production" },
       { value: "Français, anglais", label: "à distance, fuseau UTC+0" },
     ],
     caption: "Ingénieur produit full-stack et IA",
@@ -426,7 +426,7 @@ const fr = {
     label: "Profil",
     title: "Assez proche du produit pour comprendre. Assez technique pour *livrer.*",
     paragraphs: [
-      "Je suis Zié Daniogo, ingénieur produit full-stack et IA, basé à Abidjan. Depuis 2023, je conçois, livre et exploite des applications web et mobiles en entreprise, où je suis aujourd’hui responsable technique de l’équipe de développement.",
+      "Je suis Zié Daniogo, ingénieur produit full-stack et IA, basé à Abidjan. Depuis 2023, je conçois, livre et exploite des applications web et mobiles en entreprise.",
       "J’aime le design autant que la technique. Une interface sobre est une interface où chaque détail a été décidé ; une bonne architecture est celle qu’on oublie parce qu’elle tient.",
       "L’IA accélère mon travail, elle ne décide pas à ma place. Je l’utilise comme un levier, avec du jugement, des tests et une attention constante à ce qui se passe après la mise en ligne.",
     ],
@@ -438,10 +438,10 @@ const fr = {
     ],
     pathLabel: "Parcours",
     experience: {
-      dates: cv.fr.experience[0].dates,
-      role: cv.fr.experience[0].role,
+      dates: cv.fr.job.dates.replace(/^./, (letter) => letter.toUpperCase()),
+      role: cv.fr.job.title,
       place: "En entreprise, Abidjan",
-      bullets: cv.fr.experience[0].bullets,
+      highlights: cv.fr.job.highlights,
     },
     education: { dates: "2021", school: cv.fr.education.school, body: cv.fr.education.body },
     skillsLabel: cv.fr.sections.skills,
@@ -563,7 +563,7 @@ const en: SiteContent = {
     availability: "Available for remote engagements",
     facts: [
       { value: "Since 2023", label: "shipping apps to production" },
-      { value: "Technical lead", label: "of a development team" },
+      { value: "End to end", label: "design, code and deployment" },
       { value: "English, French", label: "remote, UTC+0 time zone" },
     ],
     caption: "Full-stack and AI product engineer",
@@ -930,7 +930,7 @@ const en: SiteContent = {
     label: "Profile",
     title: "Close enough to product to understand. Technical enough to *deliver.*",
     paragraphs: [
-      "I am Zié Daniogo, a full-stack and AI product engineer based in Abidjan. Since 2023, I have been designing, shipping and running web and mobile applications in-house, where I now lead the development team as technical lead.",
+      "I am Zié Daniogo, a full-stack and AI product engineer based in Abidjan. Since 2023, I have been designing, shipping and running web and mobile applications in-house.",
       "I care about design as much as engineering. A calm interface is one where every detail has been decided; good architecture is the kind you forget about because it holds.",
       "AI makes me faster, it does not decide for me. I use it as leverage, with judgment, tests and constant attention to what happens after launch.",
     ],
@@ -942,10 +942,10 @@ const en: SiteContent = {
     ],
     pathLabel: "Path",
     experience: {
-      dates: cv.en.experience[0].dates,
-      role: cv.en.experience[0].role,
+      dates: cv.en.job.dates.replace(/^./, (letter) => letter.toUpperCase()),
+      role: cv.en.job.title,
       place: "In-house, Abidjan",
-      bullets: cv.en.experience[0].bullets,
+      highlights: cv.en.job.highlights,
     },
     education: { dates: "2021", school: cv.en.education.school, body: cv.en.education.body },
     skillsLabel: cv.en.sections.skills,
