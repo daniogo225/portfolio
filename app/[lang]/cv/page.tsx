@@ -117,7 +117,6 @@ export default async function CvPage({ params }: Props) {
               </p>
             </div>
             <p className="cv-job-title">{t.job.title}</p>
-            <p className="cv-job-path">{t.job.path}</p>
             <ul className="cv-highlights">
               {t.job.highlights.map((item) => (
                 <li key={item.title}>

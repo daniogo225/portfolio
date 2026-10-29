@@ -416,7 +416,7 @@ const fr = {
     label: "Profil",
     title: "Assez proche du produit pour comprendre. Assez technique pour *livrer.*",
     paragraphs: [
-      "Je suis Zié Daniogo, ingénieur produit full-stack et IA, basé à Abidjan. Depuis 2023, je conçois, livre et exploite des applications web et mobiles en entreprise, où je suis aujourd’hui responsable technique de l’équipe de développement.",
+      "Je suis Zié Daniogo, ingénieur produit full-stack et IA, basé à Abidjan. Depuis 2023, je conçois, livre et exploite des applications web et mobiles en entreprise.",
       "J’aime le design autant que la technique. Une interface sobre est une interface où chaque détail a été décidé ; une bonne architecture est celle qu’on oublie parce qu’elle tient.",
       "L’IA accélère mon travail, elle ne décide pas à ma place. Je l’utilise comme un levier, avec du jugement, des tests et une attention constante à ce qui se passe après la mise en ligne.",
     ],
@@ -430,7 +430,7 @@ const fr = {
     timeline: [
       { year: "2021", text: "Études d’informatique à Pigier Côte d’Ivoire, développement d’applications" },
       { year: "2023", text: "Développeur full-stack en entreprise, web et mobile" },
-      { year: "Aujourd’hui", text: "Responsable technique d’une équipe de développement, ouvert aux missions" },
+      { year: "Aujourd’hui", text: "Développeur full-stack en entreprise, ouvert aux missions" },
     ],
     photo: "Zié Daniogo, assis, en polo vert",
     cvLabel: "CV",
@@ -907,7 +907,7 @@ const en: SiteContent = {
     label: "Profile",
     title: "Close enough to product to understand. Technical enough to *deliver.*",
     paragraphs: [
-      "I am Zié Daniogo, a full-stack and AI product engineer based in Abidjan. Since 2023, I have been designing, shipping and running web and mobile applications in-house, where I now lead the development team as technical lead.",
+      "I am Zié Daniogo, a full-stack and AI product engineer based in Abidjan. Since 2023, I have been designing, shipping and running web and mobile applications in-house.",
       "I care about design as much as engineering. A calm interface is one where every detail has been decided; good architecture is the kind you forget about because it holds.",
       "AI makes me faster, it does not decide for me. I use it as leverage, with judgment, tests and constant attention to what happens after launch.",
     ],
@@ -921,7 +921,7 @@ const en: SiteContent = {
     timeline: [
       { year: "2021", text: "Computer science studies at Pigier Côte d’Ivoire, application development" },
       { year: "2023", text: "Full-stack developer in-house, web and mobile" },
-      { year: "Today", text: "Technical lead of a development team, open to engagements" },
+      { year: "Today", text: "Full-stack developer in-house, open to engagements" },
     ],
     photo: "Zié Daniogo, seated, wearing a green polo shirt",
     cvLabel: "Résumé",

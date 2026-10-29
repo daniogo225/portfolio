@@ -235,12 +235,6 @@
   font-weight: 500;
 }
 
-.cv-job-path {
-  margin-top: 0.4mm;
-  color: var(--ink-faint);
-  font-size: 8.8pt;
-}
-
 .cv-highlights {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -434,8 +428,7 @@
     font-size: 1.25rem;
   }
 
-  .cv-job-head p,
-  .cv-job-path {
+  .cv-job-head p {
     font-size: 0.9rem;
   }
 
