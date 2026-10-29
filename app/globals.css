@@ -916,18 +916,13 @@ main:focus {
 }
 
 /* ==========================================================================
-   Hero
+   Hero : un titre sur toute la largeur, le portrait qui file jusqu’au bord droit.
    ========================================================================== */
 
 .hero {
   position: relative;
-  padding-top: calc(var(--header-h) + clamp(24px, 5vw, 56px));
+  padding-top: calc(var(--header-h) + clamp(28px, 5vw, 64px));
   padding-bottom: clamp(48px, 6vw, 88px);
-}
-
-.hero-grid {
-  display: grid;
-  gap: 48px;
 }
 
 .rise {
@@ -943,39 +938,48 @@ main:focus {
 }
 
 .eyebrow {
-  display: block;
-  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 24px;
+  margin-bottom: clamp(24px, 4vw, 48px);
   color: var(--fg-muted);
 }
 
 .hero-title {
   --em-color: var(--accent-text);
-  max-width: 12ch;
-  font-size: clamp(2.8rem, 1rem + 5.4vw, 6.4rem);
+  font-size: clamp(3rem, 10.4vw, 9.6rem);
   font-weight: 500;
-  line-height: 0.97;
-  letter-spacing: -0.055em;
+  line-height: 0.92;
+  letter-spacing: -0.06em;
   text-wrap: balance;
 }
 
+.hero-grid {
+  display: grid;
+  gap: 40px;
+  margin-top: clamp(32px, 5vw, 64px);
+  padding-top: 28px;
+  border-top: 1px solid var(--fg);
+}
+
 .hero-intro {
-  max-width: 34rem;
-  margin-top: 28px;
+  max-width: 32rem;
   color: var(--fg-muted);
-  font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.22rem);
-  line-height: 1.55;
+  font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.28rem);
+  line-height: 1.5;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 36px;
+  margin-top: 32px;
 }
 
 .hero-facts {
   display: grid;
-  margin-top: clamp(40px, 6vh, 64px);
+  margin-top: clamp(40px, 6vh, 72px);
   border-top: 1px solid var(--line-strong);
 }
 
@@ -1014,7 +1018,7 @@ main:focus {
 
 .hero-portrait-image {
   position: absolute;
-  inset: 7% 0 0;
+  inset: 6% 0 0;
 }
 
 .hero-portrait-image img {
@@ -1037,51 +1041,44 @@ main:focus {
   color: var(--fg);
 }
 
-@media (min-width: 640px) {
-  .hero-facts {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .hero-facts > div {
-    grid-template-columns: 1fr;
-    align-content: start;
-    gap: 4px;
-    padding: 18px 20px 0 0;
-    border-bottom: 0;
-  }
-
-  .hero-facts > div + div {
-    padding-left: 20px;
-    border-left: 1px solid var(--line);
-  }
-}
-
 @media (min-width: 1024px) {
-  .hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100svh;
-  }
-
   .hero-grid {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     column-gap: 24px;
-    align-items: center;
+    align-items: start;
   }
 
+  /* Les faits se calent en bas, au niveau du bord inférieur du portrait. */
   .hero-copy {
-    grid-column: 1 / span 7;
+    display: grid;
+    grid-column: 1 / span 5;
+    grid-template-rows: auto auto 1fr;
+    align-self: stretch;
+    padding-top: 8px;
   }
 
+  .hero-facts {
+    grid-template-columns: 1fr;
+    align-self: end;
+  }
+
+  /* Le portrait sort de la grille et file jusqu’au bord droit de l’écran. */
   .hero-portrait {
-    grid-column: 8 / span 5;
+    grid-column: 7 / -1;
+    margin-right: calc(-1 * max(0px, (100vw - 1480px) / 2) - var(--gutter));
   }
 
   .hero-portrait-frame {
-    height: min(calc(100svh - var(--header-h) - 160px), 760px);
-    min-height: 520px;
+    height: clamp(560px, 78vh, 860px);
     aspect-ratio: auto;
+  }
+
+  .hero-portrait-image {
+    inset: 5% 0 0;
+  }
+
+  .hero-caption {
+    padding-right: calc(max(0px, (100vw - 1480px) / 2) + var(--gutter));
   }
 }
 
