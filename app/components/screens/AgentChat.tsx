@@ -1,11 +1,12 @@
 "use client";
 
-import { ArrowUp, Mic, ShieldCheck, Wrench } from "lucide-react";
+import { ChevronLeft, ChevronRight, Mic, Plus, ShieldCheck, Video, Wrench } from "lucide-react";
 import { useSite } from "../site/SiteProvider";
 
 /**
- * Assistant IA dans l’iPhone : la demande de remboursement, l’appel d’outil, le garde-fou et la
- * validation humaine. Écran fixe, mesures en unités de conteneur.
+ * L’assistant dans l’iPhone, à la manière de Messages : la demande en bulle bleue, l’appel
+ * d’outil et le garde-fou en notes système, la validation humaine en alerte iOS. Écran fixe,
+ * mesures en unités de conteneur.
  */
 export default function AgentChat() {
   const { t } = useSite();
@@ -16,40 +17,56 @@ export default function AgentChat() {
   const guard = scenario.steps.find((step) => step.kind === "guard");
 
   return (
-    <div className="chat">
-      <p className="chat-title">{copy.chatTitle}</p>
+    <div className="ios chat">
+      <header className="chat-nav">
+        <ChevronLeft className="chat-back" strokeWidth={2.6} />
+        <div className="chat-contact">
+          <span className="chat-avatar">IA</span>
+          <span className="chat-name">
+            {copy.chatTitle}
+            <ChevronRight strokeWidth={2.6} />
+          </span>
+        </div>
+        <Video className="chat-video" strokeWidth={2} />
+      </header>
+
       <div className="chat-thread">
-        <p className="chat-bubble is-user">{scenario.prompt}</p>
+        <p className="chat-stamp">{copy.today}</p>
+        <p className="chat-bubble is-me">{scenario.prompt}</p>
         {tool && (
-          <p className="chat-tool">
-            <Wrench strokeWidth={2} />
+          <p className="chat-event">
+            <Wrench strokeWidth={2.2} />
             <code>{tool.text}</code>
           </p>
         )}
         {result && <p className="chat-bubble">{result.text}</p>}
         {guard && (
-          <p className="chat-guard">
-            <ShieldCheck strokeWidth={2} />
-            {guard.text}
+          <p className="chat-event is-guard">
+            <ShieldCheck strokeWidth={2.2} />
+            <span>{guard.text}</span>
           </p>
         )}
         {scenario.approval && (
-          <div className="chat-approval">
-            <p>{scenario.approval.question}</p>
-            <div>
-              <span className="is-primary">{copy.approve}</span>
-              <span>{copy.reject}</span>
+          <div className="chat-alert">
+            <p className="chat-alert-title">{copy.approval}</p>
+            <p className="chat-alert-text">{scenario.approval.question}</p>
+            <div className="chat-alert-actions">
+              <span className="is-destructive">{copy.reject}</span>
+              <span className="is-default">{copy.approve}</span>
             </div>
           </div>
         )}
       </div>
-      <div className="chat-input">
-        <span>{copy.chatInput}</span>
-        <Mic strokeWidth={2} />
-        <span className="chat-send">
-          <ArrowUp strokeWidth={2.5} />
+
+      <footer className="chat-bar">
+        <span className="chat-plus">
+          <Plus strokeWidth={2.4} />
         </span>
-      </div>
+        <span className="chat-field">
+          <span>{copy.chatInput}</span>
+          <Mic strokeWidth={2.2} />
+        </span>
+      </footer>
     </div>
   );
 }

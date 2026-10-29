@@ -15,9 +15,14 @@ import { useSite } from "./SiteProvider";
 /** L’appareil qui illustre chaque offre : le MacBook pour le web, l’iPhone pour le mobile et l’IA. */
 function useDevices(): Record<string, ReactNode> {
   const { t } = useSite();
+  // L’application hors ligne : deux actions attendent le retour du réseau, le reste est synchronisé.
+  const offline = t.demos.offline;
   const tasks: Task[] = [
-    { id: 9, label: t.demos.offline.presets[0], done: false, sync: "pending" },
-    ...t.demos.offline.initial.map((label, index) => ({ id: index, label, done: index === 0, sync: "synced" as const })),
+    { id: 10, label: offline.presets[0], done: false, sync: "pending" },
+    { id: 11, label: offline.presets[2], done: true, sync: "pending" },
+    { id: 0, label: offline.initial[0], done: true, sync: "synced" },
+    { id: 1, label: offline.initial[1], done: false, sync: "synced" },
+    { id: 12, label: offline.presets[3], done: false, sync: "synced" },
   ];
   return {
     mvp: (
@@ -31,8 +36,8 @@ function useDevices(): Record<string, ReactNode> {
       </IPhone>
     ),
     mobile: (
-      <IPhone className="preview-phone">
-        <MobileApp tasks={tasks} online pending={1} />
+      <IPhone className="preview-phone" offline>
+        <MobileApp tasks={tasks} online={false} pending={2} />
       </IPhone>
     ),
     audit: (

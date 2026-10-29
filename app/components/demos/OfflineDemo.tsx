@@ -1,6 +1,6 @@
 "use client";
 
-import { Wifi, WifiOff } from "lucide-react";
+import { Server, Smartphone, Wifi, WifiOff } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import IPhone from "../devices/IPhone";
 import MobileApp, { type Sync, type Task } from "../screens/MobileApp";
@@ -92,7 +92,12 @@ export default function OfflineDemo() {
           </div>
 
           <div className="sync" aria-hidden="true">
-            <span className="sync-node">{copy.device}</span>
+            <span className="sync-node">
+              <span className="sync-icon">
+                <Smartphone size={18} strokeWidth={1.6} />
+              </span>
+              <span className="sync-name">{copy.device}</span>
+            </span>
             <span className="sync-link">
               <span className="sync-queue">
                 {queued
@@ -102,17 +107,24 @@ export default function OfflineDemo() {
                     <i key={task.id} data-sync={task.sync} />
                   ))}
               </span>
-              <span className="sync-cut">×</span>
+              <span className="sync-cut">
+                <WifiOff size={13} strokeWidth={2} />
+              </span>
+              <span className="sync-queue-label">{copy.queue}</span>
             </span>
-            <span className="sync-node">{copy.server}</span>
-            <span className="sync-queue-label">{copy.queue}</span>
+            <span className="sync-node">
+              <span className="sync-icon">
+                <Server size={18} strokeWidth={1.6} />
+              </span>
+              <span className="sync-name">{copy.server}</span>
+            </span>
           </div>
           <p className="offline-summary" aria-live="polite" data-pending={pending > 0 ? "" : undefined}>
             {summary}
           </p>
         </div>
 
-        <IPhone className="offline-phone" status={online ? undefined : <i className="iphone-nocell" />}>
+        <IPhone className="offline-phone" offline={!online}>
           <MobileApp tasks={tasks} online={online} pending={pending} onAdd={add} onToggle={toggle} />
         </IPhone>
       </div>
