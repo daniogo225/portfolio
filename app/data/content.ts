@@ -72,6 +72,7 @@ const fr = {
     "Docker",
     "Playwright",
   ],
+  chapter: "Chapitre",
   statement: {
     label: "Point de vue",
     text: "Entre le designer, le développeur et l’hébergeur, un produit perd souvent ce qui le rendait bon. Je tiens toutes les étapes, pour qu’il arrive *entier.*",
@@ -481,6 +482,7 @@ const fr = {
     whatsapp: "Envoyer sur WhatsApp",
     email: "Envoyer par e-mail",
     directLabel: "Ou directement",
+    emailLead: "Écrivez-moi",
     whatsappLabel: "WhatsApp",
     emailLabel: "E-mail",
     copy: "Copier l’adresse",
@@ -588,6 +590,7 @@ const en: SiteContent = {
     "Docker",
     "Playwright",
   ],
+  chapter: "Chapter",
   statement: {
     label: "Point of view",
     text: "Between the designer, the developer and the hosting provider, a product often loses what made it good. I own every step, so it arrives *whole.*",
@@ -989,6 +992,7 @@ const en: SiteContent = {
     whatsapp: "Send on WhatsApp",
     email: "Send by email",
     directLabel: "Or directly",
+    emailLead: "Write to me",
     whatsappLabel: "WhatsApp",
     emailLabel: "Email",
     copy: "Copy address",

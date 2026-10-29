@@ -18,20 +18,19 @@ function Word({
   em: boolean;
 }) {
   // Même « éteint », un mot garde un contraste suffisant pour un grand texte (3:1).
-  const opacity = useTransform(progress, range, [em ? 0.72 : 0.5, 1]);
-  const y = useTransform(progress, range, [6, 0]);
+  const opacity = useTransform(progress, range, [0.22, 1]);
   return (
-    <motion.span className={em ? "statement-word word-em" : "statement-word"} style={{ opacity, y }}>
+    <motion.span className={em ? "statement-word word-em" : "statement-word"} style={{ opacity }}>
       {children}
     </motion.span>
   );
 }
 
-/** Déclaration dont les mots s’allument au rythme du défilement. */
+/** Déclaration épinglée : la page défile, la phrase reste et s’allume mot à mot. */
 export default function Statement() {
   const { t, calm } = useSite();
-  const ref = useRef<HTMLParagraphElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.4"] });
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const words = parseEmphasis(t.statement.text).flatMap((segment) =>
     segment.text
       .split(/[ \n\t]+/)
@@ -40,28 +39,35 @@ export default function Statement() {
   );
 
   return (
-    <section className="statement section" aria-labelledby="statement-label">
-      <div className="shell statement-grid">
-        <h2 className="section-label" id="statement-label">
-          <span>{t.statement.label}</span>
-        </h2>
-        <p ref={ref} className="statement-text">
-          <span className="sr-only">{plain(t.statement.text)}</span>
-          <span aria-hidden="true">
-            {words.map(({ value, em }, index) => (
-              <Fragment key={`${t.statement.text}-${index}`}>
-                {calm ? (
-                  <span className={em ? "statement-word word-em" : "statement-word"}>{value}</span>
-                ) : (
-                  <Word progress={scrollYProgress} range={[index / words.length, (index + 1) / words.length]} em={em}>
-                    {value}
-                  </Word>
-                )}
-                {index < words.length - 1 ? " " : null}
-              </Fragment>
-            ))}
-          </span>
-        </p>
+    <section className="statement" aria-labelledby="statement-label">
+      <div ref={ref} className="statement-track">
+        <div className="statement-pin">
+        <div className="shell statement-grid">
+          <h2 className="section-label" id="statement-label">
+            <span>{t.statement.label}</span>
+          </h2>
+          <p className="statement-text">
+            <span className="sr-only">{plain(t.statement.text)}</span>
+            <span aria-hidden="true">
+              {words.map(({ value, em }, index) => (
+                <Fragment key={`${t.statement.text}-${index}`}>
+                  {calm ? (
+                    <span className={em ? "statement-word word-em" : "statement-word"}>{value}</span>
+                  ) : (
+                    <Word progress={scrollYProgress} range={[(index / words.length) * 0.85, ((index + 1) / words.length) * 0.85]} em={em}>
+                      {value}
+                    </Word>
+                  )}
+                  {index < words.length - 1 ? " " : null}
+                </Fragment>
+              ))}
+            </span>
+          </p>
+        </div>
+        </div>
+      </div>
+
+      <div className="shell">
         <ol className="statement-points">
           {t.statement.points.map((point, index) => (
             <motion.li
@@ -71,7 +77,7 @@ export default function Statement() {
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.8, delay: index * 0.12, ease: EASE_OUT }}
             >
-              <span className="step-index">0{index + 1}</span>
+              <span className="step-index mono">0{index + 1}</span>
               <h3>{point.title}</h3>
               <p>{point.body}</p>
             </motion.li>

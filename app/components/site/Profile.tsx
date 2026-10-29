@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { cvPdf, localePath } from "../../data/site";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
+import ChapterHead from "./ChapterHead";
 import useAbidjanTime from "../ui/useAbidjanTime";
 import { useSite } from "./SiteProvider";
 
@@ -51,11 +52,7 @@ export default function Profile() {
           </figure>
 
           <div className="profile-copy">
-            <p className="section-label">
-              <span>04</span>
-              <span>{p.label}</span>
-            </p>
-            <RevealText as="h2" id="profile-title" className="section-title" text={p.title} />
+            <ChapterHead number="04" label={p.label} title={p.title} id="profile-title" compact />
             <div className="profile-text">
               {p.paragraphs.map((paragraph, index) => (
                 <motion.p key={paragraph} className={index === 0 ? "lead" : undefined} {...appear}>

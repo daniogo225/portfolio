@@ -41,7 +41,7 @@ export default function OrchestraDemo() {
 
   return (
     <DemoFrame number="3.1" label={copy.label} className="orchestra-demo">
-      <div ref={ref} className="orchestra" data-mode={current} style={{ "--end": end / 100 } as CSSProperties}>
+      <div ref={ref} className="orchestra" data-mode={current} data-shown={inView || calm ? "" : undefined} style={{ "--end": end / 100 } as CSSProperties}>
         <div className="orchestra-head">
           <div className="segmented orchestra-switch" role="radiogroup" aria-label={copy.label}>
             {(["solo", "team"] as Mode[]).map((value) => (

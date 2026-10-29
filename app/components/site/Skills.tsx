@@ -6,7 +6,8 @@ import AgentDemo from "../demos/AgentDemo";
 import OfflineDemo from "../demos/OfflineDemo";
 import ProductDemo from "../demos/ProductDemo";
 import ScaleDemo from "../demos/ScaleDemo";
-import RevealText, { EASE_OUT } from "../ui/RevealText";
+import { EASE_OUT } from "../ui/RevealText";
+import ChapterHead from "./ChapterHead";
 import { useSite } from "./SiteProvider";
 
 /** Savoir-faire : chaque compétence est accompagnée d’une démonstration interactive construite dans la page. */
@@ -22,14 +23,7 @@ export default function Skills() {
   return (
     <section id="expertise" className="skills section" aria-labelledby="skills-title">
       <div className="shell">
-        <header className="section-head">
-          <p className="section-label">
-            <span>02</span>
-            <span>{t.skills.label}</span>
-          </p>
-          <RevealText as="h2" id="skills-title" className="section-title" text={t.skills.title} />
-          <p className="section-intro">{t.skills.intro}</p>
-        </header>
+        <ChapterHead number="02" label={t.skills.label} title={t.skills.title} intro={t.skills.intro} id="skills-title" />
 
         <div className="skill-list">
           {t.skills.items.map((item, index) => (

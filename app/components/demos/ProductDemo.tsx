@@ -45,16 +45,16 @@ function Wire() {
 function Ui() {
   return (
     <g className="st-ui">
-      <rect x={14} y={18} width={56} height={8} className="is-fill" />
-      <rect x={14} y={32} width={84} height={4} className="is-fill-soft" />
-      <rect x={14} y={54} width={100} height={26} />
-      <rect x={22} y={65} width={46} height={4} className="is-fill-soft" />
-      <rect x={14} y={92} width={100} height={20} />
-      <rect x={47} y={92} width={34} height={20} className="is-fill-faint" />
-      <line x1={47} y1={92} x2={47} y2={112} />
-      <line x1={81} y1={92} x2={81} y2={112} />
-      <rect x={14} y={180} width={100} height={26} className="is-fill" />
-      <rect x={48} y={191} width={32} height={4} className="is-paper" />
+      <rect pathLength={1} x={14} y={18} width={56} height={8} className="is-fill" />
+      <rect pathLength={1} x={14} y={32} width={84} height={4} className="is-fill-soft" />
+      <rect pathLength={1} x={14} y={54} width={100} height={26} />
+      <rect pathLength={1} x={22} y={65} width={46} height={4} className="is-fill-soft" />
+      <rect pathLength={1} x={14} y={92} width={100} height={20} />
+      <rect pathLength={1} x={47} y={92} width={34} height={20} className="is-fill-faint" />
+      <line pathLength={1} x1={47} y1={92} x2={47} y2={112} />
+      <line pathLength={1} x1={81} y1={92} x2={81} y2={112} />
+      <rect pathLength={1} x={14} y={180} width={100} height={26} className="is-fill" />
+      <rect pathLength={1} x={48} y={191} width={32} height={4} className="is-paper" />
     </g>
   );
 }
@@ -66,8 +66,8 @@ function Code() {
         const y = 18 + index * 13;
         return (
           <g key={index}>
-            <rect x={14} y={y} width={5} height={3} className="is-fill-faint" />
-            {width > 0 && <rect x={26 + indent} y={y} width={width} height={3} className={`is-${tone}`} />}
+            <rect pathLength={1} x={14} y={y} width={5} height={3} className="is-fill-faint" />
+            {width > 0 && <rect pathLength={1} x={26 + indent} y={y} width={width} height={3} className={`is-${tone}`} />}
           </g>
         );
       })}
@@ -78,23 +78,23 @@ function Code() {
 function Live({ steps, active, calm }: { steps: number; active: boolean; calm: boolean }) {
   return (
     <g className="st-live">
-      <rect x={14} y={18} width={100} height={14} />
-      <rect x={34} y={23} width={54} height={4} className="is-fill-soft" />
-      <circle cx={22} cy={25} r={2.2} className={active ? "is-accent" : "is-fill-faint"} />
+      <rect pathLength={1} x={14} y={18} width={100} height={14} />
+      <rect pathLength={1} x={34} y={23} width={54} height={4} className="is-fill-soft" />
+      <circle pathLength={1} cx={22} cy={25} r={2.2} className={active ? "is-accent" : "is-fill-faint"} />
       {Array.from({ length: steps }, (_, index) => {
         const y = 50 + index * 26;
         const delay = calm || !active ? "0ms" : `${200 + index * 360}ms`;
         return (
           <g key={index} className="st-live-row" data-shown={active ? "" : undefined} style={{ animationDelay: delay }}>
-            <rect x={14} y={y} width={10} height={10} />
-            <polyline points={`16.5,${y + 5} 18.5,${y + 7.5} 22,${y + 3}`} className="is-check" />
-            <rect x={32} y={y + 3} width={44 + ((index * 17) % 24)} height={4} className="is-fill-soft" />
-            <rect x={104} y={y + 3} width={10} height={4} className="is-fill-faint" />
+            <rect pathLength={1} x={14} y={y} width={10} height={10} />
+            <polyline pathLength={1} points={`16.5,${y + 5} 18.5,${y + 7.5} 22,${y + 3}`} className="is-check" />
+            <rect pathLength={1} x={32} y={y + 3} width={44 + ((index * 17) % 24)} height={4} className="is-fill-soft" />
+            <rect pathLength={1} x={104} y={y + 3} width={10} height={4} className="is-fill-faint" />
           </g>
         );
       })}
-      <line x1={14} y1={190} x2={114} y2={190} className="is-faint" />
-      <rect x={14} y={196} width={28} height={10} className={active ? "is-accent" : "is-fill-faint"} />
+      <line pathLength={1} x1={14} y1={190} x2={114} y2={190} className="is-faint" />
+      <rect pathLength={1} x={14} y={196} width={28} height={10} className={active ? "is-accent" : "is-fill-faint"} />
     </g>
   );
 }
@@ -105,6 +105,7 @@ export default function ProductDemo() {
   const copy = t.demos.product;
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.5 });
+  const drawn = useInView(ref, { amount: 0.3, once: true });
   const [tab, setTab] = useState(0);
   const [touched, setTouched] = useState(false);
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
@@ -139,12 +140,12 @@ export default function ProductDemo() {
   return (
     <DemoFrame number="2.1" label={copy.label} className="pipeline-demo">
       <div ref={ref} className="pipeline">
-        <svg className="fig pipeline-svg" viewBox="0 0 640 296" aria-hidden="true">
+        <svg className="fig pipeline-svg" viewBox="0 0 640 296" aria-hidden="true" data-drawn={drawn ? "" : undefined}>
           {stations.map((station, index) => {
             const x = 16 + index * PITCH;
             return (
               <g key={index} className="station" data-active={tab === index ? "" : undefined} transform={`translate(${x} 16)`}>
-                <rect className="station-box" width={STATION_W} height={STATION_H} rx={2} />
+                <rect pathLength={1} className="station-box" width={STATION_W} height={STATION_H} rx={2} />
                 {station}
               </g>
             );

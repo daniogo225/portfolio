@@ -17,10 +17,11 @@ const mono = Geist_Mono({
   preload: false,
 });
 
+// Police de titrage : droite pour les titres, italique pour le mot mis en valeur.
 const serif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
-  style: "italic",
+  style: ["normal", "italic"],
   variable: "--font-instrument",
   display: "swap",
 });

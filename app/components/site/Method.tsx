@@ -2,7 +2,8 @@
 
 import { motion } from "motion/react";
 import OrchestraDemo from "../demos/OrchestraDemo";
-import RevealText, { EASE_OUT } from "../ui/RevealText";
+import { EASE_OUT } from "../ui/RevealText";
+import ChapterHead from "./ChapterHead";
 import { useSite } from "./SiteProvider";
 
 /** Méthode : l’orchestration d’agents IA, puis les étapes concrètes d’une mission. */
@@ -13,12 +14,8 @@ export default function Method() {
     <section id="method" className="method section" aria-labelledby="method-title">
       <div className="shell">
         <div className="method-grid">
-          <header className="method-head">
-            <p className="section-label">
-              <span>03</span>
-              <span>{t.method.label}</span>
-            </p>
-            <RevealText as="h2" id="method-title" className="section-title" text={t.method.title} />
+          <div className="method-head">
+            <ChapterHead number="03" label={t.method.label} title={t.method.title} id="method-title" compact />
             <motion.p
               className="method-body"
               initial={{ opacity: 0, y: 24 }}
@@ -33,7 +30,7 @@ export default function Method() {
                 <li key={point}>{point}</li>
               ))}
             </ul>
-          </header>
+          </div>
           <div className="method-demo">
             <OrchestraDemo />
           </div>

@@ -55,11 +55,17 @@ export default function Contact() {
   return (
     <section id="contact" className="contact section" aria-labelledby="contact-title">
       <div className="shell">
-        <p className="section-label">
-          <span>05</span>
+        <p className="chapter-meta mono">
+          <span>
+            {t.chapter} 05
+          </span>
           <span>{c.label}</span>
         </p>
         <RevealText as="h2" id="contact-title" className="contact-title" text={c.title} interval={0.08} />
+        <p className="contact-email-lead mono">{c.emailLead}</p>
+        <a className="contact-email" href={`mailto:${links.email}`}>
+          {links.email}
+        </a>
 
         <div className="contact-grid">
           <div className="contact-aside">

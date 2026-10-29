@@ -3,7 +3,7 @@
 import { ArrowDown, ArrowUpRight, Check, Plus } from "lucide-react";
 import { useState } from "react";
 import { whatsappUrl } from "../../data/site";
-import RevealText from "../ui/RevealText";
+import ChapterHead from "./ChapterHead";
 import { useSite } from "./SiteProvider";
 
 /**
@@ -17,13 +17,8 @@ export default function Offers() {
   return (
     <section id="offers" className="offers section" aria-labelledby="offers-title">
       <div className="shell offers-layout">
-        <header className="offers-aside">
-          <p className="section-label">
-            <span>01</span>
-            <span>{t.offers.label}</span>
-          </p>
-          <RevealText as="h2" id="offers-title" className="section-title" text={t.offers.title} />
-          <p className="section-intro">{t.offers.intro}</p>
+        <div className="offers-aside">
+          <ChapterHead number="01" label={t.offers.label} title={t.offers.title} intro={t.offers.intro} id="offers-title" compact />
           <div className="offers-other">
             <p>{t.offers.other}</p>
             <a className="button button-ghost" href="#contact">
@@ -33,7 +28,7 @@ export default function Offers() {
               <ArrowDown size={18} strokeWidth={1.75} aria-hidden="true" />
             </a>
           </div>
-        </header>
+        </div>
 
         <ol className="offer-list">
           {t.offers.items.map((offer, index) => {
