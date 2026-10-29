@@ -53,20 +53,16 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="contact section" aria-labelledby="contact-title">
-      <div className="shell">
-        <p className="chapter-meta mono">
-          <span>
-            {t.chapter} 05
-          </span>
-          <span>{c.label}</span>
-        </p>
-        <RevealText as="h2" id="contact-title" className="contact-title" text={c.title} interval={0.08} />
-        <p className="contact-email-lead mono">{c.emailLead}</p>
+    <section id="contact" className="contact band is-dark" aria-labelledby="contact-title">
+      <div className="band-inner">
+        <p className="eyebrow">{c.label}</p>
+        <RevealText as="h2" id="contact-title" className="band-title" text={c.title} interval={0.08} />
+        <p className="contact-email-lead">{c.emailLead}</p>
         <a className="contact-email" href={`mailto:${links.email}`}>
           {links.email}
         </a>
-
+      </div>
+      <div className="shell">
         <div className="contact-grid">
           <div className="contact-aside">
             <motion.p

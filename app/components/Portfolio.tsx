@@ -5,7 +5,6 @@ import type { SiteContent } from "../data/content";
 import type { Locale } from "../data/site";
 import CommandPalette from "./site/CommandPalette";
 import Contact from "./site/Contact";
-import Cursor from "./site/Cursor";
 import FloatingCta from "./site/FloatingCta";
 import Footer from "./site/Footer";
 import Header from "./site/Header";
@@ -57,7 +56,6 @@ function Site() {
       <Footer />
       <FloatingCta />
       <CommandPalette open={paletteOpen} onClose={closePalette} />
-      <Cursor />
     </>
   );
 }

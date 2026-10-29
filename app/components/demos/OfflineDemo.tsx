@@ -1,19 +1,18 @@
 "use client";
 
+import { Wifi, WifiOff } from "lucide-react";
 import { useEffect, useId, useState } from "react";
+import IPhone from "../devices/IPhone";
+import MobileApp, { type Sync, type Task } from "../screens/MobileApp";
 import { useSite } from "../site/SiteProvider";
 import DemoFrame from "./DemoFrame";
 
-type Sync = "synced" | "pending" | "syncing";
-type Task = { id: number; label: string; done: boolean; sync: Sync };
-
-const MAX_TASKS = 5;
+const MAX_TASKS = 6;
 const SYNC_MS = 650;
 
 /**
- * Application hors ligne : les actions faites sans réseau restent dans la file d’envoi de l’appareil,
- * puis partent une par une, dans l’ordre, quand le réseau revient. Le schéma à côté du téléphone
- * montre cette file et la liaison avec le serveur.
+ * Application hors ligne dans l’iPhone : les actions faites sans réseau restent dans la file
+ * d’envoi de l’appareil, puis partent une par une, dans l’ordre, quand le réseau revient.
  */
 export default function OfflineDemo() {
   const { t } = useSite();
@@ -29,7 +28,6 @@ export default function OfflineDemo() {
   const pending = queued.length;
   const syncing = tasks.find((task) => task.sync === "syncing");
 
-  // File d’envoi : une action à la fois, la plus ancienne d’abord.
   useEffect(() => {
     if (!online) return;
     const timer = window.setTimeout(
@@ -53,7 +51,6 @@ export default function OfflineDemo() {
     setTasks((list) => {
       const task: Task = { id: Date.now(), label, done: false, sync: "pending" };
       let updated = [task, ...list];
-      // L’écran reste lisible : on retire la plus ancienne tâche déjà synchronisée.
       while (updated.length > MAX_TASKS) {
         const oldest = updated.findLastIndex((item) => item.sync === "synced");
         if (oldest < 0) break;
@@ -89,11 +86,11 @@ export default function OfflineDemo() {
               <span className="switch-track" aria-hidden="true">
                 <span className="switch-thumb" />
               </span>
+              {online ? <Wifi size={16} strokeWidth={1.75} aria-hidden="true" /> : <WifiOff size={16} strokeWidth={1.75} aria-hidden="true" />}
               <span>{online ? copy.online : copy.offline}</span>
             </button>
           </div>
 
-          {/* Schéma : l’appareil, sa file d’envoi, le serveur. La liaison se coupe avec le réseau. */}
           <div className="sync" aria-hidden="true">
             <span className="sync-node">{copy.device}</span>
             <span className="sync-link">
@@ -115,39 +112,9 @@ export default function OfflineDemo() {
           </p>
         </div>
 
-        <div className="phone">
-          <div className="phone-screen">
-            <div className="phone-bar mono" aria-hidden="true">
-              <span>9:41</span>
-              <span>{online ? copy.online : copy.offline}</span>
-            </div>
-            <p className="phone-banner" data-shown={!online || pending > 0 ? "" : undefined}>
-              {!online ? copy.bannerOffline : pending > 0 ? copy.bannerSync : copy.allSynced}
-            </p>
-            <div className="phone-head">
-              <p className="phone-title">{copy.appTitle}</p>
-              <button type="button" className="phone-add" onClick={add}>
-                + {copy.add}
-              </button>
-            </div>
-            <ul className="phone-list">
-              {tasks.map((task) => (
-                <li key={task.id} data-sync={task.sync}>
-                  <button type="button" className="phone-task" aria-pressed={task.done} onClick={() => toggle(task.id)}>
-                    <span className="phone-check" aria-hidden="true" />
-                    <span className="phone-label">
-                      {task.label}
-                      <span className="sr-only">, {task.done ? copy.done : copy.todo}</span>
-                    </span>
-                  </button>
-                  <span className="phone-sync mono">
-                    {task.sync === "synced" ? copy.synced : task.sync === "pending" ? copy.pending : copy.syncing}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <IPhone className="offline-phone" status={online ? undefined : <i className="iphone-nocell" />}>
+          <MobileApp tasks={tasks} online={online} pending={pending} onAdd={add} onToggle={toggle} />
+        </IPhone>
       </div>
     </DemoFrame>
   );

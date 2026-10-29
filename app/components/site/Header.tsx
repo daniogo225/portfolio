@@ -196,7 +196,6 @@ export default function Header({ onOpenPalette }: { onOpenPalette: () => void })
       <div className="header-inner shell">
         <a href="#top" className="wordmark">
           <span className="wordmark-name">Zié Daniogo</span>
-          <span className="wordmark-role">{t.hero.role}</span>
           <span className="sr-only">, {t.footer.top}</span>
         </a>
 

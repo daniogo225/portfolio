@@ -44,12 +44,16 @@ const fr = {
     role: "Produit, full-stack et IA",
     eyebrow: "Ingénieur produit full-stack et IA / Abidjan",
     title: "Votre produit, de la maquette au *serveur.*",
+    kicker: "Web. Mobile. IA.",
+    learn: "En savoir plus",
     intro:
       "Je conçois, construis et mets en production des SaaS, des applications mobiles et des agents IA. Un seul interlocuteur du début à la fin, avec la cadence d’une petite équipe.",
     primary: "Écrire sur WhatsApp",
     secondary: "Voir les offres",
     availability: "Disponible pour des missions à distance",
     scroll: "Défiler",
+    web: "Web",
+    mobile: "Mobile",
     facts: [
       { value: "Depuis 2023", label: "des applications en production" },
       { value: "De bout en bout", label: "design, code et mise en production" },
@@ -178,6 +182,7 @@ const fr = {
     items: [
       {
         id: "product",
+        headline: "Web. Du produit au *serveur.*",
         title: "Du produit au serveur",
         body: "Je pars du problème, pas de l’outil. Parcours, maquette, interface, logique métier, tests, déploiement : la même personne tient chaque étape, donc rien ne se perd entre deux équipes.",
         points: [
@@ -190,6 +195,7 @@ const fr = {
       },
       {
         id: "ai",
+        headline: "IA. Des agents qui *agissent.*",
         title: "Agents IA et voix",
         body: "Un agent utile n’est pas un simple chatbot. Il comprend la demande, choisit ses outils, agit dans un périmètre défini et demande votre accord avant toute action sensible. À la voix, la réponse doit arriver pendant que l’utilisateur écoute encore.",
         points: [
@@ -202,6 +208,7 @@ const fr = {
       },
       {
         id: "scale",
+        headline: "Charge. Prêt pour *le pic.*",
         title: "Montée en charge et fiabilité",
         body: "Une application qui tient à dix utilisateurs peut tomber à cent. Je conçois des services qui encaissent : plusieurs instances derrière un répartiteur, files d’attente pour absorber les pics, cache, limites de débit, et des audits de sécurité avant que quelqu’un d’autre ne s’en charge.",
         points: [
@@ -214,6 +221,7 @@ const fr = {
       },
       {
         id: "mobile",
+        headline: "Mobile. Même *hors ligne.*",
         title: "Mobile, même sans réseau",
         body: "Sur le terrain, le réseau coupe. Une bonne application mobile continue de fonctionner, garde les actions en attente et se synchronise d’elle-même au retour du réseau, sans perte ni doublon.",
         points: [
@@ -241,6 +249,23 @@ const fr = {
       submit: "Envoyer l’invitation",
       sent: "Invitation envoyée à awa@example.com",
       url: "app.example.com/equipe",
+      app: {
+        name: "Atelier",
+        nav: ["Tableau de bord", "Projets", "Équipe", "Facturation", "Réglages"],
+        active: 2,
+        heading: "Équipe",
+        subheading: "6 membres, 2 invitations en attente",
+        invite: "Inviter",
+        columns: ["Membre", "Rôle", "Statut"],
+        rows: [
+          ["Awa Koné", "Admin", "Actif"],
+          ["Yao Kouassi", "Membre", "Actif"],
+          ["Mariam Diaby", "Membre", "Actif"],
+          ["Issa Traoré", "Lecture", "Invité"],
+          ["Fatou Bamba", "Membre", "Actif"],
+        ],
+        me: "Zié Daniogo",
+      },
       steps: [
         "Tests automatisés",
         "Analyse statique",
@@ -450,7 +475,7 @@ const fr = {
     },
     education: { dates: "2021", school: cv.fr.education.school, body: cv.fr.education.body },
     skillsLabel: cv.fr.sections.skills,
-    skillsTitle: "Du produit au serveur, les *outils du quotidien.*",
+    skillsTitle: "Caractéristiques techniques",
     skills: cv.fr.skills,
     photo: "Zié Daniogo, assis, en polo vert",
     cvLabel: "CV",
@@ -562,12 +587,16 @@ const en: SiteContent = {
     role: "Product, full-stack and AI",
     eyebrow: "Full-stack and AI product engineer / Abidjan",
     title: "Your product, from mockup to *production.*",
+    kicker: "Web. Mobile. AI.",
+    learn: "Learn more",
     intro:
       "I design, build and ship SaaS products, mobile apps and AI agents. One accountable person from start to finish, working at the pace of a small team.",
     primary: "Message me on WhatsApp",
     secondary: "See the services",
     availability: "Available for remote engagements",
     scroll: "Scroll",
+    web: "Web",
+    mobile: "Mobile",
     facts: [
       { value: "Since 2023", label: "shipping apps to production" },
       { value: "End to end", label: "design, code and deployment" },
@@ -694,6 +723,7 @@ const en: SiteContent = {
     items: [
       {
         id: "product",
+        headline: "Web. From product to *server.*",
         title: "From product to server",
         body: "I start from the problem, not the tool. Flows, mockup, interface, business logic, tests, deployment: one person owns every step, so nothing gets lost between teams.",
         points: [
@@ -706,6 +736,7 @@ const en: SiteContent = {
       },
       {
         id: "ai",
+        headline: "AI. Agents that *act.*",
         title: "AI agents and voice",
         body: "A useful agent is more than a chatbot. It understands the request, picks its tools, acts within a defined scope and asks for your approval before anything sensitive. With voice, the answer has to arrive while the user is still listening.",
         points: [
@@ -718,6 +749,7 @@ const en: SiteContent = {
       },
       {
         id: "scale",
+        headline: "Scale. Ready for *the spike.*",
         title: "Scaling and reliability",
         body: "An app that holds up with ten users can fall over with a hundred. I build services that take the load: several instances behind a load balancer, queues to absorb spikes, caching, rate limits, and security audits before someone else runs one for you.",
         points: [
@@ -730,6 +762,7 @@ const en: SiteContent = {
       },
       {
         id: "mobile",
+        headline: "Mobile. Even *offline.*",
         title: "Mobile, even offline",
         body: "In the field, the network drops. A good mobile app keeps working, holds actions in a queue and syncs on its own when the network returns, with no loss and no duplicates.",
         points: [
@@ -757,6 +790,23 @@ const en: SiteContent = {
       submit: "Send invitation",
       sent: "Invitation sent to awa@example.com",
       url: "app.example.com/team",
+      app: {
+        name: "Atelier",
+        nav: ["Dashboard", "Projects", "Team", "Billing", "Settings"],
+        active: 2,
+        heading: "Team",
+        subheading: "6 members, 2 pending invitations",
+        invite: "Invite",
+        columns: ["Member", "Role", "Status"],
+        rows: [
+          ["Awa Koné", "Admin", "Active"],
+          ["Yao Kouassi", "Member", "Active"],
+          ["Mariam Diaby", "Member", "Active"],
+          ["Issa Traoré", "Viewer", "Invited"],
+          ["Fatou Bamba", "Member", "Active"],
+        ],
+        me: "Zié Daniogo",
+      },
       steps: ["Automated tests", "Static analysis", "Database migration", "Zero-downtime release", "Monitoring on"],
       live: "Live",
       comment: "// Only a team admin can invite",
@@ -960,7 +1010,7 @@ const en: SiteContent = {
     },
     education: { dates: "2021", school: cv.en.education.school, body: cv.en.education.body },
     skillsLabel: cv.en.sections.skills,
-    skillsTitle: "From product to server, the *everyday toolkit.*",
+    skillsTitle: "Tech specs",
     skills: cv.en.skills,
     photo: "Zié Daniogo, seated, wearing a green polo shirt",
     cvLabel: "Résumé",

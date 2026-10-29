@@ -1,12 +1,8 @@
 "use client";
 
 import { ArrowUp, Pause, Play } from "lucide-react";
-import { motion, stagger } from "motion/react";
 import { cvPdf, links, whatsappUrl } from "../../data/site";
-import { EASE_OUT } from "../ui/RevealText";
 import { useSite } from "./SiteProvider";
-
-const LETTERS = Array.from("Daniogo");
 
 export default function Footer() {
   const { t, locale, paused, setPaused } = useSite();
@@ -27,28 +23,6 @@ export default function Footer() {
             {t.footer.cv}
           </a>
         </nav>
-
-        <motion.p
-          className="footer-wordmark"
-          aria-hidden="true"
-          initial="hidden"
-          whileInView="shown"
-          viewport={{ once: true, amount: 0.5 }}
-          variants={{ hidden: {}, shown: { transition: { delayChildren: stagger(0.06) } } }}
-        >
-          {LETTERS.map((letter, index) => (
-            <span className="letter-mask" key={index}>
-              <motion.span
-                variants={{
-                  hidden: { y: "105%" },
-                  shown: { y: "0%", transition: { duration: 1.1, ease: EASE_OUT } },
-                }}
-              >
-                {letter}
-              </motion.span>
-            </span>
-          ))}
-        </motion.p>
 
         <div className="footer-bar">
           <p>
