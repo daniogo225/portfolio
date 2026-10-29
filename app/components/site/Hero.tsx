@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import {
   motion,
@@ -84,7 +84,6 @@ export default function Hero() {
   const still = calm || !wide;
   const ref = useRef<HTMLElement>(null);
   const time = useAbidjanTime();
-  const [clockBefore, clockAfter = ""] = t.hero.clock.split("{time}");
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const portraitY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
   const nameY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
@@ -93,7 +92,6 @@ export default function Hero() {
   return (
     <section ref={ref} className="hero" id="top" aria-labelledby="hero-title">
       <motion.div className="hero-pitch" style={still ? undefined : { y: copyY }}>
-        <ArrowDownRight className="hero-arrow rise" style={rise(0.1)} size={30} strokeWidth={1.25} aria-hidden="true" />
         <RevealText as="h1" id="hero-title" className="hero-title" text={t.hero.title} mode="mount" delay={0.3} interval={0.06} />
         <div className="hero-actions rise" style={rise(0.9)}>
           <Magnetic>
@@ -130,11 +128,8 @@ export default function Hero() {
         <Globe />
         <p>
           <strong>{t.hero.eyebrow}</strong>
-          <span>{t.hero.place}</span>
           <span>
-            {clockBefore}
-            <time>{time || "--:--"}</time>
-            {clockAfter}
+            {t.hero.place} · <time>{time || "--:--"}</time>
           </span>
           <span>{t.hero.availability}</span>
         </p>

@@ -77,7 +77,6 @@ export default function Offers() {
             <span>{t.offers.label}</span>
           </p>
           <RevealText as="h2" id="offers-title" className="section-title" text={t.offers.title} />
-          <p className="section-intro">{t.offers.intro}</p>
         </header>
 
         <ol className="offer-list" onPointerMove={follow} onPointerLeave={() => setHover(null)}>
@@ -118,28 +117,16 @@ export default function Offers() {
                     <div className="offer-content">
                       <div className="offer-copy">
                         <p className="offer-body">{offer.body}</p>
-                        <div className="offer-columns">
-                          <div>
-                            <h4 className="mono">{t.offers.audienceLabel}</h4>
-                            <p className="offer-audience">{offer.audience}</p>
-                          </div>
-                          <div>
-                            <h4 className="mono">{t.offers.deliverablesLabel}</h4>
-                            <ul className="offer-deliverables">
-                              {offer.deliverables.map((item) => (
-                                <li key={item}>
-                                  <Check size={15} strokeWidth={2} aria-hidden="true" />
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
+                        <h4 className="offer-deliverables-label mono">{t.offers.deliverablesLabel}</h4>
+                        <ul className="offer-deliverables">
+                          {offer.deliverables.map((item) => (
+                            <li key={item}>
+                              <Check size={15} strokeWidth={2} aria-hidden="true" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
                         <div className="offer-foot">
-                          <p className="offer-stack">
-                            <span className="mono">{t.offers.stackLabel}</span>
-                            <span>{offer.stack}</span>
-                          </p>
                           <a
                             className="button button-primary"
                             href={whatsappUrl(t.offers.message.replace("{offer}", offer.subject))}

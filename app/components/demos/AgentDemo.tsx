@@ -87,7 +87,8 @@ export default function AgentDemo() {
   const { t, calm } = useSite();
   const copy = t.demos.agent;
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { amount: 0.4 });
+  // Le déroulé est haut sur téléphone : il démarre dès que son début est à l’écran.
+  const inView = useInView(ref, { amount: 0.15 });
   const [scenario, setScenario] = useState(0);
   const [words, setWords] = useState(0);
   const [beats, setBeats] = useState(0);

@@ -16,7 +16,7 @@ const appear = {
   transition: { duration: 0.8, ease: EASE_OUT },
 } as const;
 
-/** Profil : la photo détourée posée sur la page, sans cadre, le texte à côté, puis le parcours. */
+/** Profil : la photo détourée posée sur un filet, un paragraphe, quatre repères et le CV. */
 export default function Profile() {
   const { t, calm, locale } = useSite();
   const p = t.profile;
@@ -47,48 +47,16 @@ export default function Profile() {
               <span>{p.label}</span>
             </p>
             <RevealText as="h2" id="profile-title" className="section-title" text={p.title} />
-            <div className="profile-text">
-              {p.paragraphs.map((paragraph, index) => (
-                <motion.p key={paragraph} className={index === 0 ? "lead" : undefined} {...appear}>
-                  {paragraph}
-                </motion.p>
-              ))}
-            </div>
-
-            <div className="path">
-              <h3 className="block-label mono">{p.pathLabel}</h3>
-              <ol className="path-list">
-                <motion.li {...appear}>
-                  <p className="path-dates mono">{p.experience.dates}</p>
-                  <div className="path-body">
-                    <h4>{p.experience.role}</h4>
-                    <p className="path-place">{p.experience.place}</p>
-                    <ul className="path-highlights">
-                      {p.experience.highlights.map((item) => (
-                        <li key={item.title}>
-                          <strong>{item.title}</strong>
-                          <span>{item.body}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.li>
-                <motion.li {...appear}>
-                  <p className="path-dates mono">{p.education.dates}</p>
-                  <div className="path-body">
-                    <h4>{p.education.school}</h4>
-                    <p className="path-place">{p.education.body}</p>
-                  </div>
-                </motion.li>
-              </ol>
-            </div>
+            <motion.p className="profile-lead" {...appear}>
+              {p.intro}
+            </motion.p>
 
             <dl className="profile-facts">
               {p.facts.map((fact) => (
-                <div key={fact.label}>
-                  <dt>{fact.label}</dt>
+                <motion.div key={fact.label} {...appear}>
+                  <dt className="mono">{fact.label}</dt>
                   <dd>{fact.value}</dd>
-                </div>
+                </motion.div>
               ))}
             </dl>
 
@@ -107,26 +75,6 @@ export default function Profile() {
               </a>
             </div>
           </div>
-        </div>
-
-        <div className="toolkit">
-          <header className="toolkit-head">
-            <p className="section-label mono">
-              <span>{p.skillsLabel}</span>
-            </p>
-            <RevealText as="h3" className="toolkit-title" text={p.skillsTitle} />
-          </header>
-          <dl className="toolkit-grid">
-            {p.skills.map((skill, index) => (
-              <motion.div key={skill.title} {...appear} transition={{ ...appear.transition, delay: (index % 3) * 0.08 }}>
-                <dt>
-                  <span className="toolkit-index mono">0{index + 1}</span>
-                  {skill.title}
-                </dt>
-                <dd>{skill.body}</dd>
-              </motion.div>
-            ))}
-          </dl>
         </div>
       </div>
     </section>

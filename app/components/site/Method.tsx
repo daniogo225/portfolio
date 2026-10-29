@@ -28,11 +28,6 @@ export default function Method() {
             >
               {t.method.body}
             </motion.p>
-            <ul className="method-points">
-              {t.method.points.map((point) => (
-                <li key={point}>{point}</li>
-              ))}
-            </ul>
           </div>
           <div className="method-demo">
             <OrchestraDemo />
