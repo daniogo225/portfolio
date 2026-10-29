@@ -157,7 +157,7 @@ export default function AgentDemo() {
   const voiceState = listening ? "listening" : shownWords >= spoken.length ? "done" : "idle";
 
   return (
-    <DemoFrame number="2.2" label={copy.label} note={copy.note} className="agent-demo">
+    <DemoFrame number="2.3" label={copy.label} note={copy.note} className="agent-demo">
       <div ref={ref} className="agent">
         <div className="voice" data-state={voiceState}>
           <div className="voice-meta">

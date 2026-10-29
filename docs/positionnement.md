@@ -14,26 +14,26 @@ Pourquoi celui-ci :
 - **Il s’appuie sur ce que Zié fait vraiment** : conception, développement web et mobile, intégration d’IA, déploiement et exploitation de serveurs. Rien n’est gonflé.
 - **Il le distingue du développeur freelance générique.** Trois différences crédibles et vérifiables en entretien :
   1. **Un seul responsable de bout en bout** (design, code, mise en production).
-  2. **La méthode d’orchestration d’agents IA** : il pilote des agents spécialisés (développement, communication, exploitation) et relit chaque livraison. Résultat : la cadence d’une petite équipe, avec un seul interlocuteur.
+  2. **La méthode d’orchestration d’agents IA** : il pilote des agents spécialisés (développement, documentation, serveurs) et relit chaque livraison. Résultat : la cadence d’une petite équipe, avec un seul interlocuteur.
   3. **L’exigence de design** : interfaces sobres, soignées, en clair et en sombre.
-- **Il tient sans projets nommés.** Comme ses travaux sont confidentiels, le niveau se démontre par des démonstrations interactives construites dans le site, par la méthode et par la qualité du site lui-même.
+- **Il tient sans projets nommés.** Comme ses travaux sont confidentiels, le niveau se démontre par des démonstrations interactives construites dans le site, par la méthode et par la qualité du site lui-même. Sur le site, cette section s’appelle « Méthode » : elle montre une façon de travailler, jamais des projets. On n’écrit donc pas « je vous montre mes projets » à côté de « mes projets sont confidentiels ».
 
 ## 2. La cible
 
 | Segment | Ce qu’il cherche | Offre d’entrée |
 | --- | --- | --- |
-| Fondateurs et porteurs de projet (Côte d’Ivoire, Afrique de l’Ouest, francophonie, international) | Un premier produit en ligne vite, sans monter une équipe | MVP SaaS |
+| Fondateurs et porteurs de projet (Côte d’Ivoire, Afrique de l’Ouest, francophonie, international) | Un premier produit en ligne vite, sans monter une équipe | Application web et SaaS |
 | Entreprises et PME avec un produit ou des processus existants | Automatiser des tâches réelles avec l’IA, ajouter un assistant vocal | Agents IA et assistants vocaux |
-| Équipes produit, CTO, agences | Un renfort fiable : mobile, audit, montée en charge | Application mobile, Audit et montée en charge |
+| Équipes produit, CTO, agences | Un renfort fiable : mobile, audit, montée en charge | Application mobile, Audit, performance et sécurité |
 
 Atouts concrets pour l’international : fuseau **UTC+0** (heures de bureau communes avec Londres, proches de Paris), **français et anglais**.
 
 ## 3. Les offres
 
-1. **MVP SaaS** : lancer un produit en quelques semaines. Cadrage, parcours, maquettes validées avant le code, application web en production, espace d’administration, code et documentation remis.
+1. **Application web et SaaS** : une première version solide, en ligne en quelques semaines. Cadrage, parcours, maquettes validées avant le code, application web en production, espace d’administration, code et documentation remis.
 2. **Agents IA et assistants vocaux** : mettre l’IA au travail dans un produit. Agents connectés aux outils et aux données, voix en temps réel, garde-fous, validation humaine avant toute action sensible, service prêt pour la charge.
 3. **Application mobile** : iOS et Android avec React Native et Expo, mode hors ligne et synchronisation, publication sur les stores.
-4. **Audit et montée en charge** : rapport priorisé et corrections (sécurité, performance), cache, files d’attente, multi-instances, déploiement et supervision sur Oracle Cloud, Forge ou VPS.
+4. **Audit, performance et sécurité** : rapport classé par priorité et corrections (sécurité, rapidité), serveurs capables d’absorber les pics de trafic, mise en ligne et surveillance sur Oracle Cloud, Forge ou VPS.
 
 Chaque mission démarre par un appel de 30 minutes puis une proposition écrite (périmètre, étapes, livrables). Les tarifs ne sont pas publiés : ils sont donnés dans la proposition.
 
@@ -52,7 +52,30 @@ Chaque mission démarre par un appel de 30 minutes puis une proposition écrite 
 - Aucun faux témoignage, faux logo de client ou chiffre inventé.
 - Les démonstrations du site sont présentées comme des démonstrations, jamais comme des projets.
 
-## 6. Textes réutilisables
+## 6. Le vocabulaire du site
+
+Le site s’adresse d’abord à des clients, pas à des développeurs. Chaque terme technique a son équivalent simple ; le nom des outils reste dans les lignes « Outils » et dans la liste des compétences.
+
+| Éviter sur le site | Écrire |
+| --- | --- |
+| MVP | première version |
+| Montée en charge, scaling | tenir quand le trafic augmente |
+| Instance, multi-instances | serveur, plusieurs serveurs |
+| Mettre en production, déployer | mettre en ligne |
+| Supervision | surveillance |
+| Requête | demande |
+| Environnement de test, staging | version de test en ligne |
+| Lecture seule | rien n’est modifié |
+| Ingénierie de contexte et de prompts | consignes et contexte soignés |
+| Limitation de débit, durcissement | protection contre les abus, serveurs verrouillés |
+| Une seule base de code | une seule application pour iOS et Android |
+| Agent communication, agent exploitation | agent documentation, agent serveurs |
+
+Sur Malt, Upwork, Fiverr et LinkedIn, les mots-clés recherchés par les clients (MVP, scaling, montée en charge) peuvent rester : ils servent à être trouvé.
+
+Les noms de section du site : Offres, Méthode (les démonstrations), Collaboration (les agents et le déroulé d’une mission), Profil, Contact.
+
+## 7. Textes réutilisables
 
 ### Accroche d’une ligne
 
@@ -151,7 +174,7 @@ Chaque mission démarre par un appel de 30 minutes puis une proposition écrite 
 > Stack: Laravel, Inertia, React or Next.js, Tailwind. Deployment on Oracle Cloud, Forge or a VPS.
 > One accountable person from start to finish, with tests and security built in. Message me before ordering so we can scope your project together.
 
-## 7. Ressources
+## 8. Ressources
 
 - Portfolio : https://portfolio-eight-rust-82.vercel.app (FR) et `/en` (EN)
 - CV : `/cv` et `/en/cv`, PDF dans `public/cv-zie-daniogo-fr.pdf` et `public/cv-zie-daniogo-en.pdf`

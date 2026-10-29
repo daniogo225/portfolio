@@ -5,12 +5,12 @@ import OrchestraDemo from "../demos/OrchestraDemo";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
 import { useSite } from "./SiteProvider";
 
-/** Méthode : l’orchestration d’agents IA, puis les étapes concrètes d’une mission. */
+/** Collaboration : l’orchestration d’agents IA, puis les étapes concrètes d’une mission. */
 export default function Method() {
   const { t } = useSite();
 
   return (
-    <section id="method" className="method section" aria-labelledby="method-title">
+    <section id="process" className="method section" aria-labelledby="method-title">
       <div className="shell">
         <div className="method-grid">
           <div className="method-head">

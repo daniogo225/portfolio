@@ -101,7 +101,7 @@ export default function ProductDemo() {
           {tab === 0 && copy.wire.join(", ")}
           {tab === 1 && `${copy.title}. ${copy.hint}`}
           {tab === 2 && copy.comment.replace(/^\/\/\s*/, "")}
-          {tab === 3 && `${copy.url} : ${copy.steps.join(", ")}.`}
+          {tab === 3 && copy.liveCaption.replace("{url}", copy.url).replace("{steps}", copy.steps.join(", "))}
         </p>
       </div>
     </DemoFrame>

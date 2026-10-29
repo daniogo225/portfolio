@@ -80,6 +80,7 @@ export default function Hero() {
   const { t, calm } = useSite();
   const ref = useRef<HTMLElement>(null);
   const time = useAbidjanTime();
+  const [clockBefore, clockAfter = ""] = t.hero.clock.split("{time}");
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const portraitY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
   const nameY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
@@ -127,7 +128,9 @@ export default function Hero() {
           <strong>{t.hero.eyebrow}</strong>
           <span>{t.hero.place}</span>
           <span>
-            UTC+0 · <time>{time || "--:--"}</time>
+            {clockBefore}
+            <time>{time || "--:--"}</time>
+            {clockAfter}
           </span>
           <span>{t.hero.availability}</span>
         </p>

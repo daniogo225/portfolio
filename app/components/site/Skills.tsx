@@ -9,7 +9,10 @@ import ScaleDemo from "../demos/ScaleDemo";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
 import { useSite } from "./SiteProvider";
 
-/** Savoir-faire : chaque compétence et sa démonstration, posées sur la page, en alternance. */
+/**
+ * Méthode : les projets clients restent confidentiels, alors chaque façon de travailler est
+ * montrée par une démonstration, posée sur la page, en alternance.
+ */
 export default function Skills() {
   const { t, locale } = useSite();
   const demos: Record<string, ReactNode> = {
@@ -23,7 +26,7 @@ export default function Skills() {
   const items = order.map((id) => t.skills.items.find((item) => item.id === id)!).filter(Boolean);
 
   return (
-    <section id="expertise" className="skills section" aria-labelledby="skills-title">
+    <section id="method" className="skills section" aria-labelledby="skills-title">
       <div className="shell">
         <header className="section-head">
           <p className="section-label mono">

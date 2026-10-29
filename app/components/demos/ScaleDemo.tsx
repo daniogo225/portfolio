@@ -444,7 +444,7 @@ export default function ScaleDemo() {
   const seconds = new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(model.wait / 1000);
 
   return (
-    <DemoFrame number="2.3" label={copy.label} note={copy.note} className="scale-demo">
+    <DemoFrame number="2.4" label={copy.label} note={copy.note} className="scale-demo">
       <div className="scale">
         <div className="scale-canvas-wrap">
           {/* Sans animation, le canvas est recréé à chaque réglage pour redessiner l’image fixe. */}

@@ -16,14 +16,14 @@ import { EASE_OUT } from "../ui/RevealText";
 import useAbidjanTime from "../ui/useAbidjanTime";
 import { useSite } from "./SiteProvider";
 
-export const SECTIONS = ["offers", "expertise", "method", "profile", "contact"] as const;
+export const SECTIONS = ["offers", "method", "process", "profile", "contact"] as const;
 export type SectionId = (typeof SECTIONS)[number];
 
 export function sectionLabel(t: ReturnType<typeof useSite>["t"], id: SectionId) {
   const labels: Record<SectionId, string> = {
     offers: t.nav.offers,
-    expertise: t.nav.skills,
     method: t.nav.method,
+    process: t.nav.process,
     profile: t.nav.profile,
     contact: t.nav.contact,
   };

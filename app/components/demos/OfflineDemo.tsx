@@ -68,7 +68,7 @@ export default function OfflineDemo() {
     pending === 0 ? copy.allSynced : pending === 1 ? copy.pendingOne : copy.pendingMany.replace("{n}", String(pending));
 
   return (
-    <DemoFrame number="2.4" label={copy.label} note={copy.hint} className="offline-demo">
+    <DemoFrame number="2.2" label={copy.label} note={copy.hint} className="offline-demo">
       <div className="offline" data-online={online ? "" : undefined}>
         <div className="offline-panel">
           <div className="offline-control">
