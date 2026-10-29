@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import type { Theme } from "../site/SiteProvider";
 import { useSite } from "../site/SiteProvider";
-import DemoFrame from "./DemoFrame";
+import { Activity } from "lucide-react";
+import DemoFrame, { Window } from "./DemoFrame";
 
 // Modèle volontairement simple : chaque instance sert confortablement CAPACITY utilisateurs.
 const CAPACITY = 150;
@@ -34,7 +35,7 @@ type Particle = {
   vy: number;
 };
 
-type Colors = { fg: string; muted: string; line: string; accent: string; danger: string; font: string };
+type Colors = { fg: string; muted: string; line: string; accent: string; danger: string; ok: string; font: string };
 
 function readColors(element: HTMLElement): Colors {
   const style = getComputedStyle(element);
@@ -45,6 +46,7 @@ function readColors(element: HTMLElement): Colors {
     line: get("--line-strong"),
     accent: get("--accent"),
     danger: get("--danger"),
+    ok: get("--ok"),
     font: style.fontFamily,
   };
 }
@@ -91,15 +93,15 @@ function Canvas({
     let fill = 0;
     const particles: Particle[] = [];
 
+    // Les quatre emplacements restent visibles : ceux qui ne tournent pas sont en pointillés.
     function layout() {
-      const n = params.current.instances;
-      const boxX = width * 0.64;
-      const boxW = width - boxX - 4;
+      const boxX = width * 0.62;
+      const boxW = width - boxX - 2;
       const gap = 10;
-      const slotH = Math.min(52, (height - 24 - gap * (MAX_INSTANCES - 1)) / MAX_INSTANCES);
-      const totalH = n * slotH + (n - 1) * gap;
+      const slotH = Math.min(50, (height - 20 - gap * (MAX_INSTANCES - 1)) / MAX_INSTANCES);
+      const totalH = MAX_INSTANCES * slotH + (MAX_INSTANCES - 1) * gap;
       const top = (height - totalH) / 2;
-      const boxes = Array.from({ length: n }, (_, index) => ({ x: boxX, y: top + index * (slotH + gap), w: boxW, h: slotH }));
+      const boxes = Array.from({ length: MAX_INSTANCES }, (_, index) => ({ x: boxX, y: top + index * (slotH + gap), w: boxW, h: slotH }));
       return { lbX: width * 0.4, midY: height / 2, queueX: width * 0.3, boxes };
     }
 
@@ -187,6 +189,12 @@ function Canvas({
       }
     }
 
+    function box(x: number, y: number, w: number, h: number, r: number) {
+      ctx.beginPath();
+      if (typeof ctx.roundRect === "function") ctx.roundRect(x, y, w, h, r);
+      else ctx.rect(x, y, w, h);
+    }
+
     function draw() {
       const { users: u, instances: n, queue: q } = params.current;
       const model = simulate(u, n, q);
@@ -194,44 +202,82 @@ function Canvas({
       ctx.clearRect(0, 0, width, height);
       ctx.font = `500 11px ${colors.font}`;
       ctx.textBaseline = "middle";
-
-      // Répartiteur.
-      ctx.fillStyle = colors.fg;
-      ctx.fillRect(geo.lbX - 1.5, geo.midY - 46, 3, 92);
-      ctx.fillStyle = colors.muted;
-      ctx.textAlign = "center";
-      ctx.fillText(labels.balancer.toUpperCase(), geo.lbX, geo.midY + 62);
+      const tone = model.state === "dropped" ? colors.danger : model.state === "calm" ? colors.ok : colors.accent;
 
       // Liaisons vers les instances.
       ctx.strokeStyle = colors.line;
       ctx.lineWidth = 1;
       ctx.beginPath();
-      for (const box of geo.boxes) {
-        ctx.moveTo(geo.lbX + 2, geo.midY);
-        ctx.bezierCurveTo(geo.lbX + (box.x - geo.lbX) * 0.5, geo.midY, geo.lbX + (box.x - geo.lbX) * 0.5, box.y + box.h / 2, box.x, box.y + box.h / 2);
+      for (const slot of geo.boxes.slice(0, n)) {
+        ctx.moveTo(geo.lbX + 6, geo.midY);
+        ctx.bezierCurveTo(
+          geo.lbX + (slot.x - geo.lbX) * 0.55,
+          geo.midY,
+          geo.lbX + (slot.x - geo.lbX) * 0.45,
+          slot.y + slot.h / 2,
+          slot.x,
+          slot.y + slot.h / 2,
+        );
       }
       ctx.stroke();
 
+      // Répartiteur : un nœud vertical, sa légende dessous.
+      ctx.fillStyle = colors.fg;
+      box(geo.lbX - 5, geo.midY - 40, 10, 80, 5);
+      ctx.fill();
+      ctx.fillStyle = colors.muted;
+      ctx.textAlign = "center";
+      ctx.fillText(labels.balancer, geo.lbX, geo.midY + 56);
+
       // Instances et leur charge.
       const level = calm ? Math.min(model.load, 1.25) : fill;
-      const tone = model.state === "dropped" ? colors.danger : model.state === "calm" ? colors.fg : colors.accent;
-      geo.boxes.forEach((box, index) => {
-        ctx.strokeStyle = colors.line;
-        ctx.strokeRect(box.x + 0.5, box.y + 0.5, box.w - 1, box.h - 1);
-        ctx.fillStyle = tone;
-        ctx.globalAlpha = 0.9;
-        ctx.fillRect(box.x + 4, box.y + box.h - 7, (box.w - 8) * Math.min(level, 1), 3);
+      geo.boxes.forEach((slot, index) => {
+        if (index >= n) {
+          ctx.globalAlpha = 0.55;
+          ctx.setLineDash([3, 4]);
+          ctx.strokeStyle = colors.line;
+          box(slot.x + 0.5, slot.y + 0.5, slot.w - 1, slot.h - 1, 10);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = colors.muted;
+          ctx.textAlign = "left";
+          ctx.fillText(`${labels.instance} ${index + 1}`, slot.x + 14, slot.y + slot.h / 2);
+          ctx.globalAlpha = 1;
+          return;
+        }
+        ctx.fillStyle = colors.line;
+        ctx.globalAlpha = 0.35;
+        box(slot.x, slot.y, slot.w, slot.h, 10);
+        ctx.fill();
         ctx.globalAlpha = 1;
+        ctx.strokeStyle = colors.line;
+        box(slot.x + 0.5, slot.y + 0.5, slot.w - 1, slot.h - 1, 10);
+        ctx.stroke();
+
+        ctx.fillStyle = tone;
+        ctx.beginPath();
+        ctx.arc(slot.x + 14, slot.y + slot.h / 2 - 5, 3, 0, Math.PI * 2);
+        ctx.fill();
         ctx.fillStyle = colors.fg;
         ctx.textAlign = "left";
-        ctx.fillText(`${labels.instance.toUpperCase()} ${index + 1}`, box.x + 12, box.y + box.h / 2 - 3);
+        ctx.fillText(`${labels.instance} ${index + 1}`, slot.x + 24, slot.y + slot.h / 2 - 5);
+
+        const trackX = slot.x + 12;
+        const trackW = slot.w - 24;
+        const trackY = slot.y + slot.h - 13;
+        ctx.fillStyle = colors.line;
+        box(trackX, trackY, trackW, 4, 2);
+        ctx.fill();
+        ctx.fillStyle = tone;
+        box(trackX, trackY, Math.max(4, trackW * Math.min(level, 1)), 4, 2);
+        ctx.fill();
       });
 
       for (const p of particles) {
         ctx.globalAlpha = Math.max(0, p.alpha);
         ctx.fillStyle = p.phase === 3 ? colors.danger : p.phase === 1 ? colors.accent : colors.fg;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2.6, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 2.4, 0, Math.PI * 2);
         ctx.fill();
       }
       ctx.globalAlpha = 1;
@@ -297,79 +343,79 @@ export default function ScaleDemo() {
 
   return (
     <DemoFrame label={copy.label} note={copy.note} className="scale-demo">
-      <div className="scale">
-        {/* Sans animation, le canvas est recréé à chaque réglage pour redessiner l’image fixe. */}
-        <Canvas
-          key={calm ? `${users}-${instances}-${queue}` : "live"}
-          users={users}
-          instances={instances}
-          queue={queue}
-          theme={theme}
-          calm={calm}
-          labels={{ balancer: copy.balancer, instance: copy.instance }}
-          description={`${copy.users} : ${users}. ${copy.instances} : ${instances}. ${status}`}
-        />
+      <Window className="scale-window is-console" icon={<Activity size={12} strokeWidth={2} />} title={copy.title}>
+        <div className="scale">
+          <div className="scale-readout" data-state={model.state}>
+            <p className="scale-load">
+              <span>{copy.load}</span>
+              <strong>{percent} %</strong>
+            </p>
+            <p className="scale-status" aria-live="polite">
+              <span className="scale-dot" aria-hidden="true" />
+              {status}
+            </p>
+          </div>
 
-        <div className="scale-readout" data-state={model.state}>
-          <p className="scale-load">
-            <span className="mono">{copy.load}</span>
-            <strong>{percent} %</strong>
-          </p>
-          <p className="scale-status" aria-live="polite">
-            {status}
-          </p>
-        </div>
-
-        <div className="scale-controls">
-          <div className="scale-range">
-            <label htmlFor={`${id}-users`} className="mono">
-              {copy.users}
-            </label>
-            <output htmlFor={`${id}-users`}>{users}</output>
-            <input
-              id={`${id}-users`}
-              type="range"
-              min={MIN_USERS}
-              max={MAX_USERS}
-              step={10}
-              value={users}
-              onChange={(event) => setUsers(Number(event.target.value))}
+          <div className="scale-canvas-wrap">
+            {/* Sans animation, le canvas est recréé à chaque réglage pour redessiner l’image fixe. */}
+            <Canvas
+              key={calm ? `${users}-${instances}-${queue}` : "live"}
+              users={users}
+              instances={instances}
+              queue={queue}
+              theme={theme}
+              calm={calm}
+              labels={{ balancer: copy.balancer, instance: copy.instance }}
+              description={`${copy.users} : ${users}. ${copy.instances} : ${instances}. ${status}`}
             />
           </div>
-          <div className="scale-row">
-            <div className="scale-field">
-              <span id={`${id}-instances`} className="mono">
-                {copy.instances}
-              </span>
-              <div className="scale-segment" role="radiogroup" aria-labelledby={`${id}-instances`}>
-                {Array.from({ length: MAX_INSTANCES }, (_, index) => index + 1).map((count) => (
-                  <button key={count} type="button" role="radio" aria-checked={instances === count} onClick={() => setInstances(count)}>
-                    {count}
-                  </button>
-                ))}
-              </div>
+
+          <div className="scale-controls">
+            <div className="scale-range">
+              <label htmlFor={`${id}-users`}>{copy.users}</label>
+              <output htmlFor={`${id}-users`}>{users}</output>
+              <input
+                id={`${id}-users`}
+                type="range"
+                min={MIN_USERS}
+                max={MAX_USERS}
+                step={10}
+                value={users}
+                style={{ "--fill": `${((users - MIN_USERS) / (MAX_USERS - MIN_USERS)) * 100}%` } as CSSProperties}
+                onChange={(event) => setUsers(Number(event.target.value))}
+              />
             </div>
-            <div className="scale-field">
-              <span id={`${id}-queue`} className="mono">
-                {copy.queue}
-              </span>
-              <button
-                type="button"
-                role="switch"
-                aria-checked={queue}
-                aria-labelledby={`${id}-queue`}
-                className="switch"
-                onClick={() => setQueue((value) => !value)}
-              >
-                <span className="switch-track" aria-hidden="true">
-                  <span className="switch-thumb" />
-                </span>
-                <span>{queue ? copy.on : copy.off}</span>
-              </button>
+            <div className="scale-row">
+              <div className="scale-field">
+                <span id={`${id}-instances`}>{copy.instances}</span>
+                <div className="scale-segment" role="radiogroup" aria-labelledby={`${id}-instances`}>
+                  {Array.from({ length: MAX_INSTANCES }, (_, index) => index + 1).map((count) => (
+                    <button key={count} type="button" role="radio" aria-checked={instances === count} onClick={() => setInstances(count)}>
+                      {count}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="scale-field">
+                <span id={`${id}-queue`}>{copy.queue}</span>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={queue}
+                  aria-labelledby={`${id}-queue`}
+                  className="switch"
+                  onClick={() => setQueue((value) => !value)}
+                >
+                  <span className="switch-track" aria-hidden="true">
+                    <span className="switch-thumb" />
+                  </span>
+                  <span>{queue ? copy.on : copy.off}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Window>
     </DemoFrame>
   );
 }

@@ -42,7 +42,7 @@ export default function Statement() {
   return (
     <section className="statement section" aria-labelledby="statement-label">
       <div className="shell statement-grid">
-        <h2 className="section-label mono" id="statement-label">
+        <h2 className="section-label" id="statement-label">
           <span>{t.statement.label}</span>
         </h2>
         <p ref={ref} className="statement-text">
@@ -71,7 +71,7 @@ export default function Statement() {
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.8, delay: index * 0.12, ease: EASE_OUT }}
             >
-              <span className="mono step-index">0{index + 1}</span>
+              <span className="step-index">0{index + 1}</span>
               <h3>{point.title}</h3>
               <p>{point.body}</p>
             </motion.li>

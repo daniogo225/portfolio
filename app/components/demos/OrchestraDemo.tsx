@@ -1,9 +1,11 @@
 "use client";
 
+import { CalendarRange, Code2, Megaphone, Server, type LucideIcon } from "lucide-react";
+import Image from "next/image";
 import { useInView } from "motion/react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useSite } from "../site/SiteProvider";
-import DemoFrame from "./DemoFrame";
+import DemoFrame, { Window } from "./DemoFrame";
 
 type Mode = "solo" | "team";
 type TaskKey = "frame" | "design" | "ops" | "build" | "tests" | "docs" | "report" | "review";
@@ -20,6 +22,21 @@ const PLAN: { key: TaskKey; lane: number; solo: [number, number]; team: [number,
   { key: "report", lane: 2, solo: [82, 88], team: [19, 52] },
   { key: "review", lane: 0, solo: [88, 96], team: [45, 56] },
 ];
+
+// Icônes des agents, dans l’ordre des pistes 1 à 3 ; la piste 0 porte la photo de Zié.
+const AGENT_ICONS: LucideIcon[] = [Code2, Megaphone, Server];
+
+function Owner({ lane, name }: { lane: number; name: string }) {
+  const Icon = AGENT_ICONS[lane - 1];
+  return (
+    <span className="gantt-owner" data-lane={lane}>
+      <span className="gantt-avatar" aria-hidden="true">
+        {Icon ? <Icon size={11} strokeWidth={2.25} /> : <Image src="/portraits/cv-portrait.jpg" alt="" width={36} height={36} />}
+      </span>
+      {name}
+    </span>
+  );
+}
 
 /** Diagramme de Gantt qui passe d’une file unique à des files parallèles, avec revue humaine. */
 export default function OrchestraDemo() {
@@ -41,50 +58,52 @@ export default function OrchestraDemo() {
 
   return (
     <DemoFrame label={copy.label} className="orchestra-demo">
-      <div ref={ref} className="orchestra" data-mode={current} style={{ "--end": end / 100 } as CSSProperties}>
-        <div className="orchestra-head">
-          <div className="segmented orchestra-switch" role="radiogroup" aria-label={copy.label}>
-            {(["solo", "team"] as Mode[]).map((value) => (
-              <button key={value} type="button" role="radio" aria-checked={current === value} onClick={() => setMode(value)}>
-                {current === value && <span className="segmented-pill" />}
-                <span className="segmented-label">{value === "solo" ? copy.solo : copy.team}</span>
-              </button>
-            ))}
+      <Window className="orchestra-window" icon={<CalendarRange size={12} strokeWidth={2} />} title={copy.title}>
+        <div ref={ref} className="orchestra" data-mode={current} style={{ "--end": end / 100 } as CSSProperties}>
+          <div className="orchestra-head">
+            <div className="segmented orchestra-switch" role="radiogroup" aria-label={copy.label}>
+              {(["solo", "team"] as Mode[]).map((value) => (
+                <button key={value} type="button" role="radio" aria-checked={current === value} onClick={() => setMode(value)}>
+                  {current === value && <span className="segmented-pill" />}
+                  <span className="segmented-label">{value === "solo" ? copy.solo : copy.team}</span>
+                </button>
+              ))}
+            </div>
+            <p className="orchestra-caption" aria-live="polite">
+              {copy.caption[current]}
+            </p>
           </div>
-          <p className="orchestra-caption" aria-live="polite">
-            {copy.caption[current]}
-          </p>
-        </div>
 
-        <ol className="gantt">
-          {PLAN.map((task) => {
-            const [start, stop] = task[current];
-            const owner = current === "solo" ? copy.lanes[0] : copy.lanes[task.lane];
-            return (
-              <li key={task.key} className="gantt-row" data-lane={current === "solo" ? 0 : task.lane}>
-                <span className="gantt-label">
-                  <span>{copy.tasks[task.key]}</span>
-                  <span className="gantt-owner mono">{owner}</span>
-                </span>
-                <span className="gantt-track" aria-hidden="true">
-                  <span
-                    className={task.key === "review" ? "gantt-bar is-review" : "gantt-bar"}
-                    style={{ left: `${start}%`, width: `${stop - start}%` }}
-                  />
-                </span>
-              </li>
-            );
-          })}
-        </ol>
+          <ol className="gantt">
+            {PLAN.map((task) => {
+              const [start, stop] = task[current];
+              const lane = current === "solo" ? 0 : task.lane;
+              return (
+                <li key={task.key} className="gantt-row" data-lane={lane}>
+                  <span className="gantt-label">
+                    <span className="gantt-task">{copy.tasks[task.key]}</span>
+                    <Owner lane={lane} name={copy.lanes[lane]} />
+                  </span>
+                  <span className="gantt-track" aria-hidden="true">
+                    <span
+                      className={task.key === "review" ? "gantt-bar is-review" : "gantt-bar"}
+                      style={{ left: `${start}%`, width: `${stop - start}%` }}
+                    />
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
 
-        <div className="gantt-axis mono" aria-hidden="true">
-          <span />
-          <span className="gantt-axis-track">
-            <span>{copy.start}</span>
-            <span className="gantt-end">{copy.end}</span>
-          </span>
+          <div className="gantt-axis" aria-hidden="true">
+            <span />
+            <span className="gantt-axis-track">
+              <span>{copy.start}</span>
+              <span className="gantt-end">{copy.end}</span>
+            </span>
+          </div>
         </div>
-      </div>
+      </Window>
     </DemoFrame>
   );
 }

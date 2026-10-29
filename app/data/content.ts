@@ -1,7 +1,9 @@
+import { cv } from "./cv";
 import type { Locale } from "./site";
 
 // Textes du portfolio. Importé uniquement côté serveur : chaque page ne transmet au navigateur
 // que la langue affichée. Les mots entourés d’astérisques sont mis en valeur (italique, accent).
+// Le parcours et les compétences viennent du CV, sans le nom de l’employeur.
 
 export type AgentKind = "intent" | "tool" | "result" | "guard" | "answer";
 export type AgentStep = { kind: AgentKind; text: string; code?: boolean };
@@ -47,9 +49,13 @@ const fr = {
     primary: "Écrire sur WhatsApp",
     secondary: "Voir les offres",
     availability: "Disponible pour des missions à distance",
-    languages: "Français, anglais / UTC+0",
-    scroll: "Défiler",
-    portrait: "Portrait de Zié Daniogo en trame de points, réactif au pointeur",
+    facts: [
+      { value: "Depuis 2023", label: "des applications en production" },
+      { value: "Responsable technique", label: "d’une équipe de développement" },
+      { value: "Français, anglais", label: "à distance, fuseau UTC+0" },
+    ],
+    caption: "Ingénieur produit full-stack et IA",
+    portrait: "Zié Daniogo, debout, en gilet noir",
     message: "Bonjour Zié, je vous écris depuis votre portfolio.",
   },
   marquee: [
@@ -220,8 +226,9 @@ const fr = {
     ],
   },
   demos: {
+    tag: "Démonstration",
     product: {
-      label: "Démonstration : une fonctionnalité, quatre états",
+      label: "Une fonctionnalité, quatre états",
       tabs: ["Maquette", "Interface", "Code", "En ligne"],
       wire: ["Titre", "Champ e-mail", "Choix du rôle", "Action principale"],
       title: "Inviter un membre",
@@ -245,7 +252,8 @@ const fr = {
       flash: "Invitation envoyée",
     },
     agent: {
-      label: "Démonstration : un agent avec outils et validation humaine",
+      label: "Un agent avec outils et validation humaine",
+      title: "Agent IA",
       pick: "Choisissez une demande",
       kinds: {
         intent: "Intention",
@@ -310,7 +318,8 @@ const fr = {
       ] as AgentScenario[],
     },
     scale: {
-      label: "Démonstration : simulateur de charge",
+      label: "Simulateur de charge",
+      title: "Supervision",
       users: "Utilisateurs simultanés",
       instances: "Instances",
       queue: "File d’attente",
@@ -328,7 +337,7 @@ const fr = {
       note: "Modèle simplifié pour illustrer un comportement, pas une mesure.",
     },
     offline: {
-      label: "Démonstration : application qui fonctionne hors ligne",
+      label: "Une application qui fonctionne hors ligne",
       network: "Réseau",
       online: "Connecté",
       offline: "Coupé",
@@ -356,7 +365,8 @@ const fr = {
       todo: "À faire",
     },
     orchestra: {
-      label: "Démonstration : le même projet, mené de deux façons",
+      label: "Le même projet, mené de deux façons",
+      title: "Planning du projet",
       solo: "Seul",
       team: "Avec des agents",
       lanes: ["Zié", "Agent développement", "Agent communication", "Agent exploitation"],
@@ -422,16 +432,21 @@ const fr = {
     ],
     facts: [
       { label: "Basé à", value: "Abidjan, Côte d’Ivoire (UTC+0)" },
-      { label: "Langues", value: "Français, anglais" },
-      { label: "Formation", value: "Pigier Côte d’Ivoire, développement d’applications" },
+      { label: "Langues", value: "Français courant, anglais" },
       { label: "Missions", value: "À distance, Côte d’Ivoire et international" },
+      { label: "En dehors du code", value: cv.fr.interests.replace(/\.$/, "") },
     ],
-    timelineLabel: "Parcours",
-    timeline: [
-      { year: "2021", text: "Études d’informatique à Pigier Côte d’Ivoire, développement d’applications" },
-      { year: "2023", text: "Développeur full-stack en entreprise, web et mobile" },
-      { year: "Aujourd’hui", text: "Responsable technique d’une équipe de développement, ouvert aux missions" },
-    ],
+    pathLabel: "Parcours",
+    experience: {
+      dates: cv.fr.experience[0].dates,
+      role: cv.fr.experience[0].role,
+      place: "En entreprise, Abidjan",
+      bullets: cv.fr.experience[0].bullets,
+    },
+    education: { dates: "2021", school: cv.fr.education.school, body: cv.fr.education.body },
+    skillsLabel: cv.fr.sections.skills,
+    skillsTitle: "Du produit au serveur, les *outils du quotidien.*",
+    skills: cv.fr.skills,
     photo: "Zié Daniogo, assis, en polo vert",
     cvLabel: "CV",
     cvOnline: "Voir le CV",
@@ -546,9 +561,13 @@ const en: SiteContent = {
     primary: "Message me on WhatsApp",
     secondary: "See the services",
     availability: "Available for remote engagements",
-    languages: "English, French / UTC+0",
-    scroll: "Scroll",
-    portrait: "Halftone portrait of Zié Daniogo that reacts to the pointer",
+    facts: [
+      { value: "Since 2023", label: "shipping apps to production" },
+      { value: "Technical lead", label: "of a development team" },
+      { value: "English, French", label: "remote, UTC+0 time zone" },
+    ],
+    caption: "Full-stack and AI product engineer",
+    portrait: "Zié Daniogo, standing, wearing a black cardigan",
     message: "Hi Zié, I found you through your portfolio.",
   },
   marquee: [
@@ -717,8 +736,9 @@ const en: SiteContent = {
     ],
   },
   demos: {
+    tag: "Demo",
     product: {
-      label: "Demo: one feature, four states",
+      label: "One feature, four states",
       tabs: ["Wireframe", "Interface", "Code", "Live"],
       wire: ["Title", "Email field", "Role picker", "Primary action"],
       title: "Invite a member",
@@ -736,7 +756,8 @@ const en: SiteContent = {
       flash: "Invitation sent",
     },
     agent: {
-      label: "Demo: a tool-using agent with human approval",
+      label: "A tool-using agent with human approval",
+      title: "AI agent",
       pick: "Pick a request",
       kinds: {
         intent: "Intent",
@@ -801,7 +822,8 @@ const en: SiteContent = {
       ],
     },
     scale: {
-      label: "Demo: load simulator",
+      label: "Load simulator",
+      title: "Monitoring",
       users: "Concurrent users",
       instances: "Instances",
       queue: "Queue",
@@ -819,7 +841,7 @@ const en: SiteContent = {
       note: "Simplified model to illustrate a behavior, not a measurement.",
     },
     offline: {
-      label: "Demo: an app that works offline",
+      label: "An app that works offline",
       network: "Network",
       online: "Connected",
       offline: "Off",
@@ -847,7 +869,8 @@ const en: SiteContent = {
       todo: "To do",
     },
     orchestra: {
-      label: "Demo: the same project, run two ways",
+      label: "The same project, run two ways",
+      title: "Project plan",
       solo: "Alone",
       team: "With agents",
       lanes: ["Zié", "Development agent", "Communication agent", "Operations agent"],
@@ -913,16 +936,21 @@ const en: SiteContent = {
     ],
     facts: [
       { label: "Based in", value: "Abidjan, Côte d’Ivoire (UTC+0)" },
-      { label: "Languages", value: "French, English" },
-      { label: "Education", value: "Pigier Côte d’Ivoire, application development" },
+      { label: "Languages", value: "Fluent French, English" },
       { label: "Engagements", value: "Remote, Côte d’Ivoire and worldwide" },
+      { label: "Away from code", value: cv.en.interests.replace(/\.$/, "") },
     ],
-    timelineLabel: "Path",
-    timeline: [
-      { year: "2021", text: "Computer science studies at Pigier Côte d’Ivoire, application development" },
-      { year: "2023", text: "Full-stack developer in-house, web and mobile" },
-      { year: "Today", text: "Technical lead of a development team, open to engagements" },
-    ],
+    pathLabel: "Path",
+    experience: {
+      dates: cv.en.experience[0].dates,
+      role: cv.en.experience[0].role,
+      place: "In-house, Abidjan",
+      bullets: cv.en.experience[0].bullets,
+    },
+    education: { dates: "2021", school: cv.en.education.school, body: cv.en.education.body },
+    skillsLabel: cv.en.sections.skills,
+    skillsTitle: "From product to server, the *everyday toolkit.*",
+    skills: cv.en.skills,
     photo: "Zié Daniogo, seated, wearing a green polo shirt",
     cvLabel: "Résumé",
     cvOnline: "View the résumé",

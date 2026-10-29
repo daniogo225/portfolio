@@ -26,7 +26,7 @@ Les pages vivent dans `app/[lang]/`. Le français est servi à la racine grâce 
 
 ## Où sont les textes
 
-- `app/data/content.ts` : textes du portfolio (FR et EN), importés seulement côté serveur.
+- `app/data/content.ts` : textes du portfolio (FR et EN), importés seulement côté serveur. Le parcours et les compétences de la section Profil sont repris de `cv.ts`, sans le nom de l’employeur.
 - `app/data/cv.ts` : textes du CV (FR et EN).
 - `app/data/site.ts` : coordonnées, liens, adresse du site.
 

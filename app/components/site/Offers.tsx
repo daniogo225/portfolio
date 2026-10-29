@@ -16,14 +16,23 @@ export default function Offers() {
 
   return (
     <section id="offers" className="offers section" aria-labelledby="offers-title">
-      <div className="shell">
-        <header className="section-head">
-          <p className="section-label mono">
+      <div className="shell offers-layout">
+        <header className="offers-aside">
+          <p className="section-label">
             <span>01</span>
             <span>{t.offers.label}</span>
           </p>
           <RevealText as="h2" id="offers-title" className="section-title" text={t.offers.title} />
           <p className="section-intro">{t.offers.intro}</p>
+          <div className="offers-other">
+            <p>{t.offers.other}</p>
+            <a className="button button-ghost" href="#contact">
+              <span className="roll" data-text={t.offers.otherCta}>
+                <span>{t.offers.otherCta}</span>
+              </span>
+              <ArrowDown size={18} strokeWidth={1.75} aria-hidden="true" />
+            </a>
+          </div>
         </header>
 
         <ol className="offer-list">
@@ -42,7 +51,7 @@ export default function Offers() {
                     aria-controls={panelId}
                     onClick={() => setOpen(expanded ? -1 : index)}
                   >
-                    <span className="offer-index mono">0{index + 1}</span>
+                    <span className="offer-index">0{index + 1}</span>
                     <span className="offer-title">{offer.title}</span>
                     <span className="offer-tagline">{offer.tagline}</span>
                     <span className="offer-toggle" aria-hidden="true">
@@ -53,26 +62,32 @@ export default function Offers() {
                 <div id={panelId} className="offer-panel" role="region" aria-labelledby={triggerId} inert={!expanded}>
                   <div className="offer-panel-inner">
                     <div className="offer-content">
-                      <div className="offer-main">
-                        <p className="offer-body">{offer.body}</p>
+                      <p className="offer-body">{offer.body}</p>
+                      <div className="offer-columns">
                         <div className="offer-audience">
-                          <h4 className="mono">{t.offers.audienceLabel}</h4>
+                          <h4>{t.offers.audienceLabel}</h4>
                           <p>{offer.audience}</p>
                         </div>
+                        <div className="offer-side">
+                          <h4>{t.offers.deliverablesLabel}</h4>
+                          <ul className="offer-deliverables">
+                            {offer.deliverables.map((item) => (
+                              <li key={item}>
+                                <Check size={15} strokeWidth={2.25} aria-hidden="true" />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
-                      <div className="offer-side">
-                        <h4 className="mono">{t.offers.deliverablesLabel}</h4>
-                        <ul className="offer-deliverables">
-                          {offer.deliverables.map((item) => (
-                            <li key={item}>
-                              <Check size={16} strokeWidth={2} aria-hidden="true" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
+                      <div className="offer-foot">
                         <p className="offer-stack">
-                          <span className="mono">{t.offers.stackLabel}</span>
-                          <span>{offer.stack}</span>
+                          <span className="sr-only">{t.offers.stackLabel}</span>
+                          {offer.stack.split(", ").map((tool) => (
+                            <span key={tool} className="tag">
+                              {tool}
+                            </span>
+                          ))}
                         </p>
                         <a
                           className="button button-primary offer-cta"
@@ -93,16 +108,6 @@ export default function Offers() {
             );
           })}
         </ol>
-
-        <div className="offers-other">
-          <p>{t.offers.other}</p>
-          <a className="button button-ghost" href="#contact">
-            <span className="roll" data-text={t.offers.otherCta}>
-              <span>{t.offers.otherCta}</span>
-            </span>
-            <ArrowDown size={18} strokeWidth={1.75} aria-hidden="true" />
-          </a>
-        </div>
       </div>
     </section>
   );

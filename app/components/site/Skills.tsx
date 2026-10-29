@@ -20,10 +20,10 @@ export default function Skills() {
   };
 
   return (
-    <section id="expertise" className="skills section" aria-labelledby="skills-title">
+    <section id="expertise" className="skills section tone-ink" aria-labelledby="skills-title">
       <div className="shell">
         <header className="section-head">
-          <p className="section-label mono">
+          <p className="section-label">
             <span>02</span>
             <span>{t.skills.label}</span>
           </p>
@@ -41,9 +41,7 @@ export default function Skills() {
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.8, ease: EASE_OUT }}
               >
-                <p className="skill-index mono">
-                  02.{index + 1}
-                </p>
+                <p className="skill-index">02.{index + 1}</p>
                 <h3 id={`skill-${item.id}`} className="skill-title">
                   {item.title}
                 </h3>
@@ -54,11 +52,23 @@ export default function Skills() {
                   ))}
                 </ul>
                 <p className="skill-tools">
-                  <span className="mono">{t.skills.toolsLabel}</span>
-                  <span>{item.tools}</span>
+                  <span className="sr-only">{t.skills.toolsLabel}</span>
+                  {item.tools.split(", ").map((tool) => (
+                    <span key={tool} className="tag">
+                      {tool}
+                    </span>
+                  ))}
                 </p>
               </motion.div>
-              <div className="skill-demo">{demos[item.id]}</div>
+              <motion.div
+                className="skill-demo"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 1, ease: EASE_OUT }}
+              >
+                {demos[item.id]}
+              </motion.div>
             </article>
           ))}
         </div>

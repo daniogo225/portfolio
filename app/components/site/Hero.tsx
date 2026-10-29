@@ -1,41 +1,43 @@
 "use client";
 
 import { ArrowDown, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, type CSSProperties } from "react";
-import { whatsappUrl } from "../../data/site";
+import { person, whatsappUrl } from "../../data/site";
 import Magnetic from "../ui/Magnetic";
 import RevealText from "../ui/RevealText";
-import HalftonePortrait from "./HalftonePortrait";
+import useAbidjanTime from "../ui/useAbidjanTime";
 import { useSite } from "./SiteProvider";
 
 // Apparitions en CSS : elles démarrent dès le premier rendu, sans attendre le JavaScript,
 // ce qui garde le texte du hero visible très tôt (indicateur LCP).
 function rise(delay: number) {
-  return { className: "rise", style: { "--rise-delay": `${delay}s` } as CSSProperties };
+  return { "--rise-delay": `${delay}s` } as CSSProperties;
 }
 
 export default function Hero() {
-  const { t, theme, calm } = useSite();
+  const { t, calm } = useSite();
   const ref = useRef<HTMLElement>(null);
+  const time = useAbidjanTime();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const copyY = useTransform(scrollYProgress, [0, 1], ["0%", "-22%"]);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const visualY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const visualScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+  const copyY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "7%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   return (
     <section ref={ref} className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero-grid shell">
-        <motion.div className="hero-copy" style={calm ? { y: 0, opacity: 1 } : { y: copyY, opacity: copyOpacity }}>
-          <p {...rise(0.05)}>
-            <span className="eyebrow mono">{t.hero.eyebrow}</span>
+        <motion.div className="hero-copy" style={calm ? undefined : { y: copyY }}>
+          <p className="hero-status rise" style={rise(0.05)}>
+            <span className="status-dot" aria-hidden="true" />
+            {t.hero.availability}
           </p>
-          <RevealText as="h1" id="hero-title" className="hero-title" text={t.hero.title} mode="mount" delay={0.2} interval={0.06} />
-          <p className="hero-intro rise" style={rise(0.35).style}>
+          <RevealText as="h1" id="hero-title" className="hero-title" text={t.hero.title} mode="mount" delay={0.15} interval={0.06} />
+          <p className="hero-intro rise" style={rise(0.35)}>
             {t.hero.intro}
           </p>
-          <div className="hero-actions rise" style={rise(0.5).style}>
+          <div className="hero-actions rise" style={rise(0.5)}>
             <Magnetic>
               <a className="button button-primary" href={whatsappUrl(t.hero.message)} target="_blank" rel="noreferrer">
                 <span className="roll" data-text={t.hero.primary}>
@@ -51,26 +53,37 @@ export default function Hero() {
               <ArrowDown size={18} strokeWidth={1.75} aria-hidden="true" />
             </a>
           </div>
+          <ul className="hero-facts rise" style={rise(0.65)}>
+            {t.hero.facts.map((fact) => (
+              <li key={fact.value}>
+                <strong>{fact.value}</strong>
+                <span>{fact.label}</span>
+              </li>
+            ))}
+          </ul>
         </motion.div>
 
-        <motion.div
-          className="hero-visual"
-          style={calm ? { y: 0, scale: 1 } : { y: visualY, scale: visualScale }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.2 }}
-        >
-          <HalftonePortrait theme={theme} calm={calm} label={t.hero.portrait} />
-        </motion.div>
-      </div>
-
-      <div className="hero-foot shell rise" style={rise(0.8).style}>
-        <p>{t.hero.availability}</p>
-        <p className="mono hero-since">{t.hero.languages}</p>
-        <a href="#offers" className="scroll-cue mono">
-          {t.hero.scroll}
-          <span className="scroll-line" aria-hidden="true" />
-        </a>
+        <figure className="hero-portrait rise" style={rise(0.2)}>
+          <motion.div className="hero-portrait-image" style={calm ? undefined : { y: imageY, scale: imageScale }}>
+            <Image
+              src="/portraits/daniogo-product-engineer-cutout.png"
+              alt={t.hero.portrait}
+              fill
+              priority
+              sizes="(min-width: 1024px) 42vw, 100vw"
+            />
+          </motion.div>
+          <figcaption className="hero-caption">
+            <span className="hero-caption-name">
+              <strong>{person.name}</strong>
+              <span>{t.hero.caption}</span>
+            </span>
+            <span className="hero-caption-time">
+              {t.controls.localTime}
+              <time>{time || "--:--"}</time>
+            </span>
+          </figcaption>
+        </figure>
       </div>
     </section>
   );

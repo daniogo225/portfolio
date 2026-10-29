@@ -1,5 +1,6 @@
 "use client";
 
+import { Check } from "lucide-react";
 import { motion } from "motion/react";
 import OrchestraDemo from "../demos/OrchestraDemo";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
@@ -10,11 +11,11 @@ export default function Method() {
   const { t } = useSite();
 
   return (
-    <section id="method" className="method section" aria-labelledby="method-title">
+    <section id="method" className="method section tone-ink" aria-labelledby="method-title">
       <div className="shell">
         <div className="method-grid">
           <header className="method-head">
-            <p className="section-label mono">
+            <p className="section-label">
               <span>03</span>
               <span>{t.method.label}</span>
             </p>
@@ -30,7 +31,10 @@ export default function Method() {
             </motion.p>
             <ul className="method-points">
               {t.method.points.map((point) => (
-                <li key={point}>{point}</li>
+                <li key={point}>
+                  <Check size={15} strokeWidth={2.25} aria-hidden="true" />
+                  {point}
+                </li>
               ))}
             </ul>
           </header>
@@ -40,7 +44,7 @@ export default function Method() {
         </div>
 
         <div className="mission">
-          <h3 className="mono mission-label">{t.method.stepsLabel}</h3>
+          <h3 className="mission-label">{t.method.stepsLabel}</h3>
           <ol className="mission-steps">
             {t.method.steps.map((step, index) => (
               <motion.li
@@ -50,7 +54,9 @@ export default function Method() {
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.8, delay: index * 0.08, ease: EASE_OUT }}
               >
-                <span className="mono step-index">0{index + 1}</span>
+                <span className="mission-node" aria-hidden="true">
+                  {index + 1}
+                </span>
                 <h4>{step.title}</h4>
                 <p>{step.body}</p>
               </motion.li>

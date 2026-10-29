@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Clock, Plus, RefreshCw, Wifi, WifiOff } from "lucide-react";
+import { BatteryFull, CalendarDays, Check, Clock, House, ListChecks, Plus, RefreshCw, Signal, User, Wifi, WifiOff } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { useSite } from "../site/SiteProvider";
 import DemoFrame from "./DemoFrame";
@@ -26,6 +26,7 @@ export default function OfflineDemo() {
   );
 
   const pending = tasks.filter((task) => task.sync !== "synced").length;
+  const done = tasks.filter((task) => task.done).length;
   const syncing = tasks.find((task) => task.sync === "syncing");
 
   // File d’envoi : une action à la fois, la plus ancienne d’abord.
@@ -73,7 +74,7 @@ export default function OfflineDemo() {
     <DemoFrame label={copy.label} note={copy.hint} className="offline-demo">
       <div className="offline">
         <div className="offline-control">
-          <span id={`${id}-network`} className="mono">
+          <span id={`${id}-network`} className="offline-control-label">
             {copy.network}
           </span>
           <button
@@ -90,16 +91,21 @@ export default function OfflineDemo() {
             {online ? <Wifi size={16} strokeWidth={1.75} aria-hidden="true" /> : <WifiOff size={16} strokeWidth={1.75} aria-hidden="true" />}
             <span>{online ? copy.online : copy.offline}</span>
           </button>
-          <p className="offline-summary" aria-live="polite">
+          <p className="offline-summary" aria-live="polite" data-pending={pending > 0 ? "" : undefined}>
             {summary}
           </p>
         </div>
 
         <div className="phone" data-online={online ? "" : undefined}>
+          <span className="phone-island" aria-hidden="true" />
           <div className="phone-screen">
             <div className="phone-bar" aria-hidden="true">
-              <span className="mono">9:41</span>
-              {online ? <Wifi size={12} strokeWidth={2} /> : <WifiOff size={12} strokeWidth={2} />}
+              <span>9:41</span>
+              <span className="phone-bar-icons">
+                <Signal size={12} strokeWidth={2.25} />
+                {online ? <Wifi size={12} strokeWidth={2.25} /> : <WifiOff size={12} strokeWidth={2.25} />}
+                <BatteryFull size={15} strokeWidth={2} />
+              </span>
             </div>
             <p className="phone-banner" data-shown={!online || pending > 0 ? "" : undefined}>
               {!online ? copy.bannerOffline : pending > 0 ? copy.bannerSync : copy.allSynced}
@@ -111,27 +117,49 @@ export default function OfflineDemo() {
                 {copy.add}
               </button>
             </div>
+            <div className="phone-progress" aria-hidden="true">
+              <span className="phone-progress-bar">
+                <span style={{ width: `${(done / tasks.length) * 100}%` }} />
+              </span>
+              <span>
+                {done}/{tasks.length}
+              </span>
+            </div>
             <ul className="phone-list">
               {tasks.map((task) => (
                 <li key={task.id} data-sync={task.sync}>
                   <button type="button" className="phone-task" aria-pressed={task.done} onClick={() => toggle(task.id)}>
                     <span className="phone-check" aria-hidden="true">
-                      {task.done && <Check size={14} strokeWidth={2.5} />}
+                      {task.done && <Check size={12} strokeWidth={3} />}
                     </span>
                     <span className="phone-label">
                       {task.label}
                       <span className="sr-only">, {task.done ? copy.done : copy.todo}</span>
                     </span>
                   </button>
-                  <span className="phone-sync mono">
-                    {task.sync === "synced" && <Check size={12} strokeWidth={2} aria-hidden="true" />}
-                    {task.sync === "pending" && <Clock size={12} strokeWidth={2} aria-hidden="true" />}
-                    {task.sync === "syncing" && <RefreshCw size={12} strokeWidth={2} aria-hidden="true" className="spin" />}
+                  <span className="phone-sync">
+                    {task.sync === "synced" && <Check size={11} strokeWidth={2.5} aria-hidden="true" />}
+                    {task.sync === "pending" && <Clock size={11} strokeWidth={2.5} aria-hidden="true" />}
+                    {task.sync === "syncing" && <RefreshCw size={11} strokeWidth={2.5} aria-hidden="true" className="spin" />}
                     {task.sync === "synced" ? copy.synced : task.sync === "pending" ? copy.pending : copy.syncing}
                   </span>
                 </li>
               ))}
             </ul>
+            <div className="phone-tabbar" aria-hidden="true">
+              <span data-active="">
+                <House size={18} strokeWidth={2} />
+              </span>
+              <span>
+                <ListChecks size={18} strokeWidth={2} />
+              </span>
+              <span>
+                <CalendarDays size={18} strokeWidth={2} />
+              </span>
+              <span>
+                <User size={18} strokeWidth={2} />
+              </span>
+            </div>
           </div>
         </div>
       </div>

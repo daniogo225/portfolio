@@ -40,10 +40,10 @@ export default function Marquee() {
       <motion.div className="marquee-track" style={{ x }}>
         {Array.from({ length: COPIES }, (_, copy) => (
           <div className="marquee-group" key={copy}>
-            {t.marquee.map((item, index) => (
-              <span key={item} className={index % 2 ? "marquee-item is-outline" : "marquee-item"}>
+            {t.marquee.map((item) => (
+              <span key={item} className="marquee-item">
                 {item}
-                <span className="marquee-sep">/</span>
+                <span className="marquee-sep" />
               </span>
             ))}
           </div>

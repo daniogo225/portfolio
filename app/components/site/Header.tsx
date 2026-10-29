@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUpRight, Command, Menu, Moon, Sun, X } from "lucide-react";
+import Image from "next/image";
 import {
   AnimatePresence,
   motion,
@@ -195,8 +196,11 @@ export default function Header({ onOpenPalette }: { onOpenPalette: () => void })
     >
       <div className="header-inner shell">
         <a href="#top" className="wordmark">
-          <span className="wordmark-name">Zié Daniogo</span>
-          <span className="wordmark-role">{t.hero.role}</span>
+          <Image className="wordmark-avatar" src="/portraits/cv-portrait.jpg" alt="" width={72} height={72} priority />
+          <span className="wordmark-text">
+            <span className="wordmark-name">Zié Daniogo</span>
+            <span className="wordmark-role">{t.hero.role}</span>
+          </span>
           <span className="sr-only">, {t.footer.top}</span>
         </a>
 

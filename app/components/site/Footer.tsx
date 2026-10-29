@@ -13,7 +13,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="site-footer">
+    <footer className="site-footer tone-ink">
       <div className="shell">
         <nav className="footer-links" aria-label={t.footer.linksLabel}>
           <a href={whatsappUrl(t.hero.message)} target="_blank" rel="noreferrer">

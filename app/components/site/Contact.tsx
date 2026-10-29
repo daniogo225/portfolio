@@ -53,28 +53,104 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="contact section" aria-labelledby="contact-title">
+    <section id="contact" className="contact section tone-ink" aria-labelledby="contact-title">
       <div className="shell">
-        <p className="section-label mono">
+        <p className="section-label">
           <span>05</span>
           <span>{c.label}</span>
         </p>
         <RevealText as="h2" id="contact-title" className="contact-title" text={c.title} interval={0.08} />
 
         <div className="contact-grid">
-          <motion.p
-            className="contact-body"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.8, ease: EASE_OUT }}
-          >
-            {c.body}
-          </motion.p>
+          <div className="contact-aside">
+            <motion.p
+              className="contact-body"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.8, ease: EASE_OUT }}
+            >
+              {c.body}
+            </motion.p>
 
-          <form className="brief" onSubmit={(event) => event.preventDefault()}>
+            <div className="contact-direct">
+              <h3 className="block-label">{c.directLabel}</h3>
+              <dl className="contact-meta">
+                <div>
+                  <dt>{c.whatsappLabel}</dt>
+                  <dd>
+                    <a className="text-link" href={links.whatsapp} target="_blank" rel="noreferrer">
+                      {links.phone}
+                      <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt>{c.emailLabel}</dt>
+                  <dd className="contact-mail">
+                    <a className="text-link" href={`mailto:${links.email}`}>
+                      {links.email}
+                    </a>
+                    <button type="button" className="copy-button" onClick={copy}>
+                      <AnimatePresence mode="wait" initial={false}>
+                        <motion.span
+                          key={copied ? "done" : "idle"}
+                          className="copy-icon"
+                          initial={{ scale: 0.5, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={{ scale: 0.5, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          {copied ? <Check size={15} strokeWidth={2} aria-hidden="true" /> : <Copy size={15} strokeWidth={1.75} aria-hidden="true" />}
+                        </motion.span>
+                      </AnimatePresence>
+                      {copied ? c.copied : c.copy}
+                    </button>
+                    <span className="sr-only" role="status">
+                      {copied ? c.copied : ""}
+                    </span>
+                  </dd>
+                </div>
+                <div>
+                  <dt>{c.call}</dt>
+                  <dd>
+                    <a className="text-link" href={links.calendar} target="_blank" rel="noreferrer">
+                      cal.com
+                      <Calendar size={16} strokeWidth={1.75} aria-hidden="true" />
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt>vCard</dt>
+                  <dd>
+                    <a className="text-link" href={links.vcard} download>
+                      {c.vcard}
+                      <Download size={16} strokeWidth={1.75} aria-hidden="true" />
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt>{c.github}</dt>
+                  <dd>
+                    <a className="text-link" href={links.github} target="_blank" rel="noreferrer">
+                      {links.githubLabel}
+                      <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt>{c.place}</dt>
+                  <dd>
+                    {c.timeNow} <time>{now || "--:--"}</time> (UTC+0)
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <form className="brief tone-paper" onSubmit={(event) => event.preventDefault()}>
             <fieldset className="brief-group">
-              <legend className="mono">{c.needLabel}</legend>
+              <legend>{c.needLabel}</legend>
               <div className="brief-chips">
                 {c.needs.map((item, index) => (
                   <label key={item.label} className="chip">
@@ -86,7 +162,7 @@ export default function Contact() {
             </fieldset>
 
             <fieldset className="brief-group">
-              <legend className="mono">{c.timeLabel}</legend>
+              <legend>{c.timeLabel}</legend>
               <div className="brief-chips">
                 {c.times.map((item, index) => (
                   <label key={item} className="chip">
@@ -98,7 +174,7 @@ export default function Contact() {
             </fieldset>
 
             <div className="brief-group">
-              <label htmlFor={`${id}-details`} className="mono brief-legend">
+              <label htmlFor={`${id}-details`} className="brief-legend">
                 {c.detailsLabel}
               </label>
               <textarea
@@ -112,7 +188,7 @@ export default function Contact() {
             </div>
 
             <div className="brief-preview">
-              <p className="mono">{c.previewLabel}</p>
+              <p className="brief-preview-label">{c.previewLabel}</p>
               <p className="brief-message">{message}</p>
             </div>
 
@@ -133,80 +209,6 @@ export default function Contact() {
               </a>
             </div>
           </form>
-        </div>
-
-        <div className="contact-direct">
-          <h3 className="mono">{c.directLabel}</h3>
-          <dl className="contact-meta">
-            <div>
-              <dt className="mono">{c.whatsappLabel}</dt>
-              <dd>
-                <a className="text-link" href={links.whatsapp} target="_blank" rel="noreferrer">
-                  {links.phone}
-                  <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="mono">{c.emailLabel}</dt>
-              <dd className="contact-mail">
-                <a className="text-link" href={`mailto:${links.email}`}>
-                  {links.email}
-                </a>
-                <button type="button" className="copy-button" onClick={copy}>
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.span
-                      key={copied ? "done" : "idle"}
-                      className="copy-icon"
-                      initial={{ scale: 0.5, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.5, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {copied ? <Check size={16} strokeWidth={2} aria-hidden="true" /> : <Copy size={16} strokeWidth={1.75} aria-hidden="true" />}
-                    </motion.span>
-                  </AnimatePresence>
-                  {copied ? c.copied : c.copy}
-                </button>
-                <span className="sr-only" role="status">
-                  {copied ? c.copied : ""}
-                </span>
-              </dd>
-            </div>
-            <div>
-              <dt className="mono">{c.call}</dt>
-              <dd>
-                <a className="text-link" href={links.calendar} target="_blank" rel="noreferrer">
-                  cal.com
-                  <Calendar size={16} strokeWidth={1.75} aria-hidden="true" />
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="mono">vCard</dt>
-              <dd>
-                <a className="text-link" href={links.vcard} download>
-                  {c.vcard}
-                  <Download size={16} strokeWidth={1.75} aria-hidden="true" />
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="mono">{c.github}</dt>
-              <dd>
-                <a className="text-link" href={links.github} target="_blank" rel="noreferrer">
-                  {links.githubLabel}
-                  <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="mono">{c.place}</dt>
-              <dd>
-                {c.timeNow} <time>{now || "--:--"}</time> (UTC+0)
-              </dd>
-            </div>
-          </dl>
         </div>
       </div>
     </section>
