@@ -82,12 +82,8 @@ export default function Offers() {
                       </div>
                       <div className="offer-foot">
                         <p className="offer-stack">
-                          <span className="sr-only">{t.offers.stackLabel}</span>
-                          {offer.stack.split(", ").map((tool) => (
-                            <span key={tool} className="tag">
-                              {tool}
-                            </span>
-                          ))}
+                          <span className="mono">{t.offers.stackLabel}</span>
+                          <span>{offer.stack}</span>
                         </p>
                         <a
                           className="button button-primary offer-cta"

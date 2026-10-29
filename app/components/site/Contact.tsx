@@ -53,7 +53,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="contact section tone-ink" aria-labelledby="contact-title">
+    <section id="contact" className="contact section" aria-labelledby="contact-title">
       <div className="shell">
         <p className="section-label">
           <span>05</span>
@@ -148,7 +148,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <form className="brief tone-paper" onSubmit={(event) => event.preventDefault()}>
+          <form className="brief" onSubmit={(event) => event.preventDefault()}>
             <fieldset className="brief-group">
               <legend>{c.needLabel}</legend>
               <div className="brief-chips">

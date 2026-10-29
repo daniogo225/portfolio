@@ -21,17 +21,15 @@ export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const time = useAbidjanTime();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const copyY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "7%"]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+  const copyY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
 
   return (
     <section ref={ref} className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero-grid shell">
         <motion.div className="hero-copy" style={calm ? undefined : { y: copyY }}>
-          <p className="hero-status rise" style={rise(0.05)}>
-            <span className="status-dot" aria-hidden="true" />
-            {t.hero.availability}
+          <p className="eyebrow mono rise" style={rise(0.05)}>
+            {t.hero.eyebrow}
           </p>
           <RevealText as="h1" id="hero-title" className="hero-title" text={t.hero.title} mode="mount" delay={0.15} interval={0.06} />
           <p className="hero-intro rise" style={rise(0.35)}>
@@ -53,34 +51,33 @@ export default function Hero() {
               <ArrowDown size={18} strokeWidth={1.75} aria-hidden="true" />
             </a>
           </div>
-          <ul className="hero-facts rise" style={rise(0.65)}>
+          <dl className="hero-facts rise" style={rise(0.65)}>
             {t.hero.facts.map((fact) => (
-              <li key={fact.value}>
-                <strong>{fact.value}</strong>
-                <span>{fact.label}</span>
-              </li>
+              <div key={fact.value}>
+                <dt>{fact.value}</dt>
+                <dd>{fact.label}</dd>
+              </div>
             ))}
-          </ul>
+          </dl>
         </motion.div>
 
         <figure className="hero-portrait rise" style={rise(0.2)}>
-          <motion.div className="hero-portrait-image" style={calm ? undefined : { y: imageY, scale: imageScale }}>
-            <Image
-              src="/portraits/daniogo-product-engineer-cutout.png"
-              alt={t.hero.portrait}
-              fill
-              priority
-              sizes="(min-width: 1024px) 42vw, 100vw"
-            />
-          </motion.div>
-          <figcaption className="hero-caption">
-            <span className="hero-caption-name">
-              <strong>{person.name}</strong>
-              <span>{t.hero.caption}</span>
-            </span>
-            <span className="hero-caption-time">
-              {t.controls.localTime}
-              <time>{time || "--:--"}</time>
+          <div className="hero-portrait-frame">
+            <motion.div className="hero-portrait-image" style={calm ? undefined : { y: imageY }}>
+              <Image
+                src="/portraits/daniogo-product-engineer-cutout.png"
+                alt={t.hero.portrait}
+                fill
+                priority
+                sizes="(min-width: 1024px) 40vw, 100vw"
+              />
+            </motion.div>
+          </div>
+          <figcaption className="hero-caption mono">
+            <span>{person.name}</span>
+            <span>{t.hero.availability}</span>
+            <span>
+              {t.controls.localTime} <time>{time || "--:--"}</time>
             </span>
           </figcaption>
         </figure>

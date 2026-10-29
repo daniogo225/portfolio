@@ -1,28 +1,40 @@
 "use client";
 
-import { CornerDownRight, MessageSquareText, RotateCcw, ShieldCheck, Sparkles, UserCheck, Wrench, type LucideIcon } from "lucide-react";
 import { useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import type { AgentKind, AgentStep } from "../../data/content";
+import type { AgentStep } from "../../data/content";
 import { useSite } from "../site/SiteProvider";
-import DemoFrame, { Window } from "./DemoFrame";
+import DemoFrame from "./DemoFrame";
 
 const STEP_MS = 750;
 
 type Decision = "approved" | "rejected" | null;
 
-const ICONS: Record<AgentKind, LucideIcon> = {
-  intent: Sparkles,
-  tool: Wrench,
-  result: CornerDownRight,
-  guard: ShieldCheck,
-  answer: MessageSquareText,
-};
+// Lignes de vie du diagramme : 1 utilisateur, 2 agent, 3 outils, 4 vous.
+type Row =
+  | { key: string; type: "arrow"; from: number; to: number; kind: string; text: string; code?: boolean; dashed?: boolean; strong?: boolean }
+  | { key: string; type: "note"; kind: string; text: string; guard?: boolean }
+  | { key: string; type: "approval" };
+
+function rowFromStep(step: AgentStep, key: string, kinds: Record<AgentStep["kind"], string>): Row {
+  switch (step.kind) {
+    case "intent":
+      return { key, type: "note", kind: kinds.intent, text: step.text };
+    case "tool":
+      return { key, type: "arrow", from: 2, to: 3, kind: kinds.tool, text: step.text, code: step.code };
+    case "result":
+      return { key, type: "arrow", from: 3, to: 2, kind: kinds.result, text: step.text, dashed: true };
+    case "guard":
+      return { key, type: "note", kind: kinds.guard, text: step.text, guard: true };
+    default:
+      return { key, type: "arrow", from: 2, to: 1, kind: kinds.answer, text: step.text, strong: true };
+  }
+}
 
 /**
- * Trace d’un agent scriptée pas à pas : intention, appels d’outils, garde-fous, puis validation
- * humaine quand l’action est sensible. Toutes les étapes sont rendues d’emblée (invisibles) pour
- * réserver la place et éviter que la page ne saute pendant la lecture.
+ * Diagramme de séquence d’un agent : la demande, les appels d’outils, les garde-fous, puis la
+ * validation humaine quand l’action est sensible. Toutes les lignes sont rendues d’emblée
+ * (invisibles) pour réserver la place et éviter que la page ne saute pendant la lecture.
  */
 export default function AgentDemo() {
   const { t, calm } = useSite();
@@ -38,13 +50,36 @@ export default function AgentDemo() {
   const current = copy.scenarios[scenario];
   const approval = current.approval;
   const after: AgentStep[] = approval ? (decision === "rejected" ? approval.rejected : approval.approved) : [];
-  // Avant la décision, on réserve la place du chemin le plus long (validation acceptée).
-  const total = current.steps.length + (approval ? 1 + after.length : 0);
-  const waiting = Boolean(approval) && decision === null;
-  const limit = waiting ? current.steps.length + 1 : total;
-  const visible = calm ? limit : shown;
 
-  // La lecture démarre à l’entrée dans l’écran, ou dès qu’on choisit une demande.
+  const rows: Row[] = [
+    { key: "prompt", type: "arrow", from: 1, to: 2, kind: copy.request, text: current.prompt, strong: true },
+    ...current.steps.map((step, index) => rowFromStep(step, `s${index}`, copy.kinds)),
+    ...(approval
+      ? [
+          { key: "approval", type: "approval" } as Row,
+          ...(decision
+            ? [
+                {
+                  key: `decision-${decision}`,
+                  type: "arrow",
+                  from: 4,
+                  to: 2,
+                  kind: copy.decision,
+                  text: decision === "approved" ? copy.approved : copy.rejected,
+                  dashed: true,
+                } as Row,
+              ]
+            : []),
+          ...after.map((step, index) => rowFromStep(step, `a${index}-${decision ?? "pending"}`, copy.kinds)),
+        ]
+      : []),
+  ];
+
+  // Avant la décision, la lecture s’arrête sur la demande de validation.
+  const waiting = Boolean(approval) && decision === null;
+  const approvalIndex = rows.findIndex((row) => row.type === "approval");
+  const limit = waiting ? approvalIndex + 1 : rows.length;
+  const visible = calm ? limit : shown;
   const playing = started || inView;
 
   useEffect(() => {
@@ -61,87 +96,95 @@ export default function AgentDemo() {
     setRun((value) => value + 1);
   }
 
-  function decide(value: Exclude<Decision, null>) {
-    setDecision(value);
-  }
-
-  const items: { key: string; step?: AgentStep; approval?: true }[] = [
-    ...current.steps.map((step, index) => ({ key: `s${index}`, step })),
-    ...(approval ? [{ key: "approval", approval: true as const }] : []),
-    ...after.map((step, index) => ({ key: `a${index}-${decision ?? "pending"}`, step })),
-  ];
-
   return (
-    <DemoFrame label={copy.label} note={copy.note} className="agent-demo">
-      <Window className="agent-window" icon={<Sparkles size={12} strokeWidth={2} />} title={copy.title}>
-        <div ref={ref} className="agent">
-          <div className="agent-thread">
-            <p className="agent-request">{current.prompt}</p>
-            <ol className="agent-trace" aria-live="polite">
-              {items.map((item, index) => {
-                const hidden = index >= visible;
-                if (item.approval && approval) {
-                  return (
-                    <li key={item.key} className="agent-approval" data-hidden={hidden ? "" : undefined} aria-hidden={hidden || undefined}>
-                      <span className="agent-icon" aria-hidden="true">
-                        <UserCheck size={14} strokeWidth={2} />
-                      </span>
-                      <div className="agent-step">
-                        <span className="agent-kind">{copy.approval}</span>
-                        <p>{approval.question}</p>
-                        {decision === null ? (
-                          <div className="agent-actions">
-                            <button type="button" className="agent-approve" onClick={() => decide("approved")} tabIndex={hidden ? -1 : 0}>
-                              {copy.approve}
-                            </button>
-                            <button type="button" className="agent-reject" onClick={() => decide("rejected")} tabIndex={hidden ? -1 : 0}>
-                              {copy.reject}
-                            </button>
-                          </div>
-                        ) : (
-                          <p className="agent-decision" data-decision={decision}>
-                            {decision === "approved" ? copy.approved : copy.rejected}
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  );
-                }
-                const step = item.step!;
-                const Icon = ICONS[step.kind];
+    <DemoFrame number="2.2" label={copy.label} note={copy.note} className="agent-demo">
+      <div ref={ref} className="seq">
+        <div className="seq-head" aria-hidden="true">
+          {copy.lanes.map((lane) => (
+            <span key={lane}>{lane}</span>
+          ))}
+        </div>
+        <div className="seq-body">
+          <span className="seq-lines" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+          </span>
+          <ol className="seq-rows" aria-live="polite">
+            {rows.map((row, index) => {
+              const hidden = index >= visible;
+              const state = { "data-hidden": hidden ? "" : undefined, "aria-hidden": hidden || undefined };
+              if (row.type === "approval" && approval) {
                 return (
-                  <li key={item.key} data-kind={step.kind} data-hidden={hidden ? "" : undefined} aria-hidden={hidden || undefined}>
-                    <span className="agent-icon" aria-hidden="true">
-                      <Icon size={14} strokeWidth={2} />
-                    </span>
-                    <div className="agent-step">
-                      <span className="agent-kind">{copy.kinds[step.kind]}</span>
-                      {step.code ? <code>{step.text}</code> : <p>{step.text}</p>}
+                  <li key={row.key} className="seq-row" {...state}>
+                    <div className="seq-arrow" data-dir="right" style={{ gridColumn: "4 / 8" }}>
+                      <span className="seq-kind">{copy.approval}</span>
+                      <span className="seq-text">{approval.question}</span>
+                      <i className="seq-tip" />
+                    </div>
+                    <div className="seq-actions">
+                      {decision === null ? (
+                        <>
+                          <button type="button" className="seq-approve" onClick={() => setDecision("approved")} tabIndex={hidden ? -1 : 0}>
+                            {copy.approve}
+                          </button>
+                          <button type="button" className="seq-reject" onClick={() => setDecision("rejected")} tabIndex={hidden ? -1 : 0}>
+                            {copy.reject}
+                          </button>
+                        </>
+                      ) : null}
                     </div>
                   </li>
                 );
-              })}
-            </ol>
-          </div>
-
-          <div className="agent-composer">
-            <div className="agent-composer-head">
-              <p className="agent-composer-label">{copy.pick}</p>
-              <button type="button" className="agent-replay" onClick={() => play(scenario)}>
-                <RotateCcw size={13} strokeWidth={2} aria-hidden="true" />
-                {copy.replay}
-              </button>
-            </div>
-            <div className="agent-prompts" role="group" aria-label={copy.pick}>
-              {copy.scenarios.map((item, index) => (
-                <button key={item.prompt} type="button" aria-pressed={scenario === index} onClick={() => play(index)}>
-                  {item.prompt}
-                </button>
-              ))}
-            </div>
-          </div>
+              }
+              if (row.type === "note") {
+                return (
+                  <li key={row.key} className="seq-row" {...state}>
+                    <div className="seq-note" data-guard={row.guard ? "" : undefined}>
+                      <span className="seq-kind">{row.kind}</span>
+                      <span className="seq-text">{row.text}</span>
+                    </div>
+                  </li>
+                );
+              }
+              if (row.type === "arrow") {
+                const [a, b] = row.from < row.to ? [row.from, row.to] : [row.to, row.from];
+                return (
+                  <li key={row.key} className="seq-row" {...state}>
+                    <div
+                      className="seq-arrow"
+                      data-dir={row.from < row.to ? "right" : "left"}
+                      data-dashed={row.dashed ? "" : undefined}
+                      style={{ gridColumn: `${2 * a} / ${2 * b}` }}
+                    >
+                      <span className="seq-kind">{row.kind}</span>
+                      {row.code ? <code className="seq-text">{row.text}</code> : <span className={row.strong ? "seq-text is-strong" : "seq-text"}>{row.text}</span>}
+                      <i className="seq-tip" />
+                    </div>
+                  </li>
+                );
+              }
+              return null;
+            })}
+          </ol>
         </div>
-      </Window>
+
+        <div className="seq-foot">
+          <div className="seq-prompts" role="group" aria-label={copy.pick}>
+            <span className="seq-prompts-label">{copy.pick}</span>
+            {copy.scenarios.map((item, index) => (
+              <button key={item.prompt} type="button" aria-pressed={scenario === index} onClick={() => play(index)}>
+                <span className="mono">0{index + 1}</span>
+                <span>{item.prompt}</span>
+              </button>
+            ))}
+          </div>
+          <button type="button" className="text-button" onClick={() => play(scenario)}>
+            {copy.replay}
+          </button>
+        </div>
+      </div>
     </DemoFrame>
   );
 }

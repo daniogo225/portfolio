@@ -23,7 +23,7 @@ export default function Profile() {
   const time = useAbidjanTime();
 
   const { scrollYProgress } = useScroll({ target: photoRef, offset: ["start end", "end start"] });
-  const reveal = useTransform(scrollYProgress, [0, 0.35], ["inset(18% 8% 0% 8% round 28px)", "inset(0% 0% 0% 0% round 28px)"]);
+  const reveal = useTransform(scrollYProgress, [0, 0.35], ["inset(14% 0% 0% 0%)", "inset(0% 0% 0% 0%)"]);
   const imageY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
   const imageScale = useTransform(scrollYProgress, [0, 0.35], [1.18, 1]);
 

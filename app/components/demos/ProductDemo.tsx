@@ -1,50 +1,105 @@
 "use client";
 
-import { Check, Lock, Mail, UserPlus } from "lucide-react";
 import { useInView } from "motion/react";
-import { Fragment, useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useSite } from "../site/SiteProvider";
-import DemoFrame, { Window } from "./DemoFrame";
+import DemoFrame from "./DemoFrame";
 
-const STEP_MS = 3800;
+const STEP_MS = 3200;
+const STATION_W = 128;
+const STATION_H = 224;
+const PITCH = 160;
 
-// Extrait Laravel volontairement court : autorisation, validation, envoi différé par la file.
-function codeLines(comment: string, flash: string) {
-  return [
-    "public function store(InviteRequest $request, Team $team)",
-    "{",
-    `    ${comment}`,
-    "    $this->authorize('invite', $team);",
-    "",
-    "    $invitation = $team->invitations()->create(",
-    "        $request->validated()",
-    "    );",
-    "",
-    "    Mail::to($invitation->email)",
-    "        ->queue(new TeamInvitation($invitation));",
-    "",
-    `    return back()->with('status', __('${flash}'));`,
-    "}",
-  ];
+// Lignes de l’extrait de code : retrait, largeur et ton de chaque ligne.
+const CODE: [number, number, "ink" | "soft" | "faint"][] = [
+  [0, 64, "ink"],
+  [0, 8, "ink"],
+  [12, 70, "faint"],
+  [12, 54, "soft"],
+  [0, 0, "soft"],
+  [12, 66, "ink"],
+  [24, 40, "soft"],
+  [12, 14, "ink"],
+  [0, 0, "soft"],
+  [12, 58, "ink"],
+  [24, 62, "soft"],
+  [0, 0, "soft"],
+  [12, 72, "ink"],
+  [0, 8, "ink"],
+];
+
+function Wire() {
+  return (
+    <g className="st-wire">
+      <rect x={14} y={18} width={56} height={10} />
+      <rect x={14} y={34} width={84} height={4} className="is-faint" />
+      <rect x={14} y={54} width={100} height={26} />
+      <rect x={14} y={92} width={30} height={18} />
+      <rect x={49} y={92} width={30} height={18} />
+      <rect x={84} y={92} width={30} height={18} />
+      <rect x={14} y={180} width={100} height={26} />
+    </g>
+  );
 }
 
-const TOKEN = /(\/\/.*$)|('(?:[^'\\]|\\.)*')|(\$\w+)|\b(public|function|return|new)\b|(->\w+|::\w+)|\b([A-Z]\w+)\b/g;
-
-/** Coloration minimale, suffisante pour un extrait de quelques lignes. */
-function highlight(line: string) {
-  const parts: { text: string; kind?: string }[] = [];
-  let last = 0;
-  for (const match of line.matchAll(TOKEN)) {
-    const index = match.index ?? 0;
-    if (index > last) parts.push({ text: line.slice(last, index) });
-    const kind = match[1] ? "comment" : match[2] ? "string" : match[3] ? "variable" : match[4] ? "keyword" : match[5] ? "call" : "type";
-    parts.push({ text: match[0], kind });
-    last = index + match[0].length;
-  }
-  if (last < line.length) parts.push({ text: line.slice(last) });
-  return parts;
+function Ui() {
+  return (
+    <g className="st-ui">
+      <rect x={14} y={18} width={56} height={8} className="is-fill" />
+      <rect x={14} y={32} width={84} height={4} className="is-fill-soft" />
+      <rect x={14} y={54} width={100} height={26} />
+      <rect x={22} y={65} width={46} height={4} className="is-fill-soft" />
+      <rect x={14} y={92} width={100} height={20} />
+      <rect x={47} y={92} width={34} height={20} className="is-fill-faint" />
+      <line x1={47} y1={92} x2={47} y2={112} />
+      <line x1={81} y1={92} x2={81} y2={112} />
+      <rect x={14} y={180} width={100} height={26} className="is-fill" />
+      <rect x={48} y={191} width={32} height={4} className="is-paper" />
+    </g>
+  );
 }
 
+function Code() {
+  return (
+    <g className="st-code">
+      {CODE.map(([indent, width, tone], index) => {
+        const y = 18 + index * 13;
+        return (
+          <g key={index}>
+            <rect x={14} y={y} width={5} height={3} className="is-fill-faint" />
+            {width > 0 && <rect x={26 + indent} y={y} width={width} height={3} className={`is-${tone}`} />}
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+function Live({ steps, active, calm }: { steps: number; active: boolean; calm: boolean }) {
+  return (
+    <g className="st-live">
+      <rect x={14} y={18} width={100} height={14} />
+      <rect x={34} y={23} width={54} height={4} className="is-fill-soft" />
+      <circle cx={22} cy={25} r={2.2} className={active ? "is-accent" : "is-fill-faint"} />
+      {Array.from({ length: steps }, (_, index) => {
+        const y = 50 + index * 26;
+        const delay = calm || !active ? "0ms" : `${200 + index * 360}ms`;
+        return (
+          <g key={index} className="st-live-row" data-shown={active ? "" : undefined} style={{ animationDelay: delay }}>
+            <rect x={14} y={y} width={10} height={10} />
+            <polyline points={`16.5,${y + 5} 18.5,${y + 7.5} 22,${y + 3}`} className="is-check" />
+            <rect x={32} y={y + 3} width={44 + ((index * 17) % 24)} height={4} className="is-fill-soft" />
+            <rect x={104} y={y + 3} width={10} height={4} className="is-fill-faint" />
+          </g>
+        );
+      })}
+      <line x1={14} y1={190} x2={114} y2={190} className="is-faint" />
+      <rect x={14} y={196} width={28} height={10} className={active ? "is-accent" : "is-fill-faint"} />
+    </g>
+  );
+}
+
+/** Une fonctionnalité, quatre états : la même pièce suit la chaîne, de la maquette au serveur. */
 export default function ProductDemo() {
   const { t, calm } = useSite();
   const copy = t.demos.product;
@@ -52,8 +107,6 @@ export default function ProductDemo() {
   const inView = useInView(ref, { amount: 0.5 });
   const [tab, setTab] = useState(0);
   const [touched, setTouched] = useState(false);
-  const [role, setRole] = useState(1);
-  const [sent, setSent] = useState(false);
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const autoplay = inView && !calm && !touched;
 
@@ -62,12 +115,6 @@ export default function ProductDemo() {
     const timer = window.setTimeout(() => setTab((current) => (current + 1) % copy.tabs.length), STEP_MS);
     return () => window.clearTimeout(timer);
   }, [autoplay, tab, copy.tabs.length]);
-
-  useEffect(() => {
-    if (!sent) return;
-    const timer = window.setTimeout(() => setSent(false), 2600);
-    return () => window.clearTimeout(timer);
-  }, [sent]);
 
   function select(index: number) {
     setTouched(true);
@@ -87,12 +134,40 @@ export default function ProductDemo() {
     tabsRef.current[next]?.focus();
   }
 
-  const lines = codeLines(copy.comment, copy.flash);
+  const stations = [<Wire key="wire" />, <Ui key="ui" />, <Code key="code" />, <Live key="live" steps={copy.steps.length} active={tab === 3} calm={calm} />];
 
   return (
-    <DemoFrame label={copy.label} className="product-demo">
-      <div ref={ref} className="pd">
-        <div className="pd-tabs" role="tablist" aria-label={copy.label}>
+    <DemoFrame number="2.1" label={copy.label} className="pipeline-demo">
+      <div ref={ref} className="pipeline">
+        <svg className="fig pipeline-svg" viewBox="0 0 640 296" aria-hidden="true">
+          {stations.map((station, index) => {
+            const x = 16 + index * PITCH;
+            return (
+              <g key={index} className="station" data-active={tab === index ? "" : undefined} transform={`translate(${x} 16)`}>
+                <rect className="station-box" width={STATION_W} height={STATION_H} rx={2} />
+                {station}
+              </g>
+            );
+          })}
+          {[0, 1, 2].map((index) => {
+            const x = 16 + STATION_W + index * PITCH;
+            return (
+              <g key={index} className="pipeline-link" data-done={tab > index ? "" : undefined}>
+                <line x1={x + 4} y1={128} x2={x + 28} y2={128} />
+                <polyline points={`${x + 23},124 ${x + 28},128 ${x + 23},132`} />
+              </g>
+            );
+          })}
+          <line className="pipeline-rail" x1={16} y1={272} x2={624} y2={272} />
+          {[0, 1, 2, 3].map((index) => (
+            <line key={index} className="pipeline-tick" x1={16 + STATION_W / 2 + index * PITCH} y1={268} x2={16 + STATION_W / 2 + index * PITCH} y2={276} />
+          ))}
+          <g className="pipeline-cursor" style={{ transform: `translateX(${tab * PITCH}px)` }}>
+            <circle cx={16 + STATION_W / 2} cy={272} r={4} />
+          </g>
+        </svg>
+
+        <div className="pipeline-tabs" role="tablist" aria-label={copy.label}>
           {copy.tabs.map((label, index) => (
             <button
               key={label}
@@ -108,163 +183,18 @@ export default function ProductDemo() {
               onClick={() => select(index)}
               onKeyDown={onKeyDown}
             >
-              <span className="pd-tab-index">0{index + 1}</span>
-              {label}
-              {tab === index && autoplay && <span className="pd-progress" style={{ animationDuration: `${STEP_MS}ms` }} aria-hidden="true" />}
+              <span className="mono">0{index + 1}</span>
+              <span>{label}</span>
+              {tab === index && autoplay && <span className="pipeline-progress" style={{ animationDuration: `${STEP_MS}ms` }} aria-hidden="true" />}
             </button>
           ))}
         </div>
-
-        <Window className="pd-window" icon={<Lock size={11} strokeWidth={2.25} />} title={copy.url}>
-          <div id="pd-panel" className="pd-stage" role="tabpanel" aria-labelledby={`pd-tab-${tab}`} data-view={tab}>
-            {tab === 0 && (
-              <div className="pd-view pd-wire" key="wire">
-                <div className="pd-frame">
-                  <span className="pd-frame-name" aria-hidden="true">
-                    {copy.title}
-                  </span>
-                  <span className="pd-sk is-title">
-                    <span className="pd-sk-label">{copy.wire[0]}</span>
-                  </span>
-                  <span className="pd-sk is-line" aria-hidden="true" />
-                  <span className="pd-sk is-field is-selected">
-                    <span className="pd-sk-label">{copy.wire[1]}</span>
-                    <i className="pd-handle is-tl" aria-hidden="true" />
-                    <i className="pd-handle is-tr" aria-hidden="true" />
-                    <i className="pd-handle is-bl" aria-hidden="true" />
-                    <i className="pd-handle is-br" aria-hidden="true" />
-                    <span className="pd-size" aria-hidden="true">
-                      Fill × 44
-                    </span>
-                  </span>
-                  <span className="pd-sk-row">
-                    <span className="pd-sk is-chip">
-                      <span className="pd-sk-label">{copy.wire[2]}</span>
-                    </span>
-                    <span className="pd-sk is-chip" aria-hidden="true" />
-                    <span className="pd-sk is-chip" aria-hidden="true" />
-                  </span>
-                  <span className="pd-sk is-action">
-                    <span className="pd-sk-label">{copy.wire[3]}</span>
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {tab === 1 && (
-              <div className="pd-view pd-ui" key="ui">
-                <div className="pd-modal">
-                  <div className="pd-modal-head">
-                    <span className="pd-modal-icon" aria-hidden="true">
-                      <UserPlus size={18} strokeWidth={1.75} />
-                    </span>
-                    <div>
-                      <p className="pd-ui-title">{copy.title}</p>
-                      <p className="pd-ui-hint">{copy.hint}</p>
-                    </div>
-                  </div>
-                  <label className="pd-field">
-                    <span>{copy.emailLabel}</span>
-                    <span className="pd-input">
-                      <Mail size={16} strokeWidth={1.75} aria-hidden="true" />
-                      <input type="email" value={copy.email} readOnly onFocus={() => setTouched(true)} />
-                    </span>
-                  </label>
-                  <div className="pd-field">
-                    <span id="pd-role-label">{copy.roleLabel}</span>
-                    <div className="pd-roles" role="radiogroup" aria-labelledby="pd-role-label">
-                      {copy.roles.map((name, index) => (
-                        <button
-                          key={name}
-                          type="button"
-                          role="radio"
-                          aria-checked={role === index}
-                          onClick={() => {
-                            setTouched(true);
-                            setRole(index);
-                          }}
-                        >
-                          {name}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="pd-submit"
-                    onClick={() => {
-                      setTouched(true);
-                      setSent(true);
-                    }}
-                  >
-                    {copy.submit}
-                  </button>
-                </div>
-                <p className="pd-toast" role="status" data-shown={sent ? "" : undefined}>
-                  {sent && (
-                    <>
-                      <Check size={16} strokeWidth={2} aria-hidden="true" />
-                      {copy.sent}
-                    </>
-                  )}
-                </p>
-              </div>
-            )}
-
-            {tab === 2 && (
-              <div className="pd-view pd-code" key="code">
-                <p className="pd-file">
-                  <span className="pd-file-tab">InvitationController.php</span>
-                  <span className="pd-file-path" aria-hidden="true">
-                    app/Http/Controllers
-                  </span>
-                </p>
-                <pre tabIndex={0}>
-                  <code>
-                    {lines.map((line, index) => (
-                      <span key={index} className="pd-line">
-                        <span className="pd-gutter" aria-hidden="true">
-                          {index + 1}
-                        </span>
-                        {highlight(line).map((part, partIndex) =>
-                          part.kind ? (
-                            <span key={partIndex} className={`tk-${part.kind}`}>
-                              {part.text}
-                            </span>
-                          ) : (
-                            <Fragment key={partIndex}>{part.text}</Fragment>
-                          ),
-                        )}
-                      </span>
-                    ))}
-                  </code>
-                </pre>
-              </div>
-            )}
-
-            {tab === 3 && (
-              <div className="pd-view pd-live" key="live">
-                <div className="pd-live-head">
-                  <p className="pd-url">{copy.url}</p>
-                  <p className="pd-live-badge" style={{ animationDelay: calm ? "0ms" : `${200 + copy.steps.length * 380}ms` }}>
-                    {copy.live}
-                  </p>
-                </div>
-                <ol className="pd-steps">
-                  {copy.steps.map((step, index) => (
-                    <li key={step} style={{ animationDelay: calm ? "0ms" : `${200 + index * 380}ms` }}>
-                      <span className="pd-step-check" aria-hidden="true">
-                        <Check size={13} strokeWidth={2.5} />
-                      </span>
-                      <span>{step}</span>
-                      <span className="pd-step-ok">ok</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-          </div>
-        </Window>
+        <p id="pd-panel" role="tabpanel" aria-labelledby={`pd-tab-${tab}`} className="pipeline-caption">
+          {tab === 0 && copy.wire.join(", ")}
+          {tab === 1 && `${copy.title}. ${copy.hint}`}
+          {tab === 2 && copy.comment.replace(/^\/\/\s*/, "")}
+          {tab === 3 && `${copy.url} : ${copy.steps.join(", ")}.`}
+        </p>
       </div>
     </DemoFrame>
   );

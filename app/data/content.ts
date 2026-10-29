@@ -54,7 +54,6 @@ const fr = {
       { value: "De bout en bout", label: "design, code et mise en production" },
       { value: "Français, anglais", label: "à distance, fuseau UTC+0" },
     ],
-    caption: "Ingénieur produit full-stack et IA",
     portrait: "Zié Daniogo, debout, en gilet noir",
     message: "Bonjour Zié, je vous écris depuis votre portfolio.",
   },
@@ -226,7 +225,7 @@ const fr = {
     ],
   },
   demos: {
-    tag: "Démonstration",
+    tag: "Fig.",
     product: {
       label: "Une fonctionnalité, quatre états",
       tabs: ["Maquette", "Interface", "Code", "En ligne"],
@@ -253,7 +252,9 @@ const fr = {
     },
     agent: {
       label: "Un agent avec outils et validation humaine",
-      title: "Agent IA",
+      lanes: ["Utilisateur", "Agent", "Outils", "Vous"],
+      request: "Demande",
+      decision: "Décision",
       pick: "Choisissez une demande",
       kinds: {
         intent: "Intention",
@@ -319,7 +320,7 @@ const fr = {
     },
     scale: {
       label: "Simulateur de charge",
-      title: "Supervision",
+      usersShort: "Utilisateurs",
       users: "Utilisateurs simultanés",
       instances: "Instances",
       queue: "File d’attente",
@@ -338,6 +339,9 @@ const fr = {
     },
     offline: {
       label: "Une application qui fonctionne hors ligne",
+      device: "Appareil",
+      server: "Serveur",
+      queue: "File d’envoi",
       network: "Réseau",
       online: "Connecté",
       offline: "Coupé",
@@ -366,7 +370,6 @@ const fr = {
     },
     orchestra: {
       label: "Le même projet, mené de deux façons",
-      title: "Planning du projet",
       solo: "Seul",
       team: "Avec des agents",
       lanes: ["Zié", "Agent développement", "Agent communication", "Agent exploitation"],
@@ -566,7 +569,6 @@ const en: SiteContent = {
       { value: "End to end", label: "design, code and deployment" },
       { value: "English, French", label: "remote, UTC+0 time zone" },
     ],
-    caption: "Full-stack and AI product engineer",
     portrait: "Zié Daniogo, standing, wearing a black cardigan",
     message: "Hi Zié, I found you through your portfolio.",
   },
@@ -736,7 +738,7 @@ const en: SiteContent = {
     ],
   },
   demos: {
-    tag: "Demo",
+    tag: "Fig.",
     product: {
       label: "One feature, four states",
       tabs: ["Wireframe", "Interface", "Code", "Live"],
@@ -757,7 +759,9 @@ const en: SiteContent = {
     },
     agent: {
       label: "A tool-using agent with human approval",
-      title: "AI agent",
+      lanes: ["User", "Agent", "Tools", "You"],
+      request: "Request",
+      decision: "Decision",
       pick: "Pick a request",
       kinds: {
         intent: "Intent",
@@ -823,7 +827,7 @@ const en: SiteContent = {
     },
     scale: {
       label: "Load simulator",
-      title: "Monitoring",
+      usersShort: "Users",
       users: "Concurrent users",
       instances: "Instances",
       queue: "Queue",
@@ -842,6 +846,9 @@ const en: SiteContent = {
     },
     offline: {
       label: "An app that works offline",
+      device: "Device",
+      server: "Server",
+      queue: "Outbox",
       network: "Network",
       online: "Connected",
       offline: "Off",
@@ -870,7 +877,6 @@ const en: SiteContent = {
     },
     orchestra: {
       label: "The same project, run two ways",
-      title: "Project plan",
       solo: "Alone",
       team: "With agents",
       lanes: ["Zié", "Development agent", "Communication agent", "Operations agent"],

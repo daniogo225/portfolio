@@ -20,7 +20,7 @@ export default function Skills() {
   };
 
   return (
-    <section id="expertise" className="skills section tone-ink" aria-labelledby="skills-title">
+    <section id="expertise" className="skills section" aria-labelledby="skills-title">
       <div className="shell">
         <header className="section-head">
           <p className="section-label">
@@ -52,12 +52,8 @@ export default function Skills() {
                   ))}
                 </ul>
                 <p className="skill-tools">
-                  <span className="sr-only">{t.skills.toolsLabel}</span>
-                  {item.tools.split(", ").map((tool) => (
-                    <span key={tool} className="tag">
-                      {tool}
-                    </span>
-                  ))}
+                  <span className="mono">{t.skills.toolsLabel}</span>
+                  <span>{item.tools}</span>
                 </p>
               </motion.div>
               <motion.div

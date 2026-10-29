@@ -1,6 +1,5 @@
 "use client";
 
-import { BatteryFull, CalendarDays, Check, Clock, House, ListChecks, Plus, RefreshCw, Signal, User, Wifi, WifiOff } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { useSite } from "../site/SiteProvider";
 import DemoFrame from "./DemoFrame";
@@ -12,8 +11,9 @@ const MAX_TASKS = 5;
 const SYNC_MS = 650;
 
 /**
- * Application hors ligne en miniature : les actions faites sans réseau restent sur l’appareil,
- * puis partent une par une, dans l’ordre, quand le réseau revient.
+ * Application hors ligne : les actions faites sans réseau restent dans la file d’envoi de l’appareil,
+ * puis partent une par une, dans l’ordre, quand le réseau revient. Le schéma à côté du téléphone
+ * montre cette file et la liaison avec le serveur.
  */
 export default function OfflineDemo() {
   const { t } = useSite();
@@ -25,8 +25,8 @@ export default function OfflineDemo() {
     copy.initial.map((label, index) => ({ id: index, label, done: index === 0, sync: "synced" as Sync })),
   );
 
-  const pending = tasks.filter((task) => task.sync !== "synced").length;
-  const done = tasks.filter((task) => task.done).length;
+  const queued = tasks.filter((task) => task.sync !== "synced");
+  const pending = queued.length;
   const syncing = tasks.find((task) => task.sync === "syncing");
 
   // File d’envoi : une action à la fois, la plus ancienne d’abord.
@@ -71,41 +71,55 @@ export default function OfflineDemo() {
     pending === 0 ? copy.allSynced : pending === 1 ? copy.pendingOne : copy.pendingMany.replace("{n}", String(pending));
 
   return (
-    <DemoFrame label={copy.label} note={copy.hint} className="offline-demo">
-      <div className="offline">
-        <div className="offline-control">
-          <span id={`${id}-network`} className="offline-control-label">
-            {copy.network}
-          </span>
-          <button
-            type="button"
-            role="switch"
-            aria-checked={online}
-            aria-labelledby={`${id}-network`}
-            className="switch"
-            onClick={() => setOnline((value) => !value)}
-          >
-            <span className="switch-track" aria-hidden="true">
-              <span className="switch-thumb" />
+    <DemoFrame number="2.4" label={copy.label} note={copy.hint} className="offline-demo">
+      <div className="offline" data-online={online ? "" : undefined}>
+        <div className="offline-panel">
+          <div className="offline-control">
+            <span id={`${id}-network`} className="spec-label">
+              {copy.network}
             </span>
-            {online ? <Wifi size={16} strokeWidth={1.75} aria-hidden="true" /> : <WifiOff size={16} strokeWidth={1.75} aria-hidden="true" />}
-            <span>{online ? copy.online : copy.offline}</span>
-          </button>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={online}
+              aria-labelledby={`${id}-network`}
+              className="switch"
+              onClick={() => setOnline((value) => !value)}
+            >
+              <span className="switch-track" aria-hidden="true">
+                <span className="switch-thumb" />
+              </span>
+              <span>{online ? copy.online : copy.offline}</span>
+            </button>
+          </div>
+
+          {/* Schéma : l’appareil, sa file d’envoi, le serveur. La liaison se coupe avec le réseau. */}
+          <div className="sync" aria-hidden="true">
+            <span className="sync-node">{copy.device}</span>
+            <span className="sync-link">
+              <span className="sync-queue">
+                {queued
+                  .slice()
+                  .reverse()
+                  .map((task) => (
+                    <i key={task.id} data-sync={task.sync} />
+                  ))}
+              </span>
+              <span className="sync-cut">×</span>
+            </span>
+            <span className="sync-node">{copy.server}</span>
+            <span className="sync-queue-label">{copy.queue}</span>
+          </div>
           <p className="offline-summary" aria-live="polite" data-pending={pending > 0 ? "" : undefined}>
             {summary}
           </p>
         </div>
 
-        <div className="phone" data-online={online ? "" : undefined}>
-          <span className="phone-island" aria-hidden="true" />
+        <div className="phone">
           <div className="phone-screen">
-            <div className="phone-bar" aria-hidden="true">
+            <div className="phone-bar mono" aria-hidden="true">
               <span>9:41</span>
-              <span className="phone-bar-icons">
-                <Signal size={12} strokeWidth={2.25} />
-                {online ? <Wifi size={12} strokeWidth={2.25} /> : <WifiOff size={12} strokeWidth={2.25} />}
-                <BatteryFull size={15} strokeWidth={2} />
-              </span>
+              <span>{online ? copy.online : copy.offline}</span>
             </div>
             <p className="phone-banner" data-shown={!online || pending > 0 ? "" : undefined}>
               {!online ? copy.bannerOffline : pending > 0 ? copy.bannerSync : copy.allSynced}
@@ -113,53 +127,25 @@ export default function OfflineDemo() {
             <div className="phone-head">
               <p className="phone-title">{copy.appTitle}</p>
               <button type="button" className="phone-add" onClick={add}>
-                <Plus size={16} strokeWidth={2} aria-hidden="true" />
-                {copy.add}
+                + {copy.add}
               </button>
-            </div>
-            <div className="phone-progress" aria-hidden="true">
-              <span className="phone-progress-bar">
-                <span style={{ width: `${(done / tasks.length) * 100}%` }} />
-              </span>
-              <span>
-                {done}/{tasks.length}
-              </span>
             </div>
             <ul className="phone-list">
               {tasks.map((task) => (
                 <li key={task.id} data-sync={task.sync}>
                   <button type="button" className="phone-task" aria-pressed={task.done} onClick={() => toggle(task.id)}>
-                    <span className="phone-check" aria-hidden="true">
-                      {task.done && <Check size={12} strokeWidth={3} />}
-                    </span>
+                    <span className="phone-check" aria-hidden="true" />
                     <span className="phone-label">
                       {task.label}
                       <span className="sr-only">, {task.done ? copy.done : copy.todo}</span>
                     </span>
                   </button>
-                  <span className="phone-sync">
-                    {task.sync === "synced" && <Check size={11} strokeWidth={2.5} aria-hidden="true" />}
-                    {task.sync === "pending" && <Clock size={11} strokeWidth={2.5} aria-hidden="true" />}
-                    {task.sync === "syncing" && <RefreshCw size={11} strokeWidth={2.5} aria-hidden="true" className="spin" />}
+                  <span className="phone-sync mono">
                     {task.sync === "synced" ? copy.synced : task.sync === "pending" ? copy.pending : copy.syncing}
                   </span>
                 </li>
               ))}
             </ul>
-            <div className="phone-tabbar" aria-hidden="true">
-              <span data-active="">
-                <House size={18} strokeWidth={2} />
-              </span>
-              <span>
-                <ListChecks size={18} strokeWidth={2} />
-              </span>
-              <span>
-                <CalendarDays size={18} strokeWidth={2} />
-              </span>
-              <span>
-                <User size={18} strokeWidth={2} />
-              </span>
-            </div>
           </div>
         </div>
       </div>
