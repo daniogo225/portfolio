@@ -49,6 +49,7 @@ const fr = {
     primary: "Écrire sur WhatsApp",
     secondary: "Voir les offres",
     availability: "Disponible pour des missions à distance",
+    scroll: "Défiler",
     facts: [
       { value: "Depuis 2023", label: "des applications en production" },
       { value: "De bout en bout", label: "design, code et mise en production" },
@@ -564,6 +565,7 @@ const en: SiteContent = {
     primary: "Message me on WhatsApp",
     secondary: "See the services",
     availability: "Available for remote engagements",
+    scroll: "Scroll",
     facts: [
       { value: "Since 2023", label: "shipping apps to production" },
       { value: "End to end", label: "design, code and deployment" },
