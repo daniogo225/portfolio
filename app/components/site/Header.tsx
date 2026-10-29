@@ -195,6 +195,9 @@ export default function Header({ onOpenPalette }: { onOpenPalette: () => void })
     >
       <div className="header-inner shell">
         <a href="#top" className="wordmark">
+          <span className="wordmark-copy" aria-hidden="true">
+            ©
+          </span>
           <span className="wordmark-name">Zié Daniogo</span>
           <span className="sr-only">, {t.footer.top}</span>
         </a>

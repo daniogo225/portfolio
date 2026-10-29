@@ -9,7 +9,6 @@ import FloatingCta from "./site/FloatingCta";
 import Footer from "./site/Footer";
 import Header from "./site/Header";
 import Hero from "./site/Hero";
-import Marquee from "./site/Marquee";
 import Method from "./site/Method";
 import Offers from "./site/Offers";
 import Profile from "./site/Profile";
@@ -45,7 +44,6 @@ function Site() {
       <Header onOpenPalette={() => setPaletteOpen(true)} />
       <main id="main" tabIndex={-1}>
         <Hero />
-        <Marquee />
         <Statement />
         <Offers />
         <Skills />

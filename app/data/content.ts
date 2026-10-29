@@ -42,23 +42,14 @@ const fr = {
   },
   hero: {
     role: "Produit, full-stack et IA",
-    eyebrow: "Ingénieur produit full-stack et IA / Abidjan",
+    eyebrow: "Ingénieur produit full-stack et IA",
+    place: "Basé à Abidjan, Côte d’Ivoire",
     title: "Votre produit, de la maquette au *serveur.*",
-    kicker: "Web. Mobile. IA.",
-    learn: "En savoir plus",
     intro:
       "Je conçois, construis et mets en production des SaaS, des applications mobiles et des agents IA. Un seul interlocuteur du début à la fin, avec la cadence d’une petite équipe.",
     primary: "Écrire sur WhatsApp",
     secondary: "Voir les offres",
     availability: "Disponible pour des missions à distance",
-    scroll: "Défiler",
-    web: "Web",
-    mobile: "Mobile",
-    facts: [
-      { value: "Depuis 2023", label: "des applications en production" },
-      { value: "De bout en bout", label: "design, code et mise en production" },
-      { value: "Français, anglais", label: "à distance, fuseau UTC+0" },
-    ],
     portrait: "Zié Daniogo, debout, en gilet noir",
     message: "Bonjour Zié, je vous écris depuis votre portfolio.",
   },
@@ -76,9 +67,9 @@ const fr = {
     "Docker",
     "Playwright",
   ],
-  chapter: "Chapitre",
   statement: {
     label: "Point de vue",
+    cta: "Mon parcours",
     text: "Entre le designer, le développeur et l’hébergeur, un produit perd souvent ce qui le rendait bon. Je tiens toutes les étapes, pour qu’il arrive *entier.*",
     points: [
       {
@@ -182,7 +173,6 @@ const fr = {
     items: [
       {
         id: "product",
-        headline: "Web. Du produit au *serveur.*",
         title: "Du produit au serveur",
         body: "Je pars du problème, pas de l’outil. Parcours, maquette, interface, logique métier, tests, déploiement : la même personne tient chaque étape, donc rien ne se perd entre deux équipes.",
         points: [
@@ -195,7 +185,6 @@ const fr = {
       },
       {
         id: "ai",
-        headline: "IA. Des agents qui *agissent.*",
         title: "Agents IA et voix",
         body: "Un agent utile n’est pas un simple chatbot. Il comprend la demande, choisit ses outils, agit dans un périmètre défini et demande votre accord avant toute action sensible. À la voix, la réponse doit arriver pendant que l’utilisateur écoute encore.",
         points: [
@@ -208,7 +197,6 @@ const fr = {
       },
       {
         id: "scale",
-        headline: "Charge. Prêt pour *le pic.*",
         title: "Montée en charge et fiabilité",
         body: "Une application qui tient à dix utilisateurs peut tomber à cent. Je conçois des services qui encaissent : plusieurs instances derrière un répartiteur, files d’attente pour absorber les pics, cache, limites de débit, et des audits de sécurité avant que quelqu’un d’autre ne s’en charge.",
         points: [
@@ -221,7 +209,6 @@ const fr = {
       },
       {
         id: "mobile",
-        headline: "Mobile. Même *hors ligne.*",
         title: "Mobile, même sans réseau",
         body: "Sur le terrain, le réseau coupe. Une bonne application mobile continue de fonctionner, garde les actions en attente et se synchronise d’elle-même au retour du réseau, sans perte ni doublon.",
         points: [
@@ -279,6 +266,8 @@ const fr = {
     },
     agent: {
       label: "Un agent avec outils et validation humaine",
+      chatTitle: "Assistant",
+      chatInput: "Écrire ou parler",
       lanes: ["Utilisateur", "Agent", "Outils", "Vous"],
       request: "Demande",
       decision: "Décision",
@@ -475,7 +464,7 @@ const fr = {
     },
     education: { dates: "2021", school: cv.fr.education.school, body: cv.fr.education.body },
     skillsLabel: cv.fr.sections.skills,
-    skillsTitle: "Caractéristiques techniques",
+    skillsTitle: "Du produit au serveur, les *outils du quotidien.*",
     skills: cv.fr.skills,
     photo: "Zié Daniogo, assis, en polo vert",
     cvLabel: "CV",
@@ -508,6 +497,7 @@ const fr = {
     email: "Envoyer par e-mail",
     directLabel: "Ou directement",
     emailLead: "Écrivez-moi",
+    circle: "Écrire sur WhatsApp",
     whatsappLabel: "WhatsApp",
     emailLabel: "E-mail",
     copy: "Copier l’adresse",
@@ -524,6 +514,8 @@ const fr = {
   },
   footer: {
     rights: "Conçu et développé à Abidjan",
+    version: "Édition",
+    localTime: "Heure locale",
     top: "Retour en haut",
     motion: "Animations",
     pause: "Mettre les animations en pause",
@@ -585,23 +577,14 @@ const en: SiteContent = {
   },
   hero: {
     role: "Product, full-stack and AI",
-    eyebrow: "Full-stack and AI product engineer / Abidjan",
+    eyebrow: "Full-stack and AI product engineer",
+    place: "Based in Abidjan, Côte d’Ivoire",
     title: "Your product, from mockup to *production.*",
-    kicker: "Web. Mobile. AI.",
-    learn: "Learn more",
     intro:
       "I design, build and ship SaaS products, mobile apps and AI agents. One accountable person from start to finish, working at the pace of a small team.",
     primary: "Message me on WhatsApp",
     secondary: "See the services",
     availability: "Available for remote engagements",
-    scroll: "Scroll",
-    web: "Web",
-    mobile: "Mobile",
-    facts: [
-      { value: "Since 2023", label: "shipping apps to production" },
-      { value: "End to end", label: "design, code and deployment" },
-      { value: "English, French", label: "remote, UTC+0 time zone" },
-    ],
     portrait: "Zié Daniogo, standing, wearing a black cardigan",
     message: "Hi Zié, I found you through your portfolio.",
   },
@@ -619,9 +602,9 @@ const en: SiteContent = {
     "Docker",
     "Playwright",
   ],
-  chapter: "Chapter",
   statement: {
     label: "Point of view",
+    cta: "My path",
     text: "Between the designer, the developer and the hosting provider, a product often loses what made it good. I own every step, so it arrives *whole.*",
     points: [
       {
@@ -723,7 +706,6 @@ const en: SiteContent = {
     items: [
       {
         id: "product",
-        headline: "Web. From product to *server.*",
         title: "From product to server",
         body: "I start from the problem, not the tool. Flows, mockup, interface, business logic, tests, deployment: one person owns every step, so nothing gets lost between teams.",
         points: [
@@ -736,7 +718,6 @@ const en: SiteContent = {
       },
       {
         id: "ai",
-        headline: "AI. Agents that *act.*",
         title: "AI agents and voice",
         body: "A useful agent is more than a chatbot. It understands the request, picks its tools, acts within a defined scope and asks for your approval before anything sensitive. With voice, the answer has to arrive while the user is still listening.",
         points: [
@@ -749,7 +730,6 @@ const en: SiteContent = {
       },
       {
         id: "scale",
-        headline: "Scale. Ready for *the spike.*",
         title: "Scaling and reliability",
         body: "An app that holds up with ten users can fall over with a hundred. I build services that take the load: several instances behind a load balancer, queues to absorb spikes, caching, rate limits, and security audits before someone else runs one for you.",
         points: [
@@ -762,7 +742,6 @@ const en: SiteContent = {
       },
       {
         id: "mobile",
-        headline: "Mobile. Even *offline.*",
         title: "Mobile, even offline",
         body: "In the field, the network drops. A good mobile app keeps working, holds actions in a queue and syncs on its own when the network returns, with no loss and no duplicates.",
         points: [
@@ -814,6 +793,8 @@ const en: SiteContent = {
     },
     agent: {
       label: "A tool-using agent with human approval",
+      chatTitle: "Assistant",
+      chatInput: "Type or talk",
       lanes: ["User", "Agent", "Tools", "You"],
       request: "Request",
       decision: "Decision",
@@ -1010,7 +991,7 @@ const en: SiteContent = {
     },
     education: { dates: "2021", school: cv.en.education.school, body: cv.en.education.body },
     skillsLabel: cv.en.sections.skills,
-    skillsTitle: "Tech specs",
+    skillsTitle: "From product to server, the *everyday toolkit.*",
     skills: cv.en.skills,
     photo: "Zié Daniogo, seated, wearing a green polo shirt",
     cvLabel: "Résumé",
@@ -1043,6 +1024,7 @@ const en: SiteContent = {
     email: "Send by email",
     directLabel: "Or directly",
     emailLead: "Write to me",
+    circle: "Message me on WhatsApp",
     whatsappLabel: "WhatsApp",
     emailLabel: "Email",
     copy: "Copy address",
@@ -1059,6 +1041,8 @@ const en: SiteContent = {
   },
   footer: {
     rights: "Designed and built in Abidjan",
+    version: "Edition",
+    localTime: "Local time",
     top: "Back to top",
     motion: "Animations",
     pause: "Pause animations",

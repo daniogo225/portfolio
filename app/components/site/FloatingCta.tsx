@@ -54,8 +54,7 @@ export default function FloatingCta() {
           exit={{ opacity: 0, y: 24, scale: 0.92 }}
           transition={{ duration: 0.45, ease: EASE_OUT }}
         >
-          <MessageCircle size={18} strokeWidth={1.75} aria-hidden="true" />
-          <span>{t.floating.label}</span>
+          <MessageCircle size={22} strokeWidth={1.5} aria-hidden="true" />
         </motion.a>
       )}
     </AnimatePresence>
