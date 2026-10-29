@@ -31,7 +31,7 @@ for (const { lang, path } of pages) {
   await page.emulateMedia({ media: "print" });
   // La feuille doit tenir sur une page : on refuse d’exporter un contenu qui déborde.
   const overflow = await page.evaluate(() =>
-    [...document.querySelectorAll(".cv-sheet, .cv-main, .cv-side")].some((element) => element.scrollHeight > element.clientHeight + 1),
+    [...document.querySelectorAll(".cv-sheet")].some((element) => element.scrollHeight > element.clientHeight + 1),
   );
   if (overflow) {
     console.error(`${path} : le contenu dépasse la page A4, PDF non exporté.`);

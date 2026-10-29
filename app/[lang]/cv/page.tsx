@@ -2,11 +2,10 @@ import { ArrowLeft, Download } from "lucide-react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
-import { Fragment } from "react";
 import PrintButton from "../../components/cv/PrintButton";
 import { cv } from "../../data/cv";
 import { pageMetadata } from "../../data/metadata";
-import { cvPdf, isLocale, links, localePath, locales, parseEmphasis, person, siteUrl } from "../../data/site";
+import { cvPdf, isLocale, links, localePath, locales, person, siteUrl } from "../../data/site";
 import "./cv.css";
 
 // Polices statiques pour la feuille : Chrome les embarque en TrueType dans le PDF,
@@ -36,14 +35,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isLocale(lang)) return {};
   const t = cv[lang];
   return pageMetadata(lang, "cv", t.meta.title, t.meta.description);
-}
-
-function Emphasis({ text }: { text: string }) {
-  return (
-    <>
-      {parseEmphasis(text).map((part, index) => (part.em ? <em key={index}>{part.text}</em> : <Fragment key={index}>{part.text}</Fragment>))}
-    </>
-  );
 }
 
 /** CV sur une page A4 : lisible à l’écran, imprimable tel quel et exporté en PDF. */
@@ -85,121 +76,120 @@ export default async function CvPage({ params }: Props) {
 
       <main className={`cv-sheet ${cvSans.variable} ${cvMono.variable}`}>
         <header className="cv-head">
-          <div className="cv-identity">
+          <div>
             <h1>{person.name}</h1>
             <p className="cv-role">{t.role}</p>
-            <p className="cv-tagline">
-              <Emphasis text={t.tagline} />
-            </p>
           </div>
-          <ul className="cv-contacts">
-            <li>{t.place}</li>
-            <li>
-              <span>{t.whatsapp}</span> <a href={links.whatsapp}>{links.phone}</a>
-            </li>
-            <li>
-              <a href={`mailto:${links.email}`}>{links.email}</a>
-            </li>
-            <li>
-              <a href={links.github}>{links.githubLabel}</a>
-            </li>
-            <li>
-              <a href={`${siteUrl}${localePath(lang)}`}>{portfolio}</a>
-            </li>
-          </ul>
           {/* eslint-disable-next-line @next/next/no-img-element -- image fixe, imprimée telle quelle dans le PDF */}
           <img className="cv-photo" src="/portraits/cv-portrait.jpg" alt={t.photo} width={600} height={720} />
         </header>
 
-        <p className="cv-summary">{t.summary}</p>
+        <ul className="cv-contacts">
+          <li>{t.place}</li>
+          <li>
+            <span>{t.whatsapp}</span> <a href={links.whatsapp}>{links.phone}</a>
+          </li>
+          <li>
+            <a href={`mailto:${links.email}`}>{links.email}</a>
+          </li>
+          <li>
+            <a href={links.github}>{links.githubLabel}</a>
+          </li>
+        </ul>
 
-        <div className="cv-columns">
-          <div className="cv-main">
-            <section aria-labelledby="cv-experience">
-              <h2 id="cv-experience">{t.sections.experience}</h2>
-              {t.experience.map((job) => (
-                <article key={job.org} className="cv-job">
-                  <div className="cv-job-head">
-                    <h3>{job.org}</h3>
-                    <p>
-                      {job.place} / {job.dates}
-                    </p>
-                  </div>
-                  <p className="cv-job-role">{job.role}</p>
-                  <ul>
-                    {job.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
-                  </ul>
-                </article>
+        <div className="cv-row cv-intro">
+          <div className="cv-intro-text">
+            <p>{t.pitch}</p>
+            <p>{t.method}</p>
+          </div>
+        </div>
+
+        <section className="cv-row cv-section" aria-labelledby="cv-experience">
+          <h2 id="cv-experience">
+            <span className="cv-index" aria-hidden="true">01</span>
+            {t.sections.experience}
+          </h2>
+          <article className="cv-job">
+            <div className="cv-job-head">
+              <h3>{t.job.org}</h3>
+              <p>
+                {t.job.place}, {t.job.dates}
+              </p>
+            </div>
+            <p className="cv-job-title">{t.job.title}</p>
+            <p className="cv-job-path">{t.job.path}</p>
+            <ul className="cv-highlights">
+              {t.job.highlights.map((item) => (
+                <li key={item.title}>
+                  <strong>{item.title}</strong>
+                  <span>{item.body}</span>
+                </li>
               ))}
-            </section>
+            </ul>
+          </article>
+        </section>
 
-            <section aria-labelledby="cv-method">
-              <h2 id="cv-method">{t.sections.method}</h2>
-              <p>{t.method}</p>
-            </section>
+        <section className="cv-row cv-section" aria-labelledby="cv-skills">
+          <h2 id="cv-skills">
+            <span className="cv-index" aria-hidden="true">02</span>
+            {t.sections.skills}
+          </h2>
+          <dl className="cv-skills">
+            {t.skills.map((skill) => (
+              <div key={skill.title}>
+                <dt>{skill.title}</dt>
+                <dd>{skill.body}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
 
-            <section aria-labelledby="cv-missions">
-              <h2 id="cv-missions">{t.sections.missions}</h2>
-              <ul className="cv-missions">
-                {t.missions.map((mission) => (
-                  <li key={mission.title}>
-                    <strong>{mission.title}</strong>
-                    {lang === "fr" ? "\u202f: " : ": "}
-                    {mission.body}
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section aria-labelledby="cv-education">
-              <h2 id="cv-education">{t.sections.education}</h2>
+        <section className="cv-row cv-section" aria-labelledby="cv-education">
+          <h2 id="cv-education">
+            <span className="cv-index" aria-hidden="true">03</span>
+            {t.sections.education}
+          </h2>
+          <div className="cv-pair">
+            <div>
               <h3>{t.education.school}</h3>
               <p>{t.education.body}</p>
-            </section>
+            </div>
+            <div>
+              <section aria-labelledby="cv-languages">
+                <h2 id="cv-languages" className="cv-subhead">
+                  {t.sections.languages}
+                </h2>
+                <p>
+                  {t.languages.map((item, index) => (
+                    <span key={item.name}>
+                      {index > 0 && (lang === "fr" ? "\u202f; " : "; ")}
+                      {item.name}
+                      {item.level && `, ${item.level}`}
+                    </span>
+                  ))}
+                </p>
+              </section>
+              <section aria-labelledby="cv-interests">
+                <h2 id="cv-interests" className="cv-subhead">
+                  {t.sections.interests}
+                </h2>
+                <p>{t.interests}</p>
+              </section>
+            </div>
           </div>
+        </section>
 
-          <aside className="cv-side">
-            <section aria-labelledby="cv-skills">
-              <h2 id="cv-skills">{t.sections.skills}</h2>
-              <dl className="cv-skills">
-                {t.skills.map((skill) => (
-                  <div key={skill.title}>
-                    <dt>{skill.title}</dt>
-                    <dd>{skill.body}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-
-            <section aria-labelledby="cv-languages">
-              <h2 id="cv-languages">{t.sections.languages}</h2>
-              <ul className="cv-plain">
-                {t.languages.map((item) => (
-                  <li key={item.name}>
-                    {item.name}
-                    {item.level && <span>, {item.level}</span>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section aria-labelledby="cv-interests">
-              <h2 id="cv-interests">{t.sections.interests}</h2>
-              <p>{t.interests}</p>
-            </section>
-
-            <section className="cv-qr" aria-labelledby="cv-portfolio">
-              {/* eslint-disable-next-line @next/next/no-img-element -- QR vectoriel, doit rester net à l’impression */}
-              <img src={`/qr/portfolio-${lang}.svg`} alt="" width={33} height={33} />
-              <div>
-                <h2 id="cv-portfolio">{t.sections.portfolio}</h2>
-                <p>{t.qr}</p>
-              </div>
-            </section>
-          </aside>
-        </div>
+        <footer className="cv-row cv-foot">
+          <h2 className="cv-foot-label">{t.sections.portfolio}</h2>
+          <div className="cv-foot-body">
+            <p>
+              <a href={`${siteUrl}${localePath(lang)}`}>{portfolio}</a>
+              <span>{t.qr}</span>
+            </p>
+            {/* eslint-disable-next-line @next/next/no-img-element -- QR vectoriel, doit rester net à l’impression */}
+            <img src={`/qr/portfolio-${lang}.svg`} alt="" width={33} height={33} />
+          </div>
+        </footer>
       </main>
     </div>
   );

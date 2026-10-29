@@ -85,7 +85,7 @@
   color: var(--bg);
 }
 
-/* La feuille */
+/* La feuille : grille à colonne de libellés, un seul accent (les numéros de section). */
 
 .cv-sheet {
   --ink: #121211;
@@ -93,19 +93,21 @@
   --ink-faint: #6a6964;
   --rule: #e3e1db;
   --mark: #b33c09;
+  --label: 30mm;
+  --col-gap: 6mm;
   display: flex;
   flex-direction: column;
   width: 210mm;
   height: 297mm;
   margin: 0 auto;
-  padding: 13mm 14mm 12mm;
+  padding: 15mm 15mm 13mm;
   overflow: hidden;
   border-radius: 2px;
   background: #ffffff;
   color: var(--ink);
   font-family: var(--font-cv-sans), var(--font-sans);
-  font-size: 9.3pt;
-  line-height: 1.47;
+  font-size: 9.4pt;
+  line-height: 1.45;
   box-shadow:
     0 0 0 1px rgb(0 0 0 / 0.06),
     0 30px 80px -30px rgb(0 0 0 / 0.45);
@@ -123,107 +125,89 @@
 
 .cv-head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto 27mm;
-  gap: 7mm;
+  grid-template-columns: minmax(0, 1fr) 26mm;
+  gap: 8mm;
   align-items: end;
 }
 
-.cv-identity h1 {
-  font-size: 31pt;
+.cv-head h1 {
+  font-size: 38pt;
   font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.045em;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
 }
 
 .cv-role {
-  margin-top: 2.4mm;
-  font-size: 12.5pt;
+  margin-top: 3.5mm;
+  font-size: 14pt;
   font-weight: 500;
-  letter-spacing: -0.02em;
-}
-
-.cv-tagline {
-  margin-top: 1mm;
-  color: var(--ink-faint);
-  font-size: 12.5pt;
-  letter-spacing: -0.02em;
-}
-
-.cv-tagline em {
-  color: var(--mark);
-  font-family: var(--font-serif);
-  font-size: 1.08em;
-  font-style: italic;
-  letter-spacing: 0;
+  letter-spacing: -0.025em;
 }
 
 .cv-photo {
   display: block;
-  width: 27mm;
-  height: 32.4mm;
-  border-radius: 2.5mm;
+  width: 26mm;
+  height: 31mm;
+  border-radius: 1.6mm;
   object-fit: cover;
 }
 
-.cv-summary {
-  margin-top: 6mm;
-  padding-top: 4.6mm;
-  border-top: 0.3mm solid var(--rule);
-  font-size: 10.3pt;
-  line-height: 1.5;
-  letter-spacing: -0.005em;
-}
-
 .cv-contacts {
-  display: grid;
-  gap: 0.9mm;
-  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1mm 6mm;
+  margin-top: 6mm;
+  padding: 3mm 0;
+  border-top: 0.3mm solid var(--ink);
+  border-bottom: 0.3mm solid var(--rule);
   font-size: 8.4pt;
-  line-height: 1.38;
-  text-align: right;
-}
-
-.cv-contacts a {
-  color: var(--ink);
 }
 
 .cv-contacts span {
+  margin-right: 0.6mm;
   color: var(--ink-faint);
 }
 
-.cv-columns {
+.cv-row {
   display: grid;
-  flex: 1;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: 9mm;
-  min-height: 0;
+  grid-template-columns: var(--label) minmax(0, 1fr);
+  gap: 0 var(--col-gap);
+}
+
+.cv-intro-text {
+  grid-column: 2;
   margin-top: 6mm;
+  font-size: 10.8pt;
+  line-height: 1.45;
+  letter-spacing: -0.008em;
 }
 
-.cv-main,
-.cv-side {
-  display: flex;
-  flex-direction: column;
-  gap: 6.4mm;
-  min-height: 0;
+.cv-intro-text p + p {
+  margin-top: 1.4mm;
+  color: var(--ink-soft);
 }
 
-.cv-sheet h2 {
-  margin-bottom: 2.4mm;
-  padding-bottom: 1.4mm;
-  border-bottom: 0.3mm solid var(--rule);
+.cv-section {
+  margin-top: 5.5mm;
+  padding-top: 3.6mm;
+  border-top: 0.3mm solid var(--rule);
+}
+
+.cv-section > h2 {
+  padding-top: 0.8mm;
+  font-size: 8.6pt;
+  font-weight: 600;
+}
+
+.cv-index {
+  display: block;
+  margin-bottom: 0.6mm;
   color: var(--mark);
   font-family: var(--font-cv-mono), var(--font-mono);
   font-size: 7pt;
   font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.cv-sheet h3 {
-  font-size: 10.4pt;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.04em;
 }
 
 .cv-job-head {
@@ -234,56 +218,59 @@
   gap: 0 4mm;
 }
 
-.cv-job-head p {
-  color: var(--ink-faint);
-  font-size: 8pt;
+.cv-job-head h3 {
+  font-size: 14pt;
+  font-weight: 600;
+  letter-spacing: -0.025em;
 }
 
-.cv-job-role {
-  margin: 0.6mm 0 2.2mm;
+.cv-job-head p {
+  color: var(--ink-faint);
+  font-size: 8.4pt;
+}
+
+.cv-job-title {
+  margin-top: 0.8mm;
+  font-size: 10.6pt;
   font-weight: 500;
 }
 
-.cv-job ul,
-.cv-missions {
+.cv-job-path {
+  margin-top: 0.4mm;
+  color: var(--ink-faint);
+  font-size: 8.8pt;
+}
+
+.cv-highlights {
   display: grid;
-  gap: 1.9mm;
+  grid-template-columns: 1fr 1fr;
+  gap: 3mm 7mm;
+  margin-top: 4mm;
 }
 
-.cv-job li,
-.cv-missions li {
-  position: relative;
-  padding-left: 4.2mm;
-  color: var(--ink-soft);
+.cv-highlights li {
+  padding-top: 2mm;
+  border-top: 0.3mm solid var(--rule);
 }
 
-.cv-job li::before,
-.cv-missions li::before {
-  content: "";
-  position: absolute;
-  top: 0.72em;
-  left: 0;
-  width: 2.4mm;
-  height: 0.3mm;
-  background: var(--mark);
-}
-
-.cv-missions strong {
-  color: var(--ink);
+.cv-highlights strong {
+  display: block;
+  margin-bottom: 0.6mm;
+  font-size: 9.2pt;
   font-weight: 600;
 }
 
-.cv-main section > p {
+.cv-highlights span {
+  display: block;
   color: var(--ink-soft);
-}
-
-.cv-main section > h3 + p {
-  margin-top: 0.6mm;
+  font-size: 9pt;
+  line-height: 1.42;
 }
 
 .cv-skills {
   display: grid;
-  gap: 2.8mm;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.6mm 6mm;
 }
 
 .cv-skills dt {
@@ -292,89 +279,106 @@
 
 .cv-skills dd {
   color: var(--ink-soft);
-  font-size: 8.8pt;
+  font-size: 9pt;
 }
 
-.cv-plain {
+.cv-pair {
   display: grid;
-  gap: 0.8mm;
+  grid-template-columns: 1fr 1fr;
+  gap: 7mm;
 }
 
-.cv-plain span,
-.cv-side section > p {
+.cv-pair h3,
+.cv-subhead {
+  font-size: 9.6pt;
+  font-weight: 600;
+}
+
+.cv-pair p {
+  margin-top: 0.4mm;
   color: var(--ink-soft);
+  font-size: 9pt;
 }
 
-.cv-qr {
-  display: grid;
-  grid-template-columns: 19mm 1fr;
-  gap: 4mm;
+.cv-pair section + section {
+  margin-top: 2.4mm;
+}
+
+.cv-foot {
   align-items: center;
   margin-top: auto;
-  padding-top: 3.4mm;
-  border-top: 0.3mm solid var(--rule);
+  padding-top: 4mm;
+  border-top: 0.3mm solid var(--ink);
 }
 
-.cv-qr img {
-  width: 19mm;
-  height: 19mm;
+.cv-foot-label {
+  font-size: 8.6pt;
+  font-weight: 600;
 }
 
-.cv-qr h2 {
-  margin-bottom: 1mm;
-  padding-bottom: 0;
-  border-bottom: 0;
+.cv-foot-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6mm;
 }
 
-.cv-qr p {
+.cv-foot-body p {
+  font-size: 9pt;
+}
+
+.cv-foot-body a {
+  display: block;
+  font-weight: 500;
+}
+
+.cv-foot-body span {
+  display: block;
   color: var(--ink-soft);
-  font-size: 8pt;
-  line-height: 1.4;
+  font-size: 8.4pt;
 }
 
-/* Téléphone : la feuille devient une page fluide sur une colonne. */
+.cv-foot-body img {
+  flex: none;
+  width: 16mm;
+  height: 16mm;
+}
+
+/* Téléphone : la feuille devient une page fluide, les libellés passent au-dessus du contenu. */
 @media screen and (max-width: 899px) {
   .cv-sheet {
     width: 100%;
     height: auto;
     padding: 24px 20px 28px;
-    font-size: 0.94rem;
     border-radius: 14px;
+    font-size: 0.94rem;
   }
 
   .cv-head {
-    grid-template-columns: 1fr 88px;
+    grid-template-columns: minmax(0, 1fr) 76px;
     gap: 16px;
   }
 
-  .cv-contacts {
-    grid-row: 2;
-    grid-column: 1 / -1;
-    text-align: left;
+  .cv-head h1 {
+    font-size: clamp(2rem, 9vw, 2.6rem);
   }
 
-  .cv-identity h1 {
-    font-size: 2.1rem;
-  }
-
-  .cv-role,
-  .cv-tagline {
+  .cv-role {
+    margin-top: 10px;
     font-size: 1.05rem;
   }
 
   .cv-photo {
-    width: 88px;
-    height: 106px;
-    border-radius: 10px;
-  }
-
-  .cv-summary {
-    margin-top: 20px;
-    font-size: 1rem;
+    width: 76px;
+    height: 91px;
+    border-radius: 8px;
   }
 
   .cv-contacts {
+    flex-direction: column;
     gap: 0;
+    margin-top: 20px;
+    padding: 6px 0;
     font-size: 0.95rem;
   }
 
@@ -390,63 +394,120 @@
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+    overflow-wrap: anywhere;
   }
 
-  .cv-columns {
+  .cv-row {
     grid-template-columns: 1fr;
-    gap: 22px;
+  }
+
+  .cv-intro-text {
+    grid-column: 1;
+    margin-top: 20px;
+    font-size: 1.02rem;
+  }
+
+  .cv-intro-text p + p {
+    margin-top: 8px;
+  }
+
+  .cv-section {
     margin-top: 24px;
-  }
-
-  .cv-main,
-  .cv-side {
-    gap: 22px;
-  }
-
-  .cv-sheet h2 {
-    margin-bottom: 10px;
-    padding-bottom: 6px;
-    font-size: 0.72rem;
-  }
-
-  .cv-sheet h3 {
-    font-size: 1.08rem;
-  }
-
-  .cv-job-head p,
-  .cv-skills dd,
-  .cv-qr p {
-    font-size: 0.9rem;
-  }
-
-  .cv-job ul,
-  .cv-missions {
-    gap: 8px;
-  }
-
-  .cv-job li,
-  .cv-missions li {
-    padding-left: 18px;
-  }
-
-  .cv-job li::before,
-  .cv-missions li::before {
-    width: 10px;
-  }
-
-  .cv-skills {
-    gap: 10px;
-  }
-
-  .cv-qr {
-    grid-template-columns: 80px 1fr;
-    gap: 16px;
     padding-top: 16px;
   }
 
-  .cv-qr img {
-    width: 80px;
-    height: 80px;
+  .cv-section > h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-top: 0;
+    font-size: 0.95rem;
+  }
+
+  .cv-index {
+    margin-bottom: 0;
+    font-size: 0.75rem;
+  }
+
+  .cv-job-head h3 {
+    font-size: 1.25rem;
+  }
+
+  .cv-job-head p,
+  .cv-job-path {
+    font-size: 0.9rem;
+  }
+
+  .cv-job-title {
+    margin-top: 4px;
+    font-size: 1.02rem;
+  }
+
+  .cv-highlights,
+  .cv-skills,
+  .cv-pair {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .cv-highlights {
+    margin-top: 16px;
+  }
+
+  .cv-highlights li {
+    padding-top: 10px;
+  }
+
+  .cv-highlights strong,
+  .cv-pair h3,
+  .cv-subhead {
+    font-size: 1rem;
+  }
+
+  .cv-highlights span,
+  .cv-skills dd,
+  .cv-pair p {
+    font-size: 0.92rem;
+  }
+
+  .cv-pair section + section {
+    margin-top: 12px;
+  }
+
+  .cv-foot {
+    gap: 10px;
+    margin-top: 28px;
+    padding-top: 16px;
+  }
+
+  .cv-foot-label {
+    font-size: 0.95rem;
+  }
+
+  .cv-foot-body {
+    gap: 16px;
+  }
+
+  .cv-foot-body p {
+    min-width: 0;
+    font-size: 0.95rem;
+  }
+
+  .cv-foot-body a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    overflow-wrap: anywhere;
+  }
+
+  .cv-foot-body span {
+    font-size: 0.88rem;
+  }
+
+  .cv-foot-body img {
+    width: 76px;
+    height: 76px;
   }
 }
 
