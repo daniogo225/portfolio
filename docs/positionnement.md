@@ -14,8 +14,9 @@ Pourquoi celui-ci :
 - **Il s’appuie sur ce que Zié fait vraiment** : conception, développement web et mobile, intégration d’IA, déploiement et exploitation de serveurs. Rien n’est gonflé.
 - **Il le distingue du développeur freelance générique.** Trois différences crédibles et vérifiables en entretien :
   1. **Un seul responsable de bout en bout** (design, code, mise en production).
-  2. **La méthode d’orchestration d’agents IA** : il pilote des agents spécialisés (développement, documentation, serveurs) et relit chaque livraison. Résultat : la cadence d’une petite équipe, avec un seul interlocuteur.
+  2. **La méthode d’orchestration d’agents IA** : il pilote des agents spécialisés (code, tests, rédaction) et relit chaque livraison. Résultat : la cadence d’une petite équipe, avec un seul interlocuteur.
   3. **L’exigence de design** : interfaces sobres, soignées, en clair et en sombre.
+- **Pas de profil « devops » sur le site.** Zié sait mettre ses applications en ligne, mais la gestion de serveurs n’est pas mise en avant : pas de démonstration d’infrastructure, pas de livrable d’hébergement dans les offres. Le récit reste sur le produit.
 - **Le fil rouge du récit : le product design et l’attention au détail.** Chaque section part des utilisateurs et de leurs contraintes réelles (une main libre, un écran en plein soleil, un réseau qui coupe), montre le détail soigné (états vides, erreurs, chargements, mode sombre), puis la livraison de ce qui a été dessiné. La technique vient en preuve, jamais en premier.
 - **Il tient sans projets nommés.** Comme ses travaux sont confidentiels, le niveau se démontre par des démonstrations interactives construites dans le site, par la méthode et par la qualité du site lui-même. Sur le site, cette section s’appelle « Méthode » : elle montre une façon de travailler, jamais des projets. On n’écrit donc pas « je vous montre mes projets » à côté de « mes projets sont confidentiels ».
 
@@ -71,7 +72,7 @@ Le site s’adresse d’abord à des clients, pas à des développeurs. Chaque t
 | Ingénierie de contexte et de prompts | consignes et contexte soignés |
 | Limitation de débit, durcissement | protection contre les abus, serveurs verrouillés |
 | Une seule base de code | une seule application pour iOS et Android |
-| Agent développement, communication, exploitation | agent code, agent rédaction, agent serveurs |
+| Agent développement, communication, exploitation | agent code, agent tests, agent rédaction |
 | Du produit au serveur, de la maquette au serveur | de l’idée à la mise en ligne, toute la chaîne |
 | Mettre l’IA au travail dans votre produit | confier les tâches répétitives à l’IA, sous votre contrôle |
 | Un produit qui tient | une application en service, prête à évoluer |

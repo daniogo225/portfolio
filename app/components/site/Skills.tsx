@@ -5,18 +5,17 @@ import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import AgentDemo from "../demos/AgentDemo";
 import OfflineDemo from "../demos/OfflineDemo";
 import ProductDemo from "../demos/ProductDemo";
-import ScaleDemo from "../demos/ScaleDemo";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
 import { useSite } from "./SiteProvider";
 
 /**
- * Méthode : les projets clients restent confidentiels, alors chaque façon de travailler est
- * montrée par une démonstration. Les quatre chapitres partagent une seule scène, choisie par
- * onglets : une démonstration à la fois, la page reste courte.
+ * Méthode : trois chapitres sur une seule scène. Le titre à gauche, les onglets à droite, puis
+ * le texte du chapitre et sa démonstration côte à côte. La scène est dimensionnée sur la hauteur
+ * de l’écran : à chaque arrivée dans la section, elle tient en une vue.
  */
 export default function Skills() {
   const { t, locale } = useSite();
-  const order = ["product", "mobile", "ai", "scale"];
+  const order = ["product", "mobile", "ai"];
   const items = order.map((id) => t.skills.items.find((item) => item.id === id)!).filter(Boolean);
   const [active, setActive] = useState(0);
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
@@ -26,7 +25,6 @@ export default function Skills() {
     product: <ProductDemo />,
     mobile: <OfflineDemo key={locale} />,
     ai: <AgentDemo key={locale} />,
-    scale: <ScaleDemo />,
   };
 
   function onKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
@@ -45,16 +43,14 @@ export default function Skills() {
   return (
     <section id="method" className="skills section" aria-labelledby="skills-title">
       <div className="shell">
-        <header className="section-head">
-          <p className="section-label mono">
-            <span>02</span>
-            <span>{t.skills.label}</span>
-          </p>
-          <RevealText as="h2" id="skills-title" className="section-title" text={t.skills.title} />
-          <p className="section-intro">{t.skills.intro}</p>
-        </header>
-
-        <div className="showcase">
+        <header className="showcase-head">
+          <div>
+            <p className="section-label mono">
+              <span>02</span>
+              <span>{t.skills.label}</span>
+            </p>
+            <RevealText as="h2" id="skills-title" className="section-title" text={t.skills.title} />
+          </div>
           <div className="showcase-tabs" role="tablist" aria-label={t.skills.label}>
             {items.map((entry, index) => (
               <button
@@ -76,32 +72,32 @@ export default function Skills() {
               </button>
             ))}
           </div>
+        </header>
 
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={item.id}
-              id="showcase-panel"
-              role="tabpanel"
-              aria-labelledby={`showcase-tab-${item.id}`}
-              className="showcase-panel"
-              data-id={item.id}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.45, ease: EASE_OUT }}
-            >
-              <div className="showcase-copy">
-                <h3 className="showcase-title">{item.title}</h3>
-                <p className="showcase-body">{item.body}</p>
-                <p className="skill-tools">
-                  <span className="mono">{t.skills.toolsLabel}</span>
-                  <span>{item.tools}</span>
-                </p>
-              </div>
-              <div className="showcase-demo">{demos[item.id]}</div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={item.id}
+            id="showcase-panel"
+            role="tabpanel"
+            aria-labelledby={`showcase-tab-${item.id}`}
+            className="showcase-panel"
+            data-id={item.id}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.45, ease: EASE_OUT }}
+          >
+            <div className="showcase-copy">
+              <h3 className="showcase-title">{item.title}</h3>
+              <p className="showcase-body">{item.body}</p>
+              <p className="skill-tools">
+                <span className="mono">{t.skills.toolsLabel}</span>
+                <span>{item.tools}</span>
+              </p>
+            </div>
+            <div className="showcase-demo">{demos[item.id]}</div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );

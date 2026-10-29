@@ -236,12 +236,11 @@ export default function AgentDemo() {
         </ol>
 
         <div className="agent-foot">
+          <p className="agent-prompts-label">{copy.pick}</p>
           <div className="agent-prompts" role="group" aria-label={copy.pick}>
-            <span className="agent-prompts-label">{copy.pick}</span>
             {copy.scenarios.map((item, index) => (
-              <button key={item.prompt} type="button" aria-pressed={scenario === index} onClick={() => play(index)}>
-                <span className="mono">0{index + 1}</span>
-                <span>{item.prompt}</span>
+              <button key={item.prompt} type="button" aria-pressed={scenario === index} aria-label={item.prompt} title={item.prompt} onClick={() => play(index)}>
+                {item.short}
               </button>
             ))}
           </div>

@@ -8,6 +8,8 @@ export type AgentKind = "intent" | "tool" | "result" | "guard" | "answer";
 export type AgentStep = { kind: AgentKind; text: string; code?: boolean };
 export type AgentScenario = {
   prompt: string;
+  /** Nom court de la demande, sur le bouton qui la rejoue. */
+  short: string;
   steps: AgentStep[];
   approval?: { question: string; approved: AgentStep[]; rejected: AgentStep[] };
 };
@@ -90,8 +92,8 @@ const fr = {
         id: "audit",
         title: "Performance et sécurité",
         tagline: "Rendre une application rapide, sûre et stable.",
-        body: "J’examine le code, la sécurité et les serveurs, puis je corrige : pages plus rapides, failles fermées, pics de trafic absorbés.",
-        deliverables: ["Rapport classé par priorité", "Corrections de sécurité et de performance", "Surveillance sur Oracle Cloud, Forge ou un VPS"],
+        body: "J’examine le code et la sécurité de votre application, puis je corrige : pages plus rapides, failles fermées, parcours plus fluides.",
+        deliverables: ["Rapport classé par priorité", "Corrections de sécurité et de performance", "Une application plus rapide et plus stable"],
         subject: "un audit de performance ou de sécurité",
       },
     ],
@@ -99,7 +101,6 @@ const fr = {
   skills: {
     label: "Méthode",
     title: "Voyez comment je *travaille.*",
-    intro: "Mes projets clients restent confidentiels : voici ma méthode, en quatre démonstrations à essayer.",
     toolsLabel: "Outils",
     items: [
       {
@@ -122,13 +123,6 @@ const fr = {
         title: "Des agents IA clairs et sous contrôle",
         body: "L’agent montre chaque étape et vous demande votre accord avant toute action sensible. À la voix, il répond sans blanc.",
         tools: "Node, TypeScript, API des modèles d’IA, WebSocket",
-      },
-      {
-        id: "scale",
-        tab: "Vitesse",
-        title: "Rapide, même quand le trafic grimpe",
-        body: "Plusieurs serveurs, une file d’attente et du cache : l’application reste fluide pendant les pics, sans perdre une demande.",
-        tools: "Laravel, Node, Docker, Oracle Cloud, Forge",
       },
     ],
   },
@@ -218,6 +212,7 @@ const fr = {
       scenarios: [
         {
           prompt: "Déplace mon rendez-vous de jeudi à vendredi 10 h.",
+          short: "Rendez-vous",
           steps: [
             { kind: "intent", text: "Déplacer un rendez-vous existant." },
             { kind: "tool", text: 'calendar.search({ day: "thursday" })', code: true },
@@ -236,6 +231,7 @@ const fr = {
         },
         {
           prompt: "Combien de commandes attendent depuis plus de 48 h ?",
+          short: "Commandes",
           steps: [
             { kind: "intent", text: "Simple question : rien ne sera modifié." },
             { kind: "tool", text: 'orders.count({ status: "pending", olderThan: "48h" })', code: true },
@@ -246,6 +242,7 @@ const fr = {
         },
         {
           prompt: "Rembourse entièrement la commande 4512.",
+          short: "Remboursement",
           steps: [
             { kind: "intent", text: "Remboursement : action sensible." },
             { kind: "tool", text: "orders.get({ id: 4512 })", code: true },
@@ -262,30 +259,6 @@ const fr = {
           },
         },
       ] as AgentScenario[],
-    },
-    scale: {
-      label: "Simulateur de trafic",
-      usersShort: "Utilisateurs",
-      users: "Utilisateurs simultanés",
-      instances: "Serveurs",
-      queue: "File d’attente",
-      on: "Activée",
-      off: "Désactivée",
-      load: "Charge par serveur",
-      balancer: "Répartiteur",
-      instance: "Serveur",
-      status: {
-        calm: "Fluide : chaque utilisateur est servi tout de suite.",
-        busy: "Sous tension : la marge se réduit, c’est le moment d’ajouter un serveur.",
-        queued: "Pic absorbé : les demandes attendent leur tour, aucune n’est perdue.",
-        dropped: "Saturé : des utilisateurs reçoivent une erreur. Ajoutez un serveur ou activez la file d’attente.",
-      },
-      idle: "En veille",
-      history: "Charge sur les 12 dernières secondes",
-      capacity: "Capacité",
-      dropped: "Erreurs",
-      wait: "Attente",
-      note: "Modèle simplifié pour illustrer un comportement, pas une mesure.",
     },
     offline: {
       label: "Une application qui fonctionne hors ligne",
@@ -324,7 +297,7 @@ const fr = {
       label: "Le même projet, mené de deux façons",
       solo: "Seul",
       team: "Avec des agents",
-      lanes: ["Zié", "Agent code", "Agent rédaction", "Agent serveurs"],
+      lanes: ["Zié", "Agent code", "Agent tests", "Agent rédaction"],
       tasks: {
         frame: "Cadrage",
         design: "Maquettes",
@@ -332,12 +305,11 @@ const fr = {
         tests: "Tests",
         docs: "Documentation",
         report: "Comptes rendus",
-        ops: "Hébergement",
         review: "Relecture",
       },
       caption: {
-        solo: "Une seule file : chaque tâche attend la précédente.",
-        team: "Plusieurs files en parallèle, et chaque livraison passe par ma relecture.",
+        solo: "Seul, chaque tâche attend la précédente.",
+        team: "Avec les agents, tout avance en même temps, et je relis chaque livraison.",
       },
       start: "Début",
       end: "Livraison",
@@ -498,8 +470,8 @@ const en: SiteContent = {
         id: "audit",
         title: "Performance and security",
         tagline: "Make an app fast, secure and stable.",
-        body: "I review the code, security and servers, then fix what matters: faster pages, closed security holes, traffic spikes absorbed.",
-        deliverables: ["Report ranked by priority", "Security and performance fixes", "Monitoring on Oracle Cloud, Forge or a VPS"],
+        body: "I review your app’s code and security, then fix what matters: faster pages, closed security holes, smoother flows.",
+        deliverables: ["Report ranked by priority", "Security and performance fixes", "A faster, more stable app"],
         subject: "a performance or security audit",
       },
     ],
@@ -507,7 +479,6 @@ const en: SiteContent = {
   skills: {
     label: "Approach",
     title: "See how I *work.*",
-    intro: "My clients’ projects stay confidential: here is my approach instead, in four demos you can try.",
     toolsLabel: "Tools",
     items: [
       {
@@ -530,13 +501,6 @@ const en: SiteContent = {
         title: "Clear AI agents, under control",
         body: "The agent shows every step and asks for your approval before anything sensitive. With voice, it answers without awkward pauses.",
         tools: "Node, TypeScript, AI model APIs, WebSocket",
-      },
-      {
-        id: "scale",
-        tab: "Speed",
-        title: "Fast, even when traffic climbs",
-        body: "Several servers, a queue and caching: the app stays smooth during spikes, without losing a single request.",
-        tools: "Laravel, Node, Docker, Oracle Cloud, Forge",
       },
     ],
   },
@@ -620,6 +584,7 @@ const en: SiteContent = {
       scenarios: [
         {
           prompt: "Move my Thursday meeting to Friday at 10 am.",
+          short: "Meeting",
           steps: [
             { kind: "intent", text: "Reschedule an existing meeting." },
             { kind: "tool", text: 'calendar.search({ day: "thursday" })', code: true },
@@ -638,6 +603,7 @@ const en: SiteContent = {
         },
         {
           prompt: "How many orders have been pending for more than 48 hours?",
+          short: "Orders",
           steps: [
             { kind: "intent", text: "Simple question: nothing will change." },
             { kind: "tool", text: 'orders.count({ status: "pending", olderThan: "48h" })', code: true },
@@ -648,6 +614,7 @@ const en: SiteContent = {
         },
         {
           prompt: "Fully refund order 4512.",
+          short: "Refund",
           steps: [
             { kind: "intent", text: "Refund: sensitive action." },
             { kind: "tool", text: "orders.get({ id: 4512 })", code: true },
@@ -664,30 +631,6 @@ const en: SiteContent = {
           },
         },
       ],
-    },
-    scale: {
-      label: "Traffic simulator",
-      usersShort: "Users",
-      users: "Concurrent users",
-      instances: "Servers",
-      queue: "Queue",
-      on: "On",
-      off: "Off",
-      load: "Load per server",
-      balancer: "Load balancer",
-      instance: "Server",
-      status: {
-        calm: "Smooth: every user is served right away.",
-        busy: "Under pressure: headroom is shrinking, time to add a server.",
-        queued: "Spike absorbed: requests wait their turn, none is lost.",
-        dropped: "Saturated: some users get an error. Add a server or turn on the queue.",
-      },
-      idle: "Standby",
-      history: "Load over the last 12 seconds",
-      capacity: "Capacity",
-      dropped: "Errors",
-      wait: "Wait",
-      note: "Simplified model to illustrate a behavior, not a measurement.",
     },
     offline: {
       label: "An app that works offline",
@@ -726,7 +669,7 @@ const en: SiteContent = {
       label: "The same project, run two ways",
       solo: "Alone",
       team: "With agents",
-      lanes: ["Zié", "Code agent", "Writing agent", "Server agent"],
+      lanes: ["Zié", "Code agent", "Test agent", "Writing agent"],
       tasks: {
         frame: "Scoping",
         design: "Mockups",
@@ -734,12 +677,11 @@ const en: SiteContent = {
         tests: "Tests",
         docs: "Documentation",
         report: "Status reports",
-        ops: "Hosting",
         review: "Review",
       },
       caption: {
-        solo: "A single lane: every task waits for the previous one.",
-        team: "Several lanes in parallel, and every delivery goes through my review.",
+        solo: "Alone, every task waits for the previous one.",
+        team: "With agents, everything moves at once, and I review every delivery.",
       },
       start: "Start",
       end: "Delivery",

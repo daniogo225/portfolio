@@ -1,41 +1,64 @@
 "use client";
 
+import { Code2, FlaskConical, PenLine, type LucideIcon } from "lucide-react";
+import Image from "next/image";
 import { useInView } from "motion/react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useSite } from "../site/SiteProvider";
 import DemoFrame from "./DemoFrame";
 
 type Mode = "solo" | "team";
-type TaskKey = "frame" | "design" | "ops" | "build" | "tests" | "docs" | "report" | "review";
+type TaskKey = "frame" | "design" | "build" | "tests" | "docs" | "report" | "review";
 
 // Planning illustratif sur une échelle de 0 à 100, sans unité de temps.
-// lane : 0 pour Zié, 1 développement, 2 communication, 3 exploitation.
+// lane : 0 pour Zié, 1 l’agent code, 2 l’agent tests, 3 l’agent rédaction.
 const PLAN: { key: TaskKey; lane: number; solo: [number, number]; team: [number, number] }[] = [
-  { key: "frame", lane: 0, solo: [0, 7], team: [0, 7] },
-  { key: "design", lane: 0, solo: [7, 19], team: [7, 19] },
-  { key: "ops", lane: 3, solo: [19, 33], team: [9, 27] },
-  { key: "build", lane: 1, solo: [33, 63], team: [19, 45] },
-  { key: "tests", lane: 1, solo: [63, 74], team: [23, 48] },
-  { key: "docs", lane: 2, solo: [74, 82], team: [26, 47] },
-  { key: "report", lane: 2, solo: [82, 88], team: [19, 52] },
-  { key: "review", lane: 0, solo: [88, 96], team: [45, 56] },
+  { key: "frame", lane: 0, solo: [0, 8], team: [0, 8] },
+  { key: "design", lane: 0, solo: [8, 22], team: [8, 22] },
+  { key: "build", lane: 1, solo: [22, 58], team: [22, 48] },
+  { key: "tests", lane: 2, solo: [58, 72], team: [27, 51] },
+  { key: "docs", lane: 3, solo: [72, 82], team: [30, 50] },
+  { key: "report", lane: 3, solo: [82, 89], team: [22, 54] },
+  { key: "review", lane: 0, solo: [89, 97], team: [48, 58] },
 ];
 
-/** Diagramme de Gantt qui passe d’une file unique à des files parallèles, avec revue humaine. */
+const AGENT_ICONS: LucideIcon[] = [Code2, FlaskConical, PenLine];
+
+function Owner({ lane, name }: { lane: number; name: string }) {
+  const Icon = AGENT_ICONS[lane - 1];
+  return (
+    <span className="tl-owner">
+      {lane === 0 ? (
+        <Image className="tl-avatar" src="/portraits/cv-portrait.jpg" alt="" width={40} height={40} />
+      ) : (
+        <span className="tl-avatar is-agent" aria-hidden="true">
+          <Icon size={11} strokeWidth={2} />
+        </span>
+      )}
+      <span>{name}</span>
+    </span>
+  );
+}
+
+/**
+ * Le même projet mené seul ou avec des agents : chaque tâche est une pilule sur sa piste, avec
+ * son responsable (la photo de Zié, ou l’icône de l’agent). La ligne de livraison recule quand
+ * le travail se parallélise ; la relecture reste à Zié.
+ */
 export default function OrchestraDemo() {
   const { t, calm } = useSite();
   const copy = t.demos.orchestra;
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { amount: 0.55, once: true });
+  const inView = useInView(ref, { amount: 0.45, once: true });
   const [mode, setMode] = useState<Mode | null>(null);
-  // Sans choix explicite : on montre d’abord la file unique, puis la version orchestrée à l’entrée dans l’écran.
+  // Sans choix explicite : la file unique d’abord, puis la version orchestrée à l’entrée dans l’écran.
   const [revealed, setRevealed] = useState(false);
   const current: Mode = mode ?? (calm || revealed ? "team" : "solo");
   const end = Math.max(...PLAN.map((task) => task[current][1]));
 
   useEffect(() => {
     if (!inView || calm || mode) return;
-    const timer = window.setTimeout(() => setRevealed(true), 900);
+    const timer = window.setTimeout(() => setRevealed(true), 1100);
     return () => window.clearTimeout(timer);
   }, [inView, calm, mode]);
 
@@ -55,33 +78,27 @@ export default function OrchestraDemo() {
           </p>
         </div>
 
-        <ol className="gantt">
-          {PLAN.map((task) => {
-            const [start, stop] = task[current];
-            const lane = current === "solo" ? 0 : task.lane;
-            return (
-              <li key={task.key} className="gantt-row" data-lane={lane}>
-                <span className="gantt-label">
-                  <span className="gantt-task">{copy.tasks[task.key]}</span>
-                  <span className="gantt-owner mono">{copy.lanes[lane]}</span>
-                </span>
-                <span className="gantt-track" aria-hidden="true">
-                  <span
-                    className={task.key === "review" ? "gantt-bar is-review" : "gantt-bar"}
-                    style={{ left: `${start}%`, width: `${stop - start}%` }}
-                  />
-                </span>
-              </li>
-            );
-          })}
-        </ol>
-
-        <div className="gantt-axis mono" aria-hidden="true">
-          <span />
-          <span className="gantt-axis-track">
-            <span>{copy.start}</span>
-            <span className="gantt-end">{copy.end}</span>
+        <div className="timeline">
+          <span className="tl-delivery" aria-hidden="true">
+            <span>{copy.end}</span>
           </span>
+          <ol className="tl-rows">
+            {PLAN.map((task) => {
+              const [start, stop] = task[current];
+              const lane = current === "solo" ? 0 : task.lane;
+              return (
+                <li key={task.key} className="tl-row" data-lane={lane} data-review={task.key === "review" ? "" : undefined}>
+                  <span className="tl-label">
+                    <span className="tl-task">{copy.tasks[task.key]}</span>
+                    <Owner lane={lane} name={copy.lanes[lane]} />
+                  </span>
+                  <span className="tl-track" aria-hidden="true">
+                    <span className="tl-bar" style={{ left: `${start}%`, width: `${stop - start}%` }} />
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </div>
     </DemoFrame>

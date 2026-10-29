@@ -2,7 +2,7 @@
 
 import { ArrowDown, ArrowUpRight, Check, Plus } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "motion/react";
-import { useState, type PointerEvent, type ReactNode } from "react";
+import { useRef, useState, type PointerEvent, type ReactNode } from "react";
 import { whatsappUrl } from "../../data/site";
 import IPhone from "../devices/IPhone";
 import MacBook from "../devices/MacBook";
@@ -42,7 +42,7 @@ function useDevices(): Record<string, ReactNode> {
     ),
     audit: (
       <MacBook className="preview-mac">
-        <WebApp view="live" calm />
+        <WebApp view="code" />
       </MacBook>
     ),
   };
@@ -62,10 +62,37 @@ export default function Offers() {
   const sx = useSpring(x, { stiffness: 260, damping: 30, mass: 0.6 });
   const sy = useSpring(y, { stiffness: 260, damping: 30, mass: 0.6 });
 
+  const previewRef = useRef<HTMLDivElement>(null);
+
+  // Le centre de l’aperçu suit le pointeur, en restant entier dans la fenêtre.
+  function place(clientX: number, clientY: number) {
+    const box = previewRef.current;
+    const halfW = (box?.offsetWidth ?? 0) / 2 + 12;
+    const halfH = (box?.offsetHeight ?? 0) / 2 + 12;
+    return {
+      px: Math.min(Math.max(clientX, halfW), window.innerWidth - halfW),
+      py: Math.min(Math.max(clientY, halfH), window.innerHeight - halfH),
+    };
+  }
+
   function follow(event: PointerEvent) {
     if (event.pointerType !== "mouse") return;
-    x.set(event.clientX);
-    y.set(event.clientY);
+    const { px, py } = place(event.clientX, event.clientY);
+    x.set(px);
+    y.set(py);
+  }
+
+  // À l’apparition, l’aperçu se place d’emblée sous le pointeur, sans glisser depuis le coin de l’écran.
+  function enter(event: PointerEvent, index: number) {
+    if (event.pointerType !== "mouse") return;
+    if (hover === null) {
+      const { px, py } = place(event.clientX, event.clientY);
+      x.jump(px);
+      y.jump(py);
+      sx.jump(px);
+      sy.jump(py);
+    }
+    setHover(index);
   }
 
   return (
@@ -99,8 +126,9 @@ export default function Offers() {
                     aria-expanded={expanded}
                     aria-controls={panelId}
                     onClick={() => setOpen(expanded ? -1 : index)}
-                    onPointerEnter={(event) => {
-                      if (event.pointerType === "mouse") setHover(index);
+                    onPointerEnter={(event) => enter(event, index)}
+                    onPointerMove={(event) => {
+                      if (hover === null) enter(event, index);
                     }}
                     onPointerLeave={() => setHover(null)}
                   >
@@ -166,7 +194,7 @@ export default function Offers() {
         data-shown={hover !== null && hover !== open ? "" : undefined}
         style={calm ? { x, y } : { x: sx, y: sy }}
       >
-        <div className="offer-preview-inner">
+        <div ref={previewRef} className="offer-preview-inner">
           {t.offers.items.map((offer, index) => (
             <div key={offer.id} className="offer-preview-item" data-active={hover === index ? "" : undefined}>
               {devices[offer.id]}

@@ -501,59 +501,6 @@ main:focus {
   transform: translateX(16px);
 }
 
-/* Choix exclusif en texte : 1 2 3 4. */
-.choice {
-  display: inline-flex;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-}
-
-.choice button {
-  min-width: 40px;
-  min-height: 38px;
-  color: var(--fg-muted);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  transition:
-    color 0.3s var(--ease-out),
-    background-color 0.3s var(--ease-out);
-}
-
-.choice button + button {
-  border-left: 1px solid var(--line-strong);
-}
-
-.choice button[aria-checked="true"] {
-  background: var(--fg);
-  color: var(--bg);
-}
-
-/* Fiche technique : des lignes nom / valeur séparées par des filets. */
-.spec {
-  border-top: 1px solid var(--line-strong);
-}
-
-.spec-row {
-  display: grid;
-  gap: 8px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.spec-row dt,
-.spec-label {
-  color: var(--fg-muted);
-  font-size: 0.8rem;
-}
-
-@media (min-width: 480px) {
-  .spec-row {
-    grid-template-columns: minmax(0, 0.45fr) minmax(0, 1fr);
-    align-items: center;
-    column-gap: 16px;
-  }
-}
-
 /* ==========================================================================
    En-tête
    ========================================================================== */
@@ -860,9 +807,12 @@ main:focus {
    ========================================================================== */
 
 .section {
+  --section-pad: clamp(96px, min(12vw, 18svh), 200px);
   position: relative;
-  padding-block: clamp(104px, 12vw, 200px);
+  padding-block: var(--section-pad);
   border-top: 1px solid var(--line);
+  /* Arrivée par le menu : la marge du haut passe sous l’en-tête, le contenu commence juste dessous. */
+  scroll-margin-top: calc(var(--header-h) + 28px - var(--section-pad));
 }
 
 .section-label {
@@ -883,7 +833,7 @@ main:focus {
 
 .section-title {
   max-width: 16ch;
-  font-size: clamp(2.3rem, 1.1rem + 3.8vw, 5rem);
+  font-size: clamp(2.3rem, min(1.1rem + 3.8vw, 1rem + 6.4svh), 5rem);
   font-weight: 500;
   line-height: 1.02;
   letter-spacing: -0.045em;
@@ -929,8 +879,7 @@ main:focus {
   border-radius: 6px;
 }
 
-.segmented,
-.choice {
+.segmented {
   overflow: hidden;
 }
 
@@ -1353,7 +1302,7 @@ main:focus {
 
 .intro-text {
   max-width: 21ch;
-  font-size: clamp(2.2rem, 0.9rem + 4.2vw, 5.4rem);
+  font-size: clamp(2.2rem, min(0.9rem + 4.2vw, 1rem + 7svh), 5.4rem);
   font-weight: 500;
   line-height: 1.04;
   letter-spacing: -0.045em;
@@ -1389,7 +1338,7 @@ main:focus {
   gap: 8px 14px;
   align-items: center;
   width: 100%;
-  padding: clamp(28px, 4.4vw, 56px) 0;
+  padding: clamp(24px, min(4.4vw, 6svh), 56px) 0;
   color: inherit;
   text-align: left;
   transition: opacity 0.45s var(--ease-out);
@@ -1408,7 +1357,7 @@ main:focus {
 
 .offer-title {
   grid-area: title;
-  font-size: clamp(2rem, 1rem + 4.2vw, 5.6rem);
+  font-size: clamp(2rem, min(1rem + 4.2vw, 1rem + 7.6svh), 5.6rem);
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.05em;
@@ -1565,9 +1514,10 @@ main:focus {
 }
 
 .offer-preview-inner {
+  --preview-w: clamp(300px, min(30vw, 52svh), 460px);
   position: relative;
-  width: 460px;
-  height: 380px;
+  width: var(--preview-w);
+  height: calc(var(--preview-w) * 0.8);
   transform: translate(-50%, -50%) scale(0.2);
   opacity: 0;
   transition:
@@ -1594,11 +1544,11 @@ main:focus {
 }
 
 .offer-preview .preview-mac {
-  width: 460px;
+  width: var(--preview-w);
 }
 
 .offer-preview .preview-phone {
-  width: 180px;
+  width: calc(var(--preview-w) * 0.39);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1633,7 +1583,9 @@ main:focus {
     text-align: right;
   }
 
+  /* Le titre le plus long tient toujours sur sa ligne, quelle que soit la largeur de la fenêtre. */
   .offer-title {
+    font-size: min(5.6rem, 1rem + 7.6svh, calc((100vw - 2 * var(--edge) - 476px) / 10.8));
     white-space: nowrap;
   }
 
@@ -1647,19 +1599,20 @@ main:focus {
 
 /* ==========================================================================
    Savoir-faire
-   Une seule scène centrée : les onglets, le titre et une phrase, puis la démonstration
-   en grand, sans cadre. Chaque démonstration a sa largeur de lecture.
+   La méthode sur une seule scène : le titre à gauche, les onglets à droite, puis le texte
+   du chapitre et sa démonstration côte à côte. Les appareils se dimensionnent aussi sur
+   la hauteur de l’écran : quel que soit le zoom, une démonstration tient dans une vue.
    ========================================================================== */
 
-.showcase {
+.showcase-head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
-  gap: clamp(48px, 5vw, 72px);
+  gap: 32px;
+  margin-bottom: clamp(44px, 7svh, 88px);
 }
 
 .showcase-tabs {
   display: flex;
+  justify-self: start;
   gap: 4px;
   width: max-content;
   max-width: 100%;
@@ -1704,20 +1657,15 @@ main:focus {
 .showcase-panel {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
-  gap: clamp(48px, 6vw, 88px);
-  width: 100%;
+  gap: clamp(40px, 6svh, 64px);
 }
 
 .showcase-copy {
-  display: grid;
-  justify-items: center;
-  max-width: 38rem;
-  text-align: center;
+  max-width: 30rem;
 }
 
 .showcase-title {
-  font-size: clamp(2rem, 1.1rem + 2.6vw, 3.6rem);
+  font-size: clamp(1.9rem, min(1.1rem + 2.2vw, 1rem + 4.4svh), 3.2rem);
   font-weight: 500;
   line-height: 1.04;
   letter-spacing: -0.045em;
@@ -1725,10 +1673,9 @@ main:focus {
 }
 
 .showcase-body {
-  max-width: 32rem;
   margin-top: 20px;
   color: var(--fg-muted);
-  font-size: 1.06rem;
+  font-size: 1.04rem;
   line-height: 1.55;
   text-wrap: pretty;
 }
@@ -1736,10 +1683,11 @@ main:focus {
 .skill-tools {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: baseline;
   gap: 4px 12px;
-  margin-top: 22px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
   color: var(--fg-muted);
   font-size: 0.88rem;
 }
@@ -1749,25 +1697,27 @@ main:focus {
 }
 
 .showcase-demo {
-  width: 100%;
-  max-width: 1040px;
+  min-width: 0;
 }
 
-.showcase-panel[data-id="mobile"] .showcase-demo {
-  max-width: 560px;
+/* Le MacBook, ses étapes et la légende tiennent sous le titre, dans la même vue. */
+.showcase-panel[data-id="product"] .product {
+  width: min(100%, max(440px, calc((100svh - 360px) * 1.3)));
+  margin-inline: auto;
 }
 
-.showcase-panel[data-id="ai"] .showcase-demo {
-  max-width: 760px;
+/* L’iPhone se règle sur la hauteur disponible, sous l’en-tête. */
+.showcase-panel[data-id="mobile"] .offline-phone {
+  width: clamp(220px, calc((100svh - 400px) * 0.47), 300px);
 }
 
 /* Dans la scène, la légende des figures reste pour les lecteurs d’écran seulement. */
-.showcase .figure,
+.skills .figure,
 .method-demo .figure {
   border-top: 0;
 }
 
-.showcase .figure-head,
+.skills .figure-head,
 .method-demo .figure-head {
   position: absolute;
   width: 1px;
@@ -1777,36 +1727,52 @@ main:focus {
   white-space: nowrap;
 }
 
-.showcase .figure-body,
+.skills .figure-body,
 .method-demo .figure-body {
   padding-top: 0;
 }
 
-.showcase .figure-note {
-  max-width: 34rem;
-  margin: 36px auto 0;
+.skills .figure-note {
+  margin-top: 28px;
   padding-top: 0;
   border-top: 0;
   text-align: center;
 }
 
-/* Sur téléphone, les quatre onglets se partagent la largeur, sans défilement. */
+/* Sur téléphone, les trois onglets se partagent la largeur. */
 @media (max-width: 639px) {
   .showcase-tabs {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     width: 100%;
     gap: 2px;
   }
 
   .showcase-tabs button {
-    padding: 12px 4px;
-    font-size: 0.84rem;
-    letter-spacing: -0.01em;
+    padding: 12px 6px;
+    font-size: 0.9rem;
   }
 
   .showcase-tabs button .mono {
     display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .showcase-head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .showcase-tabs {
+    justify-self: end;
+    margin-bottom: 0.4em;
+  }
+
+  .showcase-panel {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    column-gap: clamp(40px, 5vw, 88px);
+    align-items: center;
   }
 }
 
@@ -4011,339 +3977,230 @@ main:focus {
   }
 }
 
-/* Le choix de la demande, sous un filet. */
+/* Dans la scène de la méthode, la demande et le déroulé se lisent côte à côte. */
+@media (min-width: 1024px) {
+  .skills .agent {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: clamp(28px, 3vw, 48px);
+    align-items: start;
+  }
+
+  .skills .voice {
+    grid-column: 1;
+    grid-row: 1;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .skills .voice-text {
+    font-size: clamp(1.15rem, 0.9rem + 0.6vw, 1.4rem);
+  }
+
+  .skills .agent-foot {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+  }
+
+  .skills .trace {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    padding-top: 0;
+  }
+
+  .skills .trace-step {
+    padding-bottom: 16px;
+  }
+
+  .skills .trace-code {
+    font-size: 0.74rem;
+  }
+}
+
+/* Le choix de la demande : trois pastilles courtes, le texte complet est la demande vocale. */
 .agent-foot {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px 24px;
-  margin-top: 32px;
-  padding-top: 14px;
+  align-items: center;
+  gap: 12px 16px;
+  margin-top: 28px;
+  padding-top: 18px;
   border-top: 1px solid var(--line-strong);
 }
 
-.agent-prompts {
-  display: grid;
-  flex: 1 1 320px;
-  gap: 2px;
-}
-
 .agent-prompts-label {
-  margin-bottom: 6px;
+  flex-basis: 100%;
   color: var(--fg-muted);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.agent-prompts button {
-  display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  gap: 10px;
-  min-height: 36px;
-  padding: 6px 0;
-  color: var(--fg-muted);
-  font-size: 0.875rem;
-  line-height: 1.4;
-  text-align: left;
-  transition: color 0.3s var(--ease-out);
+.agent-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.agent-prompts button .mono {
-  padding-top: 0.2em;
+.agent-prompts button {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--fg-muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition:
+    background-color 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
 }
 
 .agent-prompts button[aria-pressed="true"] {
-  color: var(--fg);
-}
-
-.agent-prompts button[aria-pressed="true"] .mono {
-  color: var(--accent-text);
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
 }
 
 @media (hover: hover) {
-  .agent-prompts button:hover {
+  .agent-prompts button:not([aria-pressed="true"]):hover {
+    border-color: var(--fg);
     color: var(--fg);
   }
 }
 
-/* ==========================================================================
-   Simulateur de charge
-   ========================================================================== */
-
-.scale {
-  display: grid;
-}
-
-.scale-canvas-wrap {
-  position: relative;
-  height: clamp(320px, 26vw, 370px);
-  margin-bottom: 28px;
-}
-
-.scale-canvas {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* La lecture : la charge en grand, les rejets et l’attente à côté, sur des filets. */
-.scale-readout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: 16px 24px;
-  padding-bottom: 20px;
-}
-
-.scale-load {
-  display: grid;
-  gap: 6px;
-}
-
-.scale-load strong {
-  font-size: clamp(2.4rem, 1.6rem + 2vw, 3.2rem);
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-  letter-spacing: -0.045em;
-  transition: color 0.3s var(--ease-out);
-}
-
-.scale-load span {
-  color: var(--fg-muted);
-  font-size: 0.84rem;
-}
-
-.scale-readout:not([data-state="calm"]) .scale-load strong {
-  color: var(--accent-text);
-}
-
-.scale-stats {
-  display: flex;
-  gap: 0;
-}
-
-.scale-stats > div {
-  display: grid;
-  gap: 6px;
-  min-width: 96px;
-  padding: 0 0 2px 18px;
-  border-left: 1px solid var(--line);
-}
-
-.scale-stats dt {
-  color: var(--fg-muted);
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.scale-stats dd {
-  font-size: 1.25rem;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.03em;
-  transition: color 0.3s var(--ease-out);
-}
-
-.scale-stats dd[data-alert] {
-  color: var(--accent-text);
-}
-
-.scale-status {
-  grid-column: 1 / -1;
-  max-width: 36rem;
-  min-height: 2.9em;
-  color: var(--fg-muted);
-  font-size: 0.88rem;
-  line-height: 1.45;
-}
-
-.scale-range {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.scale-range output {
-  min-width: 3ch;
-  text-align: right;
-}
-
-.scale-range input {
-  flex: 1;
-  width: 100%;
-  height: 28px;
-  margin: 0;
-  background: transparent;
-  -webkit-appearance: none;
-  appearance: none;
-  cursor: pointer;
-}
-
-.scale-range input::-webkit-slider-runnable-track {
-  height: 2px;
-  border-radius: 2px;
-  background: var(--line-strong);
-}
-
-.scale-range input::-moz-range-track {
-  height: 2px;
-  border-radius: 2px;
-  background: var(--line-strong);
-}
-
-.scale-range input::-webkit-slider-thumb {
-  width: 18px;
-  height: 18px;
-  margin-top: -8px;
-  border: 1.5px solid var(--fg);
-  border-radius: 50%;
-  background: var(--bg);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.scale-range input::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
-  border: 1.5px solid var(--fg);
-  border-radius: 50%;
-  background: var(--bg);
-}
-
-@media (max-width: 479px) {
-  .scale-readout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .scale-stats > div:first-child {
-    padding-left: 0;
-    border-left: 0;
-  }
+.agent-foot .text-button {
+  margin-left: auto;
 }
 
 /* ==========================================================================
    Méthode
+   Collaboration : le titre et une phrase, le planning en pleine largeur, puis la frise
+   d’une mission.
    ========================================================================== */
 
-.method-grid {
-  display: grid;
-  gap: 48px;
+.method-head {
+  margin-bottom: clamp(48px, 7svh, 88px);
 }
 
 .method-body {
-  max-width: 33rem;
+  max-width: 34rem;
   margin-top: 24px;
   color: var(--fg-muted);
-  font-size: 1.02rem;
+  font-size: 1.06rem;
+  line-height: 1.55;
 }
 
 /* Planning. */
 .orchestra {
-  --label-w: 112px;
+  --label-w: 150px;
   display: grid;
-  gap: 18px;
+  gap: 28px;
 }
 
 .orchestra-head {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px 18px;
+  gap: 12px 20px;
+}
+
+.orchestra-switch {
+  padding: 4px;
+  gap: 4px;
 }
 
 .orchestra-switch button {
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
   font-family: var(--font-sans);
-  font-size: 0.84rem;
+  font-size: 0.9rem;
+  font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
 }
 
+.orchestra-switch button + button {
+  border-left: 0;
+}
+
 .orchestra-caption {
-  flex: 1 1 220px;
-  min-height: 2.9em;
+  flex: 1 1 240px;
   color: var(--fg-muted);
-  font-size: 0.86rem;
+  font-size: 0.92rem;
   line-height: 1.45;
 }
 
-.gantt {
+/* Les pistes : le libellé et son responsable à gauche, la pilule sur la piste à droite. */
+.timeline {
   position: relative;
-  display: grid;
+  padding-top: 34px;
+}
+
+.tl-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
   border-top: 1px solid var(--line-strong);
 }
 
-/* Graduations verticales, seulement sous les barres. */
-.gantt::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: calc(var(--label-w) + 12px);
-  background: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 20%);
-  pointer-events: none;
-}
-
-/* Ligne de livraison : elle recule quand le travail se parallélise. */
-.gantt::after {
-  content: "";
-  position: absolute;
-  top: -6px;
-  bottom: -6px;
-  left: calc(var(--label-w) + 12px + (100% - var(--label-w) - 12px) * var(--end));
-  width: 1px;
-  background: var(--accent);
-  transition: left 0.9s var(--ease-in-out);
-}
-
-.gantt-row {
-  position: relative;
+.tl-row {
   display: grid;
   grid-template-columns: var(--label-w) minmax(0, 1fr);
-  gap: 12px;
   align-items: center;
-  min-height: 44px;
+  gap: 16px;
+  min-height: clamp(40px, 5svh, 54px);
   border-bottom: 1px solid var(--line);
 }
 
-.gantt-label {
+.tl-label {
   display: grid;
-  gap: 2px;
+  gap: 4px;
   min-width: 0;
 }
 
-.gantt-task {
+.tl-task {
   overflow: hidden;
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.gantt-owner {
-  overflow: hidden;
+.tl-owner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
   color: var(--fg-muted);
-  font-size: 0.6rem;
-  text-overflow: ellipsis;
+  font-size: 0.74rem;
   white-space: nowrap;
 }
 
-.gantt-track {
-  position: relative;
-  height: 10px;
+.tl-avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 20%;
 }
 
-/* Barres en pilule : l’encre pour Zié, un gris par agent, le contour pour la communication, l’accent pour la revue. */
-.gantt-bar {
+.tl-avatar.is-agent {
+  border: 1px solid var(--line-strong);
+  color: var(--fg);
+}
+
+.tl-track {
+  position: relative;
+  height: 12px;
+}
+
+.tl-bar {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -4357,62 +4214,68 @@ main:focus {
     border-color 0.6s var(--ease-out);
 }
 
-.gantt-row[data-lane="1"] .gantt-bar {
+.tl-row[data-lane="1"] .tl-bar {
   border-color: transparent;
   background: color-mix(in srgb, var(--fg) 52%, transparent);
 }
 
-.gantt-row[data-lane="2"] .gantt-bar {
+.tl-row[data-lane="2"] .tl-bar {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--fg) 26%, transparent);
+}
+
+.tl-row[data-lane="3"] .tl-bar {
   background: transparent;
 }
 
-.gantt-row[data-lane="3"] .gantt-bar {
-  border-color: transparent;
-  background: color-mix(in srgb, var(--fg) 24%, transparent);
-}
-
-.gantt-bar.is-review {
+.tl-row[data-review] .tl-bar {
   border-color: var(--accent);
   background: var(--accent);
 }
 
-.gantt-axis {
-  display: grid;
-  grid-template-columns: var(--label-w) minmax(0, 1fr);
-  gap: 12px;
-  color: var(--fg-muted);
+.orchestra:not([data-shown]) .tl-bar {
+  width: 0 !important;
 }
 
-.gantt-axis-track {
-  position: relative;
-  min-height: 20px;
-}
-
-.gantt-end {
+/* La livraison : une ligne d’accent et son étiquette, qui reculent quand le travail se parallélise. */
+.tl-delivery {
   position: absolute;
   top: 0;
-  left: calc(var(--end) * 100%);
-  color: var(--accent-text);
+  bottom: 0;
+  left: calc(var(--label-w) + 16px + (100% - var(--label-w) - 16px) * var(--end));
+  width: 1px;
+  background: var(--accent);
+  transition: left 0.9s var(--ease-in-out);
+  pointer-events: none;
+}
+
+.tl-delivery span {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   white-space: nowrap;
-  transform: translateX(8px);
-  transition:
-    left 0.9s var(--ease-in-out),
-    transform 0.9s var(--ease-in-out);
+  transform: translateX(-50%);
 }
 
-/* En fin de piste, l’étiquette passe à gauche de la ligne pour rester dans le cadre. */
-.orchestra[data-mode="solo"] .gantt-end {
-  transform: translateX(calc(-100% - 8px));
+.orchestra[data-mode="solo"] .tl-delivery span {
+  transform: translateX(-100%);
 }
 
-/* Déroulé d’une mission. */
+/* La frise d’une mission : un filet, cinq repères, une ligne de texte chacun. */
 .mission {
-  margin-top: clamp(96px, 10vw, 150px);
+  margin-top: clamp(80px, 12svh, 140px);
 }
 
 .mission-label {
-  margin-bottom: 0;
-  padding-bottom: 20px;
+  margin-bottom: 28px;
   color: var(--fg-muted);
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -4421,91 +4284,120 @@ main:focus {
 }
 
 .mission-steps {
+  position: relative;
   display: grid;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .mission-steps li {
+  position: relative;
   display: grid;
-  gap: 8px;
-  padding: 22px 0;
-  border-top: 1px solid var(--line-strong);
+  grid-template-columns: 36px minmax(0, 1fr);
+  column-gap: 16px;
+  row-gap: 4px;
+}
+
+.mission-dot {
+  display: grid;
+  grid-row: 1 / span 2;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--fg);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--fg);
 }
 
 .mission-steps h4 {
-  font-size: 1.12rem;
+  padding-top: 5px;
+  font-size: 1.06rem;
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
 }
 
 .mission-steps p {
   color: var(--fg-muted);
-  font-size: 0.95rem;
+  font-size: 0.94rem;
+  line-height: 1.5;
 }
 
-@media (min-width: 640px) {
+/* Sur téléphone, un fil vertical relie les repères. */
+.mission-steps::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  bottom: 16px;
+  left: 16px;
+  width: 1px;
+  background: var(--line-strong);
+}
+
+@media (max-width: 639px) {
   .orchestra {
-    --label-w: 150px;
+    --label-w: 112px;
+  }
+
+  .tl-task {
+    font-size: 0.84rem;
+  }
+
+  .tl-owner {
+    font-size: 0.68rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .method-grid {
+  .method-head {
+    display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     column-gap: 24px;
-    align-items: center;
   }
 
-  .method-head {
-    grid-column: 1 / span 5;
-  }
-
-  .method-demo {
-    grid-column: 6 / -1;
+  .method-head > * {
+    grid-column: 1 / span 8;
   }
 
   .method-head .section-title {
-    font-size: clamp(2.5rem, 1rem + 2.9vw, 4.2rem);
+    max-width: 22ch;
   }
 
+  .orchestra {
+    --label-w: 190px;
+  }
+
+  /* Sur grand écran, les repères se suivent sur un filet horizontal. */
   .mission-steps {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     column-gap: 24px;
   }
 
+  .mission-steps::before {
+    top: 16px;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 1px;
+  }
+
   .mission-steps li {
-    align-content: start;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
     padding-right: 12px;
   }
-}
 
-.orchestra:not([data-shown]) .gantt-bar {
-  width: 0 !important;
-}
-
-@media (max-width: 1023px) {
-  .mission-steps li {
-    grid-template-columns: 36px minmax(0, 1fr);
-    column-gap: 12px;
-    row-gap: 4px;
-    padding: 16px 0;
+  .mission-dot {
+    grid-row: auto;
+    margin-bottom: 10px;
   }
 
-  .mission-steps .mission-index {
-    grid-row: 1 / span 2;
-    margin: 0;
-    font-size: 1.5rem;
+  .mission-steps h4 {
+    padding-top: 0;
   }
-}
-
-/* Étapes d’une mission : un grand chiffre fin, puis le texte. */
-.mission-index {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--fg-muted);
-  font-size: 2.4rem;
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.04em;
 }
 
 /* ==========================================================================
@@ -4875,7 +4767,9 @@ main:focus {
    ========================================================================== */
 
 .contact {
-  padding: clamp(96px, 11vw, 168px) 0 clamp(64px, 8vw, 112px);
+  --section-pad: clamp(96px, min(11vw, 17svh), 168px);
+  padding: var(--section-pad) 0 clamp(64px, 8vw, 112px);
+  scroll-margin-top: calc(var(--header-h) + 28px - var(--section-pad));
 }
 
 .contact-head {
