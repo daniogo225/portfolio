@@ -43,11 +43,14 @@ export default function IPhone({
   className,
   time = "9:41",
   offline,
+  island,
 }: {
   children: ReactNode;
   className?: string;
   time?: string;
   offline?: boolean;
+  /** Activité en direct : l’îlot s’élargit et affiche ce contenu, comme sur iOS. */
+  island?: ReactNode;
 }) {
   return (
     <div className={["iphone", className].filter(Boolean).join(" ")} aria-hidden="true">
@@ -60,7 +63,9 @@ export default function IPhone({
         <div className="iphone-screen">
           <div className="iphone-status">
             <span className="iphone-time">{time}</span>
-            <span className="iphone-island" />
+            <span className="iphone-island" data-live={island ? "" : undefined}>
+              <span className="iphone-island-content">{island}</span>
+            </span>
             <span className="iphone-signals">
               <Signal off={offline} />
               {!offline && <Wifi />}

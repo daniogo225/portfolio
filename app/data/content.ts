@@ -50,7 +50,7 @@ const fr = {
     message: "Bonjour Zié, je vous écris depuis votre portfolio.",
   },
   statement: {
-    cta: "Mon parcours",
+    label: "Point de vue",
     text: "Un bon produit se joue dans les détails : un bouton à portée de pouce, un message d’erreur qui aide, un écran qui tient quand le réseau coupe. Je les dessine et je les code *moi-même.*",
   },
   offers: {
@@ -72,7 +72,7 @@ const fr = {
       },
       {
         id: "ai",
-        title: "Agents IA et assistants vocaux",
+        title: "Agents IA et voix",
         tagline: "Confier les tâches répétitives à l’IA, sous votre contrôle.",
         body: "Des agents qui agissent dans vos outils et des assistants vocaux qui répondent en temps réel, avec votre accord avant toute action sensible.",
         deliverables: ["Agent relié à vos outils et à vos données", "Assistant vocal en temps réel", "Garde-fous et validation humaine"],
@@ -88,7 +88,7 @@ const fr = {
       },
       {
         id: "audit",
-        title: "Audit, performance et sécurité",
+        title: "Performance et sécurité",
         tagline: "Rendre une application rapide, sûre et stable.",
         body: "J’examine le code, la sécurité et les serveurs, puis je corrige : pages plus rapides, failles fermées, pics de trafic absorbés.",
         deliverables: ["Rapport classé par priorité", "Corrections de sécurité et de performance", "Surveillance sur Oracle Cloud, Forge ou un VPS"],
@@ -289,10 +289,8 @@ const fr = {
     },
     offline: {
       label: "Une application qui fonctionne hors ligne",
-      device: "Téléphone",
-      server: "Serveur",
-      queue: "En attente d’envoi",
       network: "Réseau",
+      networkLine: "Réseau : {state}",
       online: "Connecté",
       offline: "Coupé",
       appTitle: "Tâches du jour",
@@ -309,6 +307,7 @@ const fr = {
         "Contrôler l’extincteur",
       ],
       synced: "Synchronisé",
+      islandPending: "{n} en attente",
       pending: "En attente",
       syncing: "Envoi en cours",
       summary: "{done} sur {total} terminées",
@@ -459,7 +458,7 @@ const en: SiteContent = {
     message: "Hi Zié, I found you through your portfolio.",
   },
   statement: {
-    cta: "My path",
+    label: "Point of view",
     text: "A good product lives in the details: a button within thumb’s reach, an error message that helps, a screen that holds up when the network drops. I design them and build them *myself.*",
   },
   offers: {
@@ -481,7 +480,7 @@ const en: SiteContent = {
       },
       {
         id: "ai",
-        title: "AI agents and voice assistants",
+        title: "AI agents and voice",
         tagline: "Hand repetitive tasks to AI, under your control.",
         body: "Agents that act inside your tools and voice assistants that answer in real time, with your approval before anything sensitive.",
         deliverables: ["Agent connected to your tools and data", "Real-time voice assistant", "Guardrails and human approval"],
@@ -497,7 +496,7 @@ const en: SiteContent = {
       },
       {
         id: "audit",
-        title: "Audit, performance and security",
+        title: "Performance and security",
         tagline: "Make an app fast, secure and stable.",
         body: "I review the code, security and servers, then fix what matters: faster pages, closed security holes, traffic spikes absorbed.",
         deliverables: ["Report ranked by priority", "Security and performance fixes", "Monitoring on Oracle Cloud, Forge or a VPS"],
@@ -692,10 +691,8 @@ const en: SiteContent = {
     },
     offline: {
       label: "An app that works offline",
-      device: "Phone",
-      server: "Server",
-      queue: "Waiting to send",
       network: "Network",
+      networkLine: "Network: {state}",
       online: "Connected",
       offline: "Off",
       appTitle: "Today’s tasks",
@@ -712,6 +709,7 @@ const en: SiteContent = {
         "Inspect the fire extinguisher",
       ],
       synced: "Synced",
+      islandPending: "{n} pending",
       pending: "Pending",
       syncing: "Sending",
       summary: "{done} of {total} done",

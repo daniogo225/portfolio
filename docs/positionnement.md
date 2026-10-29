@@ -24,17 +24,17 @@ Pourquoi celui-ci :
 | Segment | Ce qu’il cherche | Offre d’entrée |
 | --- | --- | --- |
 | Fondateurs et porteurs de projet (Côte d’Ivoire, Afrique de l’Ouest, francophonie, international) | Un premier produit en ligne vite, sans monter une équipe | Application web et SaaS |
-| Entreprises et PME avec un produit ou des processus existants | Automatiser des tâches réelles avec l’IA, ajouter un assistant vocal | Agents IA et assistants vocaux |
-| Équipes produit, CTO, agences | Un renfort fiable : mobile, audit, montée en charge | Application mobile, Audit, performance et sécurité |
+| Entreprises et PME avec un produit ou des processus existants | Automatiser des tâches réelles avec l’IA, ajouter un assistant vocal | Agents IA et voix |
+| Équipes produit, CTO, agences | Un renfort fiable : mobile, audit, montée en charge | Application mobile, Performance et sécurité |
 
 Atouts concrets pour l’international : fuseau **UTC+0** (heures de bureau communes avec Londres, proches de Paris), **français et anglais**.
 
 ## 3. Les offres
 
 1. **Application web et SaaS** : une première version solide, en ligne en quelques semaines. Cadrage, parcours, maquettes validées avant le code, application web en production, espace d’administration, code et documentation remis.
-2. **Agents IA et assistants vocaux** : mettre l’IA au travail dans un produit. Agents connectés aux outils et aux données, voix en temps réel, garde-fous, validation humaine avant toute action sensible, service prêt pour la charge.
+2. **Agents IA et voix** : mettre l’IA au travail dans un produit. Agents connectés aux outils et aux données, voix en temps réel, garde-fous, validation humaine avant toute action sensible, service prêt pour la charge.
 3. **Application mobile** : des apps au design soigné, pensées pour la réalité des utilisateurs (une main, le plein soleil, le réseau qui coupe). iOS et Android avec React Native et Expo, fonctionnement hors ligne et synchronisation, publication sur les stores.
-4. **Audit, performance et sécurité** : rapport classé par priorité et corrections (sécurité, rapidité), serveurs capables d’absorber les pics de trafic, mise en ligne et surveillance sur Oracle Cloud, Forge ou VPS.
+4. **Performance et sécurité** : rapport classé par priorité et corrections (sécurité, rapidité), serveurs capables d’absorber les pics de trafic, mise en ligne et surveillance sur Oracle Cloud, Forge ou VPS.
 
 Chaque mission démarre par un appel de 30 minutes puis une proposition écrite (périmètre, étapes, livrables). Les tarifs ne sont pas publiés : ils sont donnés dans la proposition.
 

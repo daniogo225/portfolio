@@ -1,25 +1,18 @@
 "use client";
 
-import Magnetic from "../ui/Magnetic";
-import RevealText from "../ui/RevealText";
+import ScrollText from "../ui/ScrollText";
 import { useSite } from "./SiteProvider";
 
-/** Point de vue : une seule phrase, en grand, et un bouton rond vers le profil. */
+/** Point de vue : une seule phrase, en très grand, qui s’encre au fil de la lecture. */
 export default function Statement() {
-  const { t } = useSite();
+  const { t, calm } = useSite();
   return (
     <section className="intro section" aria-labelledby="intro-title">
       <div className="shell">
-        <div className="intro-grid">
-          <RevealText as="h2" id="intro-title" className="intro-text" text={t.statement.text} interval={0.025} />
-          <div className="intro-side">
-            <Magnetic strength={0.35}>
-              <a className="circle-button" href="#profile">
-                <span>{t.statement.cta}</span>
-              </a>
-            </Magnetic>
-          </div>
-        </div>
+        <p className="section-label mono">
+          <span>{t.statement.label}</span>
+        </p>
+        <ScrollText as="h2" id="intro-title" className="intro-text" text={t.statement.text} calm={calm} />
       </div>
     </section>
   );
