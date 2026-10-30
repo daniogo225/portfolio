@@ -69,7 +69,11 @@ function NameMarquee({ calm }: { calm: boolean }) {
         {Array.from({ length: COPIES }, (_, index) => (
           <span key={index} className="hero-name-item">
             {person.name}
-            <span className="hero-name-sep">—</span>
+            <span className="hero-name-sep">
+              <svg viewBox="0 0 100 100">
+                <path d="M50 8v84M13.6 29l72.8 42M13.6 71l72.8-42" />
+              </svg>
+            </span>
           </span>
         ))}
       </motion.div>

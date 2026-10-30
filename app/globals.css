@@ -1162,9 +1162,32 @@ main:focus {
   white-space: nowrap;
 }
 
+/* Le séparateur : une étoile au trait, calée sur la hauteur des minuscules, qui tourne lentement. */
 .hero-name-sep {
-  margin-inline: 0.22em;
-  font-weight: 300;
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 0.46em;
+  height: 0.46em;
+  margin-inline: 0.34em;
+  transform: translateY(0.04em);
+}
+
+.hero-name-sep svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 13;
+  stroke-linecap: round;
+  animation: sep-spin 16s linear infinite;
+}
+
+@keyframes sep-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .hero-about {
@@ -5206,6 +5229,7 @@ main:focus {
 [data-motion="off"] .hero-portrait img,
 [data-motion="off"] .hero-name,
 [data-motion="off"] .globe-meridian,
+[data-motion="off"] .hero-name-sep svg,
 [data-motion="off"] .term-steps li,
 [data-motion="off"] .term-live,
 [data-motion="off"] .rem-list li,
