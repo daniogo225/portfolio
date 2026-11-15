@@ -35,21 +35,25 @@
 }
 
 .build-head .section-label {
+  justify-content: center;
   margin: 0;
   font-weight: 400;
 }
 
+/* Une scène se lit dans l’axe : l’image au centre, sa phrase centrée dessous, comme une légende. */
 .build-scene {
   display: grid;
   align-content: start;
+  justify-items: center;
   gap: clamp(20px, 4svh, 40px);
   padding: clamp(40px, 8svh, 72px) var(--edge) 0;
+  text-align: center;
 }
 
-/* Une phrase entière par scène : un corps de lecture, sur quatre ou cinq lignes équilibrées. */
+/* Une phrase entière par scène : trois ou quatre lignes équilibrées. */
 .build-text {
-  max-width: 26ch;
-  font-size: clamp(1.55rem, min(0.7rem + 2vw, 0.7rem + 3.6svh), 2.9rem);
+  max-width: 36ch;
+  font-size: clamp(1.5rem, min(0.7rem + 1.7vw, 0.7rem + 3.2svh), 2.5rem);
   font-weight: 500;
   line-height: 1.12;
   letter-spacing: -0.035em;
@@ -63,8 +67,8 @@
 }
 
 .build-art {
+  order: -1;
   margin: 0;
-  justify-self: center;
   width: min(100%, 440px);
 }
 
@@ -101,17 +105,20 @@
   padding-top: calc(var(--header-h) + clamp(12px, 4svh, 44px));
 }
 
+/* Trois scènes, chacune de la largeur de l’écran utile (barre de défilement exclue) : leur axe
+   est le même que celui de l’étiquette et de la page. */
 .build[data-moving] .build-track {
   display: flex;
-  width: 300vw;
+  width: 300%;
   min-height: 0;
   will-change: transform;
 }
 
 .build[data-moving] .build-scene {
-  flex: 0 0 100vw;
+  flex: 0 0 calc(100% / 3);
   align-content: center;
   min-height: 0;
+  gap: clamp(12px, 3svh, 32px);
   padding-block: clamp(12px, 3svh, 32px);
 }
 
@@ -143,28 +150,20 @@
 
 @media (min-width: 1024px) {
   .build-scene {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: 24px;
-    align-items: center;
     padding-top: clamp(56px, 10svh, 112px);
   }
 
-  .build-copy {
-    grid-column: 1 / span 6;
-  }
-
   .build-art {
-    grid-column: 7 / -1;
-    width: min(100%, 620px);
+    width: min(100%, 520px);
   }
 
   .build[data-moving] .build-art {
-    width: min(100%, 72svh, 700px);
+    width: min(100%, 50svh, 520px);
   }
 }
 
 /* ==========================================================================
-   Méthode : la règle à gauche, le planning à droite
+   Méthode : la règle centrée, le planning dessous, dans le même axe
    ========================================================================== */
 
 .method-grid {
@@ -172,9 +171,16 @@
   gap: clamp(40px, 7svh, 72px);
 }
 
+.method-head {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
 .method-title {
-  max-width: 15ch;
-  font-size: clamp(2.2rem, min(1rem + 3.4vw, 1rem + 5.8svh), 4.6rem);
+  /* Une phrase par ligne sur grand écran : la coupure est dans le texte. */
+  max-width: 26ch;
+  font-size: clamp(2.2rem, min(1rem + 3vw, 1rem + 5.4svh), 4.2rem);
   font-weight: 500;
   line-height: 1.03;
   letter-spacing: -0.045em;
@@ -189,7 +195,7 @@
 }
 
 .orchestra-switch {
-  justify-self: start;
+  justify-self: center;
   padding: 4px;
   gap: 4px;
 }
@@ -274,24 +280,10 @@
 }
 
 @media (min-width: 1024px) {
-  .method-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: 24px;
-    align-items: end;
-  }
-
-  .method-head {
-    grid-column: 1 / span 5;
-    align-self: start;
-  }
-
   .orchestra {
     --label-w: 168px;
-    grid-column: 6 / -1;
-  }
-
-  .orchestra-switch {
-    justify-self: end;
+    width: min(100%, 960px);
+    justify-self: center;
   }
 }
 
@@ -441,7 +433,7 @@
 }
 
 /* ==========================================================================
-   Contact : de nuit, la question, le disque WhatsApp en face, trois coordonnées
+   Contact : la question centrée, le disque WhatsApp dessous, trois coordonnées
    ========================================================================== */
 
 .contact {
@@ -452,7 +444,9 @@
 
 .contact-stage {
   display: grid;
-  gap: 40px;
+  justify-items: center;
+  gap: clamp(36px, 6svh, 56px);
+  text-align: center;
 }
 
 /* Deux lignes : la question, puis l’invitation. Le corps laisse la question tenir sur sa ligne. */
@@ -467,14 +461,11 @@
 
 .contact-body {
   max-width: 27rem;
+  margin-inline: auto;
   margin-top: clamp(24px, 4svh, 36px);
   color: var(--fg-muted);
   font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
   line-height: 1.5;
-}
-
-.contact-circle {
-  justify-self: end;
 }
 
 .contact-lines {
@@ -487,6 +478,7 @@
 
 .contact-lines li {
   border-bottom: 1px solid var(--line);
+  text-align: center;
 }
 
 .contact-line {
@@ -543,18 +535,6 @@
 
   .contact-line {
     min-height: 76px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .contact-stage {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-    column-gap: 48px;
-  }
-
-  .contact-circle {
-    margin: 0 clamp(0px, 6vw, 120px) 8px 0;
   }
 }
 

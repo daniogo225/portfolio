@@ -81,7 +81,7 @@ const fr = {
   },
   method: {
     label: "Méthode",
-    title: "Les agents IA avancent en parallèle. Je relis chaque livraison.",
+    title: "Les agents IA avancent en parallèle.\nJe relis chaque livraison.",
   },
   profile: {
     label: "Profil",
@@ -214,7 +214,7 @@ const en: SiteContent = {
   },
   method: {
     label: "Method",
-    title: "AI agents work in parallel. I review everything before it ships.",
+    title: "AI agents work in parallel.\nI review everything before it ships.",
   },
   profile: {
     label: "About",
