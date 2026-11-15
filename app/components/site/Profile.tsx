@@ -2,8 +2,8 @@
 
 import { ArrowUpRight, Download } from "lucide-react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import { cvPdf, localePath } from "../../data/site";
-import PixelPortrait from "../ui/PixelPortrait";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
 import { useSite } from "./SiteProvider";
 
@@ -14,11 +14,11 @@ const appear = {
 } as const;
 
 /**
- * Profil : après la photo de la hero, le même portrait en pixel art, qui se met au point en
- * entrant dans l’écran. À côté, le titre, la description et le CV, calés contre l’image.
+ * Profil : le portrait en noir de la hero, détouré, posé à même le fond de la section. Il n’a ni
+ * cadre ni fond : son bas se dissout dans la page. À côté, le titre, la description et le CV.
  */
 export default function Profile() {
-  const { t, locale, calm } = useSite();
+  const { t, locale } = useSite();
   const p = t.profile;
 
   return (
@@ -26,15 +26,25 @@ export default function Profile() {
       <div className="shell profile-grid">
         <p className="section-label mono">{p.label}</p>
 
-        <figure className="profile-still">
-          <div className="profile-still-frame">
-            <PixelPortrait alt={p.photo} still={calm} />
-          </div>
+        <motion.figure
+          className="profile-portrait"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.2, ease: EASE_OUT }}
+        >
+          <Image
+            src="/portraits/daniogo-product-engineer-cutout.png"
+            alt={p.photo}
+            width={1024}
+            height={1536}
+            sizes="(min-width: 1024px) 44vw, 92vw"
+          />
           <figcaption className="mono">
             <span>{t.contact.place}</span>
             <span>{p.languages}</span>
           </figcaption>
-        </figure>
+        </motion.figure>
 
         <RevealText as="h2" id="profile-title" className="profile-statement" text={p.lead} />
 

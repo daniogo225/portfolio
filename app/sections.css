@@ -288,89 +288,61 @@
 }
 
 /* ==========================================================================
-   Profil : le portrait en pixel art, et le texte calé contre lui
-   C’est le seul écran qui porte un paragraphe : il se lit à gauche, contre l’image, sur
-   ordinateur comme sur téléphone. Le portrait a une taille fixe, multiple de sa grille
-   (48 × 64 pixels), pour que chaque pixel soit un carré net.
+   Profil : le portrait détouré, posé à même le fond, et le texte contre lui
+   Le portrait n’a ni cadre ni fond : la silhouette se découpe sur la page et son bas se
+   dissout par un masque. C’est le seul écran qui porte un paragraphe : il se lit à gauche,
+   sur ordinateur comme sur téléphone.
    ========================================================================== */
 
 .profile-grid {
-  --cell: 4px;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  row-gap: 28px;
 }
 
 .profile-grid .section-label {
   margin: 0;
 }
 
-.profile-still {
+.profile-portrait {
+  /* La photo a du vide autour de la silhouette : on la décale pour que l’épaule, et non ce
+     vide, s’aligne sur la marge. */
+  --bleed: 14%;
+  width: min(100%, 400px);
+  margin: 20px 0 0;
+}
+
+.profile-portrait img {
+  /* Le buste seul : la photo est coupée sous la taille, là où le masque l’a déjà effacée. */
+  aspect-ratio: 1024 / 1090;
+  width: calc(100% + var(--bleed));
+  max-width: none;
+  height: auto;
+  margin-left: calc(var(--bleed) * -1);
+  object-fit: cover;
+  object-position: top;
+  -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 96%);
+  mask-image: linear-gradient(to bottom, #000 52%, transparent 96%);
+}
+
+/* La légende remonte dans le bas dissous du portrait. */
+.profile-portrait figcaption {
   display: grid;
-  justify-items: start;
-  gap: 12px;
-  margin: 0;
-}
-
-.profile-still-frame {
-  width: calc(48 * var(--cell));
-  height: calc(64 * var(--cell));
-  background: var(--bg-sunken);
-}
-
-.pixel-portrait {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.pixel-portrait img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  image-rendering: pixelated;
-}
-
-/* La mise au point : un seul palier grossier à la fois, posé sur l’image finale. Les paliers
-   sont opaques sur le fond du cadre, sinon l’image finale se verrait à travers leurs vides. */
-.pixel-portrait img[data-step] {
-  visibility: hidden;
-  background: var(--bg-sunken);
-}
-
-.pixel-portrait[data-step="wait"] img {
-  visibility: hidden;
-}
-
-.pixel-portrait[data-step="0"] img[data-step="0"],
-.pixel-portrait[data-step="1"] img[data-step="1"],
-.pixel-portrait[data-step="2"] img[data-step="2"] {
-  visibility: visible;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pixel-portrait img[data-step] {
-    visibility: hidden !important;
-  }
-
-  .pixel-portrait img:not([data-step]) {
-    visibility: visible !important;
-  }
-}
-
-.profile-still figcaption {
-  display: grid;
+  margin-top: -1.2rem;
   gap: 6px;
   color: var(--fg-muted);
 }
 
 .profile-statement {
+  margin-top: 28px;
   font-size: clamp(2.2rem, min(0.6rem + 4.6vw, 1rem + 7svh), 5.4rem);
   font-weight: 500;
   line-height: 1.02;
   letter-spacing: -0.048em;
   text-wrap: balance;
+}
+
+.profile-text {
+  margin-top: 28px;
 }
 
 .profile-body {
@@ -395,13 +367,10 @@
 
 @media (min-width: 1024px) {
   .profile-grid {
-    --cell: 6px;
-    /* Hauteur de la légende sous le portrait : son écart, puis deux lignes. */
-    --caption-h: calc(12px + 2 * 0.72rem * 1.4 + 6px);
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: auto auto 1fr;
-    column-gap: clamp(56px, 7vw, 128px);
-    row-gap: 0;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    /* Le titre et le texte forment un seul bloc, centré sur la hauteur du portrait. */
+    grid-template-rows: auto 1fr auto auto 1fr;
+    column-gap: clamp(24px, 3vw, 56px);
   }
 
   .profile-grid .section-label {
@@ -409,33 +378,23 @@
     margin-bottom: clamp(28px, 5svh, 48px);
   }
 
-  /* Le portrait à gauche, du haut du titre au bas des boutons. */
-  .profile-still {
+  .profile-portrait {
     grid-column: 1;
-    grid-row: 2 / span 2;
-    align-self: start;
+    grid-row: 2 / span 4;
+    width: 100%;
+    margin: 0;
   }
 
   .profile-statement {
     grid-column: 2;
-    grid-row: 2;
-    /* Le haut des capitales s’aligne sur le haut du portrait. */
-    margin-top: -0.13em;
+    grid-row: 3;
+    margin-top: 0;
   }
 
   .profile-text {
     grid-column: 2;
-    grid-row: 3;
-    align-self: end;
-    padding-top: clamp(24px, 4svh, 40px);
-    /* Le bas des boutons s’aligne sur le bas du portrait, au-dessus de sa légende. */
-    padding-bottom: var(--caption-h);
-  }
-}
-
-@media (min-width: 1280px) {
-  .profile-grid {
-    --cell: 7px;
+    grid-row: 4;
+    margin-top: clamp(24px, 4svh, 40px);
   }
 }
 
