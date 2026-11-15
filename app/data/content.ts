@@ -96,7 +96,8 @@ const fr = {
   contact: {
     label: "Contact",
     title: "Un projet, une question\u202f?\n*Écrivez-moi.*",
-    body: "Je réponds sur WhatsApp et par e-mail.",
+    channels: { email: "E-mail", phone: "Téléphone", github: "GitHub" },
+    separator: "\u00a0: ",
     circle: "Écrire sur WhatsApp",
     copy: "Copier l’adresse",
     copied: "Adresse copiée",
@@ -230,7 +231,8 @@ const en: SiteContent = {
   contact: {
     label: "Contact",
     title: "A project, a question?\n*Write to me.*",
-    body: "I answer on WhatsApp and by email.",
+    channels: { email: "Email", phone: "Phone", github: "GitHub" },
+    separator: ": ",
     circle: "Message me on WhatsApp",
     copy: "Copy address",
     copied: "Address copied",
