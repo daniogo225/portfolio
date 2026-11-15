@@ -518,7 +518,6 @@ main:focus {
   content: "";
   position: absolute;
   inset: 0;
-  border-bottom: 1px solid var(--line);
   background: var(--bg);
   opacity: 0;
   transition: opacity 0.4s var(--ease-out);
@@ -668,7 +667,6 @@ main:focus {
 .menu-mask {
   display: block;
   overflow: hidden;
-  border-bottom: 1px solid var(--line);
 }
 
 .mobile-menu nav a {
@@ -764,7 +762,6 @@ main:focus {
   --section-pad: clamp(96px, min(12vw, 18svh), 200px);
   position: relative;
   padding-block: var(--section-pad);
-  border-top: 1px solid var(--line);
   /* Arrivée par le menu : la marge du haut passe sous l’en-tête, le contenu commence juste dessous. */
   scroll-margin-top: calc(var(--header-h) + 28px - var(--section-pad));
 }
