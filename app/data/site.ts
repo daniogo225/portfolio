@@ -28,7 +28,6 @@ export const links = {
   whatsapp: "https://wa.me/2250715736802",
   github: "https://github.com/daniogo225",
   githubLabel: "github.com/daniogo225",
-  calendar: "https://cal.com/dani-walker-uqwwfc/30min",
   vcard: "/daniogo.vcf",
 } as const;
 

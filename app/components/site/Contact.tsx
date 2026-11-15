@@ -96,8 +96,8 @@ export default function Contact() {
             </a>
           </li>
           <li>
-            <a className="contact-line" href={links.calendar} target="_blank" rel="noreferrer">
-              <span>{c.call}</span>
+            <a className="contact-line" href={links.github} target="_blank" rel="noreferrer">
+              <span>{links.githubLabel}</span>
               <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
             </a>
           </li>

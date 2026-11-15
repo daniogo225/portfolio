@@ -4,9 +4,9 @@ import { person } from "./data/site";
 // Manifeste du site : nom, couleurs et icônes pour l’ajout à l’écran d’accueil.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${person.name}, développeur full-stack freelance`,
+    name: `${person.name}, développeur full-stack et IA`,
     short_name: person.name,
-    description: "Développeur full-stack freelance à Abidjan : applications web, mobiles et IA intégrée.",
+    description: "Zié Daniogo, développeur full-stack et IA à Abidjan : applications mobiles, applications web et IA intégrée.",
     start_url: "/",
     display: "standalone",
     lang: "fr",

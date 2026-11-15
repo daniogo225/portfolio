@@ -2,7 +2,7 @@
 
 Site personnel et CV de Zié Daniogo, développeur full-stack et IA. Next.js 16, React 19, Tailwind 4, motion et lenis, déployé par Vercel depuis `master`.
 
-Le positionnement, les offres, le ton et les textes réutilisables (LinkedIn, Malt, Upwork, Fiverr) sont dans [`docs/positionnement.md`](docs/positionnement.md). À lire avant de modifier un texte.
+Ce que le site dit, le ton et ce qu’on ne publie jamais sont dans [`docs/positionnement.md`](docs/positionnement.md). À lire avant de modifier un texte.
 
 ## Commandes
 
@@ -52,7 +52,7 @@ Le script écrit `public/cv-zie-daniogo-fr.pdf` et `public/cv-zie-daniogo-en.pdf
 2. Ce que je construis (`app/components/site/Build.tsx`) : trois scènes, une illustration isométrique et une phrase chacune. La section est épinglée et le défilement fait glisser la caméra d’une scène à l’autre ; sans animation, les scènes se lisent l’une sous l’autre. Illustrations dans `public/scenes/` (générées avec Codex, optimisées en WebP).
 3. Méthode : la règle à gauche, le planning « seul / avec des agents » à droite.
 4. Profil : le portrait serré sur toute la hauteur, une conviction, un paragraphe, le CV.
-5. Contact : la question, le disque WhatsApp, trois coordonnées.
+5. Contact : « Écrivez-moi », le disque WhatsApp, trois coordonnées.
 
 Styles des sections dans `app/sections.css`. Le mouvement (entrée de la hero, rideau, travelling) se coupe avec `prefers-reduced-motion` ou le bouton « Animations » du pied de page.
 

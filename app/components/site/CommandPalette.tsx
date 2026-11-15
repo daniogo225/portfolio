@@ -92,7 +92,6 @@ export default function CommandPalette({ open, onClose }: { open: boolean; onClo
         run: () => openExternal(whatsappUrl(t.hero.message)),
       },
       { id: "cv", group: t.palette.actions, label: t.palette.cv, hint: "/cv", run: () => window.location.assign(localePath(locale, "cv")) },
-      { id: "book", group: t.palette.actions, label: t.palette.book, hint: "cal.com", run: () => openExternal(links.calendar) },
       {
         id: "theme",
         group: t.palette.actions,

@@ -183,11 +183,6 @@ export default function Hero() {
               {after}
             </span>
           </span>
-          <span className="line-mask">
-            <span className="line" style={rise(0.9)}>
-              {t.hero.availability}
-            </span>
-          </span>
         </p>
       </motion.div>
 

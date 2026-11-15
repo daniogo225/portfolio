@@ -7,22 +7,22 @@ import type { Locale } from "./site";
 
 const fr = {
   meta: {
-    title: "Zié Daniogo, développeur full-stack freelance à Abidjan",
+    title: "Zié Daniogo, développeur full-stack et IA à Abidjan",
     description:
-      "Développeur full-stack freelance à Abidjan, Côte d’Ivoire : applications web Laravel et React, apps mobiles React Native, IA intégrée. Français et anglais.",
+      "Zié Daniogo, développeur full-stack et IA à Abidjan, Côte d’Ivoire. Applications iOS et Android en React Native, back-offices web en Laravel et React, IA intégrée.",
     ogAlt: "Zié Daniogo, développeur full-stack et IA à Abidjan. Je dessine, je code, je mets en ligne. Moi-même.",
     skip: "Aller au contenu",
     navLabel: "Navigation principale",
     mobileNavLabel: "Navigation mobile",
   },
   nav: {
-    build: "Services",
+    build: "Travail",
     method: "Méthode",
     profile: "Profil",
     contact: "Contact",
     menu: "Menu",
     close: "Fermer",
-    cta: "Discutons",
+    cta: "M’écrire",
   },
   controls: {
     language: "Langue",
@@ -33,7 +33,6 @@ const fr = {
   hero: {
     eyebrow: "Développeur full-stack et IA",
     clock: "Il est {time} à Abidjan.",
-    availability: "Disponible pour des missions à distance.",
     title: "Je dessine,\nje code,\nje mets en ligne.\n*Moi-même.*",
     primary: "Écrire sur WhatsApp",
     portrait: "Zié Daniogo, debout, en veste noire",
@@ -96,16 +95,15 @@ const fr = {
   },
   contact: {
     label: "Contact",
-    title: "Une application en tête\u202f?\n*Écrivez-moi.*",
-    body: "On en parle 30 minutes, puis je vous envoie une proposition écrite : périmètre, étapes, budget.",
+    title: "*Écrivez-moi.*",
+    body: "Je réponds sur WhatsApp et par e-mail.",
     circle: "Écrire sur WhatsApp",
     copy: "Copier l’adresse",
     copied: "Adresse copiée",
-    call: "Réserver 30 minutes",
     place: "Abidjan, Côte d’Ivoire",
   },
   floating: {
-    label: "Discutons",
+    label: "M’écrire",
     aria: "Écrire à Zié sur WhatsApp",
   },
   footer: {
@@ -128,7 +126,6 @@ const fr = {
     copyEmail: "Copier l’adresse e-mail",
     copied: "Adresse copiée",
     cv: "Ouvrir le CV",
-    book: "Réserver 30 minutes",
     toLight: "Passer en mode clair",
     toDark: "Passer en mode sombre",
     otherLanguage: "Switch to English",
@@ -144,22 +141,22 @@ export type SiteContent = typeof fr;
 
 const en: SiteContent = {
   meta: {
-    title: "Zié Daniogo, freelance full-stack developer in Côte d’Ivoire",
+    title: "Zié Daniogo, full-stack and AI developer in Abidjan",
     description:
-      "Freelance full-stack developer in Abidjan, Côte d’Ivoire (Ivory Coast). Laravel and React web apps, React Native mobile apps, AI built into real products.",
+      "Zié Daniogo, full-stack and AI developer in Abidjan, Côte d’Ivoire (Ivory Coast). iOS and Android apps in React Native, web back offices in Laravel and React, AI built in.",
     ogAlt: "Zié Daniogo, full-stack and AI developer in Abidjan. I design it, build it and ship it. Myself.",
     skip: "Skip to content",
     navLabel: "Main navigation",
     mobileNavLabel: "Mobile navigation",
   },
   nav: {
-    build: "Services",
+    build: "Work",
     method: "Method",
     profile: "About",
     contact: "Contact",
     menu: "Menu",
     close: "Close",
-    cta: "Let’s talk",
+    cta: "Write to me",
   },
   controls: {
     language: "Language",
@@ -170,7 +167,6 @@ const en: SiteContent = {
   hero: {
     eyebrow: "Full-stack and AI developer",
     clock: "It’s {time} in Abidjan.",
-    availability: "Available for remote work.",
     title: "I design it,\nbuild it,\nship it.\n*Myself.*",
     primary: "Message me on WhatsApp",
     portrait: "Zié Daniogo, standing, wearing a black overshirt",
@@ -233,16 +229,15 @@ const en: SiteContent = {
   },
   contact: {
     label: "Contact",
-    title: "Got an app in mind?\n*Write to me.*",
-    body: "We talk for 30 minutes, then I send you a written proposal: scope, milestones, budget.",
+    title: "*Write to me.*",
+    body: "I answer on WhatsApp and by email.",
     circle: "Message me on WhatsApp",
     copy: "Copy address",
     copied: "Address copied",
-    call: "Book 30 minutes",
     place: "Abidjan, Côte d’Ivoire",
   },
   floating: {
-    label: "Let’s talk",
+    label: "Write to me",
     aria: "Message Zié on WhatsApp",
   },
   footer: {
@@ -265,7 +260,6 @@ const en: SiteContent = {
     copyEmail: "Copy email address",
     copied: "Address copied",
     cv: "Open the résumé",
-    book: "Book 30 minutes",
     toLight: "Switch to light mode",
     toDark: "Switch to dark mode",
     otherLanguage: "Passer en français",
