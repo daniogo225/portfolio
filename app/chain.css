@@ -212,14 +212,14 @@
   }
 
   .chain-phone[data-dim] {
-    opacity: 0.6;
-    filter: blur(3px);
+    opacity: 0.7;
+    filter: blur(2.5px);
     transform: scale(0.95);
   }
 
   .chain-desk[data-dim] {
-    opacity: 0.6;
-    filter: blur(3px);
+    opacity: 0.75;
+    filter: blur(2px);
   }
 
   .chain-panel {
@@ -897,7 +897,7 @@
 .desk-file {
   display: grid;
   min-width: 0;
-  padding: 1.3em 1.4em 1.2em;
+  padding: 1.2em 1.4em 1.1em;
 }
 
 .desk-empty,
@@ -945,7 +945,7 @@
 }
 
 .desk-summary {
-  margin-top: 0.9em;
+  margin-top: 0.8em;
   padding: 0.75em 0.9em 0.85em;
   border-radius: 0.7em;
   background: var(--bg-sunken);
@@ -1141,7 +1141,7 @@
 
 .method-head .method-title {
   grid-column: 1 / -1;
-  max-width: 24ch;
+  max-width: 32ch;
   font-size: clamp(2.1rem, min(1rem + 3vw, 1rem + 5.4svh), 4rem);
 }
 
