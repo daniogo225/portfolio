@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Portfolio from "../components/Portfolio";
 import { content } from "../data/content";
-import { pageMetadata, personJsonLd } from "../data/metadata";
+import { pageMetadata, profileJsonLd } from "../data/metadata";
 import { isLocale } from "../data/site";
 
 type Props = { params: Promise<{ lang: string }> };
@@ -21,7 +21,7 @@ export default async function Home({ params }: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(lang)).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd(lang)).replace(/</g, "\\u003c") }}
       />
       <Portfolio locale={lang} t={content[lang]} />
     </>

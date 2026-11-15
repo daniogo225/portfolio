@@ -11,8 +11,13 @@ export function isLocale(value: string): value is Locale {
 
 export const siteUrl = "https://portfolio-eight-rust-82.vercel.app";
 
+/** Date de la dernière mise à jour du contenu, pour le sitemap et les données structurées. */
+export const lastUpdated = "2026-11-15";
+
 export const person = {
   name: "Zié Daniogo",
+  givenName: "Zié",
+  familyName: "Daniogo",
   fullName: "Zié Aboubakar junior Daniogo",
 };
 

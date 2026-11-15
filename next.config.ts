@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   experimental: {
     globalNotFound: true,
   },
+  // Portraits servis en AVIF, à défaut en WebP : le détouré de la hero pèse plus d’un mégaoctet en PNG.
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
   async redirects() {
     return [
       { source: "/fr", destination: "/", permanent: true },

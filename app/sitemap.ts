@@ -1,16 +1,18 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "./data/site";
+import { lastUpdated, siteUrl } from "./data/site";
 
+// Chaque page figure dans ses deux langues, avec ses alternatives (hreflang) et sa date de mise à jour.
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [
     { fr: "/", en: "/en", priority: 1 },
     { fr: "/cv", en: "/en/cv", priority: 0.6 },
   ];
   return pages.flatMap(({ fr, en, priority }) => {
-    const languages = { fr: `${siteUrl}${fr}`, en: `${siteUrl}${en}` };
+    const languages = { fr: `${siteUrl}${fr}`, en: `${siteUrl}${en}`, "x-default": `${siteUrl}${fr}` };
+    const shared = { lastModified: lastUpdated, changeFrequency: "monthly" as const, priority, alternates: { languages } };
     return [
-      { url: languages.fr, changeFrequency: "monthly" as const, priority, alternates: { languages } },
-      { url: languages.en, changeFrequency: "monthly" as const, priority, alternates: { languages } },
+      { url: languages.fr, ...shared },
+      { url: languages.en, ...shared },
     ];
   });
 }
