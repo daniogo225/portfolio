@@ -36,12 +36,18 @@ export default function RevealText({
   mode = "view",
 }: RevealTextProps) {
   const Tag = motion[as];
-  const words = parseEmphasis(text).flatMap((segment) =>
-    segment.text
-      .split(/[ \n\t]+/)
-      .filter(Boolean)
-      .map((value) => ({ value, em: segment.em })),
-  );
+  // Un retour à la ligne dans le texte impose une coupure : le rythme d’un titre se choisit.
+  const words: { value: string; em: boolean; breakBefore: boolean }[] = [];
+  let pendingBreak = false;
+  for (const segment of parseEmphasis(text)) {
+    segment.text.split("\n").forEach((line, lineIndex) => {
+      if (lineIndex > 0) pendingBreak = true;
+      for (const value of line.split(/[ \t]+/).filter(Boolean)) {
+        words.push({ value, em: segment.em, breakBefore: pendingBreak && words.length > 0 });
+        pendingBreak = false;
+      }
+    });
+  }
   const container: Variants = {
     hidden: {},
     shown: { transition: { delayChildren: stagger(interval, { startDelay: delay }) } },
@@ -55,8 +61,9 @@ export default function RevealText({
     <Tag className={className} id={id} initial="hidden" variants={container} {...trigger}>
       <span className="sr-only">{plain(text)}</span>
       <span aria-hidden="true">
-        {words.map(({ value, em }, index) => (
+        {words.map(({ value, em, breakBefore }, index) => (
           <Fragment key={`${text}-${index}`}>
+            {breakBefore ? <br /> : null}
             <span className="word-mask">
               <motion.span className={em ? "word word-em" : "word"} variants={word}>
                 {value}

@@ -1,40 +1,23 @@
 "use client";
 
 import { ArrowUp, Pause, Play } from "lucide-react";
-import { cvPdf, links, whatsappUrl } from "../../data/site";
-import useAbidjanTime from "../ui/useAbidjanTime";
+import { cvPdf, links } from "../../data/site";
 import { useSite } from "./SiteProvider";
 
-/** Pied de page, dans le prolongement du contact : édition, heure locale, liens. */
+/** Pied de page, dans le prolongement du contact : la signature, trois liens, la pause des animations. */
 export default function Footer() {
   const { t, locale, paused, setPaused } = useSite();
   const year = new Date().getFullYear();
-  const time = useAbidjanTime();
 
   return (
     <footer className="site-footer">
       <div className="shell footer-bar">
-        <div className="footer-meta">
-          <div>
-            <p className="mono">{t.footer.version}</p>
-            <p>
-              {year} © Zié Daniogo
-            </p>
-          </div>
-          <div>
-            <p className="mono">{t.footer.localTime}</p>
-            <p>
-              <time>{time || "--:--"}</time> UTC+0, Abidjan
-            </p>
-          </div>
-        </div>
+        <p className="footer-sign">
+          © {year} Zié Daniogo. {t.footer.rights}.
+        </p>
 
         <nav className="footer-links" aria-label={t.footer.linksLabel}>
-          <p className="mono">{t.footer.linksLabel}</p>
           <div>
-            <a href={whatsappUrl(t.hero.message)} target="_blank" rel="noreferrer">
-              WhatsApp
-            </a>
             <a href={links.github} target="_blank" rel="noreferrer">
               GitHub
             </a>
@@ -63,7 +46,6 @@ export default function Footer() {
           </a>
         </div>
       </div>
-      <p className="sr-only">{t.footer.rights}</p>
     </footer>
   );
 }

@@ -1,0 +1,600 @@
+/* ==========================================================================
+   Transition d’ouverture : l’affiche reste en place, la suite monte par-dessus
+   ========================================================================== */
+
+@media (min-width: 1024px) and (min-height: 660px) {
+  .hero {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+  }
+
+  /* Tout ce qui suit l’affiche passe devant elle, sur un fond plein. */
+  main > section:not(.hero),
+  .site-footer {
+    position: relative;
+    z-index: 1;
+    background: var(--bg);
+  }
+}
+
+/* ==========================================================================
+   Ce que je construis : trois scènes, une image et une phrase chacune
+   Épinglée, la section fait glisser la caméra d’une scène à l’autre. Sans animation
+   (ou sur un écran trop bas), les scènes se lisent l’une sous l’autre.
+   ========================================================================== */
+
+.build {
+  position: relative;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 0;
+}
+
+.build-head {
+  padding-top: clamp(72px, 12svh, 120px);
+}
+
+.build-head .section-label {
+  margin: 0;
+  font-weight: 400;
+}
+
+.build-scene {
+  display: grid;
+  align-content: start;
+  gap: clamp(20px, 4svh, 40px);
+  padding: clamp(40px, 8svh, 72px) var(--edge) 0;
+}
+
+.build-text {
+  max-width: 17ch;
+  font-size: clamp(2rem, min(1rem + 3.2vw, 1rem + 5.6svh), 4.4rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.build-tools {
+  margin-top: clamp(18px, 3svh, 28px);
+  color: var(--fg-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.build-art {
+  margin: 0;
+  justify-self: center;
+  width: min(100%, 440px);
+}
+
+.build-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.build-rail {
+  display: none;
+}
+
+.build:not([data-moving]) {
+  padding-bottom: clamp(72px, 12svh, 120px);
+}
+
+/* Le travelling. */
+.build[data-moving] {
+  height: 340svh;
+}
+
+.build[data-moving] .build-pin {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100svh;
+  overflow: clip;
+}
+
+.build[data-moving] .build-head {
+  padding-top: calc(var(--header-h) + clamp(12px, 4svh, 44px));
+}
+
+.build[data-moving] .build-track {
+  display: flex;
+  width: 300vw;
+  min-height: 0;
+  will-change: transform;
+}
+
+.build[data-moving] .build-scene {
+  flex: 0 0 100vw;
+  align-content: center;
+  min-height: 0;
+  padding-block: clamp(12px, 3svh, 32px);
+}
+
+.build[data-moving] .build-art {
+  width: min(100%, 46svh, 440px);
+}
+
+.build[data-moving] .build-rail {
+  display: block;
+  padding-bottom: clamp(20px, 4svh, 40px);
+}
+
+.build-rail::before,
+.build-rail span {
+  content: "";
+  display: block;
+  height: 1px;
+}
+
+.build-rail::before {
+  background: var(--line);
+}
+
+.build-rail span {
+  margin-top: -1px;
+  background: var(--fg);
+  transform-origin: 0 50%;
+}
+
+@media (min-width: 1024px) {
+  .build-scene {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 24px;
+    align-items: center;
+    padding-top: clamp(56px, 10svh, 112px);
+  }
+
+  .build-copy {
+    grid-column: 1 / span 6;
+  }
+
+  .build-art {
+    grid-column: 7 / -1;
+    width: min(100%, 620px);
+  }
+
+  .build[data-moving] .build-art {
+    width: min(100%, 72svh, 700px);
+  }
+}
+
+/* ==========================================================================
+   Méthode : la règle à gauche, le planning à droite
+   ========================================================================== */
+
+.method-grid {
+  display: grid;
+  gap: clamp(40px, 7svh, 72px);
+}
+
+.method-title {
+  max-width: 15ch;
+  font-size: clamp(2.2rem, min(1rem + 3.4vw, 1rem + 5.8svh), 4.6rem);
+  font-weight: 500;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.orchestra {
+  --label-w: 150px;
+  display: grid;
+  gap: 24px;
+  margin: 0;
+}
+
+.orchestra-switch {
+  justify-self: start;
+  padding: 4px;
+  gap: 4px;
+}
+
+.orchestra-switch button {
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.orchestra-switch button + button {
+  border-left: 0;
+}
+
+/* Une ligne par tâche : la vignette dit qui s’en charge (le portrait, ou l’icône de l’agent). */
+.tl-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tl-owner {
+  flex-shrink: 0;
+}
+
+/* Les pistes arrivent l’une après l’autre, puis les barres se déploient. */
+.tl-row {
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: calc(var(--row) * 55ms);
+}
+
+.orchestra:not([data-shown]) .tl-row {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.orchestra[data-shown] .tl-bar {
+  transition-delay: calc(var(--row) * 40ms);
+}
+
+/* Le repère « seul » : une ligne discrète là où la livraison tomberait sans les agents. */
+.tl-mark {
+  position: absolute;
+  top: 10px;
+  bottom: 0;
+  left: calc(var(--label-w) + 16px + (100% - var(--label-w) - 16px) * var(--solo-end));
+  width: 1px;
+  background: repeating-linear-gradient(to bottom, var(--line-strong) 0 4px, transparent 4px 8px);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out) 0.5s;
+  pointer-events: none;
+}
+
+.tl-mark span {
+  position: absolute;
+  top: -10px;
+  right: 8px;
+  color: var(--fg-muted);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.orchestra[data-mode="team"][data-shown] .tl-mark {
+  opacity: 1;
+}
+
+@media (max-width: 639px) {
+  .orchestra {
+    --label-w: 146px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .method-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 24px;
+    align-items: end;
+  }
+
+  .method-head {
+    grid-column: 1 / span 5;
+    align-self: start;
+  }
+
+  .orchestra {
+    --label-w: 168px;
+    grid-column: 6 / -1;
+  }
+
+  .orchestra-switch {
+    justify-self: end;
+  }
+}
+
+/* ==========================================================================
+   Profil : le portrait sur toute la hauteur, une conviction, un paragraphe, le CV
+   ========================================================================== */
+
+.profile-grid {
+  display: grid;
+  gap: 40px;
+}
+
+.profile-still {
+  margin: 0;
+}
+
+.profile-still-frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--bg-sunken);
+}
+
+/* L’image déborde un peu de son cadre pour pouvoir y glisser. */
+.profile-still-image {
+  position: absolute;
+  inset: -6% 0;
+}
+
+.profile-still-image img {
+  object-fit: cover;
+  object-position: 50% 24%;
+}
+
+.profile-still-frame .is-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .profile-still-frame .is-light {
+    display: none;
+  }
+
+  :root:not([data-theme="light"]) .profile-still-frame .is-dark {
+    display: block;
+  }
+}
+
+:root[data-theme="dark"] .profile-still-frame .is-light {
+  display: none;
+}
+
+:root[data-theme="dark"] .profile-still-frame .is-dark {
+  display: block;
+}
+
+.profile-still figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 12px;
+  color: var(--fg-muted);
+}
+
+.profile-statement {
+  max-width: 13ch;
+  font-size: clamp(2.2rem, min(1rem + 3.4vw, 1rem + 5.8svh), 4.6rem);
+  font-weight: 500;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.profile-body {
+  max-width: 32rem;
+  margin-top: clamp(24px, 4svh, 36px);
+  color: var(--fg-muted);
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.profile-cv {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+  margin-top: clamp(28px, 5svh, 44px);
+}
+
+@media (min-width: 1024px) {
+  .profile-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 24px;
+    align-items: stretch;
+  }
+
+  .profile-still {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1 / span 5;
+  }
+
+  /* Le cadre prend toute la hauteur de la colonne de texte : plus de vide au-dessus du portrait. */
+  .profile-still-frame {
+    flex: 1;
+    min-height: min(68svh, 640px);
+    aspect-ratio: auto;
+  }
+
+  .profile-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    grid-column: 7 / -1;
+  }
+
+  .profile-copy .section-label {
+    margin-bottom: 0;
+  }
+
+  .profile-statement {
+    margin-top: auto;
+    padding-top: 48px;
+  }
+}
+
+/* ==========================================================================
+   Contact : de nuit, la question, le disque WhatsApp en face, trois coordonnées
+   ========================================================================== */
+
+.contact {
+  --section-pad: clamp(96px, min(11vw, 17svh), 176px);
+  padding: var(--section-pad) 0 0;
+  scroll-margin-top: calc(var(--header-h) + 28px - var(--section-pad));
+}
+
+.contact-stage {
+  display: grid;
+  gap: 40px;
+}
+
+.contact-title {
+  --em-color: var(--accent-text);
+  max-width: 11ch;
+  font-size: clamp(2.8rem, 1rem + 6.4vw, 8rem);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.contact-body {
+  max-width: 27rem;
+  margin-top: clamp(24px, 4svh, 36px);
+  color: var(--fg-muted);
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+  line-height: 1.5;
+}
+
+.contact-circle {
+  justify-self: end;
+}
+
+.contact-lines {
+  display: grid;
+  margin: clamp(56px, 10svh, 112px) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+}
+
+.contact-lines li {
+  border-bottom: 1px solid var(--line);
+}
+
+.contact-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+  color: var(--fg);
+  font-size: 1.02rem;
+  text-align: left;
+}
+
+.contact-line > span:first-child {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0% 1px no-repeat;
+  transition: background-size 0.5s var(--ease-out);
+}
+
+.contact-line svg {
+  color: var(--fg-muted);
+  transition:
+    color 0.3s var(--ease-out),
+    transform 0.4s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .contact-line:hover > span:first-child {
+    background-size: 100% 1px;
+  }
+
+  .contact-line:hover svg {
+    color: var(--fg);
+  }
+
+  a.contact-line:hover svg {
+    transform: translate(2px, -2px);
+  }
+}
+
+.copy-icon {
+  display: grid;
+  place-items: center;
+}
+
+@media (min-width: 768px) {
+  .contact-lines {
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contact-lines li {
+    border-bottom: 0;
+  }
+
+  .contact-line {
+    min-height: 76px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contact-stage {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: 48px;
+  }
+
+  .contact-circle {
+    margin: 0 clamp(0px, 6vw, 120px) 8px 0;
+  }
+}
+
+/* ==========================================================================
+   Pied de page, dans le prolongement du contact
+   ========================================================================== */
+
+.site-footer {
+  padding: 22px 0 max(22px, env(safe-area-inset-bottom));
+}
+
+.footer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 40px;
+}
+
+.footer-sign {
+  color: var(--fg-muted);
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  margin-left: auto;
+}
+
+.footer-links div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 22px;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font-size: 0.9rem;
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 4px) / 0% 1px no-repeat;
+  transition: background-size 0.5s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .footer-links a:hover {
+    background-size: 100% 1px;
+  }
+}
+
+.footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 639px) {
+  .footer-links {
+    margin-left: 0;
+  }
+
+  .footer-actions {
+    margin-left: auto;
+  }
+}

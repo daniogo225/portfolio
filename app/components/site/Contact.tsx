@@ -1,7 +1,6 @@
 "use client";
 
-import { Calendar, Check, Copy } from "lucide-react";
-import Image from "next/image";
+import { ArrowUpRight, Check, Copy } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { links, whatsappUrl } from "../../data/site";
@@ -18,7 +17,7 @@ export async function copyEmail() {
   }
 }
 
-/** Contact : le titre, une phrase, le bouton rond WhatsApp posé sur le filet, puis les coordonnées. */
+/** Contact : la question, une phrase, le disque WhatsApp en face, puis trois coordonnées sur une ligne. */
 export default function Contact() {
   const { t } = useSite();
   const c = t.contact;
@@ -40,8 +39,7 @@ export default function Contact() {
   return (
     <section id="contact" className="contact" aria-labelledby="contact-title">
       <div className="shell">
-        <div className="contact-head">
-          <Image className="contact-avatar" src="/portraits/cv-portrait.jpg" alt="" width={192} height={192} />
+        <div className="contact-stage">
           <div className="contact-heading">
             <RevealText as="h2" id="contact-title" className="contact-title" text={c.title} interval={0.07} />
             <motion.p
@@ -54,47 +52,56 @@ export default function Contact() {
               {c.body}
             </motion.p>
           </div>
-        </div>
 
-        <div className="contact-rule">
-          <div className="contact-circle">
+          <motion.div
+            className="contact-circle"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.9, delay: 0.35, ease: EASE_OUT }}
+          >
             <Magnetic strength={0.3}>
               <a className="circle-button is-accent" href={whatsappUrl(t.hero.message)} target="_blank" rel="noreferrer">
                 <span>{c.circle}</span>
               </a>
             </Magnetic>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="contact-pills">
-          <a className="pill" href={`mailto:${links.email}`}>
-            {links.email}
-          </a>
-          <button type="button" className="pill is-icon" onClick={copy} aria-label={copied ? c.copied : c.copy} title={copied ? c.copied : c.copy}>
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={copied ? "done" : "idle"}
-                className="copy-icon"
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.5, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                {copied ? <Check size={16} strokeWidth={2} aria-hidden="true" /> : <Copy size={16} strokeWidth={1.75} aria-hidden="true" />}
-              </motion.span>
-            </AnimatePresence>
-          </button>
-          <span className="sr-only" role="status">
-            {copied ? c.copied : ""}
-          </span>
-          <a className="pill" href={links.whatsapp} target="_blank" rel="noreferrer">
-            {links.phone}
-          </a>
-          <a className="pill" href={links.calendar} target="_blank" rel="noreferrer">
-            {c.call}
-            <Calendar size={16} strokeWidth={1.75} aria-hidden="true" />
-          </a>
-        </div>
+        <ul className="contact-lines">
+          <li>
+            <button type="button" className="contact-line" onClick={copy} title={copied ? c.copied : c.copy}>
+              <span>{links.email}</span>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={copied ? "done" : "idle"}
+                  className="copy-icon"
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.5, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {copied ? <Check size={16} strokeWidth={2} aria-hidden="true" /> : <Copy size={16} strokeWidth={1.75} aria-hidden="true" />}
+                </motion.span>
+              </AnimatePresence>
+              <span className="sr-only">, {c.copy}</span>
+            </button>
+            <span className="sr-only" role="status">
+              {copied ? c.copied : ""}
+            </span>
+          </li>
+          <li>
+            <a className="contact-line" href={links.tel}>
+              <span>{links.phone}</span>
+            </a>
+          </li>
+          <li>
+            <a className="contact-line" href={links.calendar} target="_blank" rel="noreferrer">
+              <span>{c.call}</span>
+              <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
   );

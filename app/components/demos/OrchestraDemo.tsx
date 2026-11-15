@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useInView } from "motion/react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useSite } from "../site/SiteProvider";
-import DemoFrame from "./DemoFrame";
 
 type Mode = "solo" | "team";
 type TaskKey = "frame" | "design" | "build" | "tests" | "docs" | "report" | "review";
@@ -35,7 +34,7 @@ function Owner({ lane, name }: { lane: number; name: string }) {
           <Icon size={11} strokeWidth={2} />
         </span>
       )}
-      <span>{name}</span>
+      <span className="sr-only">{name}</span>
     </span>
   );
 }
@@ -48,13 +47,14 @@ function Owner({ lane, name }: { lane: number; name: string }) {
 export default function OrchestraDemo() {
   const { t, calm } = useSite();
   const copy = t.demos.orchestra;
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { amount: 0.45, once: true });
   const [mode, setMode] = useState<Mode | null>(null);
   // Sans choix explicite : la file unique d’abord, puis la version orchestrée à l’entrée dans l’écran.
   const [revealed, setRevealed] = useState(false);
   const current: Mode = mode ?? (calm || revealed ? "team" : "solo");
   const end = Math.max(...PLAN.map((task) => task[current][1]));
+  const soloEnd = Math.max(...PLAN.map((task) => task.solo[1]));
 
   useEffect(() => {
     if (!inView || calm || mode) return;
@@ -63,44 +63,42 @@ export default function OrchestraDemo() {
   }, [inView, calm, mode]);
 
   return (
-    <DemoFrame number="3.1" label={copy.label} className="orchestra-demo">
-      <div ref={ref} className="orchestra" data-mode={current} data-shown={inView || calm ? "" : undefined} style={{ "--end": end / 100 } as CSSProperties}>
-        <div className="orchestra-head">
-          <div className="segmented orchestra-switch" role="radiogroup" aria-label={copy.label}>
-            {(["solo", "team"] as Mode[]).map((value) => (
-              <button key={value} type="button" role="radio" aria-checked={current === value} onClick={() => setMode(value)}>
-                {value === "solo" ? copy.solo : copy.team}
-              </button>
-            ))}
-          </div>
-          <p className="orchestra-caption" aria-live="polite">
-            {copy.caption[current]}
-          </p>
-        </div>
-
-        <div className="timeline">
-          <span className="tl-delivery" aria-hidden="true">
-            <span>{copy.end}</span>
-          </span>
-          <ol className="tl-rows">
-            {PLAN.map((task) => {
-              const [start, stop] = task[current];
-              const lane = current === "solo" ? 0 : task.lane;
-              return (
-                <li key={task.key} className="tl-row" data-lane={lane} data-review={task.key === "review" ? "" : undefined}>
-                  <span className="tl-label">
-                    <span className="tl-task">{copy.tasks[task.key]}</span>
-                    <Owner lane={lane} name={copy.lanes[lane]} />
-                  </span>
-                  <span className="tl-track" aria-hidden="true">
-                    <span className="tl-bar" style={{ left: `${start}%`, width: `${stop - start}%` }} />
-                  </span>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
+    <figure className="orchestra" ref={ref} data-mode={current} data-shown={inView || calm ? "" : undefined} style={{ "--end": end / 100, "--solo-end": soloEnd / 100 } as CSSProperties}>
+      <figcaption className="sr-only">{copy.label}</figcaption>
+      <div className="segmented orchestra-switch" role="radiogroup" aria-label={copy.label}>
+        {(["solo", "team"] as Mode[]).map((value) => (
+          <button key={value} type="button" role="radio" aria-checked={current === value} onClick={() => setMode(value)}>
+            {value === "solo" ? copy.solo : copy.team}
+          </button>
+        ))}
       </div>
-    </DemoFrame>
+
+      <div className="timeline">
+        {/* Le repère de la livraison « seul » reste en place : l’écart avec la livraison se lit sur le planning. */}
+        <span className="tl-mark" aria-hidden="true">
+          <span>{copy.solo}</span>
+        </span>
+        <span className="tl-delivery" aria-hidden="true">
+          <span>{copy.end}</span>
+        </span>
+        <ol className="tl-rows">
+          {PLAN.map((task, index) => {
+            const [start, stop] = task[current];
+            const lane = current === "solo" ? 0 : task.lane;
+            return (
+              <li key={task.key} className="tl-row" data-lane={lane} data-review={task.key === "review" ? "" : undefined} style={{ "--row": index } as CSSProperties}>
+                <span className="tl-label">
+                  <Owner lane={lane} name={copy.lanes[lane]} />
+                  <span className="tl-task">{copy.tasks[task.key]}</span>
+                </span>
+                <span className="tl-track" aria-hidden="true">
+                  <span className="tl-bar" style={{ left: `${start}%`, width: `${stop - start}%` }} />
+                </span>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </figure>
   );
 }

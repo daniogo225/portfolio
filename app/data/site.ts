@@ -61,5 +61,5 @@ export function parseEmphasis(text: string) {
 
 /** Texte brut, sans les marqueurs de mise en valeur. */
 export function plain(text: string) {
-  return text.replaceAll("*", "");
+  return text.replaceAll("*", "").replace(/\s*\n\s*/g, " ");
 }

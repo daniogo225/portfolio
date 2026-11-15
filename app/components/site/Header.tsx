@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Command, Menu, Moon, Sun, X } from "lucide-react";
+import { ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
 import {
   AnimatePresence,
   motion,
@@ -16,12 +16,12 @@ import { EASE_OUT } from "../ui/RevealText";
 import useAbidjanTime from "../ui/useAbidjanTime";
 import { useSite } from "./SiteProvider";
 
-export const SECTIONS = ["demo", "method", "profile", "contact"] as const;
+export const SECTIONS = ["build", "method", "profile", "contact"] as const;
 export type SectionId = (typeof SECTIONS)[number];
 
 export function sectionLabel(t: ReturnType<typeof useSite>["t"], id: SectionId) {
   const labels: Record<SectionId, string> = {
-    demo: t.nav.demo,
+    build: t.nav.build,
     method: t.nav.method,
     profile: t.nav.profile,
     contact: t.nav.contact,
@@ -104,13 +104,12 @@ const menuItem: Variants = {
   open: { y: "0%", transition: { duration: 0.8, ease: EASE_OUT } },
 };
 
-export default function Header({ onOpenPalette }: { onOpenPalette: () => void }) {
+export default function Header() {
   const { t, lockScroll, calm } = useSite();
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<SectionId | null>(null);
-  const [shortcut, setShortcut] = useState("Ctrl K");
   const menuButton = useRef<HTMLButtonElement>(null);
   const firstLink = useRef<HTMLAnchorElement>(null);
   const time = useAbidjanTime();
@@ -124,13 +123,6 @@ export default function Header({ onOpenPalette }: { onOpenPalette: () => void })
     if (current > 320 && current > previous + 4) setHidden(true);
     else if (current < previous - 4 || current < 320) setHidden(false);
   });
-
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => {
-      if (/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) setShortcut("⌘ K");
-    });
-    return () => cancelAnimationFrame(frame);
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -216,10 +208,6 @@ export default function Header({ onOpenPalette }: { onOpenPalette: () => void })
           <span className="header-clock mono" aria-live="off">
             {t.controls.localTime} <time>{time || "--:--"}</time>
           </span>
-          <button type="button" className="palette-trigger" onClick={onOpenPalette} aria-label={t.controls.palette}>
-            <Command size={14} strokeWidth={1.75} aria-hidden="true" />
-            <kbd>{shortcut}</kbd>
-          </button>
           <div className="desktop-only">
             <LocaleSwitch id="header" />
           </div>

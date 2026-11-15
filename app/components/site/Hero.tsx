@@ -1,18 +1,20 @@
 "use client";
 
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import {
   motion,
   useAnimationFrame,
   useMotionValue,
+  useMotionTemplate,
+  useMotionValueEvent,
   useScroll,
   useSpring,
   useTransform,
   useVelocity,
   wrap,
 } from "motion/react";
-import { useRef, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import { person, whatsappUrl } from "../../data/site";
 import Magnetic from "../ui/Magnetic";
 import RevealText from "../ui/RevealText";
@@ -65,6 +67,7 @@ function NameMarquee({ calm }: { calm: boolean }) {
 
   return (
     <div className="hero-name" aria-hidden="true">
+      <div className="hero-name-rise">
       <motion.div className="hero-name-track" style={{ x }}>
         {Array.from({ length: COPIES }, (_, index) => (
           <span key={index} className="hero-name-item">
@@ -77,27 +80,66 @@ function NameMarquee({ calm }: { calm: boolean }) {
           </span>
         ))}
       </motion.div>
+      </div>
     </div>
   );
 }
 
+const DRIFT = { stiffness: 70, damping: 18, mass: 0.6 };
+
 export default function Hero() {
   const { t, calm } = useSite();
-  // La parallaxe ne joue que sur grand écran : sur téléphone, le portrait glisserait sur le texte.
+  // La profondeur ne joue que sur grand écran : sur téléphone, le portrait glisserait sur le texte.
   const wide = useMediaQuery("(min-width: 1024px)");
   const still = calm || !wide;
-  const ref = useRef<HTMLElement>(null);
   const time = useAbidjanTime();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const portraitY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
-  const nameY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
-  const copyY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+
+  // Au défilement : l’affiche reste en place pendant que la suite monte par-dessus. Le nom file
+  // vers le haut, le portrait suit à peine, les textes s’effacent.
+  const { scrollY } = useScroll();
+  const progress = useTransform(scrollY, (value) =>
+    typeof window === "undefined" ? 0 : Math.min(1, value / window.innerHeight),
+  );
+  const portraitY = useTransform(progress, [0, 1], ["0%", "-5%"]);
+  const nameY = useTransform(progress, [0, 1], ["0%", "-46%"]);
+  const copyY = useTransform(progress, [0, 1], ["0%", "-34%"]);
+  const copyOpacity = useTransform(progress, [0, 0.6], [1, 0]);
+  const veil = useTransform(progress, [0, 1], [0, 0.55]);
+  // Une fois l’affiche recouverte, le nom cesse de défiler : rien ne tourne hors champ.
+  const [covered, setCovered] = useState(false);
+  useMotionValueEvent(progress, "change", (value) => setCovered(value >= 1));
+
+  // Au pointeur : trois plans qui glissent à des vitesses différentes, le nom au fond, le
+  // portrait devant. Quelques pixels, amortis par un ressort.
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const driftX = useSpring(pointerX, DRIFT);
+  const driftY = useSpring(pointerY, DRIFT);
+  const portraitX = useTransform(driftX, (value) => value * -14);
+  const portraitLift = useTransform(driftY, (value) => value * -6);
+  const nameX = useTransform(driftX, (value) => value * 34);
+  const copyX = useTransform(driftX, (value) => value * 8);
+  const portraitTransform = useMotionTemplate`translate3d(${portraitX}px, calc(${portraitY} + ${portraitLift}px), 0)`;
+
+  function drift(event: PointerEvent<HTMLElement>) {
+    if (still || event.pointerType !== "mouse") return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
+    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
+  }
+
+  function settle() {
+    pointerX.set(0);
+    pointerY.set(0);
+  }
+
+  const [before, after = ""] = t.hero.clock.split("{time}");
 
   return (
-    <section ref={ref} className="hero" id="top" aria-labelledby="hero-title">
-      <motion.div className="hero-pitch" style={still ? undefined : { y: copyY }}>
-        <RevealText as="h1" id="hero-title" className="hero-title" text={t.hero.title} mode="mount" delay={0.3} interval={0.06} />
-        <div className="hero-actions rise" style={rise(0.9)}>
+    <section className="hero" id="top" aria-labelledby="hero-title" onPointerMove={drift} onPointerLeave={settle}>
+      <motion.div className="hero-pitch" style={still ? undefined : { x: copyX, y: copyY, opacity: copyOpacity }}>
+        <RevealText as="h1" id="hero-title" className="hero-title" text={t.hero.title} mode="mount" delay={0.95} interval={0.07} />
+        <div className="hero-actions rise" style={rise(1.6)}>
           <Magnetic>
             <a className="button button-primary" href={whatsappUrl(t.hero.message)} target="_blank" rel="noreferrer">
               <span className="roll" data-text={t.hero.primary}>
@@ -106,15 +148,11 @@ export default function Hero() {
               <ArrowUpRight size={17} strokeWidth={1.75} aria-hidden="true" />
             </a>
           </Magnetic>
-          <a className="text-link hero-secondary" href="#demo">
-            {t.hero.secondary}
-            <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
-          </a>
         </div>
       </motion.div>
 
       <div className="hero-stage">
-        <motion.figure className="hero-portrait" style={still ? undefined : { y: portraitY }}>
+        <motion.figure className="hero-portrait" style={still ? undefined : { transform: portraitTransform }}>
           <Image
             src="/portraits/daniogo-product-engineer-cutout.png"
             alt={t.hero.portrait}
@@ -123,21 +161,37 @@ export default function Hero() {
             sizes="(min-width: 1024px) 40vw, 90vw"
           />
         </motion.figure>
-        <motion.div className="hero-name-wrap" style={still ? undefined : { y: nameY }}>
-          <NameMarquee calm={calm} />
+        <motion.div className="hero-name-wrap" style={still ? undefined : { x: nameX, y: nameY }}>
+          <NameMarquee calm={calm || covered} />
         </motion.div>
       </div>
 
-      <motion.div className="hero-about rise" style={still ? rise(0.6) : { ...rise(0.6), y: copyY }}>
-        <Globe />
+      <motion.div className="hero-about" style={still ? undefined : { x: copyX, y: copyY, opacity: copyOpacity }}>
+        <span className="hero-about-globe rise" style={rise(0.7)}>
+          <Globe />
+        </span>
         <p>
-          <strong>{t.hero.eyebrow}</strong>
-          <span>
-            {t.hero.place} · <time>{time || "--:--"}</time>
+          <span className="line-mask">
+            <strong className="line" style={rise(0.74)}>
+              {t.hero.eyebrow}
+            </strong>
           </span>
-          <span>{t.hero.availability}</span>
+          <span className="line-mask">
+            <span className="line" style={rise(0.82)}>
+              {before}
+              <time>{time || "--:--"}</time>
+              {after}
+            </span>
+          </span>
+          <span className="line-mask">
+            <span className="line" style={rise(0.9)}>
+              {t.hero.availability}
+            </span>
+          </span>
         </p>
       </motion.div>
+
+      <motion.div className="hero-veil" style={still ? undefined : { opacity: veil }} aria-hidden="true" />
     </section>
   );
 }

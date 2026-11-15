@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { SiteContent } from "../data/content";
 import type { Locale } from "../data/site";
-import Chain from "./site/Chain";
+import Build from "./site/Build";
 import CommandPalette from "./site/CommandPalette";
 import Contact from "./site/Contact";
 import FloatingCta from "./site/FloatingCta";
@@ -39,10 +39,10 @@ function Site() {
       >
         {t.meta.skip}
       </a>
-      <Header onOpenPalette={() => setPaletteOpen(true)} />
+      <Header />
       <main id="main" tabIndex={-1}>
         <Hero />
-        <Chain />
+        <Build />
         <Method />
         <Profile />
         <Contact />
