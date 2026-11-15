@@ -100,7 +100,7 @@ html {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  html:not(.lenis) {
+  html:not(.lenis):not([data-motion="off"]) {
     scroll-behavior: smooth;
   }
 }
@@ -463,7 +463,6 @@ main:focus {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  min-height: 40px;
   color: var(--fg);
   font-size: 0.875rem;
 }
@@ -1632,11 +1631,35 @@ main:focus {
   z-index: 2;
 }
 
+/* Animations coupées (interrupteur du pied de page ou préférence du système) : plus rien ne bouge.
+   Les entrées, les boucles et les transitions arrivent tout de suite à leur état final. */
+[data-motion="off"] *,
+[data-motion="off"] ::before,
+[data-motion="off"] ::after {
+  animation-duration: 0.01ms !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0s !important;
+  scroll-behavior: auto !important;
+}
+
 [data-motion="off"] .rise,
 [data-motion="off"] .line,
 [data-motion="off"] .hero-portrait img,
 [data-motion="off"] .hero-banner-star path {
   animation: none;
+}
+
+/* Rien n’attend d’être défilé pour apparaître, rien ne reste à mi-course : les textes révélés mot
+   à mot, les blocs qui entrent au défilement et les plans de la hero sont à leur place. */
+[data-motion="off"] :is(.word, .magnetic, .hero-pitch, .hero-portrait, .hero-banner-wrap, .profile-portrait, .profile-body, .profile-cv, .contact-circle) {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+[data-motion="off"] .hero-veil {
+  opacity: 0 !important;
 }
 
 [data-motion="off"] .roll::after {
@@ -1647,10 +1670,11 @@ main:focus {
   transform: none !important;
 }
 
+/* Sans script, la préférence du système suffit. Avec, le choix du visiteur (data-motion) l’emporte. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
+  html:not([data-motion="on"]) *,
+  html:not([data-motion="on"]) ::before,
+  html:not([data-motion="on"]) ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

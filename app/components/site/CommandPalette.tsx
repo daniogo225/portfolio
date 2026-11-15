@@ -28,7 +28,7 @@ function openExternal(url: string) {
 
 /** Palette d’actions au clavier (Ctrl K ou ⌘ K) : sections, thème, langue, contact. */
 export default function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { t, locale, setLocale, theme, toggleTheme, paused, setPaused, scrollTo, lockScroll } = useSite();
+  const { t, locale, setLocale, theme, toggleTheme, calm, setCalm, scrollTo, lockScroll } = useSite();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
@@ -120,12 +120,12 @@ export default function CommandPalette({ open, onClose }: { open: boolean; onClo
       {
         id: "motion",
         group: t.palette.actions,
-        label: paused ? t.palette.play : t.palette.pause,
-        run: () => setPaused(!paused),
+        label: calm ? t.palette.play : t.palette.pause,
+        run: () => setCalm(!calm),
       },
     ];
     return [...navigate, ...tools];
-  }, [locale, paused, scrollTo, setLocale, setPaused, t, theme, toggleTheme]);
+  }, [calm, locale, scrollTo, setCalm, setLocale, t, theme, toggleTheme]);
 
   const filtered = useMemo(() => {
     const needle = normalize(query.trim());

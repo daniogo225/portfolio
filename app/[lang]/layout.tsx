@@ -56,8 +56,9 @@ export const viewport: Viewport = {
   ],
 };
 
-// Applique le thème choisi avant le premier rendu pour éviter un flash de la mauvaise couleur.
-const themeScript = `try{var t=localStorage.getItem("portfolio-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+// Applique le thème et le réglage des animations avant le premier rendu : ni flash de la mauvaise
+// couleur, ni entrée qui démarre alors que le visiteur a coupé le mouvement.
+const themeScript = `try{var d=document.documentElement,t=localStorage.getItem("portfolio-theme"),m=localStorage.getItem("portfolio-motion");if(t==="light"||t==="dark")d.dataset.theme=t;if(m!=="on"&&m!=="off")m=matchMedia("(prefers-reduced-motion: reduce)").matches?"off":"on";d.dataset.motion=m}catch(e){}`;
 
 export default async function RootLayout({
   children,

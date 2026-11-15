@@ -1,12 +1,13 @@
 "use client";
 
 import Lenis from "lenis";
-import { MotionConfig } from "motion/react";
+import { MotionConfig, MotionGlobalConfig } from "motion/react";
 import {
   createContext,
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -26,10 +27,13 @@ type SiteContextValue = {
   setLocale: (locale: Locale) => void;
   theme: Theme;
   toggleTheme: (origin?: { x: number; y: number }) => void;
-  paused: boolean;
-  setPaused: (paused: boolean) => void;
-  /** Vrai quand aucune animation ne doit tourner : préférence système ou pause demandée. */
+  /**
+   * Vrai quand rien ne doit bouger. Le choix du visiteur l’emporte ; sans choix, on suit la
+   * préférence du système (prefers-reduced-motion). Les deux mènent au même site immobile.
+   */
   calm: boolean;
+  /** Coupe ou relance les animations, et retient le choix pour les prochaines visites. */
+  setCalm: (calm: boolean) => void;
   scrollTo: (target: string | number) => void;
   lockScroll: (locked: boolean) => void;
 };
@@ -46,7 +50,57 @@ function writeStorage(key: string, value: string) {
   }
 }
 
+const MOTION_KEY = "portfolio-motion";
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+
+type MotionChoice = "on" | "off" | null;
+
+// Le choix du visiteur vit dans le stockage local : il tient au rechargement, au changement de
+// langue et d’un onglet à l’autre. Sans stockage, il tient le temps de la visite.
+let motionChoice: MotionChoice | undefined;
+const motionListeners = new Set<() => void>();
+
+function readMotionChoice(): MotionChoice {
+  if (motionChoice === undefined) {
+    try {
+      const stored = localStorage.getItem(MOTION_KEY);
+      motionChoice = stored === "on" || stored === "off" ? stored : null;
+    } catch {
+      motionChoice = null;
+    }
+  }
+  return motionChoice;
+}
+
+function subscribeMotionChoice(onChange: () => void) {
+  const sync = (event: StorageEvent) => {
+    if (event.key !== MOTION_KEY) return;
+    motionChoice = undefined;
+    onChange();
+  };
+  motionListeners.add(onChange);
+  window.addEventListener("storage", sync);
+  return () => {
+    motionListeners.delete(onChange);
+    window.removeEventListener("storage", sync);
+  };
+}
+
+function writeMotionChoice(choice: Exclude<MotionChoice, null>) {
+  motionChoice = choice;
+  writeStorage(MOTION_KEY, choice);
+  motionListeners.forEach((listener) => listener());
+}
+
+/** Le repère visible au moment du réglage : le contrôle utilisé, sinon la section au milieu de l’écran. */
+function viewportAnchor() {
+  const active = document.activeElement;
+  if (active instanceof HTMLElement && active !== document.body && !active.closest("dialog")) {
+    const rect = active.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) return active;
+  }
+  return document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)?.closest<HTMLElement>("section, footer") ?? null;
+}
 
 function subscribeReducedMotion(onChange: () => void) {
   const media = matchMedia(REDUCED_MOTION);
@@ -80,10 +134,17 @@ export default function SiteProvider({
 }) {
   const router = useRouter();
   const [theme, setTheme] = useState<Theme>("dark");
-  const [paused, setPaused] = useState(false);
   const prefersReduced = usePrefersReducedMotion();
-  const calm = paused || prefersReduced;
+  const choice = useSyncExternalStore(subscribeMotionChoice, readMotionChoice, () => null);
+  const calm = choice ? choice === "off" : prefersReduced;
   const lenisRef = useRef<Lenis | null>(null);
+  const anchor = useRef<{ element: HTMLElement; top: number } | null>(null);
+
+  const setCalm = useCallback((next: boolean) => {
+    const element = viewportAnchor();
+    anchor.current = element ? { element, top: element.getBoundingClientRect().top } : null;
+    writeMotionChoice(next ? "off" : "on");
+  }, []);
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -102,8 +163,17 @@ export default function SiteProvider({
     };
   }, []);
 
-  useEffect(() => {
+  // Couper ou relancer change la hauteur de « Ce que je fais » (travelling ou scènes empilées) :
+  // on recale le défilement pour que ce que le visiteur regardait ne bouge pas sous son doigt.
+  useLayoutEffect(() => {
     document.documentElement.dataset.motion = calm ? "off" : "on";
+    // Tout ce que la bibliothèque d’animation lancerait arrive directement à son état final.
+    MotionGlobalConfig.skipAnimations = calm;
+    const kept = anchor.current;
+    anchor.current = null;
+    if (!kept || !kept.element.isConnected) return;
+    const shift = kept.element.getBoundingClientRect().top - kept.top;
+    if (Math.abs(shift) > 1) window.scrollBy({ top: shift, behavior: "instant" });
   }, [calm]);
 
   useEffect(() => {
@@ -182,18 +252,17 @@ export default function SiteProvider({
       setLocale,
       theme,
       toggleTheme,
-      paused,
-      setPaused,
       calm,
+      setCalm,
       scrollTo,
       lockScroll,
     }),
-    [calm, locale, lockScroll, paused, scrollTo, setLocale, t, theme, toggleTheme],
+    [calm, locale, lockScroll, scrollTo, setCalm, setLocale, t, theme, toggleTheme],
   );
 
   return (
     <SiteContext.Provider value={value}>
-      <MotionConfig reducedMotion={paused ? "always" : "user"}>{children}</MotionConfig>
+      <MotionConfig reducedMotion={calm ? "always" : "never"}>{children}</MotionConfig>
     </SiteContext.Provider>
   );
 }

@@ -1,12 +1,12 @@
 "use client";
 
-import { ArrowUp, Pause, Play } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { cvPdf, links } from "../../data/site";
 import { useSite } from "./SiteProvider";
 
-/** Pied de page, dans le prolongement du contact : la signature, trois liens, la pause des animations. */
+/** Pied de page, dans le prolongement du contact : la signature, trois liens, l’interrupteur des animations. */
 export default function Footer() {
-  const { t, locale, paused, setPaused } = useSite();
+  const { t, locale, calm, setCalm } = useSite();
   const year = new Date().getFullYear();
 
   return (
@@ -31,15 +31,12 @@ export default function Footer() {
         </nav>
 
         <div className="footer-actions">
-          <button
-            type="button"
-            className="chip-button"
-            aria-pressed={paused}
-            aria-label={paused ? t.footer.play : t.footer.pause}
-            onClick={() => setPaused(!paused)}
-          >
+          {/* Un interrupteur : allumé, le site bouge ; éteint, plus rien ne bouge. L’état se lit sans légende. */}
+          <button type="button" role="switch" className="chip-button switch" aria-checked={!calm} onClick={() => setCalm(!calm)}>
             {t.footer.motion}
-            {paused ? <Play size={14} strokeWidth={2} aria-hidden="true" /> : <Pause size={14} strokeWidth={2} aria-hidden="true" />}
+            <span className="switch-track" aria-hidden="true">
+              <span className="switch-thumb" />
+            </span>
           </button>
           <a className="icon-button is-outlined" href="#top" aria-label={t.footer.top} title={t.footer.top}>
             <ArrowUp size={18} strokeWidth={1.75} aria-hidden="true" />

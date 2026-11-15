@@ -125,7 +125,7 @@ function sameBox(a: Box | null, b: Box) {
  * du défilement de la page. Immobile, l’étoile se cale derrière le portrait et le nom se lit
  * entier de chaque côté.
  */
-function NameBanner({ calm, avoid }: { calm: boolean; avoid: RefObject<HTMLElement | null> }) {
+function NameBanner({ calm, rest, avoid }: { calm: boolean; rest: boolean; avoid: RefObject<HTMLElement | null> }) {
   const maskId = useId();
   const pathId = useId();
   const svg = useRef<SVGSVGElement>(null);
@@ -181,6 +181,7 @@ function NameBanner({ calm, avoid }: { calm: boolean; avoid: RefObject<HTMLEleme
     return () => observer.disconnect();
   }, [avoid]);
 
+  // Animations coupées (rest) : la bannière revient à sa pose de repos au lieu de se figer en route.
   useEffect(() => {
     metrics.current.stale = true;
     const refresh = () => {
@@ -189,7 +190,7 @@ function NameBanner({ calm, avoid }: { calm: boolean; avoid: RefObject<HTMLEleme
     // La période dépend de la police : on remesure quand elle arrive.
     document.fonts.addEventListener("loadingdone", refresh);
     return () => document.fonts.removeEventListener("loadingdone", refresh);
-  }, [geometry]);
+  }, [geometry, rest]);
 
   useEffect(() => {
     if (!ready) return;
@@ -393,7 +394,7 @@ export default function Hero() {
           />
         </motion.figure>
         <motion.div className="hero-banner-wrap" style={still ? undefined : { x: bannerX, y: bannerY }}>
-          <NameBanner calm={calm || covered} avoid={pitch} />
+          <NameBanner calm={calm || covered} rest={calm} avoid={pitch} />
         </motion.div>
       </div>
 
