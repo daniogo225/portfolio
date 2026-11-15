@@ -97,7 +97,7 @@ const fr = {
   figures: [
     { value: 3, suffix: "\u00a0ans+", caption: "chez Comafrique Technologies" },
     { value: 30, suffix: "+", caption: "bases de code en tant que contributeur" },
-    { value: 3000, suffix: "", caption: "commits ou presque, en 14 mois" },
+    { value: 2800, suffix: "+", caption: "commits en 14 mois" },
   ],
   contact: {
     label: "Contact",
@@ -235,7 +235,7 @@ const en: SiteContent = {
   figures: [
     { value: 3, suffix: "+ years", caption: "at Comafrique Technologies" },
     { value: 30, suffix: "+", caption: "codebases contributed to" },
-    { value: 3000, suffix: "", caption: "commits, or close to it, in 14 months" },
+    { value: 2800, suffix: "+", caption: "commits in 14 months" },
   ],
   contact: {
     label: "Contact",
