@@ -9,8 +9,8 @@ const fr = {
   meta: {
     title: "Zié Daniogo, développeur full-stack et IA à Abidjan",
     description:
-      "Zié Daniogo, développeur full-stack et IA à Abidjan, Côte d’Ivoire. Applications iOS et Android en React Native, back-offices web en Laravel et React, IA intégrée.",
-    ogAlt: "Zié Daniogo, développeur full-stack et IA à Abidjan. Je dessine, je code, je mets en ligne. Moi-même.",
+      "Zié Daniogo, développeur full-stack et IA basé à Abidjan, Côte d’Ivoire. Applications web et mobiles conçues, développées et mises en ligne de bout en bout, avec intégration d’IA.",
+    ogAlt: "Zié Daniogo, développeur full-stack et IA basé à Abidjan. Des applications web et mobiles, conçues, développées et mises en ligne de bout en bout.",
     skip: "Aller au contenu",
     navLabel: "Navigation principale",
     mobileNavLabel: "Navigation mobile",
@@ -32,7 +32,7 @@ const fr = {
   },
   hero: {
     eyebrow: "Développeur full-stack et IA",
-    title: "Je dessine,\nje code,\nje mets en ligne.\n*Moi-même.*",
+    title: "Des applications web et mobiles, conçues, développées et mises en ligne *de bout en bout.*",
     primary: "Écrire sur WhatsApp",
     portrait: "Zié Daniogo, debout, en veste noire",
     message: "Bonjour Zié, je vous écris depuis votre portfolio.",
@@ -42,20 +42,20 @@ const fr = {
     scenes: [
       {
         id: "mobile",
-        text: "Je fais des applications iOS et Android.",
-        note: "En React Native. Je dessine chaque écran avant de le coder.",
+        text: "Des applications mobiles iOS et Android au design soigné, pensées pour être adoptées dès la première utilisation.",
+        tools: "React Native",
         alt: "Un téléphone debout, devant deux croquis d’écran et un crayon.",
       },
       {
         id: "desk",
-        text: "Derrière,\nle back-office web.",
-        note: "En Laravel et React. J’y branche l’IA\u202f: modèles de langage, voix, lecture de documents.",
+        text: "Des applications web modernes, avec intégration d’intelligence artificielle, pour les cas d’usage les plus exigeants.",
+        tools: "Laravel, React",
         alt: "Un bureau, avec un écran qui affiche une carte et ses repères.",
       },
       {
         id: "server",
-        text: "Je déploie moi-même.",
-        note: "Sur des serveurs Linux que j’administre.",
+        text: "Une mise en production maîtrisée\u202f: déploiement, sécurité et suivi, sans intermédiaire.",
+        tools: "Linux, Docker",
         alt: "Une baie de serveurs, câbles rangés.",
       },
     ],
@@ -85,8 +85,8 @@ const fr = {
   },
   profile: {
     label: "Profil",
-    lead: "Je tiens à des écrans\nqu’on comprend\ndu premier coup.",
-    body: "Développeur full-stack à Abidjan. Web, mobile et IA intégrée : je dessine, je code et je mets en ligne.",
+    lead: "Développeur full-stack et IA, basé à Abidjan.",
+    body: "Je conçois les interfaces, j’écris le code et j’assure la mise en ligne.",
     languages: "Français, anglais",
     photo: "Portrait de Zié Daniogo, en veste noire",
     cvPdf: "Télécharger le CV",
@@ -94,7 +94,7 @@ const fr = {
   },
   contact: {
     label: "Contact",
-    title: "*Écrivez-moi.*",
+    title: "Un projet, une question\u202f?\n*Écrivez-moi.*",
     body: "Je réponds sur WhatsApp et par e-mail.",
     circle: "Écrire sur WhatsApp",
     copy: "Copier l’adresse",
@@ -142,8 +142,8 @@ const en: SiteContent = {
   meta: {
     title: "Zié Daniogo, full-stack and AI developer in Abidjan",
     description:
-      "Zié Daniogo, full-stack and AI developer in Abidjan, Côte d’Ivoire (Ivory Coast). iOS and Android apps in React Native, web back offices in Laravel and React, AI built in.",
-    ogAlt: "Zié Daniogo, full-stack and AI developer in Abidjan. I design it, build it and ship it. Myself.",
+      "Zié Daniogo, full-stack and AI developer based in Abidjan, Côte d’Ivoire (Ivory Coast). Web and mobile applications designed, built and shipped end to end, with AI integration.",
+    ogAlt: "Zié Daniogo, full-stack and AI developer based in Abidjan. Web and mobile applications, designed, built and shipped end to end.",
     skip: "Skip to content",
     navLabel: "Main navigation",
     mobileNavLabel: "Mobile navigation",
@@ -165,7 +165,7 @@ const en: SiteContent = {
   },
   hero: {
     eyebrow: "Full-stack and AI developer",
-    title: "I design it,\nbuild it,\nship it.\n*Myself.*",
+    title: "Web and mobile applications, designed, built and shipped *end to end.*",
     primary: "Message me on WhatsApp",
     portrait: "Zié Daniogo, standing, wearing a black overshirt",
     message: "Hi Zié, I found you through your portfolio.",
@@ -175,20 +175,20 @@ const en: SiteContent = {
     scenes: [
       {
         id: "mobile",
-        text: "I make iOS and Android apps.",
-        note: "In React Native. I draw every screen before I code it.",
+        text: "iOS and Android mobile applications with carefully crafted design, built to be adopted from the very first use.",
+        tools: "React Native",
         alt: "A phone standing behind two screen sketches and a pencil.",
       },
       {
         id: "desk",
-        text: "Behind them,\na web back office.",
-        note: "Laravel and React. That’s where I wire in the AI: language models, voice, document reading.",
+        text: "Modern web applications with integrated artificial intelligence, built for the most demanding use cases.",
+        tools: "Laravel, React",
         alt: "A desk with a screen showing a map and its pins.",
       },
       {
         id: "server",
-        text: "I deploy it myself.",
-        note: "On Linux servers I run.",
+        text: "Controlled production releases: deployment, security and monitoring, with no intermediary.",
+        tools: "Linux, Docker",
         alt: "A server rack with tidy cables.",
       },
     ],
@@ -218,8 +218,8 @@ const en: SiteContent = {
   },
   profile: {
     label: "About",
-    lead: "I care about screens\npeople understand\nat first glance.",
-    body: "Full-stack developer in Abidjan. Web, mobile and built-in AI: I design, build and ship.",
+    lead: "Full-stack and AI developer, based in Abidjan.",
+    body: "I design the interfaces, write the code and handle the release.",
     languages: "French, English",
     photo: "Portrait of Zié Daniogo, wearing a black overshirt",
     cvPdf: "Download the résumé",
@@ -227,7 +227,7 @@ const en: SiteContent = {
   },
   contact: {
     label: "Contact",
-    title: "*Write to me.*",
+    title: "A project, a question?\n*Write to me.*",
     body: "I answer on WhatsApp and by email.",
     circle: "Message me on WhatsApp",
     copy: "Copy address",

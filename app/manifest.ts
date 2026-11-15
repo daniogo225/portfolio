@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: `${person.name}, développeur full-stack et IA`,
     short_name: person.name,
-    description: "Zié Daniogo, développeur full-stack et IA à Abidjan : applications mobiles, applications web et IA intégrée.",
+    description: "Zié Daniogo, développeur full-stack et IA basé à Abidjan : applications web et mobiles conçues, développées et mises en ligne de bout en bout.",
     start_url: "/",
     display: "standalone",
     lang: "fr",

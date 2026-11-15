@@ -19,7 +19,7 @@
 }
 
 /* ==========================================================================
-   Ce que je fais : trois scènes, une image, une phrase et sa précision
+   Ce que je fais : trois scènes, une image, une phrase et ses outils
    Épinglée, la section fait glisser la caméra d’une scène à l’autre. Sans animation
    (ou sur un écran trop bas), les scènes se lisent l’une sous l’autre.
    ========================================================================== */
@@ -46,24 +46,20 @@
   padding: clamp(40px, 8svh, 72px) var(--edge) 0;
 }
 
+/* Une phrase entière par scène : un corps de lecture, sur quatre ou cinq lignes équilibrées. */
 .build-text {
-  max-width: 17ch;
-  font-size: clamp(2rem, min(1rem + 3.2vw, 1rem + 5.6svh), 4.4rem);
+  max-width: 26ch;
+  font-size: clamp(1.55rem, min(0.7rem + 2vw, 0.7rem + 3.6svh), 2.9rem);
   font-weight: 500;
-  line-height: 1.04;
-  letter-spacing: -0.045em;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
   text-wrap: balance;
-  /* Les retours à la ligne du texte sont respectés : la coupe d’une phrase se choisit. */
-  white-space: pre-line;
 }
 
-.build-note {
-  max-width: 34ch;
+/* Les outils : une petite ligne, en retrait sous la phrase. */
+.build-tools {
   margin-top: clamp(18px, 3svh, 28px);
   color: var(--fg-muted);
-  font-size: clamp(1.02rem, 0.95rem + 0.35vw, 1.22rem);
-  line-height: 1.5;
-  text-wrap: pretty;
 }
 
 .build-art {
@@ -376,6 +372,7 @@
   font-weight: 500;
   line-height: 1.02;
   letter-spacing: -0.048em;
+  text-wrap: balance;
 }
 
 .profile-body {
@@ -383,6 +380,7 @@
   color: var(--fg-muted);
   font-size: 1.08rem;
   line-height: 1.6;
+  text-wrap: pretty;
 }
 
 .profile-cv {
@@ -457,13 +455,13 @@
   gap: 40px;
 }
 
+/* Deux lignes : la question, puis l’invitation. Le corps laisse la question tenir sur sa ligne. */
 .contact-title {
   --em-color: var(--accent-text);
-  max-width: 11ch;
-  font-size: clamp(2.8rem, 1rem + 6.4vw, 8rem);
+  font-size: clamp(2.4rem, 0.8rem + 4.2vw, 5.6rem);
   font-weight: 500;
-  line-height: 0.96;
-  letter-spacing: -0.055em;
+  line-height: 1;
+  letter-spacing: -0.05em;
   text-wrap: balance;
 }
 

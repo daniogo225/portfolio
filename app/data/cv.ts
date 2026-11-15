@@ -7,7 +7,7 @@ const fr = {
   meta: {
     title: "CV de Zié Daniogo, développeur full-stack (Laravel, React, React Native)",
     description:
-      "CV de Zié Daniogo, développeur full-stack à Abidjan, Côte d’Ivoire : applications web Laravel et React, applications mobiles React Native, IA intégrée, mise en ligne.",
+      "CV de Zié Daniogo, développeur full-stack et IA basé à Abidjan, Côte d’Ivoire : applications web et mobiles (Laravel, React, React Native), intégration d’IA, mise en production.",
   },
   toolbar: {
     back: "Portfolio",
@@ -16,7 +16,7 @@ const fr = {
     language: "Langue du CV",
   },
   role: "Développeur full-stack et IA",
-  pitch: "Je conçois et je livre des applications métier complètes : back-office web, API, application mobile et IA intégrée, de l’idée à la mise en ligne.",
+  pitch: "Applications web et mobiles avec intégration d’intelligence artificielle : je conçois les interfaces, j’écris le code et j’assure la mise en ligne, de bout en bout.",
   method: "Je travaille avec des agents IA spécialisés (code, tests, rédaction) et je relis chaque livraison avant qu’elle parte.",
   place: "Abidjan, Côte d’Ivoire",
   whatsapp: "WhatsApp",
@@ -36,10 +36,10 @@ const fr = {
     title: "Développeur full-stack",
     highlights: [
       { title: "Livraison", body: "Applications web et mobiles livrées de bout en bout, du cadrage à la mise en ligne." },
-      { title: "Architecture", body: "Une même plateforme déployée séparément pour plusieurs sociétés d’un groupe." },
+      { title: "Architecture", body: "API, files d’attente et bases de données ; une même application déployée en plusieurs instances isolées." },
       { title: "Produit", body: "Parcours et interfaces dessinés avant le code, tests automatisés et revues de code." },
       { title: "Mobile", body: "Applications iOS et Android en React Native, écrans dessinés avant le code, envoi différé hors ligne." },
-      { title: "IA", body: "Assistants vocaux, lecture de documents, résumé et routage automatiques des demandes." },
+      { title: "IA", body: "Intégration de modèles de langage et de vision, voix, lecture de documents, recherche sémantique." },
       { title: "Production", body: "Serveurs Linux sur Oracle Cloud et Hetzner : mises en ligne, surveillance, sécurité." },
     ],
   },
@@ -68,7 +68,7 @@ const en: CvContent = {
   meta: {
     title: "Résumé of Zié Daniogo, full-stack developer (Laravel, React, React Native)",
     description:
-      "Résumé of Zié Daniogo, full-stack developer in Abidjan, Côte d’Ivoire: Laravel and React web apps, React Native mobile apps, built-in AI, launch and operations.",
+      "Résumé of Zié Daniogo, full-stack and AI developer based in Abidjan, Côte d’Ivoire: web and mobile applications (Laravel, React, React Native), AI integration, production releases.",
   },
   toolbar: {
     back: "Portfolio",
@@ -77,7 +77,7 @@ const en: CvContent = {
     language: "Résumé language",
   },
   role: "Full-stack and AI developer",
-  pitch: "I design and ship complete business applications, from idea to launch: web back office, API, mobile app, AI built in.",
+  pitch: "Web and mobile applications with integrated artificial intelligence: I design the interfaces, write the code and handle the release, end to end.",
   method: "I work with specialized AI agents (code, tests, writing) and review every delivery before it goes out.",
   place: "Abidjan, Côte d’Ivoire",
   whatsapp: "WhatsApp",
@@ -97,10 +97,10 @@ const en: CvContent = {
     title: "Full-stack developer",
     highlights: [
       { title: "Delivery", body: "Web and mobile applications shipped end to end, from scoping to launch." },
-      { title: "Architecture", body: "One platform deployed separately for several companies of the same group." },
+      { title: "Architecture", body: "APIs, queues and databases; one application deployed as several isolated instances." },
       { title: "Product", body: "Flows and interfaces designed before any code, automated tests and code reviews." },
       { title: "Mobile", body: "iOS and Android apps in React Native, screens designed before any code, offline queueing." },
-      { title: "AI", body: "Voice assistants, document reading, automatic summaries and routing of requests." },
+      { title: "AI", body: "Integration of language and vision models, voice, document reading, semantic search." },
       { title: "Production", body: "Linux servers on Oracle Cloud and Hetzner: releases, monitoring, security." },
     ],
   },

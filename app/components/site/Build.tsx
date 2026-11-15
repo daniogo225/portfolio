@@ -38,7 +38,7 @@ function SceneView({ scene, index, camera, moving }: { scene: Scene; index: numb
     <article className="build-scene">
       <motion.div className="build-copy" style={moving ? { x: textX, opacity: textOpacity } : undefined}>
         <p className="build-text">{scene.text}</p>
-        <p className="build-note">{scene.note}</p>
+        <p className="build-tools mono">{scene.tools}</p>
       </motion.div>
       <motion.figure className="build-art" style={moving ? { x: artX, scale: artScale } : undefined}>
         <Image src={`/scenes/${scene.id}.webp`} alt={scene.alt} width={1100} height={1100} sizes="(min-width: 1024px) 46vw, 92vw" />
@@ -48,7 +48,7 @@ function SceneView({ scene, index, camera, moving }: { scene: Scene; index: numb
 }
 
 /**
- * Ce que je fais : trois scènes, une image, une phrase et sa précision. La section est épinglée et
+ * Ce que je fais : trois scènes, une image, une phrase et ses outils en petite ligne. La section est épinglée et
  * le défilement fait glisser la caméra d’une scène à l’autre, comme un travelling. Sans
  * animation, les trois scènes se lisent simplement l’une sous l’autre.
  */

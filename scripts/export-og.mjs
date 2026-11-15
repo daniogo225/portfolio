@@ -26,13 +26,13 @@ const portrait = data("public/portraits/daniogo-product-engineer-cutout.png", "i
 const copy = {
   fr: {
     place: "Zié Daniogo / Abidjan, Côte d’Ivoire",
-    title: "Je dessine,<br>je code,<br>je mets en ligne.<br><em>Moi-même.</em>",
+    title: "Des applications web et mobiles, conçues, développées et mises en ligne <em>de bout en bout.</em>",
     role: "Développeur full-stack et IA",
     detail: "Web, mobile, IA intégrée / Français, anglais",
   },
   en: {
     place: "Zié Daniogo / Abidjan, Côte d’Ivoire",
-    title: "I design it,<br>build it,<br>ship it.<br><em>Myself.</em>",
+    title: "Web and mobile applications, designed, built and shipped <em>end to end.</em>",
     role: "Full-stack and AI developer",
     detail: "Web, mobile, built-in AI / English, French",
   },
@@ -49,7 +49,7 @@ const html = (t) => `<!doctype html>
 body { position: relative; width: 1200px; height: 630px; overflow: hidden; background: #0c0c0d; color: #ececea; font-family: "Geist", sans-serif; -webkit-font-smoothing: antialiased; }
 .text { position: absolute; inset: 64px auto 60px 72px; display: flex; flex-direction: column; width: 700px; }
 .place { color: #9a9993; font: 500 17px/1 "Geist Mono", monospace; letter-spacing: 0.1em; text-transform: uppercase; }
-h1 { margin-top: 40px; font-size: 76px; font-weight: 500; line-height: 0.98; letter-spacing: -0.045em; }
+h1 { max-width: 640px; margin-top: 44px; font-size: 56px; font-weight: 500; line-height: 1.06; letter-spacing: -0.04em; text-wrap: balance; }
 h1 em { color: #ff6b1a; font-family: "Instrument Serif", Georgia, serif; font-size: 1.07em; font-weight: 400; letter-spacing: -0.01em; }
 .role { margin-top: auto; font-size: 27px; font-weight: 500; letter-spacing: -0.02em; }
 .detail { margin-top: 10px; color: #9a9993; font-size: 21px; }
