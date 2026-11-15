@@ -999,8 +999,9 @@ main:focus {
 }
 
 /* ==========================================================================
-   Hero : le portrait au centre, le nom en travers, le rôle et la promesse
-   de part et d’autre. Sur mobile, les mêmes pièces s’empilent.
+   Hero : trois pièces. Le portrait au centre, le nom en bannière qui passe
+   derrière lui en U, la phrase et son bouton en haut à droite. Sur mobile,
+   le texte passe au-dessus du portrait.
    ========================================================================== */
 
 .hero {
@@ -1010,8 +1011,9 @@ main:focus {
   display: grid;
   grid-template-areas:
     "pitch"
-    "stage"
-    "about";
+    "stage";
+  grid-template-rows: auto 1fr;
+  min-height: 100svh;
   overflow: clip;
   padding-top: calc(var(--header-h) + 20px);
   background: var(--hero-bg);
@@ -1057,6 +1059,7 @@ main:focus {
 .hero-stage {
   position: relative;
   grid-area: stage;
+  align-self: end;
   height: var(--portrait-h);
   margin-top: 8px;
 }
@@ -1090,68 +1093,40 @@ main:focus {
   }
 }
 
-/* Le nom passe derrière la silhouette : le portrait se tient devant son propre nom. */
-.hero-name-wrap {
+/* La bannière passe derrière la silhouette : le portrait se tient devant son propre nom. */
+.hero-banner-wrap {
   position: absolute;
-  right: 0;
-  bottom: 5%;
-  left: 0;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
 }
 
-/* Deuxième temps : le nom monte de derrière son masque, comme un titre de générique. */
-.hero-name {
-  overflow: clip;
-  padding-block: 0.04em 0.16em;
-}
-
-.hero-name-rise {
-  animation: name-in 1.4s var(--ease-expo) 0.4s both;
-}
-
-@keyframes name-in {
-  from {
-    transform: translateY(112%);
-  }
-}
-
-.hero-name-track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-}
-
-.hero-name-item {
-  display: inline-flex;
-  align-items: center;
-  color: var(--fg);
-  font-size: clamp(5.4rem, 15.5vw, 16rem);
-  font-weight: 500;
-  line-height: 0.95;
-  letter-spacing: -0.055em;
-  white-space: nowrap;
-}
-
-/* Le séparateur : une étoile au trait, calée sur la hauteur des minuscules, qui tourne lentement. */
-.hero-name-sep {
-  display: inline-grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: 0.46em;
-  height: 0.46em;
-  margin-inline: 0.34em;
-  transform: translateY(0.04em);
-}
-
-.hero-name-sep svg {
+.hero-banner {
+  display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
+}
+
+.hero-banner-text {
+  fill: var(--fg);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  text-rendering: geometricPrecision;
+  user-select: none;
+}
+
+/* Le séparateur : une étoile au trait, calée sur la hauteur des minuscules, qui tourne lentement. */
+.hero-banner-star svg {
+  overflow: visible;
   fill: none;
-  stroke: currentColor;
+  stroke: var(--fg);
   stroke-width: 13;
   stroke-linecap: round;
+}
+
+.hero-banner-star path {
+  transform-origin: 50px 50px;
   animation: sep-spin 16s linear infinite;
 }
 
@@ -1161,22 +1136,16 @@ main:focus {
   }
 }
 
-.hero-about {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  grid-area: about;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 24px var(--gutter) 32px;
+/* Le métier, en petite ligne au-dessus de la phrase : il sort de son masque juste avant elle. */
+.hero-role {
+  margin-bottom: 18px;
+  color: var(--fg-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.4;
 }
 
-.hero-about-globe {
-  display: grid;
-  flex-shrink: 0;
-}
-
-/* Troisième temps : les trois lignes de gauche sortent chacune de leur masque. */
 .line-mask {
   display: block;
   overflow: hidden;
@@ -1194,22 +1163,6 @@ main:focus {
   }
 }
 
-.hero-about p {
-  display: grid;
-  gap: 3px;
-  text-wrap: balance;
-  color: var(--fg-muted);
-  font-size: 0.95rem;
-  line-height: 1.45;
-}
-
-.hero-about strong {
-  color: var(--fg);
-  font-size: 1.02rem;
-  font-weight: 500;
-  letter-spacing: -0.012em;
-}
-
 /* Le voile : l’affiche s’assombrit pendant que la section suivante monte par-dessus. */
 .hero-veil {
   position: absolute;
@@ -1218,47 +1171,6 @@ main:focus {
   background: var(--bg);
   opacity: 0;
   pointer-events: none;
-}
-
-.hero-about time {
-  color: var(--fg);
-  font-variant-numeric: tabular-nums;
-}
-
-/* Globe au trait : les méridiens s’aplatissent puis s’élargissent, comme une rotation. */
-.globe {
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  fill: none;
-  stroke: var(--fg);
-  stroke-width: 1;
-}
-
-.globe-meridian {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: meridian 6s linear infinite;
-}
-
-.globe-meridian.is-2 {
-  animation-delay: -2s;
-}
-
-.globe-meridian.is-3 {
-  animation-delay: -4s;
-}
-
-@keyframes meridian {
-  0% {
-    transform: scaleX(1);
-  }
-  50% {
-    transform: scaleX(0);
-  }
-  100% {
-    transform: scaleX(-1);
-  }
 }
 
 @media (min-width: 640px) {
@@ -1290,15 +1202,10 @@ main:focus {
     margin: 0;
   }
 
-  /* Les deux colonnes de texte partagent la même ligne de départ, sous l’en-tête. */
-  .hero-pitch,
-  .hero-about {
-    align-self: start;
-    margin-top: max(calc(var(--header-h) + 48px), calc(30svh - 40px));
-  }
-
   .hero-pitch {
+    align-self: start;
     justify-self: end;
+    margin-top: max(calc(var(--header-h) + 44px), 16svh);
     width: min(29vw, 440px);
     margin-right: var(--edge);
     padding: 0;
@@ -1308,20 +1215,6 @@ main:focus {
     font-size: clamp(2.4rem, 1rem + 2.5vw, 4rem);
   }
 
-  .hero-about {
-    justify-self: start;
-    width: clamp(300px, 28vw, 400px);
-    margin-left: var(--edge);
-    padding: 0;
-  }
-
-  .hero-about strong {
-    white-space: nowrap;
-  }
-
-  .hero-name-wrap {
-    bottom: 6%;
-  }
 }
 
 /* ==========================================================================
@@ -1707,15 +1600,6 @@ main:focus {
     height: 52px;
   }
 
-  .hero-about {
-    padding-top: 28px;
-    border-top: 1px solid var(--line);
-  }
-
-  /* Le nom reste visible dans le premier écran, derrière les jambes. */
-  .hero-name-wrap {
-    bottom: 9%;
-  }
 }
 
 /* ==========================================================================
@@ -1735,9 +1619,7 @@ main:focus {
 [data-motion="off"] .rise,
 [data-motion="off"] .line,
 [data-motion="off"] .hero-portrait img,
-[data-motion="off"] .hero-name-rise,
-[data-motion="off"] .globe-meridian,
-[data-motion="off"] .hero-name-sep svg {
+[data-motion="off"] .hero-banner-star path {
   animation: none;
 }
 
@@ -1749,29 +1631,7 @@ main:focus {
   transform: none !important;
 }
 
-/* Sans animation, le globe garde trois méridiens fixes au lieu d’un cercle vide. */
-[data-motion="off"] .globe-meridian.is-2,
-[data-motion="off"] .globe-meridian.is-3 {
-  transform: scaleX(0.55);
-}
-
-[data-motion="off"] .globe-meridian.is-3 {
-  transform: scaleX(0.18);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .globe-meridian {
-    animation: none !important;
-  }
-
-  .globe-meridian.is-2 {
-    transform: scaleX(0.55);
-  }
-
-  .globe-meridian.is-3 {
-    transform: scaleX(0.18);
-  }
-
   *,
   ::before,
   ::after {

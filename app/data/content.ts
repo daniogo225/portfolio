@@ -32,7 +32,6 @@ const fr = {
   },
   hero: {
     eyebrow: "Développeur full-stack et IA",
-    clock: "Il est {time} à Abidjan.",
     title: "Je dessine,\nje code,\nje mets en ligne.\n*Moi-même.*",
     primary: "Écrire sur WhatsApp",
     portrait: "Zié Daniogo, debout, en veste noire",
@@ -166,7 +165,6 @@ const en: SiteContent = {
   },
   hero: {
     eyebrow: "Full-stack and AI developer",
-    clock: "It’s {time} in Abidjan.",
     title: "I design it,\nbuild it,\nship it.\n*Myself.*",
     primary: "Message me on WhatsApp",
     portrait: "Zié Daniogo, standing, wearing a black overshirt",
