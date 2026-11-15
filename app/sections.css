@@ -19,7 +19,7 @@
 }
 
 /* ==========================================================================
-   Ce que je construis : trois scènes, une image et une phrase chacune
+   Ce que je fais : trois scènes, une image, une phrase et sa précision
    Épinglée, la section fait glisser la caméra d’une scène à l’autre. Sans animation
    (ou sur un écran trop bas), les scènes se lisent l’une sous l’autre.
    ========================================================================== */
@@ -53,14 +53,17 @@
   line-height: 1.04;
   letter-spacing: -0.045em;
   text-wrap: balance;
+  /* Les retours à la ligne du texte sont respectés : la coupe d’une phrase se choisit. */
+  white-space: pre-line;
 }
 
-.build-tools {
+.build-note {
+  max-width: 34ch;
   margin-top: clamp(18px, 3svh, 28px);
   color: var(--fg-muted);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: clamp(1.02rem, 0.95rem + 0.35vw, 1.22rem);
+  line-height: 1.5;
+  text-wrap: pretty;
 }
 
 .build-art {
@@ -297,15 +300,26 @@
 }
 
 /* ==========================================================================
-   Profil : le portrait sur toute la hauteur, une conviction, un paragraphe, le CV
+   Profil : la vignette et la phrase
+   Le portrait d’origine est petit : il reste petit, donc net, et c’est la phrase qui prend la
+   place. L’image et le texte partagent le même haut et le même bas.
    ========================================================================== */
 
 .profile-grid {
   display: grid;
-  gap: 40px;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 28px;
+}
+
+.profile-grid .section-label {
+  margin: 0;
 }
 
 .profile-still {
+  display: grid;
+  grid-template-columns: clamp(124px, 34vw, 200px) minmax(0, 1fr);
+  align-items: end;
+  gap: 16px;
   margin: 0;
 }
 
@@ -313,19 +327,20 @@
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border-radius: 4px;
   background: var(--bg-sunken);
 }
 
-/* L’image déborde un peu de son cadre pour pouvoir y glisser. */
 .profile-still-image {
   position: absolute;
-  inset: -6% 0;
+  inset: 0;
+  transform-origin: 50% 30%;
 }
 
+/* Noir et blanc : le portrait s’accorde à la page, la couleur reste à la hero. */
 .profile-still-image img {
   object-fit: cover;
-  object-position: 50% 24%;
+  object-position: 50% 22%;
+  filter: grayscale(1) contrast(1.06);
 }
 
 .profile-still-frame .is-dark {
@@ -351,25 +366,20 @@
 }
 
 .profile-still figcaption {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding-top: 12px;
+  display: grid;
+  gap: 6px;
   color: var(--fg-muted);
 }
 
 .profile-statement {
-  max-width: 13ch;
-  font-size: clamp(2.2rem, min(1rem + 3.4vw, 1rem + 5.8svh), 4.6rem);
+  font-size: clamp(2.2rem, min(0.6rem + 4.6vw, 1rem + 7svh), 5.4rem);
   font-weight: 500;
-  line-height: 1.03;
-  letter-spacing: -0.045em;
-  text-wrap: balance;
+  line-height: 1.02;
+  letter-spacing: -0.048em;
 }
 
 .profile-body {
-  max-width: 32rem;
-  margin-top: clamp(24px, 4svh, 36px);
+  max-width: 34rem;
   color: var(--fg-muted);
   font-size: 1.08rem;
   line-height: 1.6;
@@ -380,43 +390,55 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 12px 28px;
-  margin-top: clamp(28px, 5svh, 44px);
+  margin-top: clamp(24px, 4svh, 36px);
 }
 
 @media (min-width: 1024px) {
   .profile-grid {
+    /* Hauteur de la légende sous la vignette : son écart, puis deux lignes. */
+    --caption-h: calc(12px + 2 * 0.72rem * 1.4 + 6px);
     grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto auto 1fr;
     column-gap: 24px;
-    align-items: stretch;
+    row-gap: 0;
   }
 
+  .profile-grid .section-label {
+    grid-column: 1 / -1;
+    margin-bottom: clamp(28px, 5svh, 48px);
+  }
+
+  /* La vignette : trois colonnes, du haut de la phrase au bas des boutons. */
   .profile-still {
     display: flex;
     flex-direction: column;
-    grid-column: 1 / span 5;
+    align-items: stretch;
+    grid-column: 1 / span 3;
+    grid-row: 2 / span 2;
+    gap: 12px;
   }
 
-  /* Le cadre prend toute la hauteur de la colonne de texte : plus de vide au-dessus du portrait. */
   .profile-still-frame {
     flex: 1;
-    min-height: min(68svh, 640px);
     aspect-ratio: auto;
+    min-height: 380px;
   }
 
-  .profile-copy {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    grid-column: 7 / -1;
-  }
-
-  .profile-copy .section-label {
-    margin-bottom: 0;
-  }
 
   .profile-statement {
-    margin-top: auto;
-    padding-top: 48px;
+    grid-column: 5 / -1;
+    grid-row: 2;
+    /* Le haut des capitales s’aligne sur le haut de la vignette. */
+    margin-top: -0.13em;
+  }
+
+  .profile-text {
+    grid-column: 5 / span 6;
+    grid-row: 3;
+    align-self: end;
+    padding-top: clamp(32px, 6svh, 56px);
+    /* Le bas des boutons s’aligne sur le bas de la vignette, au-dessus de sa légende. */
+    padding-bottom: var(--caption-h);
   }
 }
 

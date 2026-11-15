@@ -49,9 +49,9 @@ Le script écrit `public/cv-zie-daniogo-fr.pdf` et `public/cv-zie-daniogo-en.pdf
 ## Structure de la page
 
 1. Hero : le portrait en noir, le nom en travers, une phrase, une action.
-2. Ce que je construis (`app/components/site/Build.tsx`) : trois scènes, une illustration isométrique et une phrase chacune. La section est épinglée et le défilement fait glisser la caméra d’une scène à l’autre ; sans animation, les scènes se lisent l’une sous l’autre. Illustrations dans `public/scenes/` (générées avec Codex, optimisées en WebP).
+2. Ce que je fais (`app/components/site/Build.tsx`) : trois scènes, une illustration isométrique, une phrase et sa précision : l’application mobile, le back-office web, la mise en production. La section est épinglée et le défilement fait glisser la caméra d’une scène à l’autre ; sans animation, les scènes se lisent l’une sous l’autre. Illustrations dans `public/scenes/` (générées avec Codex, optimisées en WebP).
 3. Méthode : la règle à gauche, le planning « seul / avec des agents » à droite.
-4. Profil : le portrait serré sur toute la hauteur, une conviction, un paragraphe, le CV.
+4. Profil : le portrait en vignette, en noir et blanc, à côté de la phrase en grand ; un paragraphe, le CV. Le portrait d’origine est petit (600 px) : il reste affiché petit pour rester net.
 5. Contact : « Écrivez-moi », le disque WhatsApp, trois coordonnées.
 
 Styles des sections dans `app/sections.css`. Le mouvement (entrée de la hero, rideau, travelling) se coupe avec `prefers-reduced-motion` ou le bouton « Animations » du pied de page.
