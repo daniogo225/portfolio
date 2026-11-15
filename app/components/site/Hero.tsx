@@ -39,6 +39,7 @@ function rise(delay: number) {
 type Rect = { left: number; top: number; right: number; bottom: number };
 type Box = { width: number; height: number; blocks: Rect[] };
 type Curve = { d: string; length: number; font: number; copies: number };
+type Frame = { font: number; spacing: number };
 
 // Espace laissé à l’étoile entre deux passages du nom, et taille de l’étoile, en cadratins.
 const GAP = 1.14;
@@ -47,6 +48,26 @@ const STAR = 0.46;
 const ASCENT = 0.78;
 // Distance minimale, en pixels, entre les lettres de la bannière et le texte de la hero.
 const CLEARANCE = 44;
+// Avant la bascule tablette, le nom ne tient plus de chaque côté du portrait : immobile, il s’écrit une
+// seule fois, autour de lui.
+const NARROW = "(max-width: 639px)";
+// Bords de la silhouette à la hauteur de la bannière (la main à gauche, la jambe à droite),
+// mesurés sur le détourage depuis l’axe du portrait, en fraction de sa hauteur.
+const BODY = { left: -0.235, right: 0.105 };
+// Marge, en pixels, entre le nom immobile et les bords de l’écran.
+const MARGIN = 12;
+
+/** Abscisse curviligne du point du tracé situé à l’abscisse x (le tracé va de gauche à droite). */
+function lengthAt(line: SVGPathElement, total: number, x: number) {
+  let low = 0;
+  let high = total;
+  for (let step = 0; step < 24; step += 1) {
+    const middle = (low + high) / 2;
+    if (line.getPointAtLength(middle).x < x) low = middle;
+    else high = middle;
+  }
+  return (low + high) / 2;
+}
 
 /** Vrai si la bande occupée par les lettres passe à moins de CLEARANCE d’un bloc de texte. */
 function crowds(blocks: Rect[], cx: number, bottom: number, dip: number, font: number, width: number) {
@@ -123,7 +144,8 @@ function sameBox(a: Box | null, b: Box) {
  * Le nom en bannière : il suit un U qui descend d’un côté, passe derrière la silhouette et
  * remonte de l’autre, et il défile le long de cette courbe. Sa vitesse et son sens suivent ceux
  * du défilement de la page. Immobile, l’étoile se cale derrière le portrait et le nom se lit
- * entier de chaque côté.
+ * de chaque côté ; sur un écran étroit, où il n’y tiendrait pas, il s’écrit une seule fois, le
+ * prénom d’un côté de la silhouette et le nom de l’autre.
  */
 function NameBanner({ calm, rest, avoid }: { calm: boolean; rest: boolean; avoid: RefObject<HTMLElement | null> }) {
   const maskId = useId();
@@ -135,9 +157,11 @@ function NameBanner({ calm, rest, avoid }: { calm: boolean; rest: boolean; avoid
   const stars = useRef<(SVGGElement | null)[]>([]);
   const [box, setBox] = useState<Box | null>(null);
   const geometry = useMemo(() => (box ? curve(box) : null), [box]);
+  // Le cadrage du nom immobile sur écran étroit : taille des lettres et espace laissé au portrait.
+  const [frame, setFrame] = useState<Frame | null>(null);
 
   // Mesures faites sur le rendu réel : la période (un passage du nom) et la pose de repos.
-  const metrics = useRef({ period: 0, total: 0, stale: true });
+  const metrics = useRef({ period: 0, total: 0, stale: true, framed: false });
   const offset = useRef(0);
   const direction = useRef(-1);
   const { scrollY } = useScroll();
@@ -218,8 +242,41 @@ function NameBanner({ calm, rest, avoid }: { calm: boolean; rest: boolean; avoid
       if (!(period > 0)) return;
       // Pose de repos : l’étoile derrière le portrait, aucune lettre coupée par la silhouette.
       const total = line.getTotalLength();
-      const rest = wrap(-period, 0, total / 2 - geometry.font * (GAP / 2 + 0.18));
-      if (!moving || state.period === 0) offset.current = rest;
+      const space = name.indexOf(" ");
+      let framed: Frame | null = null;
+      let pose = wrap(-period, 0, total / 2 - geometry.font * (GAP / 2 + 0.18));
+      if (rest && box && space > 0 && window.matchMedia(NARROW).matches) {
+        // Le prénom s’arrête avant la silhouette, le nom reprend après : rien n’est caché, et
+        // les lettres rapetissent jusqu’à ce que les deux tiennent entre le portrait et les bords.
+        const start = ruler.getStartPositionOfChar(0).x;
+        const first = ruler.getStartPositionOfChar(space).x - start;
+        const second = ruler.getStartPositionOfChar(space + 1).x - start;
+        const end = ruler.getEndPositionOfChar(name.length - 1).x - start;
+        const axis = box.width / 2;
+        const from = lengthAt(line, total, MARGIN);
+        const to = lengthAt(line, total, box.width - MARGIN);
+        const fit = (scale: number) => {
+          const air = geometry.font * scale * 0.16;
+          const before = lengthAt(line, total, axis + BODY.left * box.height - air);
+          const after = lengthAt(line, total, axis + BODY.right * box.height + air);
+          return { before, after, room: Math.min((before - from) / first, (to - after) / (end - second)) };
+        };
+        let scale = 1;
+        for (let step = 0; step < 4; step += 1) scale = Math.min(1, fit(scale).room);
+        const { before, after } = fit(scale);
+        // Le côté qui a de la place en trop la partage : chaque mot se pose au milieu de la sienne.
+        pose = (from + before - first * scale) / 2;
+        const resume = (after + to - (end - second) * scale) / 2;
+        framed = {
+          font: Math.round(geometry.font * scale * 10) / 10,
+          spacing: Math.round((resume - pose - second * scale) * 10) / 10,
+        };
+      }
+      setFrame((current) =>
+        current?.font === framed?.font && current?.spacing === framed?.spacing ? current : framed,
+      );
+      state.framed = framed !== null;
+      if (!moving || state.period === 0) offset.current = pose;
       state.period = period;
       state.total = total;
       state.stale = false;
@@ -244,7 +301,7 @@ function NameBanner({ calm, rest, avoid }: { calm: boolean; rest: boolean; avoid
       const star = stars.current[index];
       if (!star) continue;
       const at = offset.current + index * state.period + (geometry.font * (GAP - 0.05)) / 2;
-      if (at < 0 || at > total) {
+      if (state.framed || at < 0 || at > total) {
         star.style.visibility = "hidden";
         continue;
       }
@@ -284,10 +341,14 @@ function NameBanner({ calm, rest, avoid }: { calm: boolean; rest: boolean; avoid
             <tspan dx={`${GAP}em`}>{person.name}</tspan>
           </text>
           <g mask={unfurled ? undefined : `url(#${maskId})`}>
-            <text className="hero-banner-text" fontSize={geometry.font}>
+            <text
+              className="hero-banner-text"
+              fontSize={frame ? frame.font : geometry.font}
+              style={frame ? { wordSpacing: `${frame.spacing}px` } : undefined}
+            >
               <textPath ref={textPath} href={`#${pathId}`} startOffset="0">
-                {Array.from({ length: geometry.copies }, (_, index) => (
-                  <tspan key={index} dx={`${GAP}em`}>
+                {Array.from({ length: frame ? 1 : geometry.copies }, (_, index) => (
+                  <tspan key={index} dx={frame ? 0 : `${GAP}em`}>
                     {person.name}
                   </tspan>
                 ))}
