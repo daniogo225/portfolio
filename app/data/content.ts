@@ -87,7 +87,7 @@ const fr = {
   profile: {
     label: "Profil",
     lead: "Je tiens à des écrans\nqu’on comprend\ndu premier coup.",
-    body: "Développeur full-stack à Abidjan, en poste depuis 2023. Je travaille sur des applications métier\u202f: réclamations, suivi de flottes, collecte pour des collectivités, signalement de terrain, contrôle d’accès.",
+    body: "Développeur full-stack à Abidjan. Web, mobile et IA intégrée : je dessine, je code et je mets en ligne.",
     languages: "Français, anglais",
     photo: "Portrait de Zié Daniogo, en veste noire",
     cvPdf: "Télécharger le CV",
@@ -221,7 +221,7 @@ const en: SiteContent = {
   profile: {
     label: "About",
     lead: "I care about screens\npeople understand\nat first glance.",
-    body: "Full-stack developer in Abidjan, in the same job since 2023. I work on business applications: complaint handling, fleet tracking, revenue collection for local governments, field reporting, site access control.",
+    body: "Full-stack developer in Abidjan. Web, mobile and built-in AI: I design, build and ship.",
     languages: "French, English",
     photo: "Portrait of Zié Daniogo, wearing a black overshirt",
     cvPdf: "Download the résumé",
