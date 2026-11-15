@@ -290,8 +290,8 @@
 /* ==========================================================================
    Profil : le portrait détouré, posé à même le fond, et le texte contre lui
    Le portrait n’a ni cadre ni fond : la silhouette se découpe sur la page et son bas se
-   dissout par un masque. C’est le seul écran qui porte un paragraphe : il se lit à gauche,
-   sur ordinateur comme sur téléphone.
+   dissout par un masque. C’est le seul écran qui porte un paragraphe : il se lit à gauche
+   sur ordinateur ; sous 1024 px, tout l’écran passe dans l’axe (voir la fin du fichier).
    ========================================================================== */
 
 .profile-grid {
@@ -562,5 +562,104 @@
 
   .footer-actions {
     margin-left: auto;
+  }
+}
+
+/* ==========================================================================
+   Téléphone et tablette : tout dans l’axe
+   Sous 1024 px, chaque écran se lit sur une seule colonne. Le portrait y est déjà centré :
+   l’étiquette, les titres, les textes et les boutons le rejoignent. Seul le planning de la
+   Méthode, une vraie liste, garde son alignement à gauche.
+   ========================================================================== */
+
+@media (max-width: 1023px) {
+  /* Hero : le métier, la phrase et le bouton dans l’axe du portrait. */
+  .hero-pitch {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  /* Profil. */
+  .profile-grid {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .profile-grid .section-label {
+    justify-content: center;
+  }
+
+  /* La silhouette est au milieu de la photo : le débord se répartit des deux côtés, et la
+     section le coupe pour qu’il n’élargisse pas la page. */
+  .profile {
+    overflow-x: clip;
+  }
+
+  .profile-portrait img {
+    margin-left: calc(var(--bleed) * -0.5);
+  }
+
+  .profile-portrait figcaption {
+    justify-items: center;
+  }
+
+  .profile-body {
+    margin-inline: auto;
+    text-wrap: balance;
+  }
+
+  .profile-cv {
+    justify-content: center;
+  }
+
+  /* Menu ouvert : les rubriques dans l’axe, leur numéro en repère dans la marge. */
+  .mobile-menu nav a {
+    position: relative;
+    justify-content: center;
+  }
+
+  .mobile-menu nav a .mono {
+    position: absolute;
+    bottom: 22px;
+    left: 0;
+  }
+
+  .mobile-menu-foot {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .mobile-menu-cta {
+    justify-self: center;
+  }
+
+  .mobile-menu-controls {
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 639px) {
+  /* Pied de page : la signature, les liens puis les réglages, l’un sous l’autre. */
+  .footer-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-sign {
+    text-wrap: balance;
+  }
+
+  .footer-links div {
+    justify-content: center;
+  }
+
+  .footer-actions {
+    margin-left: 0;
   }
 }
