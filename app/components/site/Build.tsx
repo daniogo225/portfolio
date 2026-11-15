@@ -80,10 +80,6 @@ export default function Build() {
             <SceneView key={scene.id} scene={scene} index={index} camera={camera} moving={moving} />
           ))}
         </motion.div>
-
-        <div className="build-rail shell" aria-hidden="true">
-          <motion.span style={{ scaleX: scrollYProgress }} />
-        </div>
       </div>
     </section>
   );

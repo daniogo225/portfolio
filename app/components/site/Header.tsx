@@ -7,7 +7,6 @@ import {
   stagger,
   useMotionValueEvent,
   useScroll,
-  useSpring,
   type Variants,
 } from "motion/react";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
@@ -105,7 +104,7 @@ const menuItem: Variants = {
 };
 
 export default function Header() {
-  const { t, lockScroll, calm } = useSite();
+  const { t, lockScroll } = useSite();
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -113,8 +112,7 @@ export default function Header() {
   const menuButton = useRef<HTMLButtonElement>(null);
   const firstLink = useRef<HTMLAnchorElement>(null);
   const time = useAbidjanTime();
-  const { scrollY, scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 180, damping: 32, restDelta: 0.001 });
+  const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (current) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -229,8 +227,6 @@ export default function Header() {
           </button>
         </div>
       </div>
-
-      <motion.div className="scroll-progress" style={{ scaleX: calm ? scrollYProgress : progress }} aria-hidden="true" />
 
       <AnimatePresence>
         {menuOpen && (

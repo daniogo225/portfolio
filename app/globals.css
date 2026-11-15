@@ -647,22 +647,6 @@ main:focus {
   font-size: 0.9rem;
 }
 
-.scroll-progress {
-  position: absolute;
-  right: 0;
-  bottom: -1px;
-  left: 0;
-  height: 1px;
-  background: var(--fg);
-  transform-origin: 0 50%;
-  opacity: 0;
-  transition: opacity 0.4s var(--ease-out);
-}
-
-.site-header[data-scrolled]:not([data-menu]) .scroll-progress {
-  opacity: 1;
-}
-
 .mobile-menu {
   position: fixed;
   inset: 0;
