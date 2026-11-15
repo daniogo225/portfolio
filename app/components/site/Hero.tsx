@@ -365,12 +365,12 @@ export default function Hero() {
     <section className="hero" id="top" aria-labelledby="hero-title" onPointerMove={drift} onPointerLeave={settle}>
       <motion.div ref={pitch} className="hero-pitch" style={still ? undefined : { x: copyX, y: copyY, opacity: copyOpacity }}>
         <p className="hero-role line-mask">
-          <span className="line" style={rise(1.15)}>
+          <span className="line" style={rise(1.3)}>
             {t.hero.eyebrow}
           </span>
         </p>
-        <RevealText as="h1" id="hero-title" className="hero-title" text={t.hero.title} mode="mount" delay={1.25} interval={0.07} />
-        <div className="hero-actions rise" style={rise(1.9)}>
+        <RevealText as="h1" id="hero-title" className="hero-title" text={t.hero.title} mode="mount" delay={1.3} interval={0.04} />
+        <div className="hero-actions rise" style={rise(1.8)}>
           <Magnetic>
             <a className="button button-primary" href={whatsappUrl(t.hero.message)} target="_blank" rel="noreferrer">
               <span className="roll" data-text={t.hero.primary}>

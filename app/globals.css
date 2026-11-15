@@ -1000,8 +1000,9 @@ main:focus {
 
 /* ==========================================================================
    Hero : trois pièces. Le portrait au centre, le nom en bannière qui passe
-   derrière lui en U, la phrase et son bouton en haut à droite. Sur mobile,
-   le texte passe au-dessus du portrait.
+   derrière lui en U, et le texte en légende dans les deux coins du haut : la
+   phrase à gauche, le métier et le bouton à droite. Le creux du U reste
+   libre autour du visage. Sur mobile, le texte passe au-dessus du portrait.
    ========================================================================== */
 
 .hero {
@@ -1038,13 +1039,14 @@ main:focus {
   padding-inline: var(--gutter);
 }
 
+/* Une légende, pas une affiche : le nom en bannière reste le seul grand texte de la scène. */
 .hero-title {
   --em-color: var(--accent-text);
-  max-width: 11ch;
-  font-size: clamp(2.3rem, 1.2rem + 3.6vw, 3.6rem);
+  max-width: 24ch;
+  font-size: clamp(1.6rem, 1.05rem + 2.4vw, 2.3rem);
   font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.045em;
+  line-height: 1.14;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 
@@ -1136,7 +1138,7 @@ main:focus {
   }
 }
 
-/* Le métier, en petite ligne au-dessus de la phrase : il sort de son masque juste avant elle. */
+/* Le métier, en petite ligne : il sort de son masque en même temps que la phrase. */
 .hero-role {
   margin-bottom: 18px;
   color: var(--fg-muted);
@@ -1193,28 +1195,46 @@ main:focus {
     grid-area: 1 / 1;
   }
 
-  .hero-title {
-    max-width: none;
-  }
-
   .hero-stage {
     height: 100%;
     margin: 0;
   }
 
+  /* Les deux coins du haut, alignés sur les marges de l’en-tête : la phrase à gauche, le métier
+     et le bouton à droite, entre le même haut et le même bas. */
   .hero-pitch {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "title role"
+      "title actions";
+    column-gap: 40px;
     align-self: start;
-    justify-self: end;
     margin-top: max(calc(var(--header-h) + 44px), 16svh);
-    width: min(29vw, 440px);
-    margin-right: var(--edge);
-    padding: 0;
+    padding-inline: var(--edge);
   }
 
+  /* La phrase s’arrête avant le visage, quelle que soit la largeur de l’écran. */
   .hero-title {
-    font-size: clamp(2.4rem, 1rem + 2.5vw, 4rem);
+    grid-area: title;
+    max-width: min(25ch, calc(50vw - var(--edge) - var(--portrait-h) * 0.19));
+    font-size: clamp(1.45rem, 0.55rem + 1.5vw, 2.4rem);
   }
 
+  .hero-role {
+    grid-area: role;
+    justify-self: end;
+    margin: 0;
+    text-align: right;
+  }
+
+  .hero-actions {
+    grid-area: actions;
+    align-self: end;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
 }
 
 /* ==========================================================================

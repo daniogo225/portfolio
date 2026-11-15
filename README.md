@@ -48,13 +48,13 @@ Le script écrit `public/cv-zie-daniogo-fr.pdf` et `public/cv-zie-daniogo-en.pdf
 
 ## Structure de la page
 
-1. Hero : trois pièces. Le portrait en noir au centre ; le nom en bannière, qui défile le long d’un U passant derrière lui (texte sur tracé SVG, `NameBanner` dans `app/components/site/Hero.tsx`) ; le métier, la phrase et l’action en haut à droite. Le creux du U se calcule sur la scène et se réduit tant que les lettres frôleraient le texte ; sur téléphone il n’est plus qu’une légère courbe.
-2. Ce que je fais (`app/components/site/Build.tsx`) : trois scènes, une illustration isométrique, une phrase et sa précision : l’application mobile, le back-office web, la mise en production. La section est épinglée et le défilement fait glisser la caméra d’une scène à l’autre ; sans animation, les scènes se lisent l’une sous l’autre. Illustrations dans `public/scenes/` (générées avec Codex, optimisées en WebP).
+1. Hero : trois pièces. Le portrait en noir au centre ; le nom en bannière, qui défile le long d’un U passant derrière lui (texte sur tracé SVG, `NameBanner` dans `app/components/site/Hero.tsx`) ; le texte en légende dans les deux coins du haut, alignés sur les marges de l’en-tête : la phrase à gauche, le métier et l’action à droite. Le creux du U reste libre autour du visage ; il se calcule sur la scène et se réduit seulement si les lettres frôlaient le texte. Sur téléphone il n’est plus qu’une légère courbe, et le texte passe au-dessus du portrait.
+2. Ce que je fais (`app/components/site/Build.tsx`) : trois scènes, une illustration isométrique, une phrase (un énoncé de compétence) et ses outils en petite ligne : les applications mobiles, les applications web avec IA, la mise en production. La section est épinglée et le défilement fait glisser la caméra d’une scène à l’autre ; sans animation, les scènes se lisent l’une sous l’autre. Illustrations dans `public/scenes/` (générées avec Codex, optimisées en WebP).
 3. Méthode : la règle à gauche, le planning « seul / avec des agents » à droite.
-4. Profil : le portrait en vignette, en noir et blanc, à côté de la phrase en grand ; un paragraphe, le CV. Le portrait d’origine est petit (600 px) : il reste affiché petit pour rester net.
-5. Contact : « Écrivez-moi », le disque WhatsApp, trois coordonnées.
+4. Profil : le portrait en vignette, en noir et blanc, à côté du titre en grand ; une phrase, le CV. Le portrait d’origine est petit (600 px) : il reste affiché petit pour rester net.
+5. Contact : « Un projet, une question ? Écrivez-moi. », le disque WhatsApp, trois coordonnées.
 
-Styles des sections dans `app/sections.css`. Le mouvement (entrée de la hero : le portrait, la bannière qui se déroule depuis son dos, puis le texte ; rideau, travelling) se coupe avec `prefers-reduced-motion` ou le bouton « Animations » du pied de page.
+Styles des sections dans `app/sections.css`. Le mouvement (entrée de la hero : le portrait, la bannière qui se déroule depuis son dos, puis les deux coins de texte ensemble ; rideau, travelling) se coupe avec `prefers-reduced-motion` ou le bouton « Animations » du pied de page.
 
 Photos : seuls les portraits en noir de `public/portraits/` sont publiés. Les photos retirées sont dans `docs/photos-retirees/`, hors du site.
 
