@@ -1,9 +1,9 @@
 "use client";
 
 import { ArrowUpRight, Download } from "lucide-react";
-import Image from "next/image";
-import { motion, type Variants } from "motion/react";
+import { motion } from "motion/react";
 import { cvPdf, localePath } from "../../data/site";
+import PixelPortrait from "../ui/PixelPortrait";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
 import { useSite } from "./SiteProvider";
 
@@ -13,24 +13,12 @@ const appear = {
   viewport: { once: true, amount: 0.5 },
 } as const;
 
-// Le portrait se dévoile de haut en bas quand il entre dans l’écran, pendant que l’image,
-// d’abord un peu trop grande, se pose à sa taille.
-const unveil: Variants = {
-  hidden: { clipPath: "inset(0 0 100% 0)" },
-  shown: { clipPath: "inset(0 0 0% 0)", transition: { duration: 1.1, ease: [0.77, 0, 0.175, 1] } },
-};
-
-const settle: Variants = {
-  hidden: { scale: 1.16 },
-  shown: { scale: 1, transition: { duration: 1.6, ease: EASE_OUT } },
-};
-
 /**
- * Profil : après le plan large de la hero, la vignette. Le portrait reste petit, donc net ; la
- * phrase prend la place. Les deux partagent le même haut et le même bas.
+ * Profil : après la photo de la hero, le même portrait en pixel art, qui se met au point en
+ * entrant dans l’écran. À côté, le titre, la description et le CV, calés contre l’image.
  */
 export default function Profile() {
-  const { t, locale } = useSite();
+  const { t, locale, calm } = useSite();
   const p = t.profile;
 
   return (
@@ -38,25 +26,24 @@ export default function Profile() {
       <div className="shell profile-grid">
         <p className="section-label mono">{p.label}</p>
 
-        <motion.figure className="profile-still" initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.3 }}>
-          <motion.div className="profile-still-frame" variants={unveil}>
-            <motion.div className="profile-still-image" variants={settle}>
-              <Image className="is-light" src="/portraits/cv-portrait.jpg" alt={p.photo} fill sizes="(min-width: 1024px) 320px, 160px" />
-              <Image className="is-dark" src="/portraits/cv-portrait-band.jpg" alt={p.photo} fill sizes="(min-width: 1024px) 320px, 160px" />
-            </motion.div>
-          </motion.div>
+        <figure className="profile-still">
+          <div className="profile-still-frame">
+            <PixelPortrait alt={p.photo} still={calm} />
+          </div>
           <figcaption className="mono">
             <span>{t.contact.place}</span>
             <span>{p.languages}</span>
           </figcaption>
-        </motion.figure>
+        </figure>
 
         <RevealText as="h2" id="profile-title" className="profile-statement" text={p.lead} />
 
         <div className="profile-text">
-          <motion.p className="profile-body" {...appear} transition={{ duration: 0.8, delay: 0.15, ease: EASE_OUT }}>
-            {p.body}
-          </motion.p>
+          {/* La description, puis les outils du quotidien sur leur propre ligne. */}
+          <motion.div className="profile-body" {...appear} transition={{ duration: 0.8, delay: 0.15, ease: EASE_OUT }}>
+            <p>{p.body}</p>
+            <p>{p.stack}</p>
+          </motion.div>
           <motion.div className="profile-cv" {...appear} transition={{ duration: 0.8, delay: 0.25, ease: EASE_OUT }}>
             <a className="button button-primary" href={cvPdf(locale)} download>
               <span className="roll" data-text={p.cvPdf}>

@@ -49,14 +49,25 @@ Le script écrit `public/cv-zie-daniogo-fr.pdf` et `public/cv-zie-daniogo-en.pdf
 ## Structure de la page
 
 1. Hero : trois pièces. Le portrait en noir au centre ; le nom en bannière, qui défile le long d’un U passant derrière lui (texte sur tracé SVG, `NameBanner` dans `app/components/site/Hero.tsx`) ; le texte en légende dans les deux coins du haut, alignés sur les marges de l’en-tête : la phrase à gauche, le métier et l’action à droite. Le creux du U reste libre autour du visage ; il se calcule sur la scène et se réduit seulement si les lettres frôlaient le texte. Sur téléphone il n’est plus qu’une légère courbe, et le texte passe au-dessus du portrait.
-2. Ce que je fais (`app/components/site/Build.tsx`) : trois scènes, une illustration isométrique, une phrase (un énoncé de compétence) et ses outils en petite ligne : les applications mobiles, les applications web avec IA, la mise en production. La section est épinglée et le défilement fait glisser la caméra d’une scène à l’autre ; sans animation, les scènes se lisent l’une sous l’autre. Illustrations dans `public/scenes/` (générées avec Codex, optimisées en WebP).
-3. Méthode : la règle à gauche, le planning « seul / avec des agents » à droite.
-4. Profil : le portrait en vignette, en noir et blanc, à côté du titre en grand ; une phrase, le CV. Le portrait d’origine est petit (600 px) : il reste affiché petit pour rester net.
-5. Contact : « Un projet, une question ? Écrivez-moi. », le disque WhatsApp, trois coordonnées.
+2. Ce que je fais (`app/components/site/Build.tsx`) : trois scènes, une illustration isométrique au centre, et dessous, centrés, une phrase (un énoncé de compétence) et ses outils en petite ligne : les applications mobiles, les applications web avec IA, la mise en production. La section est épinglée et le défilement fait glisser la caméra d’une scène à l’autre ; sans animation, les scènes se lisent l’une sous l’autre. Illustrations dans `public/scenes/` (générées avec Codex, optimisées en WebP).
+3. Méthode : la règle centrée, une phrase par ligne, et le planning « seul / avec des agents » dessous, dans le même axe.
+4. Profil : le portrait en pixel art (`app/components/ui/PixelPortrait.tsx`, 48 × 64 pixels, six gris) à côté du titre, de la description et du CV. C’est le seul écran qui porte un paragraphe : son texte reste à gauche, contre l’image. Quand il entre dans l’écran, le portrait arrive en gros pixels et se met au point en trois paliers.
+5. Contact : « Un projet, une question ? Écrivez-moi. », centré, le disque WhatsApp dessous, trois coordonnées.
+
+Alignement : les écrans à phrase courte (2, 3, 5) se lisent dans l’axe ; le paragraphe du Profil et le planning restent à gauche.
 
 Styles des sections dans `app/sections.css`. Le mouvement (entrée de la hero : le portrait, la bannière qui se déroule depuis son dos, puis les deux coins de texte ensemble ; rideau, travelling) se coupe avec `prefers-reduced-motion` ou le bouton « Animations » du pied de page.
 
 Photos : seuls les portraits en noir de `public/portraits/` sont publiés. Les photos retirées sont dans `docs/photos-retirees/`, hors du site.
+
+## Régénérer le portrait en pixel art
+
+```bash
+cd /tmp/cv-export            # un dossier où sharp est installé (npm i sharp)
+node ~/code/portfolio/scripts/export-pixel-portrait.mjs
+```
+
+Le script part du portrait en noir de la hero et écrit `public/portraits/pixel/zie-06.png` à `zie-48.png` : l’image affichée et les trois paliers de la mise au point. Le cadrage, la palette et les finesses sont en tête du script.
 
 ## Régénérer les images de partage
 

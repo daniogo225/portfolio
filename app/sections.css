@@ -288,12 +288,14 @@
 }
 
 /* ==========================================================================
-   Profil : la vignette et la phrase
-   Le portrait d’origine est petit : il reste petit, donc net, et c’est la phrase qui prend la
-   place. L’image et le texte partagent le même haut et le même bas.
+   Profil : le portrait en pixel art, et le texte calé contre lui
+   C’est le seul écran qui porte un paragraphe : il se lit à gauche, contre l’image, sur
+   ordinateur comme sur téléphone. Le portrait a une taille fixe, multiple de sa grille
+   (48 × 64 pixels), pour que chaque pixel soit un carré net.
    ========================================================================== */
 
 .profile-grid {
+  --cell: 4px;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   row-gap: 28px;
@@ -305,52 +307,56 @@
 
 .profile-still {
   display: grid;
-  grid-template-columns: clamp(124px, 34vw, 200px) minmax(0, 1fr);
-  align-items: end;
-  gap: 16px;
+  justify-items: start;
+  gap: 12px;
   margin: 0;
 }
 
 .profile-still-frame {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
+  width: calc(48 * var(--cell));
+  height: calc(64 * var(--cell));
   background: var(--bg-sunken);
 }
 
-.profile-still-image {
+.pixel-portrait {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.pixel-portrait img {
   position: absolute;
   inset: 0;
-  transform-origin: 50% 30%;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
 }
 
-/* Noir et blanc : le portrait s’accorde à la page, la couleur reste à la hero. */
-.profile-still-image img {
-  object-fit: cover;
-  object-position: 50% 22%;
-  filter: grayscale(1) contrast(1.06);
+/* La mise au point : un seul palier grossier à la fois, posé sur l’image finale. Les paliers
+   sont opaques sur le fond du cadre, sinon l’image finale se verrait à travers leurs vides. */
+.pixel-portrait img[data-step] {
+  visibility: hidden;
+  background: var(--bg-sunken);
 }
 
-.profile-still-frame .is-dark {
-  display: none;
+.pixel-portrait[data-step="wait"] img {
+  visibility: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .profile-still-frame .is-light {
-    display: none;
+.pixel-portrait[data-step="0"] img[data-step="0"],
+.pixel-portrait[data-step="1"] img[data-step="1"],
+.pixel-portrait[data-step="2"] img[data-step="2"] {
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-portrait img[data-step] {
+    visibility: hidden !important;
   }
 
-  :root:not([data-theme="light"]) .profile-still-frame .is-dark {
-    display: block;
+  .pixel-portrait img:not([data-step]) {
+    visibility: visible !important;
   }
-}
-
-:root[data-theme="dark"] .profile-still-frame .is-light {
-  display: none;
-}
-
-:root[data-theme="dark"] .profile-still-frame .is-dark {
-  display: block;
 }
 
 .profile-still figcaption {
@@ -368,11 +374,15 @@
 }
 
 .profile-body {
-  max-width: 34rem;
+  max-width: 37rem;
   color: var(--fg-muted);
-  font-size: 1.08rem;
-  line-height: 1.6;
+  font-size: clamp(1.08rem, 0.98rem + 0.34vw, 1.3rem);
+  line-height: 1.55;
   text-wrap: pretty;
+}
+
+.profile-body p + p {
+  margin-top: 0.7em;
 }
 
 .profile-cv {
@@ -385,11 +395,12 @@
 
 @media (min-width: 1024px) {
   .profile-grid {
-    /* Hauteur de la légende sous la vignette : son écart, puis deux lignes. */
+    --cell: 6px;
+    /* Hauteur de la légende sous le portrait : son écart, puis deux lignes. */
     --caption-h: calc(12px + 2 * 0.72rem * 1.4 + 6px);
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: auto auto 1fr;
-    column-gap: 24px;
+    column-gap: clamp(56px, 7vw, 128px);
     row-gap: 0;
   }
 
@@ -398,37 +409,33 @@
     margin-bottom: clamp(28px, 5svh, 48px);
   }
 
-  /* La vignette : trois colonnes, du haut de la phrase au bas des boutons. */
+  /* Le portrait à gauche, du haut du titre au bas des boutons. */
   .profile-still {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    grid-column: 1 / span 3;
+    grid-column: 1;
     grid-row: 2 / span 2;
-    gap: 12px;
+    align-self: start;
   }
-
-  .profile-still-frame {
-    flex: 1;
-    aspect-ratio: auto;
-    min-height: 380px;
-  }
-
 
   .profile-statement {
-    grid-column: 5 / -1;
+    grid-column: 2;
     grid-row: 2;
-    /* Le haut des capitales s’aligne sur le haut de la vignette. */
+    /* Le haut des capitales s’aligne sur le haut du portrait. */
     margin-top: -0.13em;
   }
 
   .profile-text {
-    grid-column: 5 / span 6;
+    grid-column: 2;
     grid-row: 3;
     align-self: end;
-    padding-top: clamp(32px, 6svh, 56px);
-    /* Le bas des boutons s’aligne sur le bas de la vignette, au-dessus de sa légende. */
+    padding-top: clamp(24px, 4svh, 40px);
+    /* Le bas des boutons s’aligne sur le bas du portrait, au-dessus de sa légende. */
     padding-bottom: var(--caption-h);
+  }
+}
+
+@media (min-width: 1280px) {
+  .profile-grid {
+    --cell: 7px;
   }
 }
 
