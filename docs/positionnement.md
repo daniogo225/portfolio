@@ -79,7 +79,7 @@ Le site s’adresse d’abord à des clients, pas à des développeurs. Chaque t
 
 Sur Malt, Upwork, Fiverr et LinkedIn, les mots-clés recherchés par les clients (MVP, scaling, montée en charge) peuvent rester : ils servent à être trouvé.
 
-Les noms de section du site : Offres, Méthode (les démonstrations), Collaboration (les agents et le déroulé d’une mission), Profil, Contact.
+Les noms de section du site (refonte du 15/11/2026) : Démonstration (une demande fictive suivie à travers toute la chaîne ; chacun de ses quatre plans porte une offre), Méthode (le planning avec les agents), Profil, Contact.
 
 ## 7. Textes réutilisables
 
@@ -185,5 +185,7 @@ Les noms de section du site : Offres, Méthode (les démonstrations), Collaborat
 - Portfolio : https://portfolio-eight-rust-82.vercel.app (FR) et `/en` (EN)
 - CV : `/cv` et `/en/cv`, PDF dans `public/cv-zie-daniogo-fr.pdf` et `public/cv-zie-daniogo-en.pdf`
 - Carte de visite : `public/daniogo.vcf`
-- Image de partage : `public/og/og-fr.png`, `public/og/og-en.png`
+- Image de partage : `public/og/og-fr.png`, `public/og/og-en.png` (générées par `scripts/export-og.mjs`)
 - Photo de profil conseillée pour les plateformes : `public/portraits/cv-portrait.jpg`
+- Photos : seuls les portraits en noir sont publiés. Les deux photos en polo vert sont sorties du site et conservées dans `docs/photos-retirees/`.
+- Référencement : la balise de titre et la description emploient « développeur full-stack freelance » et le lieu, parce que ce sont les mots que tapent les clients ; le titre affiché dans la hero reste celui du positionnement.

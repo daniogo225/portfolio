@@ -5,9 +5,9 @@ import type { Locale } from "./site";
 
 const fr = {
   meta: {
-    title: "CV de Zié Daniogo, ingénieur produit full-stack et IA",
+    title: "CV de Zié Daniogo, développeur full-stack (Laravel, React, React Native)",
     description:
-      "CV de Zié Daniogo, ingénieur produit full-stack et IA à Abidjan : applications web et mobiles, agents IA, montée en charge et déploiement cloud.",
+      "CV de Zié Daniogo, développeur full-stack à Abidjan, Côte d’Ivoire : applications web Laravel et React, applications mobiles React Native, IA intégrée, mise en ligne.",
   },
   toolbar: {
     back: "Portfolio",
@@ -16,7 +16,7 @@ const fr = {
     language: "Langue du CV",
   },
   role: "Ingénieur produit full-stack et IA",
-  pitch: "Je conçois toute la chaîne d’applications web, mobiles et IA, de l’idée à la mise en ligne.",
+  pitch: "Je conçois et je livre des applications métier complètes : back-office web, API, application mobile et IA intégrée, de l’idée à la mise en ligne.",
   method: "J’orchestre des agents IA spécialisés et je relis chaque livraison : la cadence d’une petite équipe, un seul interlocuteur.",
   place: "Abidjan, Côte d’Ivoire",
   whatsapp: "WhatsApp",
@@ -37,19 +37,19 @@ const fr = {
     highlights: [
       { title: "Livraison", body: "Applications web et mobiles livrées de bout en bout, du cadrage à la mise en ligne." },
       { title: "Architecture", body: "Une même plateforme déployée séparément pour plusieurs sociétés d’un groupe." },
-      { title: "Produit", body: "Interfaces conçues avec les utilisateurs métier, tests automatisés et revues de code." },
-      { title: "IA", body: "Agents IA et assistants vocaux intégrés dans des applications métier." },
-      { title: "Cloud", body: "Serveurs installés et maintenus sur Oracle Cloud et Forge : mises en ligne, surveillance." },
-      { title: "Sécurité", body: "Audits de sécurité des applications et correction des failles." },
+      { title: "Produit", body: "Parcours et interfaces dessinés avant le code, tests automatisés et revues de code." },
+      { title: "Mobile", body: "Applications qui fonctionnent hors ligne : envoi différé, reprise après coupure, notifications." },
+      { title: "IA", body: "Assistants vocaux, lecture de documents, résumé et routage automatiques des demandes." },
+      { title: "Production", body: "Serveurs Linux sur Oracle Cloud et Hetzner : mises en ligne, surveillance, sécurité." },
     ],
   },
   skills: [
     { title: "Interface", body: "React, Next.js, Inertia, TypeScript, Tailwind" },
-    { title: "Back-end", body: "Laravel, PHP, Node, API, files d’attente" },
-    { title: "IA", body: "Agents avec outils, voix en temps réel, ingénierie de contexte, Claude Code, Codex" },
-    { title: "Mobile", body: "React Native, Expo" },
+    { title: "Back-end", body: "Laravel, PHP, Node, API, files d’attente, PostgreSQL et PostGIS, MySQL" },
+    { title: "IA", body: "Modèles de langage et de vision, voix, OCR, recherche sémantique, Claude Code, Codex" },
+    { title: "Mobile", body: "React Native, Expo, hors ligne, notifications push" },
     { title: "Qualité", body: "Pest, Vitest, Playwright" },
-    { title: "Cloud", body: "Oracle Cloud, Forge, Docker, VPS, Git" },
+    { title: "Production", body: "Linux, Docker, Laravel Forge, Oracle Cloud, Hetzner, Git" },
   ],
   education: {
     school: "Pigier Côte d’Ivoire, Abidjan",
@@ -67,9 +67,9 @@ export type CvContent = typeof fr;
 
 const en: CvContent = {
   meta: {
-    title: "Résumé of Zié Daniogo, full-stack and AI product engineer",
+    title: "Résumé of Zié Daniogo, full-stack developer (Laravel, React, React Native)",
     description:
-      "Résumé of Zié Daniogo, full-stack and AI product engineer in Abidjan: web and mobile apps, AI agents, scaling and cloud deployment.",
+      "Résumé of Zié Daniogo, full-stack developer in Abidjan, Côte d’Ivoire: Laravel and React web apps, React Native mobile apps, built-in AI, launch and operations.",
   },
   toolbar: {
     back: "Portfolio",
@@ -78,7 +78,7 @@ const en: CvContent = {
     language: "Résumé language",
   },
   role: "Full-stack and AI product engineer",
-  pitch: "I build web, mobile and AI applications end to end, from idea to launch.",
+  pitch: "I design and ship complete business applications, from idea to launch: web back office, API, mobile app, AI built in.",
   method: "I orchestrate specialized AI agents and review every delivery: the pace of a small team, a single point of contact.",
   place: "Abidjan, Côte d’Ivoire",
   whatsapp: "WhatsApp",
@@ -99,19 +99,19 @@ const en: CvContent = {
     highlights: [
       { title: "Delivery", body: "Web and mobile applications shipped end to end, from scoping to launch." },
       { title: "Architecture", body: "One platform deployed separately for several companies of the same group." },
-      { title: "Product", body: "Interfaces designed with business users, automated tests and code reviews." },
-      { title: "AI", body: "AI agents and voice assistants built into business applications." },
-      { title: "Cloud", body: "Servers set up and maintained on Oracle Cloud and Forge: releases, monitoring." },
-      { title: "Security", body: "Application security audits and vulnerability fixes." },
+      { title: "Product", body: "Flows and interfaces designed before any code, automated tests and code reviews." },
+      { title: "Mobile", body: "Apps that work offline: deferred sending, recovery after an outage, notifications." },
+      { title: "AI", body: "Voice assistants, document reading, automatic summaries and routing of requests." },
+      { title: "Production", body: "Linux servers on Oracle Cloud and Hetzner: releases, monitoring, security." },
     ],
   },
   skills: [
     { title: "Interface", body: "React, Next.js, Inertia, TypeScript, Tailwind" },
-    { title: "Back end", body: "Laravel, PHP, Node, APIs, queues" },
-    { title: "AI", body: "Tool-using agents, real-time voice, context engineering, Claude Code, Codex" },
-    { title: "Mobile", body: "React Native, Expo" },
+    { title: "Back end", body: "Laravel, PHP, Node, APIs, queues, PostgreSQL with PostGIS, MySQL" },
+    { title: "AI", body: "Language and vision models, voice, OCR, semantic search, Claude Code, Codex" },
+    { title: "Mobile", body: "React Native, Expo, offline, push notifications" },
     { title: "Quality", body: "Pest, Vitest, Playwright" },
-    { title: "Cloud", body: "Oracle Cloud, Forge, Docker, VPS, Git" },
+    { title: "Production", body: "Linux, Docker, Laravel Forge, Oracle Cloud, Hetzner, Git" },
   ],
   education: {
     school: "Pigier Côte d’Ivoire, Abidjan",
