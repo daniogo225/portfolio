@@ -339,11 +339,48 @@
   margin-top: clamp(24px, 4svh, 36px);
 }
 
+/* Les chiffres ferment le profil : trois nombres dans le corps du titre, leur légende dessous. */
+.figures {
+  display: grid;
+  gap: clamp(28px, 5svh, 40px);
+  margin: clamp(56px, 9svh, 88px) 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.figures li {
+  display: grid;
+  gap: 10px;
+}
+
+.figures strong {
+  font-size: clamp(2.6rem, 1.5rem + 2.6vw, 4.2rem);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -0.048em;
+}
+
+.figures li > span {
+  color: var(--fg-muted);
+  font-size: clamp(0.98rem, 0.92rem + 0.2vw, 1.08rem);
+  line-height: 1.4;
+}
+
+@media (min-width: 720px) {
+  .figures {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-column: 1 / -1;
+    column-gap: clamp(24px, 4vw, 72px);
+  }
+}
+
 @media (min-width: 1024px) {
   .profile-grid {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     /* Le titre et le texte forment un seul bloc, centré sur la hauteur du portrait. */
-    grid-template-rows: auto 1fr auto auto 1fr;
+    grid-template-rows: auto 1fr auto auto 1fr auto;
     column-gap: clamp(24px, 3vw, 56px);
   }
 

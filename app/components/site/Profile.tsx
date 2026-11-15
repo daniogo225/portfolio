@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { cvPdf, localePath } from "../../data/site";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
+import Figures from "./Figures";
 import { useSite } from "./SiteProvider";
 
 const appear = {
@@ -67,6 +68,8 @@ export default function Profile() {
             </a>
           </motion.div>
         </div>
+
+        <Figures />
       </div>
     </section>
   );

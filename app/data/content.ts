@@ -2,7 +2,8 @@ import type { Locale } from "./site";
 
 // Textes du portfolio. Importé uniquement côté serveur : chaque page ne transmet au navigateur
 // que la langue affichée. Les mots entourés d’astérisques sont mis en valeur (italique, accent) :
-// seulement dans la hero et le contact. Aucun projet, client ni employeur n’est nommé.
+// seulement dans la hero et le contact. Aucun projet ni client n’est nommé ; l’employeur ne l’est
+// que dans les chiffres du profil.
 // L’anglais est réécrit, pas traduit mot à mot.
 
 const fr = {
@@ -93,6 +94,11 @@ const fr = {
     cvPdf: "Télécharger le CV",
     cvOnline: "Le lire en ligne",
   },
+  figures: [
+    { value: 3, suffix: "\u00a0ans+", caption: "chez Comafrique Technologies" },
+    { value: 30, suffix: "+", caption: "bases de code en tant que contributeur" },
+    { value: 3000, suffix: "", caption: "commits ou presque, en 14 mois" },
+  ],
   contact: {
     label: "Contact",
     title: "Un projet, une question\u202f?\n*Écrivez-moi.*",
@@ -226,6 +232,11 @@ const en: SiteContent = {
     cvPdf: "Download the résumé",
     cvOnline: "Read it online",
   },
+  figures: [
+    { value: 3, suffix: "+ years", caption: "at Comafrique Technologies" },
+    { value: 30, suffix: "+", caption: "codebases contributed to" },
+    { value: 3000, suffix: "", caption: "commits, or close to it, in 14 months" },
+  ],
   contact: {
     label: "Contact",
     title: "A project, a question?\n*Write to me.*",
