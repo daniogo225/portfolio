@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { SiteContent } from "../data/content";
 import type { Locale } from "../data/site";
+import Chain from "./site/Chain";
 import CommandPalette from "./site/CommandPalette";
 import Contact from "./site/Contact";
 import FloatingCta from "./site/FloatingCta";
@@ -10,11 +11,8 @@ import Footer from "./site/Footer";
 import Header from "./site/Header";
 import Hero from "./site/Hero";
 import Method from "./site/Method";
-import Offers from "./site/Offers";
 import Profile from "./site/Profile";
 import SiteProvider, { useSite } from "./site/SiteProvider";
-import Skills from "./site/Skills";
-import Statement from "./site/Statement";
 
 function Site() {
   const { t } = useSite();
@@ -44,9 +42,7 @@ function Site() {
       <Header onOpenPalette={() => setPaletteOpen(true)} />
       <main id="main" tabIndex={-1}>
         <Hero />
-        <Statement />
-        <Offers />
-        <Skills />
+        <Chain />
         <Method />
         <Profile />
         <Contact />

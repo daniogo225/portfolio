@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
+import "../chain.css";
 import { isLocale, locales, person, siteUrl } from "../data/site";
 
 const sans = Geist({

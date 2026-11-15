@@ -106,7 +106,7 @@ export default function Hero() {
               <ArrowUpRight size={17} strokeWidth={1.75} aria-hidden="true" />
             </a>
           </Magnetic>
-          <a className="text-link hero-secondary" href="#offers">
+          <a className="text-link hero-secondary" href="#demo">
             {t.hero.secondary}
             <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
           </a>
