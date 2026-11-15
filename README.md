@@ -1,6 +1,6 @@
 # Portfolio de Zié Daniogo
 
-Site personnel et CV de Zié Daniogo, ingénieur produit full-stack et IA. Next.js 16, React 19, Tailwind 4, motion et lenis, déployé par Vercel depuis `master`.
+Site personnel et CV de Zié Daniogo, développeur full-stack et IA. Next.js 16, React 19, Tailwind 4, motion et lenis, déployé par Vercel depuis `master`.
 
 Le positionnement, les offres, le ton et les textes réutilisables (LinkedIn, Malt, Upwork, Fiverr) sont dans [`docs/positionnement.md`](docs/positionnement.md). À lire avant de modifier un texte.
 
@@ -26,7 +26,7 @@ Les pages vivent dans `app/[lang]/`. Le français est servi à la racine grâce 
 
 ## Où sont les textes
 
-- `app/data/content.ts` : textes du portfolio (FR et EN), importés seulement côté serveur, y compris ceux de la démonstration (données fictives). Le parcours de la section Profil reste générique, sans le nom de l’employeur.
+- `app/data/content.ts` : textes du portfolio (FR et EN), importés seulement côté serveur. Le parcours de la section Profil reste générique, sans le nom de l’employeur.
 - `app/data/cv.ts` : textes du CV (FR et EN).
 - `app/data/site.ts` : coordonnées, liens, adresse du site, date de mise à jour (`lastUpdated`, reprise par le sitemap et les données structurées).
 - `app/data/metadata.ts` : titres, descriptions, hreflang et données structurées (WebSite, ProfilePage, Person).
@@ -49,10 +49,12 @@ Le script écrit `public/cv-zie-daniogo-fr.pdf` et `public/cv-zie-daniogo-en.pdf
 ## Structure de la page
 
 1. Hero : le portrait en noir, le nom en travers, une phrase, une action.
-2. Démonstration (`app/components/site/Chain.tsx`) : une demande fictive suivie en quatre plans, du téléphone de terrain (`screens/FieldApp.tsx`) au back-office (`screens/Desk.tsx`). Chaque plan porte une offre. Styles dans `app/chain.css`.
-3. Méthode : le planning « seul / avec des agents ».
-4. Profil : le portrait serré, quatre repères, le CV.
-5. Contact.
+2. Ce que je construis (`app/components/site/Build.tsx`) : trois scènes, une illustration isométrique et une phrase chacune. La section est épinglée et le défilement fait glisser la caméra d’une scène à l’autre ; sans animation, les scènes se lisent l’une sous l’autre. Illustrations dans `public/scenes/` (générées avec Codex, optimisées en WebP).
+3. Méthode : la règle à gauche, le planning « seul / avec des agents » à droite.
+4. Profil : le portrait serré sur toute la hauteur, une conviction, un paragraphe, le CV.
+5. Contact : la question, le disque WhatsApp, trois coordonnées.
+
+Styles des sections dans `app/sections.css`. Le mouvement (entrée de la hero, rideau, travelling) se coupe avec `prefers-reduced-motion` ou le bouton « Animations » du pied de page.
 
 Photos : seuls les portraits en noir de `public/portraits/` sont publiés. Les photos retirées sont dans `docs/photos-retirees/`, hors du site.
 

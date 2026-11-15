@@ -44,8 +44,8 @@ export function pageMetadata(locale: Locale, path: string, title: string, descri
 }
 
 const jobTitle: Record<Locale, string> = {
-  fr: "Développeur full-stack freelance",
-  en: "Freelance full-stack developer",
+  fr: "Développeur full-stack et IA",
+  en: "Full-stack and AI developer",
 };
 
 // Ce que la personne sait construire : technologies et types de systèmes, sans produit ni client.

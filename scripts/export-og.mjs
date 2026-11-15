@@ -26,14 +26,14 @@ const portrait = data("public/portraits/daniogo-product-engineer-cutout.png", "i
 const copy = {
   fr: {
     place: "Zié Daniogo / Abidjan, Côte d’Ivoire",
-    title: "Votre produit,<br>de l’idée à la<br><em>mise en ligne.</em>",
-    role: "Développeur full-stack freelance",
+    title: "Je dessine,<br>je code,<br>je mets en ligne.<br><em>Moi-même.</em>",
+    role: "Développeur full-stack et IA",
     detail: "Web, mobile, IA intégrée / Français, anglais",
   },
   en: {
     place: "Zié Daniogo / Abidjan, Côte d’Ivoire",
-    title: "Your product,<br>from idea<br>to <em>launch.</em>",
-    role: "Freelance full-stack developer",
+    title: "I design it,<br>build it,<br>ship it.<br><em>Myself.</em>",
+    role: "Full-stack and AI developer",
     detail: "Web, mobile, built-in AI / English, French",
   },
 };
@@ -49,7 +49,7 @@ const html = (t) => `<!doctype html>
 body { position: relative; width: 1200px; height: 630px; overflow: hidden; background: #0c0c0d; color: #ececea; font-family: "Geist", sans-serif; -webkit-font-smoothing: antialiased; }
 .text { position: absolute; inset: 64px auto 60px 72px; display: flex; flex-direction: column; width: 700px; }
 .place { color: #9a9993; font: 500 17px/1 "Geist Mono", monospace; letter-spacing: 0.1em; text-transform: uppercase; }
-h1 { margin-top: 44px; font-size: 88px; font-weight: 500; line-height: 0.98; letter-spacing: -0.045em; }
+h1 { margin-top: 40px; font-size: 76px; font-weight: 500; line-height: 0.98; letter-spacing: -0.045em; }
 h1 em { color: #ff6b1a; font-family: "Instrument Serif", Georgia, serif; font-size: 1.07em; font-weight: 400; letter-spacing: -0.01em; }
 .role { margin-top: auto; font-size: 27px; font-weight: 500; letter-spacing: -0.02em; }
 .detail { margin-top: 10px; color: #9a9993; font-size: 21px; }

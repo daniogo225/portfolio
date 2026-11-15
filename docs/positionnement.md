@@ -4,9 +4,11 @@ Document de référence pour le portfolio, le CV et les profils freelance. À re
 
 ## 1. Le positionnement retenu
 
-**Ingénieur produit full-stack et IA. De l’idée à la mise en ligne, je conçois toute la chaîne de vos SaaS, applications mobiles et agents IA.**
+**Développeur full-stack et IA. De l’idée à la mise en ligne, je conçois toute la chaîne de vos SaaS, applications mobiles et agents IA.**
 
-Formule courte : **« Votre produit, de l’idée à la mise en ligne. »**
+Formule courte : **« Votre produit, de l’idée à la mise en ligne. »** Sur le site, depuis le 15/11/2026, la hero parle à la première personne : **« Je dessine, je code, je mets en ligne. Moi-même. »** (EN : « I design it, build it, ship it. Myself. »), Zié ayant jugé la formule courte trop impersonnelle.
+
+Titre affiché partout depuis le 15/11/2026 (décision de Zié) : **Développeur full-stack et IA** (EN : Full-stack and AI developer).
 
 Pourquoi celui-ci :
 
@@ -79,20 +81,20 @@ Le site s’adresse d’abord à des clients, pas à des développeurs. Chaque t
 
 Sur Malt, Upwork, Fiverr et LinkedIn, les mots-clés recherchés par les clients (MVP, scaling, montée en charge) peuvent rester : ils servent à être trouvé.
 
-Les noms de section du site (refonte du 15/11/2026) : Démonstration (une demande fictive suivie à travers toute la chaîne ; chacun de ses quatre plans porte une offre), Méthode (le planning avec les agents), Profil, Contact.
+Les noms de section du site (refonte du 15/11/2026, deuxième passe) : Services (« Ce que je construis » : trois scènes illustrées, une phrase chacune : l’application mobile, le back-office, la mise en ligne), Méthode (le planning avec les agents), Profil, Contact. La troisième scène dit que Zié garde ses applications en ligne ; elle ne vend ni hébergement ni gestion de serveurs.
 
 ## 7. Textes réutilisables
 
 ### Accroche d’une ligne
 
-- FR : Ingénieur produit full-stack et IA. De l’idée à la mise en ligne, je conçois toute la chaîne de vos SaaS, applications mobiles et agents IA.
-- EN : Full-stack and AI product engineer. From idea to launch, I build the whole chain of your SaaS, mobile apps and AI agents.
+- FR : Développeur full-stack et IA. De l’idée à la mise en ligne, je conçois toute la chaîne de vos SaaS, applications mobiles et agents IA.
+- EN : Full-stack and AI developer. From idea to launch, I build the whole chain of your SaaS, mobile apps and AI agents.
 
 ### LinkedIn
 
-**Titre (FR)** : Ingénieur produit full-stack et IA | SaaS, mobile, agents IA et assistants vocaux | De l’idée à la mise en ligne | Missions à distance
+**Titre (FR)** : Développeur full-stack et IA | SaaS, mobile, agents IA et assistants vocaux | De l’idée à la mise en ligne | Missions à distance
 
-**Headline (EN)** : Full-stack and AI product engineer | SaaS, mobile, AI agents and voice assistants | From idea to launch | Available remotely
+**Headline (EN)** : Full-stack and AI developer | SaaS, mobile, AI agents and voice assistants | From idea to launch | Available remotely
 
 **Infos (FR)** :
 
@@ -128,7 +130,7 @@ Les noms de section du site (refonte du 15/11/2026) : Démonstration (une demand
 
 ### Malt (FR)
 
-**Titre** : Ingénieur produit full-stack et IA, SaaS, mobile et agents IA
+**Titre** : Développeur full-stack et IA, SaaS, mobile et agents IA
 
 **Description** :
 
@@ -146,7 +148,7 @@ Les noms de section du site (refonte du 15/11/2026) : Démonstration (une demand
 
 ### Upwork (EN)
 
-**Title** : Full-stack & AI Product Engineer | SaaS, Mobile, AI Agents, Voice
+**Title** : Full-stack & AI Developer | SaaS, Mobile, AI Agents, Voice
 
 **Overview** :
 
