@@ -3,7 +3,7 @@
 //
 // Usage : node scripts/export-og.mjs
 // Playwright n’est pas une dépendance du projet : il est cherché dans le dossier courant, comme
-// pour export-cv.mjs. Les polices du site (Archivo élargie, IBM Plex Sans et Mono) sont chargées
+// pour export-cv.mjs. Les polices du site (Newsreader, Public Sans, IBM Plex Mono) sont chargées
 // depuis Google Fonts : lancer le script avec le réseau.
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -40,13 +40,13 @@ const copy = {
 const html = (t) => `<!doctype html>
 <html><head><meta charset="utf-8">
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=block");
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=block");
 * { box-sizing: border-box; margin: 0; }
-body { position: relative; width: 1200px; height: 630px; overflow: hidden; background: #0c0c0d; color: #ececea; font-family: "IBM Plex Sans", sans-serif; -webkit-font-smoothing: antialiased; }
+body { position: relative; width: 1200px; height: 630px; overflow: hidden; background: #0c0c0d; color: #ececea; font-family: "Public Sans", sans-serif; -webkit-font-smoothing: antialiased; }
 .text { position: absolute; inset: 64px auto 60px 72px; display: flex; flex-direction: column; width: 700px; }
 .place { color: #9a9993; font: 500 17px/1 "IBM Plex Mono", monospace; letter-spacing: 0.1em; text-transform: uppercase; }
-h1 { max-width: 640px; margin-top: 44px; font-family: "Archivo", sans-serif; font-size: 50px; font-stretch: 112%; font-weight: 800; line-height: 1.08; letter-spacing: -0.03em; text-wrap: balance; }
-h1 em { color: #ff6b1a; font-style: normal; }
+h1 { max-width: 640px; margin-top: 44px; font-family: "Newsreader", serif; font-size: 58px; font-weight: 500; line-height: 1.06; letter-spacing: -0.025em; text-wrap: balance; }
+h1 em { font-style: italic; font-weight: 400; }
 .role { margin-top: auto; font-size: 27px; font-weight: 500; letter-spacing: -0.01em; }
 .detail { margin-top: 10px; color: #9a9993; font-size: 21px; }
 .portrait { position: absolute; top: 34px; right: 28px; width: 470px; }

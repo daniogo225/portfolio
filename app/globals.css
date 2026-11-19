@@ -22,12 +22,11 @@
   --danger: #b42318;
   --hero-bg: #e6e3dc;
 
-  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
-  /* Titres : Archivo élargie, serrée. */
-  --display-stretch: 112%;
-  --display-tracking: -0.03em;
+  /* Titres : Newsreader 500, taille optique automatique, légèrement serrée. */
+  --display-tracking: -0.025em;
 
   --gutter: clamp(16px, 4vw, 56px);
   /* Marge réelle du contenu : la gouttière, ou plus si l’écran dépasse la largeur maximale. */
@@ -253,13 +252,20 @@ main:focus {
   margin-block: -0.14em -0.1em;
 }
 
+.word-mask:has(.word-em) {
+  padding-right: 0.12em;
+  margin-right: -0.12em;
+}
+
 .word {
   display: inline-block;
 }
 
-/* Le mot mis en valeur : même police, même graisse, dans la couleur d’accent. */
+/* Le mot mis en valeur : Newsreader italique 400, dans la couleur du texte. */
 .word-em {
-  color: var(--em-color, var(--accent-text));
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
 }
 
 /* ==========================================================================
@@ -543,8 +549,7 @@ main:focus {
 .wordmark-name {
   font-size: 1rem;
   font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-weight: 800;
+  font-weight: 500;
   letter-spacing: -0.02em;
 }
 
@@ -668,10 +673,9 @@ main:focus {
   align-items: baseline;
   gap: 16px;
   padding: 14px 0;
-  font-size: clamp(2rem, 9.5vw, 3.2rem);
+  font-size: clamp(2.3rem, 11vw, 3.6rem);
   font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-weight: 800;
+  font-weight: 500;
   letter-spacing: var(--display-tracking);
   line-height: 1.05;
 }
@@ -781,10 +785,9 @@ main:focus {
 
 .section-title {
   max-width: 16ch;
-  font-size: clamp(2rem, min(1rem + 3.3vw, 0.9rem + 5.6svh), 4.4rem);
+  font-size: clamp(2.4rem, min(1.15rem + 3.9vw, 1rem + 6.6svh), 5.2rem);
   font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-weight: 800;
+  font-weight: 500;
   line-height: 1.04;
   letter-spacing: var(--display-tracking);
   text-wrap: balance;
@@ -961,8 +964,7 @@ main:focus {
 .wordmark-name {
   font-size: 1rem;
   font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-weight: 800;
+  font-weight: 500;
   letter-spacing: -0.02em;
 }
 
@@ -1023,12 +1025,10 @@ main:focus {
 
 /* Une légende, pas une affiche : le nom en bannière reste le seul grand texte de la scène. */
 .hero-title {
-  --em-color: var(--accent-text);
   max-width: 24ch;
-  font-size: clamp(1.45rem, 0.95rem + 2.2vw, 2.1rem);
+  font-size: clamp(1.65rem, 1.1rem + 2.4vw, 2.4rem);
   font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-weight: 800;
+  font-weight: 500;
   line-height: 1.12;
   letter-spacing: var(--display-tracking);
   text-wrap: balance;
@@ -1097,9 +1097,8 @@ main:focus {
 .hero-banner-text {
   fill: var(--fg);
   font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-weight: 800;
-  letter-spacing: -0.04em;
+  font-weight: 500;
+  letter-spacing: -0.03em;
   text-rendering: geometricPrecision;
   user-select: none;
 }
@@ -1205,7 +1204,7 @@ main:focus {
   .hero-title {
     grid-area: title;
     max-width: min(25ch, calc(50vw - var(--edge) - var(--portrait-h) * 0.19));
-    font-size: clamp(1.3rem, 0.5rem + 1.35vw, 2.15rem);
+    font-size: clamp(1.6rem, 0.65rem + 1.75vw, 2.7rem);
   }
 
   .hero-role {
@@ -1423,10 +1422,9 @@ main:focus {
 }
 
 .not-found h1 {
-  font-size: clamp(2.3rem, 1.05rem + 4.4vw, 5.2rem);
+  font-size: clamp(2.7rem, 1.25rem + 5.2vw, 6.2rem);
   font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-weight: 800;
+  font-weight: 500;
   line-height: 1.02;
   letter-spacing: var(--display-tracking);
 }

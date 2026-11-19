@@ -1,22 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Mono, Newsreader, Public_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import "../sections.css";
 import { isLocale, locales, person, siteUrl } from "../data/site";
 
-// Titres : Archivo élargie (axe wdth), en 800. Le mot mis en valeur passe par la couleur d’accent.
-const display = Archivo({
+// Titres : Newsreader 500 (axe opsz). Le mot mis en valeur en italique 400, couleur du texte.
+const display = Newsreader({
   subsets: ["latin"],
-  axes: ["wdth"],
-  variable: "--font-archivo",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  variable: "--font-newsreader",
   display: "swap",
 });
 
 // Texte courant.
-const sans = IBM_Plex_Sans({
+const sans = Public_Sans({
   subsets: ["latin"],
-  variable: "--font-plex-sans",
+  variable: "--font-public-sans",
   display: "swap",
 });
 
