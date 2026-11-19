@@ -1,11 +1,10 @@
-import { ArrowLeft, Download } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
-import PrintButton from "../../components/cv/PrintButton";
 import { cv } from "../../data/cv";
 import { pageMetadata } from "../../data/metadata";
-import { cvPdf, isLocale, links, localePath, locales, person, siteUrl } from "../../data/site";
+import { isLocale, links, localePath, locales, person, siteUrl } from "../../data/site";
 import "./cv.css";
 
 // Polices statiques pour la feuille : Chrome les embarque en TrueType dans le PDF,
@@ -66,11 +65,6 @@ export default async function CvPage({ params }: Props) {
               </a>
             ))}
           </div>
-          <PrintButton label={t.toolbar.print} />
-          <a className="cv-tool is-primary" href={cvPdf(lang)} download>
-            {t.toolbar.download}
-            <Download size={16} strokeWidth={1.75} aria-hidden="true" />
-          </a>
         </div>
       </nav>
 

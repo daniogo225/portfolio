@@ -1,9 +1,9 @@
 "use client";
 
-import { ArrowUpRight, Download } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
-import { cvPdf, localePath } from "../../data/site";
+import { localePath } from "../../data/site";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
 import Figures from "./Figures";
 import { useSite } from "./SiteProvider";
@@ -56,12 +56,6 @@ export default function Profile() {
             <p>{p.stack}</p>
           </motion.div>
           <motion.div className="profile-cv" {...appear} transition={{ duration: 0.8, delay: 0.25, ease: EASE_OUT }}>
-            <a className="button button-primary" href={cvPdf(locale)} download>
-              <span className="roll" data-text={p.cvPdf}>
-                <span>{p.cvPdf}</span>
-              </span>
-              <Download size={17} strokeWidth={1.75} aria-hidden="true" />
-            </a>
             <a className="text-link" href={localePath(locale, "cv")}>
               {p.cvOnline}
               <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />

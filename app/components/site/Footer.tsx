@@ -1,12 +1,12 @@
 "use client";
 
 import { ArrowUp } from "lucide-react";
-import { cvPdf, links } from "../../data/site";
+import { links } from "../../data/site";
 import { useSite } from "./SiteProvider";
 
-/** Pied de page, dans le prolongement du contact : la signature, trois liens, l’interrupteur des animations. */
+/** Pied de page, dans le prolongement du contact : la signature, deux liens, l’interrupteur des animations. */
 export default function Footer() {
-  const { t, locale, calm, setCalm } = useSite();
+  const { t, calm, setCalm } = useSite();
   const year = new Date().getFullYear();
 
   return (
@@ -20,9 +20,6 @@ export default function Footer() {
           <div>
             <a href={links.github} target="_blank" rel="noreferrer">
               GitHub
-            </a>
-            <a href={cvPdf(locale)} download>
-              {t.footer.cv}
             </a>
             <a href={links.vcard} download>
               vCard
