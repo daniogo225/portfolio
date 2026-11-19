@@ -261,11 +261,12 @@ main:focus {
   display: inline-block;
 }
 
-/* Le mot mis en valeur : Newsreader italique 400, dans la couleur du texte. */
+/* Le mot mis en valeur : Newsreader italique 400, dans l’orange d’accent (choix de Zié, 19/11). */
 .word-em {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
+  color: var(--accent-text);
 }
 
 /* ==========================================================================
