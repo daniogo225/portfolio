@@ -1,30 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import "../sections.css";
 import { isLocale, locales, person, siteUrl } from "../data/site";
 
-const sans = Geist({
+// Titres : Archivo élargie (axe wdth), en 800. Le mot mis en valeur passe par la couleur d’accent.
+const display = Archivo({
   subsets: ["latin"],
-  variable: "--font-geist",
+  axes: ["wdth"],
+  variable: "--font-archivo",
   display: "swap",
 });
 
-const mono = Geist_Mono({
+// Texte courant.
+const sans = IBM_Plex_Sans({
   subsets: ["latin"],
-  variable: "--font-geist-mono",
+  variable: "--font-plex-sans",
+  display: "swap",
+});
+
+// Étiquettes et détails.
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: "500",
+  variable: "--font-plex-mono",
   display: "swap",
   preload: false,
-});
-
-// Police de titrage : droite pour les titres, italique pour le mot mis en valeur.
-const serif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument",
-  display: "swap",
 });
 
 // Seules les deux langues existent : toute autre valeur donne une page 404.
@@ -71,7 +73,7 @@ export default async function RootLayout({
   if (!isLocale(lang)) notFound();
 
   return (
-    <html lang={lang} className={`${sans.variable} ${mono.variable} ${serif.variable}`} suppressHydrationWarning>
+    <html lang={lang} className={`${display.variable} ${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

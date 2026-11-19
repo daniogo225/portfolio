@@ -22,9 +22,12 @@
   --danger: #b42318;
   --hero-bg: #e6e3dc;
 
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
-  --font-serif: var(--font-instrument), Georgia, serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+  /* Titres : Archivo élargie, serrée. */
+  --display-stretch: 112%;
+  --display-tracking: -0.03em;
 
   --gutter: clamp(16px, 4vw, 56px);
   /* Marge réelle du contenu : la gouttière, ou plus si l’écran dépasse la largeur maximale. */
@@ -182,7 +185,7 @@ main:focus {
 .mono {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.06em;
   line-height: 1.4;
   text-transform: uppercase;
@@ -250,23 +253,13 @@ main:focus {
   margin-block: -0.14em -0.1em;
 }
 
-.word-mask:has(.word-em) {
-  padding-right: 0.12em;
-  margin-right: -0.12em;
-}
-
 .word {
   display: inline-block;
 }
 
-/* Le mot mis en valeur : italique à empattements, dans l’encre. L’accent n’y est que sur le hero. */
+/* Le mot mis en valeur : même police, même graisse, dans la couleur d’accent. */
 .word-em {
-  font-family: var(--font-serif);
-  font-size: 1.06em;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  color: var(--em-color, currentColor);
+  color: var(--em-color, var(--accent-text));
 }
 
 /* ==========================================================================
@@ -549,8 +542,10 @@ main:focus {
 
 .wordmark-name {
   font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .wordmark-role {
@@ -673,9 +668,11 @@ main:focus {
   align-items: baseline;
   gap: 16px;
   padding: 14px 0;
-  font-size: clamp(2.3rem, 11vw, 3.6rem);
-  font-weight: 500;
-  letter-spacing: -0.045em;
+  font-size: clamp(2rem, 9.5vw, 3.2rem);
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-weight: 800;
+  letter-spacing: var(--display-tracking);
   line-height: 1.05;
 }
 
@@ -773,6 +770,7 @@ main:focus {
   color: var(--fg-muted);
   font-family: var(--font-mono);
   font-size: 0.72rem;
+  font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -783,10 +781,12 @@ main:focus {
 
 .section-title {
   max-width: 16ch;
-  font-size: clamp(2.3rem, min(1.1rem + 3.8vw, 1rem + 6.4svh), 5rem);
-  font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.045em;
+  font-size: clamp(2rem, min(1rem + 3.3vw, 0.9rem + 5.6svh), 4.4rem);
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: var(--display-tracking);
   text-wrap: balance;
 }
 
@@ -960,7 +960,9 @@ main:focus {
 
 .wordmark-name {
   font-size: 1rem;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-weight: 800;
   letter-spacing: -0.02em;
 }
 
@@ -1023,10 +1025,12 @@ main:focus {
 .hero-title {
   --em-color: var(--accent-text);
   max-width: 24ch;
-  font-size: clamp(1.6rem, 1.05rem + 2.4vw, 2.3rem);
-  font-weight: 500;
-  line-height: 1.14;
-  letter-spacing: -0.035em;
+  font-size: clamp(1.45rem, 0.95rem + 2.2vw, 2.1rem);
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: var(--display-tracking);
   text-wrap: balance;
 }
 
@@ -1092,8 +1096,10 @@ main:focus {
 
 .hero-banner-text {
   fill: var(--fg);
-  font-weight: 500;
-  letter-spacing: -0.055em;
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-weight: 800;
+  letter-spacing: -0.04em;
   text-rendering: geometricPrecision;
   user-select: none;
 }
@@ -1199,7 +1205,7 @@ main:focus {
   .hero-title {
     grid-area: title;
     max-width: min(25ch, calc(50vw - var(--edge) - var(--portrait-h) * 0.19));
-    font-size: clamp(1.45rem, 0.55rem + 1.5vw, 2.4rem);
+    font-size: clamp(1.3rem, 0.5rem + 1.35vw, 2.15rem);
   }
 
   .hero-role {
@@ -1362,6 +1368,11 @@ main:focus {
     font-size: 0.84rem;
   }
 
+  /* Sur téléphone, l’étiquette se range à gauche de la ligne : elle ne touche jamais le repère « Seul ». */
+  .tl-delivery span {
+    transform: translateX(-100%);
+  }
+
   .tl-owner {
     font-size: 0.68rem;
   }
@@ -1412,10 +1423,12 @@ main:focus {
 }
 
 .not-found h1 {
-  font-size: clamp(2.6rem, 1.2rem + 5vw, 6rem);
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.05em;
+  font-size: clamp(2.3rem, 1.05rem + 4.4vw, 5.2rem);
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: var(--display-tracking);
 }
 
 .not-found-en {

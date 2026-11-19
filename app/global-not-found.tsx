@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 
-const sans = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
-const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap", preload: false });
+const display = Archivo({ subsets: ["latin"], axes: ["wdth"], variable: "--font-archivo", display: "swap" });
+const sans = IBM_Plex_Sans({ subsets: ["latin"], variable: "--font-plex-sans", display: "swap" });
+const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "500", variable: "--font-plex-mono", display: "swap", preload: false });
 
 export const metadata: Metadata = {
   title: "Page introuvable | Zié Daniogo",
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 // Page 404 commune aux deux langues : le site n’a pas de mise en page racine hors de [lang].
 export default function GlobalNotFound() {
   return (
-    <html lang="fr" className={`${sans.variable} ${mono.variable}`}>
+    <html lang="fr" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
       <body>
         <main className="not-found shell">
           <p className="mono">404</p>
