@@ -2,7 +2,7 @@
 
 import { CornerDownLeft, Search } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { links, localePath, whatsappUrl } from "../../data/site";
+import { links, whatsappUrl } from "../../data/site";
 import { copyEmail } from "./Contact";
 import { SECTIONS, sectionLabel } from "./Header";
 import { useSite } from "./SiteProvider";
@@ -91,7 +91,6 @@ export default function CommandPalette({ open, onClose }: { open: boolean; onClo
         hint: "WhatsApp",
         run: () => openExternal(whatsappUrl(t.hero.message)),
       },
-      { id: "cv", group: t.palette.actions, label: t.palette.cv, hint: "/cv", run: () => window.location.assign(localePath(locale, "cv")) },
       {
         id: "theme",
         group: t.palette.actions,

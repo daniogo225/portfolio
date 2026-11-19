@@ -1,9 +1,7 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
-import { localePath } from "../../data/site";
 import RevealText, { EASE_OUT } from "../ui/RevealText";
 import Figures from "./Figures";
 import { useSite } from "./SiteProvider";
@@ -19,7 +17,7 @@ const appear = {
  * cadre ni fond : son bas se dissout dans la page. À côté, le titre, la description et le CV.
  */
 export default function Profile() {
-  const { t, locale } = useSite();
+  const { t } = useSite();
   const p = t.profile;
 
   return (
@@ -54,12 +52,6 @@ export default function Profile() {
           <motion.div className="profile-body" {...appear} transition={{ duration: 0.8, delay: 0.15, ease: EASE_OUT }}>
             <p>{p.body}</p>
             <p>{p.stack}</p>
-          </motion.div>
-          <motion.div className="profile-cv" {...appear} transition={{ duration: 0.8, delay: 0.25, ease: EASE_OUT }}>
-            <a className="text-link" href={localePath(locale, "cv")}>
-              {p.cvOnline}
-              <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
-            </a>
           </motion.div>
         </div>
 

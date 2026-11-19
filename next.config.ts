@@ -15,13 +15,15 @@ const nextConfig: NextConfig = {
     return [
       { source: "/fr", destination: "/", permanent: true },
       { source: "/fr/:path*", destination: "/:path*", permanent: true },
+      // Le CV n'est plus publié (Zié, 19/11) : ses anciennes adresses mènent à l'accueil.
+      { source: "/cv", destination: "/", permanent: false },
+      { source: "/en/cv", destination: "/en", permanent: false },
     ];
   },
   async rewrites() {
     return {
       beforeFiles: [
         { source: "/", destination: "/fr" },
-        { source: "/cv", destination: "/fr/cv" },
       ],
     };
   },
